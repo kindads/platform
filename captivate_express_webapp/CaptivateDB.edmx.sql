@@ -1,0 +1,579 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
+-- --------------------------------------------------
+-- Date Created: 02/19/2018 22:14:48
+-- Generated from EDMX file: C:\Users\JaimeSánchezBeltrán\Source\Repos\Captivate Express WebApp2\captivate_express_webapp\CaptivateDB.edmx
+-- --------------------------------------------------
+
+SET QUOTED_IDENTIFIER OFF;
+
+GO
+IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
+GO
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- --------------------------------------------------
+
+IF OBJECT_ID(N'[dbo].[FK_CATEGORIESTAGS_CATEGORIES]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CATEGORIESTAGS] DROP CONSTRAINT [FK_CATEGORIESTAGS_CATEGORIES];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CATEGORIESTAGS_TAGS]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CATEGORIESTAGS] DROP CONSTRAINT [FK_CATEGORIESTAGS_TAGS];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CATEGORIESSITES_CATEGORIES]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CATEGORIESSITES] DROP CONSTRAINT [FK_CATEGORIESSITES_CATEGORIES];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CATEGORIESSITES_SITES]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CATEGORIESSITES] DROP CONSTRAINT [FK_CATEGORIESSITES_SITES];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PARTNERSPARTNER_SETTINGS_PARTNERS]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PARTNERSPARTNER_SETTINGS] DROP CONSTRAINT [FK_PARTNERSPARTNER_SETTINGS_PARTNERS];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PARTNERSPARTNER_SETTINGS_PARTNER_SETTINGS]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PARTNERSPARTNER_SETTINGS] DROP CONSTRAINT [FK_PARTNERSPARTNER_SETTINGS_PARTNER_SETTINGS];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SITESPRODUCTS_SITES]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SITESPRODUCTS] DROP CONSTRAINT [FK_SITESPRODUCTS_SITES];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SITESPRODUCTS_PRODUCTS]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SITESPRODUCTS] DROP CONSTRAINT [FK_SITESPRODUCTS_PRODUCTS];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PRODUCTSPARTNERS_PRODUCTS]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PRODUCTSPARTNERS] DROP CONSTRAINT [FK_PRODUCTSPARTNERS_PRODUCTS];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PRODUCTSPARTNERS_PARTNERS]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PRODUCTSPARTNERS] DROP CONSTRAINT [FK_PRODUCTSPARTNERS_PARTNERS];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PARTNER_PRODUCT_SETTINGSPRODUCT_TYPE]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PARTNER_PRODUCT_SETTINGS] DROP CONSTRAINT [FK_PARTNER_PRODUCT_SETTINGSPRODUCT_TYPE];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PRODUCTSSITES]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SITES] DROP CONSTRAINT [FK_PRODUCTSSITES];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PRODUCTSPRODUCT_TYPE]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PRODUCT_TYPE] DROP CONSTRAINT [FK_PRODUCTSPRODUCT_TYPE];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PRODUCTSPARTNERS1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PARTNERS] DROP CONSTRAINT [FK_PRODUCTSPARTNERS1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SITESAspNetUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SITES] DROP CONSTRAINT [FK_SITESAspNetUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PRODUCTSAspNetUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PRODUCTS] DROP CONSTRAINT [FK_PRODUCTSAspNetUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PRODUCTSTRANSACTIONS_CAPT]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TRANSACTIONS_CAPT] DROP CONSTRAINT [FK_PRODUCTSTRANSACTIONS_CAPT];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TRANSACTION_TYPETRANSACTIONS_CAPT]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TRANSACTIONS_CAPT] DROP CONSTRAINT [FK_TRANSACTION_TYPETRANSACTIONS_CAPT];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- --------------------------------------------------
+
+IF OBJECT_ID(N'[dbo].[CATEGORIES]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CATEGORIES];
+GO
+IF OBJECT_ID(N'[dbo].[TAGS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TAGS];
+GO
+IF OBJECT_ID(N'[dbo].[SITES]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[SITES];
+GO
+IF OBJECT_ID(N'[dbo].[PRODUCT_TYPE]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PRODUCT_TYPE];
+GO
+IF OBJECT_ID(N'[dbo].[PARTNER_PRODUCT_SETTINGS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PARTNER_PRODUCT_SETTINGS];
+GO
+IF OBJECT_ID(N'[dbo].[PARTNERS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PARTNERS];
+GO
+IF OBJECT_ID(N'[dbo].[PRODUCTS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PRODUCTS];
+GO
+
+IF OBJECT_ID(N'[dbo].[TRANSACTIONS_CAPT]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TRANSACTIONS_CAPT];
+GO
+IF OBJECT_ID(N'[dbo].[TRANSACTION_TYPE]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TRANSACTION_TYPE];
+GO
+IF OBJECT_ID(N'[dbo].[CATEGORIESTAGS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CATEGORIESTAGS];
+GO
+IF OBJECT_ID(N'[dbo].[CATEGORIESSITES]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CATEGORIESSITES];
+GO
+IF OBJECT_ID(N'[dbo].[PARTNERSPARTNER_SETTINGS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PARTNERSPARTNER_SETTINGS];
+GO
+IF OBJECT_ID(N'[dbo].[SITESPRODUCTS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[SITESPRODUCTS];
+GO
+IF OBJECT_ID(N'[dbo].[PRODUCTSPARTNERS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PRODUCTSPARTNERS];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'CATEGORIES'
+CREATE TABLE [dbo].[CATEGORIES] (
+    [IdCategory] smallint IDENTITY(1,1) NOT NULL,
+    [Description] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'TAGS'
+CREATE TABLE [dbo].[TAGS] (
+    [IdTag] smallint IDENTITY(1,1) NOT NULL,
+    [Description] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'SITES'
+CREATE TABLE [dbo].[SITES] (
+    [IdSite] uniqueidentifier  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [URL] nvarchar(max)  NOT NULL,
+    [PRODUCT_IdProduct] uniqueidentifier  NOT NULL,
+    [AspNetUsers_Id] nvarchar(128)  NOT NULL
+);
+GO
+
+-- Creating table 'PRODUCT_TYPE'
+CREATE TABLE [dbo].[PRODUCT_TYPE] (
+    [IdProductType] uniqueidentifier  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [PRODUCT_IdProduct] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'PARTNER_PRODUCT_SETTINGS'
+CREATE TABLE [dbo].[PARTNER_PRODUCT_SETTINGS] (
+    [IdSetting] uniqueidentifier  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Value] nvarchar(max)  NOT NULL,
+    [PRODUCT_TYPE_IdProductType] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'PARTNERS'
+CREATE TABLE [dbo].[PARTNERS] (
+    [IdPartner] uniqueidentifier  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Status] nvarchar(max)  NOT NULL,
+    [PRODUCT1_IdProduct] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'PRODUCTS'
+CREATE TABLE [dbo].[PRODUCTS] (
+    [IdProduct] uniqueidentifier  NOT NULL,
+    [IdUsr] nvarchar(max)  NOT NULL,
+    [StartTime] nvarchar(max)  NOT NULL,
+    [EndTime] nvarchar(max)  NOT NULL,
+    [AspNetUsers_Id] nvarchar(128)  NOT NULL
+);
+GO
+
+
+-- Creating table 'TRANSACTIONS_CAPT'
+CREATE TABLE [dbo].[TRANSACTIONS_CAPT] (
+    [IdTransaction] int IDENTITY(1,1) NOT NULL,
+    [HashFrom] nvarchar(max)  NOT NULL,
+    [HashTo] nvarchar(max)  NOT NULL,
+    [Amount] nvarchar(max)  NOT NULL,
+    [BlockDate] nvarchar(max)  NOT NULL,
+    [RegisterDate] nvarchar(max)  NOT NULL,
+    [HashTransaction] nvarchar(max)  NOT NULL,
+    [Gas] nvarchar(max)  NOT NULL,
+    [PRODUCT_IdProduct] uniqueidentifier  NOT NULL,
+    [TRANSACTION_TYPE_IdTransactionType] smallint  NOT NULL
+);
+GO
+
+-- Creating table 'TRANSACTION_TYPE'
+CREATE TABLE [dbo].[TRANSACTION_TYPE] (
+    [IdTransactionType] smallint IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'CATEGORIESTAGS'
+CREATE TABLE [dbo].[CATEGORIESTAGS] (
+    [CATEGORIES_IdCategory] smallint  NOT NULL,
+    [TAGS_IdTag] smallint  NOT NULL
+);
+GO
+
+-- Creating table 'CATEGORIESSITES'
+CREATE TABLE [dbo].[CATEGORIESSITES] (
+    [CATEGORy_IdCategory] smallint  NOT NULL,
+    [SITES_IdSite] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'PARTNERSPARTNER_SETTINGS'
+CREATE TABLE [dbo].[PARTNERSPARTNER_SETTINGS] (
+    [PARTNER_IdPartner] uniqueidentifier  NOT NULL,
+    [PARTNER_SETTINGS_IdSetting] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'SITESPRODUCTS'
+CREATE TABLE [dbo].[SITESPRODUCTS] (
+    [SITE_IdSite] uniqueidentifier  NOT NULL,
+    [PRODUCTS_IdProductType] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'PRODUCTSPARTNERS'
+CREATE TABLE [dbo].[PRODUCTSPARTNERS] (
+    [PRODUCT_IdProductType] uniqueidentifier  NOT NULL,
+    [PARTNERS_IdPartner] uniqueidentifier  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [IdCategory] in table 'CATEGORIES'
+ALTER TABLE [dbo].[CATEGORIES]
+ADD CONSTRAINT [PK_CATEGORIES]
+    PRIMARY KEY CLUSTERED ([IdCategory] ASC);
+GO
+
+-- Creating primary key on [IdTag] in table 'TAGS'
+ALTER TABLE [dbo].[TAGS]
+ADD CONSTRAINT [PK_TAGS]
+    PRIMARY KEY CLUSTERED ([IdTag] ASC);
+GO
+
+-- Creating primary key on [IdSite] in table 'SITES'
+ALTER TABLE [dbo].[SITES]
+ADD CONSTRAINT [PK_SITES]
+    PRIMARY KEY CLUSTERED ([IdSite] ASC);
+GO
+
+-- Creating primary key on [IdProductType] in table 'PRODUCT_TYPE'
+ALTER TABLE [dbo].[PRODUCT_TYPE]
+ADD CONSTRAINT [PK_PRODUCT_TYPE]
+    PRIMARY KEY CLUSTERED ([IdProductType] ASC);
+GO
+
+-- Creating primary key on [IdSetting] in table 'PARTNER_PRODUCT_SETTINGS'
+ALTER TABLE [dbo].[PARTNER_PRODUCT_SETTINGS]
+ADD CONSTRAINT [PK_PARTNER_PRODUCT_SETTINGS]
+    PRIMARY KEY CLUSTERED ([IdSetting] ASC);
+GO
+
+-- Creating primary key on [IdPartner] in table 'PARTNERS'
+ALTER TABLE [dbo].[PARTNERS]
+ADD CONSTRAINT [PK_PARTNERS]
+    PRIMARY KEY CLUSTERED ([IdPartner] ASC);
+GO
+
+-- Creating primary key on [IdProduct] in table 'PRODUCTS'
+ALTER TABLE [dbo].[PRODUCTS]
+ADD CONSTRAINT [PK_PRODUCTS]
+    PRIMARY KEY CLUSTERED ([IdProduct] ASC);
+GO
+
+
+-- Creating primary key on [IdTransaction] in table 'TRANSACTIONS_CAPT'
+ALTER TABLE [dbo].[TRANSACTIONS_CAPT]
+ADD CONSTRAINT [PK_TRANSACTIONS_CAPT]
+    PRIMARY KEY CLUSTERED ([IdTransaction] ASC);
+GO
+
+-- Creating primary key on [IdTransactionType] in table 'TRANSACTION_TYPE'
+ALTER TABLE [dbo].[TRANSACTION_TYPE]
+ADD CONSTRAINT [PK_TRANSACTION_TYPE]
+    PRIMARY KEY CLUSTERED ([IdTransactionType] ASC);
+GO
+
+-- Creating primary key on [CATEGORIES_IdCategory], [TAGS_IdTag] in table 'CATEGORIESTAGS'
+ALTER TABLE [dbo].[CATEGORIESTAGS]
+ADD CONSTRAINT [PK_CATEGORIESTAGS]
+    PRIMARY KEY CLUSTERED ([CATEGORIES_IdCategory], [TAGS_IdTag] ASC);
+GO
+
+-- Creating primary key on [CATEGORy_IdCategory], [SITES_IdSite] in table 'CATEGORIESSITES'
+ALTER TABLE [dbo].[CATEGORIESSITES]
+ADD CONSTRAINT [PK_CATEGORIESSITES]
+    PRIMARY KEY CLUSTERED ([CATEGORy_IdCategory], [SITES_IdSite] ASC);
+GO
+
+-- Creating primary key on [PARTNER_IdPartner], [PARTNER_SETTINGS_IdSetting] in table 'PARTNERSPARTNER_SETTINGS'
+ALTER TABLE [dbo].[PARTNERSPARTNER_SETTINGS]
+ADD CONSTRAINT [PK_PARTNERSPARTNER_SETTINGS]
+    PRIMARY KEY CLUSTERED ([PARTNER_IdPartner], [PARTNER_SETTINGS_IdSetting] ASC);
+GO
+
+-- Creating primary key on [SITE_IdSite], [PRODUCTS_IdProductType] in table 'SITESPRODUCTS'
+ALTER TABLE [dbo].[SITESPRODUCTS]
+ADD CONSTRAINT [PK_SITESPRODUCTS]
+    PRIMARY KEY CLUSTERED ([SITE_IdSite], [PRODUCTS_IdProductType] ASC);
+GO
+
+-- Creating primary key on [PRODUCT_IdProductType], [PARTNERS_IdPartner] in table 'PRODUCTSPARTNERS'
+ALTER TABLE [dbo].[PRODUCTSPARTNERS]
+ADD CONSTRAINT [PK_PRODUCTSPARTNERS]
+    PRIMARY KEY CLUSTERED ([PRODUCT_IdProductType], [PARTNERS_IdPartner] ASC);
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [CATEGORIES_IdCategory] in table 'CATEGORIESTAGS'
+ALTER TABLE [dbo].[CATEGORIESTAGS]
+ADD CONSTRAINT [FK_CATEGORIESTAGS_CATEGORIES]
+    FOREIGN KEY ([CATEGORIES_IdCategory])
+    REFERENCES [dbo].[CATEGORIES]
+        ([IdCategory])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [TAGS_IdTag] in table 'CATEGORIESTAGS'
+ALTER TABLE [dbo].[CATEGORIESTAGS]
+ADD CONSTRAINT [FK_CATEGORIESTAGS_TAGS]
+    FOREIGN KEY ([TAGS_IdTag])
+    REFERENCES [dbo].[TAGS]
+        ([IdTag])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CATEGORIESTAGS_TAGS'
+CREATE INDEX [IX_FK_CATEGORIESTAGS_TAGS]
+ON [dbo].[CATEGORIESTAGS]
+    ([TAGS_IdTag]);
+GO
+
+-- Creating foreign key on [CATEGORy_IdCategory] in table 'CATEGORIESSITES'
+ALTER TABLE [dbo].[CATEGORIESSITES]
+ADD CONSTRAINT [FK_CATEGORIESSITES_CATEGORIES]
+    FOREIGN KEY ([CATEGORy_IdCategory])
+    REFERENCES [dbo].[CATEGORIES]
+        ([IdCategory])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [SITES_IdSite] in table 'CATEGORIESSITES'
+ALTER TABLE [dbo].[CATEGORIESSITES]
+ADD CONSTRAINT [FK_CATEGORIESSITES_SITES]
+    FOREIGN KEY ([SITES_IdSite])
+    REFERENCES [dbo].[SITES]
+        ([IdSite])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CATEGORIESSITES_SITES'
+CREATE INDEX [IX_FK_CATEGORIESSITES_SITES]
+ON [dbo].[CATEGORIESSITES]
+    ([SITES_IdSite]);
+GO
+
+-- Creating foreign key on [PARTNER_IdPartner] in table 'PARTNERSPARTNER_SETTINGS'
+ALTER TABLE [dbo].[PARTNERSPARTNER_SETTINGS]
+ADD CONSTRAINT [FK_PARTNERSPARTNER_SETTINGS_PARTNERS]
+    FOREIGN KEY ([PARTNER_IdPartner])
+    REFERENCES [dbo].[PARTNERS]
+        ([IdPartner])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [PARTNER_SETTINGS_IdSetting] in table 'PARTNERSPARTNER_SETTINGS'
+ALTER TABLE [dbo].[PARTNERSPARTNER_SETTINGS]
+ADD CONSTRAINT [FK_PARTNERSPARTNER_SETTINGS_PARTNER_SETTINGS]
+    FOREIGN KEY ([PARTNER_SETTINGS_IdSetting])
+    REFERENCES [dbo].[PARTNER_PRODUCT_SETTINGS]
+        ([IdSetting])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PARTNERSPARTNER_SETTINGS_PARTNER_SETTINGS'
+CREATE INDEX [IX_FK_PARTNERSPARTNER_SETTINGS_PARTNER_SETTINGS]
+ON [dbo].[PARTNERSPARTNER_SETTINGS]
+    ([PARTNER_SETTINGS_IdSetting]);
+GO
+
+-- Creating foreign key on [SITE_IdSite] in table 'SITESPRODUCTS'
+ALTER TABLE [dbo].[SITESPRODUCTS]
+ADD CONSTRAINT [FK_SITESPRODUCTS_SITES]
+    FOREIGN KEY ([SITE_IdSite])
+    REFERENCES [dbo].[SITES]
+        ([IdSite])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [PRODUCTS_IdProductType] in table 'SITESPRODUCTS'
+ALTER TABLE [dbo].[SITESPRODUCTS]
+ADD CONSTRAINT [FK_SITESPRODUCTS_PRODUCTS]
+    FOREIGN KEY ([PRODUCTS_IdProductType])
+    REFERENCES [dbo].[PRODUCT_TYPE]
+        ([IdProductType])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SITESPRODUCTS_PRODUCTS'
+CREATE INDEX [IX_FK_SITESPRODUCTS_PRODUCTS]
+ON [dbo].[SITESPRODUCTS]
+    ([PRODUCTS_IdProductType]);
+GO
+
+-- Creating foreign key on [PRODUCT_IdProductType] in table 'PRODUCTSPARTNERS'
+ALTER TABLE [dbo].[PRODUCTSPARTNERS]
+ADD CONSTRAINT [FK_PRODUCTSPARTNERS_PRODUCTS]
+    FOREIGN KEY ([PRODUCT_IdProductType])
+    REFERENCES [dbo].[PRODUCT_TYPE]
+        ([IdProductType])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [PARTNERS_IdPartner] in table 'PRODUCTSPARTNERS'
+ALTER TABLE [dbo].[PRODUCTSPARTNERS]
+ADD CONSTRAINT [FK_PRODUCTSPARTNERS_PARTNERS]
+    FOREIGN KEY ([PARTNERS_IdPartner])
+    REFERENCES [dbo].[PARTNERS]
+        ([IdPartner])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PRODUCTSPARTNERS_PARTNERS'
+CREATE INDEX [IX_FK_PRODUCTSPARTNERS_PARTNERS]
+ON [dbo].[PRODUCTSPARTNERS]
+    ([PARTNERS_IdPartner]);
+GO
+
+-- Creating foreign key on [PRODUCT_TYPE_IdProductType] in table 'PARTNER_PRODUCT_SETTINGS'
+ALTER TABLE [dbo].[PARTNER_PRODUCT_SETTINGS]
+ADD CONSTRAINT [FK_PARTNER_PRODUCT_SETTINGSPRODUCT_TYPE]
+    FOREIGN KEY ([PRODUCT_TYPE_IdProductType])
+    REFERENCES [dbo].[PRODUCT_TYPE]
+        ([IdProductType])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PARTNER_PRODUCT_SETTINGSPRODUCT_TYPE'
+CREATE INDEX [IX_FK_PARTNER_PRODUCT_SETTINGSPRODUCT_TYPE]
+ON [dbo].[PARTNER_PRODUCT_SETTINGS]
+    ([PRODUCT_TYPE_IdProductType]);
+GO
+
+-- Creating foreign key on [PRODUCT_IdProduct] in table 'SITES'
+ALTER TABLE [dbo].[SITES]
+ADD CONSTRAINT [FK_PRODUCTSSITES]
+    FOREIGN KEY ([PRODUCT_IdProduct])
+    REFERENCES [dbo].[PRODUCTS]
+        ([IdProduct])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PRODUCTSSITES'
+CREATE INDEX [IX_FK_PRODUCTSSITES]
+ON [dbo].[SITES]
+    ([PRODUCT_IdProduct]);
+GO
+
+-- Creating foreign key on [PRODUCT_IdProduct] in table 'PRODUCT_TYPE'
+ALTER TABLE [dbo].[PRODUCT_TYPE]
+ADD CONSTRAINT [FK_PRODUCTSPRODUCT_TYPE]
+    FOREIGN KEY ([PRODUCT_IdProduct])
+    REFERENCES [dbo].[PRODUCTS]
+        ([IdProduct])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PRODUCTSPRODUCT_TYPE'
+CREATE INDEX [IX_FK_PRODUCTSPRODUCT_TYPE]
+ON [dbo].[PRODUCT_TYPE]
+    ([PRODUCT_IdProduct]);
+GO
+
+-- Creating foreign key on [PRODUCT1_IdProduct] in table 'PARTNERS'
+ALTER TABLE [dbo].[PARTNERS]
+ADD CONSTRAINT [FK_PRODUCTSPARTNERS1]
+    FOREIGN KEY ([PRODUCT1_IdProduct])
+    REFERENCES [dbo].[PRODUCTS]
+        ([IdProduct])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PRODUCTSPARTNERS1'
+CREATE INDEX [IX_FK_PRODUCTSPARTNERS1]
+ON [dbo].[PARTNERS]
+    ([PRODUCT1_IdProduct]);
+GO
+
+-- Creating foreign key on [AspNetUsers_Id] in table 'SITES'
+ALTER TABLE [dbo].[SITES]
+ADD CONSTRAINT [FK_SITESAspNetUser]
+    FOREIGN KEY ([AspNetUsers_Id])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SITESAspNetUser'
+CREATE INDEX [IX_FK_SITESAspNetUser]
+ON [dbo].[SITES]
+    ([AspNetUsers_Id]);
+GO
+
+-- Creating foreign key on [AspNetUsers_Id] in table 'PRODUCTS'
+ALTER TABLE [dbo].[PRODUCTS]
+ADD CONSTRAINT [FK_PRODUCTSAspNetUser]
+    FOREIGN KEY ([AspNetUsers_Id])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PRODUCTSAspNetUser'
+CREATE INDEX [IX_FK_PRODUCTSAspNetUser]
+ON [dbo].[PRODUCTS]
+    ([AspNetUsers_Id]);
+GO
+
+-- Creating foreign key on [PRODUCT_IdProduct] in table 'TRANSACTIONS_CAPT'
+ALTER TABLE [dbo].[TRANSACTIONS_CAPT]
+ADD CONSTRAINT [FK_PRODUCTSTRANSACTIONS_CAPT]
+    FOREIGN KEY ([PRODUCT_IdProduct])
+    REFERENCES [dbo].[PRODUCTS]
+        ([IdProduct])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PRODUCTSTRANSACTIONS_CAPT'
+CREATE INDEX [IX_FK_PRODUCTSTRANSACTIONS_CAPT]
+ON [dbo].[TRANSACTIONS_CAPT]
+    ([PRODUCT_IdProduct]);
+GO
+
+-- Creating foreign key on [TRANSACTION_TYPE_IdTransactionType] in table 'TRANSACTIONS_CAPT'
+ALTER TABLE [dbo].[TRANSACTIONS_CAPT]
+ADD CONSTRAINT [FK_TRANSACTION_TYPETRANSACTIONS_CAPT]
+    FOREIGN KEY ([TRANSACTION_TYPE_IdTransactionType])
+    REFERENCES [dbo].[TRANSACTION_TYPE]
+        ([IdTransactionType])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_TRANSACTION_TYPETRANSACTIONS_CAPT'
+CREATE INDEX [IX_FK_TRANSACTION_TYPETRANSACTIONS_CAPT]
+ON [dbo].[TRANSACTIONS_CAPT]
+    ([TRANSACTION_TYPE_IdTransactionType]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

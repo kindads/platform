@@ -1,0 +1,96 @@
+@model captivate_express_webapp.Models.Advertiser.CreateCampaingModel
+@{
+  ViewBag.Title = "Configure your site.";
+}
+<style type="text/css">
+  .bgimg {
+    background-image: url('../../Img/product/product.PNG');
+  }
+</style>
+
+@using (Html.BeginForm())
+{
+  <div class="row">
+    <br />
+    <div class="col-sm-9">
+      <div class="col-sm-12">
+        <h3>Configure your message</h3>
+      </div>
+      <hr />
+      <div class="col-sm-6">
+        <div class="col-sm-12 form-group">
+          @Html.CheckBoxFor(m => m.SendEmailAfterSubs)
+          Send welcome email after subscribing
+        </div>
+        <div class="col-sm-12 form-group">
+          @Html.Label("Title")
+          @Html.TextBoxFor(m => m.Campaign.Name, new { @class = "form-control input-lg", @id = "txtTitle", @onchange = "onchangetitleevent(); " })
+
+        </div>
+        <div class="col-sm-12 form-group">
+          @Html.Label("Message")
+          @Html.TextAreaFor(m => m.Campaign.AdText, new { @class = "form-control input-lg" })
+        </div>
+        <div class="col-sm-12 form-group">
+          @Html.EditorFor(m => m.Url) Url
+          @Html.TextBoxFor(m => m.Campaign.AdURL, new { @class = "form-control input-lg" })
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="col-sm-12" style="background-image: url(../../Img/product/product.PNG); height:353px ; width: 318px;">
+          <div style="height:235px"></div>
+          <div id="pnlTitle" class="col-sm-12 text-center">
+            <label id="lblTitle" />
+          </div>
+          <div class="col-sm-12 text-center">
+            @ViewBag.Text
+          </div>
+        </div>
+        <div class="col-sm-12 form-group text-center">
+          <a href="" class="btn btn-primary btn-rounded btn-lg btn-block">Accept</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm-3 text-muted" style="background-color: black;">
+      <div class="col-sm-12">
+        <strong><h3>Estimated price</h3></strong>
+      </div>
+      <hr />
+      <div class="col-sm-12 form-group">
+        @Html.LabelFor(model => model.CostByPush)
+        <select class="selectpicker form-control">
+          <option>30 CAPT /1000</option>
+          <option>30 CAPT /1000</option>
+          <option>30 CAPT /1000</option>
+        </select>
+
+      </div>
+      <div class="col-sm-12 form-group">
+        @Html.LabelFor(model => model.TimeDuration)
+        <select class="selectpicker form-control">
+          <option>1 WEEK</option>
+          <option>2 WEEK</option>
+          <option>3 WEEK</option>
+        </select>
+      </div>
+      <div class="col-sm-12 form-group">
+        <h5>NUMBER OF PUSH</h5>
+        <h4>1 - 1000 notifications</h4>
+      </div>
+      <div class="col-sm-12 form-group">
+        <br />
+        <h4>FINAL PRICE</h4>
+        <h2>30 CAPT</h2>
+      </div>
+    </div>
+  </div>
+
+}
+
+@Scripts.Render("~/bundles/customjs")
+<script type="text/javascript">
+  function onchangetitleevent() {
+    $('#lblTitle').val('sam');
+  }
+</script>

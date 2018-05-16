@@ -1,0 +1,17 @@
+div.modal.fade(id='siteSucessModal' role='dialog' aria-labelledby='siteSucessModal' aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type='button' data-dismiss='modal' ) &times;
+        h4.modal-title Autorizar crédito
+      .modal-body
+        .panel
+          .panel-body.text-center
+            form
+              p Su préstamo esta listo, solo falta aprobarlo
+              .add-space
+              button.btn.btn-primary.btn-lg(type='button' data-dismiss='modal' onclick="window.location.href='beneficiario-credito-activo.html'") Si, aprobar el préstamo
+
+      .modal-footer
+        .avatar-hint
+          small El préstamo aprobado se pagará de acuerdo a los términos del crédito.

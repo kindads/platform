@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "name": "kind-ads-system",
+  "description": "Kind Ads System",
+  "main": "gulpfile.js",
+  "keywords": [
+    "Blockbliss",
+    "Etherium"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://blockbliss.visualstudio.com/Captivate%20Express/_git/Captivate%20Express%20WebApp"
+  },
+  "author": "Enrique Estrada <enrique.estrada@blockbliss.com>",
+  "copyright": "BlockBliss",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cli": "^1.4.0",
+    "gulp-htmlclean": "^2.7.14",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^3.3.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^2.1.2",
+    "gulp-watch": "^4.3.11",
+    "pug": "^2.0.0-rc.4"
+  },
+  "scripts": {
+    "prestart": "npm install"
+  }
+}

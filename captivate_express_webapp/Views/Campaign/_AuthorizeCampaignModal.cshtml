@@ -1,0 +1,57 @@
+@model captivate_express_webapp.Models.Advertiser.CreateCampaingModel
+<div class="modal fade" id="campaignModal" role="dialog" aria-labelledby="siteSucessModal" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="lblTitle">Authorize Campaign</label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="panel">
+          <div class="panel-body">
+            <div id="pnlCampaignModalSuccesMsg" style="display:none">
+              <div class="row">
+                <div class="col-md-6 form-group text-right">
+                  Campaign
+                </div>
+                <div class="col-md-6 form-group">
+                  @Model.TitleText
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group text-right">
+                  Site
+                </div>
+                <div class="col-md-6 form-group">
+                  @Model.Campaign.PRODUCT.SITE.URL
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-offset-2 col-sm-8 panel panel-info">
+                  <div class="panel-body text-center">
+                    <h3>
+                      CONGRATULATIONS
+                      <small>This campaign has been approved</small>
+                    </h3>
+                    <div class="circle">
+                      <img class="image-logo" src="../Img/UI/approved-arrow.png" alt="Verified" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="pnlCampaignModalErrorMsg" style="display:none">
+              Error ...
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

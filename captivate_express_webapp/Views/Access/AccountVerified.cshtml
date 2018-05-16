@@ -1,0 +1,58 @@
+
+@{
+  ViewBag.Title = "AccountVerified";
+}
+
+@model captivate_express_webapp.Models.Access.LoginViewModel
+@{
+  ViewBag.Title = Resources.ACCOUNT_VERIFIED_TITLE;
+  Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<div class="title">
+  <div class="logo-mobile">
+    <a href="@Url.Action("Home", "Access")">
+      <img src="../Img/UI/Logo-White.png">
+    </a>
+  </div>
+  <h1>Account Verified</h1>
+</div>
+
+@using (Html.BeginForm("Login", "Access", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+  @Html.AntiForgeryToken()
+
+  <article class="form-data">
+    <form>
+      <fieldset>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+          <div class="col-xs-9 col-xs-offset-2 form-group text-center">
+            <p>
+              <text>@Resources.ACCOUNT_VERIFIED_CONGRATULATIONS</text>
+              <br /><br />
+              <text>@Resources.ACCOUNT_VERIFIED_VALIDATE</text>
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 form-group simple">
+            <div class="text-center">
+              <input type="submit" class="btn btn-default btn-rounded btn-lg" value="@Resources.GO_TO_LOGIN" />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </article>
+
+  <div class="col sm-12">
+    <ul class="last clearfix">
+      <li>
+
+      </li>
+    </ul>
+  </div>
+
+}

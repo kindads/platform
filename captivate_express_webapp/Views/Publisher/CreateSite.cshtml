@@ -1,0 +1,320 @@
+@model captivate_express_webapp.Models.Publisher.CreateSiteModel
+@{
+  var listCategory = ViewBag.listCategory as SelectList;
+  var listTag = ViewBag.listTag as SelectList;
+  var listParter = ViewBag.listParter as SelectList;
+}
+
+@*@using (Html.BeginForm())*@
+@*@using (Html.BeginForm("SaveSite", "Publisher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))*@
+@using (Html.BeginForm("SaveSite", "Publisher", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formSite" }))
+{
+  @Html.AntiForgeryToken()
+  <div class="container-fluid">
+    <div class="form-horizontal">
+
+      <div class="row">
+        <div class="col-sm-12 main-bar">
+          <h1 class="title">Configure your site</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="white-block">
+            @if (@ViewBag.Message != null && !string.IsNullOrEmpty(@ViewBag.Message))
+            {
+              <div class="callout callout-info">
+                <h4>@ViewBag.Message</h4>
+
+                In order to see all your products go to  @Html.ActionLink("Products", "ShowSites", "Publisher", new { @class = "link" }) page.
+              </div>
+            }
+            <div class="heading">
+              <h2>Site Setup</h2>
+            </div>
+            <div class="body-content">
+              <div class="form-data form-horizontal">
+                <form>
+                  <fieldset>
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @{
+                      bool visibleCreateSite = Convert.ToBoolean(Session["IsCreateSite"]);
+                      bool visibleShowSites = !visibleCreateSite;
+
+                      string vCreateSite = visibleCreateSite ? "block" : "none";
+                      string vShowSites = !visibleCreateSite ? "block" : "none";
+                    }
+
+                    <div class="row" style="display :@vCreateSite;">
+                      <div class="col-md-12">
+
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @placeholder = "Site Name", @class = "form-control", @required = "true", @data_msg_required = "Name is required" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                          </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.URL, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control", @required = "true", @data_msg_required = "Site URL is required" } })
+                              @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
+                            </div>
+                          </div>*@
+
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.URL, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            <div class="input-group">
+                              <div class="input-group-btn">
+                                @Html.DropDownList("Protocols", ViewData["protocols"] as List<SelectListItem>, new { @class = "form-control", @required = "true", @data_msg_required = "Url protocol is required" })
+                                @Html.ValidationMessage("Protocols")
+                              </div>
+                              @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @placeholder = "nytimes.com", @class = "form-control", @required = "true", @data_msg_required = "Site URL is required" } })
+                            </div>
+                          </div>
+                          @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.CategoryTypeSelect, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.DropDownList("Categories", ViewData["categories"] as List<SelectListItem>, "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Category is required" })
+                            @Html.ValidationMessage("Categories")
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row" style="display : @vShowSites;">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          @Html.Label("Sites", htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.DropDownList("Sites", ViewData["sites"] as List<SelectListItem>, "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Site is required" })
+                            @Html.ValidationMessage("Sites")
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="subheading">
+                          <h2>Configure Product</h2>
+                        </div>
+
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.ProductTypeSelect, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.DropDownList("Products", ViewData["products"] as List<SelectListItem>, "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Product is required" })
+                            @Html.ValidationMessage("Products")
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.ParterTypeSelect, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.DropDownList("Partners", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Partner is required" })
+                            @Html.ValidationMessage("Partners")
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.PriceSelecc, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.DropDownList("Prices", ViewData["prices"] as List<SelectListItem>, "Please select", new { @class = "form-control form-tooltip", @required = "true", @data_msg_required = "Price is required" })
+                            <a href="#" data-toggle="tooltip" title="KIND is the token used to make transactions">
+                              <i class="kas-icon-revisions"></i>
+                            </a>
+                            @Html.ValidationMessage("Prices")
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          @Html.Label("Upload an image", htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            <div class="btn btn-default file">
+                              Add photo
+                              <input id="fileup" name="fileup" type="file" />
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="btn-group">
+                          <input type="submit" value="Create" class="btn btn-primary btn-lg" />
+                        </div>
+                      </div>
+                    </div>
+
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+}
+
+@Scripts.Render("~/bundles/customjs")
+
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+  $(function () {
+    $('.link-dashboard').addClass('active');
+
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+      $("#Products").change(function () {
+        $("#Partners").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetPartners")',
+                dataType: 'json',
+                data: { id: $("#Products").val() },
+                success: function (partners) {
+                  if (partners != null && partners != '') {
+                    $("#Partners").append('<option value="">' + 'Please select' + '</option>');
+                    $.each(partners, function (i, state) {
+                      $("#Partners").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                  } else {
+                    $("#Partners").append('<option value="">' + 'Please select' + '</option>');
+                  }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Categories").change(function () {
+        $("#Tags").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTags")',
+                dataType: 'json',
+                data: { id: $("#Categories").val() },
+                success: function (tags) {
+                  if (tags != null && tags != '') {
+                    $("#Tags").append('<option value="">' + 'Please select' + '</option>');
+                    $.each(tags, function (i, state) {
+                      $("#Tags").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                  } else {
+                    $("#Tags").append('<option value="">' + 'Please select' + '</option>');
+                  }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve categories.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Tags").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("TagSelecc")',
+                data: { id: $("#Tags").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve tags.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Partners").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PartnerSelecc")',
+                data: { id: $("#Partners").val() }
+            });
+            return false;
+        })
+    });
+</script>
+
+<script type="text/javascript">
+  $().ready(function () {
+    $("#formSite").validate();
+  });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Prices").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PriceSelecc")',
+                data: { id: $("#Prices").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Sites").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SiteSelecc")',
+                data: { id: $("#Sites").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Protocols").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ProtocolSelecc")',
+                data: { id: $("#Protocols").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+
+
+
+

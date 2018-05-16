@@ -1,0 +1,272 @@
+/* Header
+================================================== */
+// Base
+.navbar-custom {
+  z-index: 120;
+  position: relative;
+  margin-bottom: 0;
+  border-radius: 0;
+  border: none;
+
+  .container-fluid {
+    padding: 12px;
+    background: $white;
+  }
+
+  .navbar-header {
+    .navbar-brand {
+      float: left;
+      overflow: hidden;
+      padding: 4px 8px 12px;
+
+      img {
+        max-height: 44px;
+      }
+    }
+
+    .navbar-toggle {
+      float: left;
+      margin-right: 0;
+      padding: 8px 0;
+      margin-top: 10px;
+
+      .icon-bar {
+        background-color: $dim-grey;
+        width: 24px;
+
+        &.last {
+          width: 12px;
+        }
+      }
+    }
+  }
+
+  .navbar-collapse.collapse {
+    padding: 0;
+    float: left;
+  }
+
+  .nav {
+    margin: 0;
+
+    > li {
+      a {
+        padding: 8px 12px;
+        display: inline-block;
+
+        .name {
+          display: none;
+        }
+
+        &.active,
+        &:active {
+          color: $main-blue;
+        }
+      }
+
+      &.open {
+        & > a,
+        & a:focus,
+        & a:hover {
+          background-color: lighten($main-blue, 35);
+          border-color: transparent;
+        }
+      }
+    }
+  }
+
+  .navbar-right {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    text-align: right;
+
+    .dropdown-menu {
+      min-width: auto;
+      margin-top: 0;
+      background: $white;
+      padding: 0;
+      box-shadow: 0 6px 12px rgba($black, .175);
+      border: solid 1px $dim-grey;
+
+      a {
+        padding: 6px 12px;
+      }
+    }
+
+    > li {
+      float: left;
+    }
+  }
+
+  &.navbar-marketplace {
+    background-image: linear-gradient(to bottom, #412C90 0%, #151154 100%);
+    border-bottom-color: #151154;
+
+    .container-fluid {
+      background: none;
+    }
+
+    .nav {
+      margin: 0;
+
+      > li {
+        a {
+          color: $white;
+
+          &.active,
+          &:active {
+            color: $off-white;
+          }
+
+          &:focus,
+          &:hover {
+            background-color: rgba($soft-grey, .7);
+            color: $charcoal-grey !important;
+            border-radius: 3px 3px 0 0;
+          }
+        }
+      }
+    }
+
+    .navbar-right {
+      .dropdown-menu {
+        background: $vivid-violet;
+        border-color: $main-violet;
+      }
+    }
+  }
+
+  @include breakpoint($tablet) {
+    overflow: visible;
+    border-bottom: solid 1px $soft-grey;
+    z-index: 3000;
+
+    .container-fluid {
+      padding: 12px 15px 0;
+    }
+
+    .navbar-header {
+      margin-right: 40px;
+
+      .navbar-brand {
+        padding: 4px 40px 12px;
+      }
+    }
+
+    .nav {
+      > li {
+        margin: 0 12px;
+
+        a {
+          padding: 14px 8px;
+          line-height: 24px;
+          border: solid 1px transparent;
+          border-bottom-width: 4px;
+          display: block;
+
+          .name {
+            display: inline-block;
+          }
+
+          &:focus,
+          &:hover {
+            background-color: lighten($main-blue, 35);
+            color: $charcoal-grey !important;
+            border-radius: 3px 3px 0 0;
+          }
+
+          &.active {
+            border-bottom-color: $main-blue;
+          }
+
+          &.disabled,
+          &[disabled] {
+            pointer-events: none;
+            cursor: not-allowed;
+            color: lighten($dim-grey, 15);
+
+            &:focus,
+            &:hover {
+              background: none;
+              color: lighten($dim-grey, 15) !important;
+            }
+          }
+        }
+      }
+    }
+
+    .navbar-right {
+      position: relative;
+      top: 0;
+
+      > li {
+        margin: 0 2px;
+      }
+    }
+
+    &.fixed-header {
+      position: fixed;
+      width: 100%;
+    }
+
+    &.navbar-marketplace {
+      .nav {
+        > li {
+          a {
+            &.active {
+              border-bottom-color: $white;
+            }
+
+            &.disabled,
+            &[disabled] {
+              &:focus,
+              &:hover {
+                color: lighten($dim-grey, 5) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint($desktop-l) {
+    box-shadow: $box-shadow;
+    background: $white;
+
+    .container-fluid {
+      padding: 12px 30px 0;
+      margin: 0 auto;
+      width: 1440px;
+    }
+  }
+}
+
+
+
+
+/* Footer
+================================================== */
+// Base
+.site-footer {
+  display: none;
+
+  @include breakpoint($tablet) {
+    background-color: transparent;
+    display: block;
+    padding: 1rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    &.advertiser {
+      position: relative;
+
+      .holder {
+
+      }
+    }
+  }
+}

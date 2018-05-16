@@ -1,0 +1,133 @@
+@{
+  ViewBag.Title = "My Sites";
+  Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+  <div class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-12 main-bar clearfix">
+        <h1 class="pull-left title">My sites</h1>
+        <div class="pull-right">
+          @Html.ActionLink("Create a Site", "CreateSite", "Site", null, new { @class = "btn btn-primary" })
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white-block">
+          <ul class="nav nav-tabs flexbox">
+            <li class="active">
+              <a href="#pnlGridPending" data-toggle="tab">Pending</a>
+            </li>
+            <li>
+              <a href="#pnlGridVerify" data-toggle="tab">Approved</a>
+            </li>
+          </ul>
+          <div class="tab-content clearfix">
+            @using (Ajax.BeginForm("ShowSitesPending", "Site", null, new AjaxOptions
+            {
+              HttpMethod = "POST",
+              OnSuccess = "",
+              OnFailure = "",
+              UpdateTargetId = "pnlGridPending"
+            }, new { id = "pnlGridPendingAjax" })) { }
+            <div id="pnlGridPending" class="tab-pane active">
+              @{Html.RenderAction("ShowSitesPending", "Site");}
+            </div>
+            @using (Ajax.BeginForm("ShowSitesVerify", "Site", null, new AjaxOptions
+            {
+              HttpMethod = "POST",
+              OnSuccess = "",
+              OnFailure = "",
+              UpdateTargetId = "pnlGridVerify"
+            }, new { id = "pnlGridVerifyAjax" })) { }
+            <div id="pnlGridVerify" class="tab-pane">
+              @{Html.RenderAction("ShowSitesVerify", "Site");}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+@Scripts.Render("~/bundles/customjs")
+<script type="text/javascript">
+  $(function () {
+    $('.link-dashboard').addClass('active');
+    $('.datagrid thead th:contains("Delete")').addClass('icon-delete');
+  });
+
+  $(function () {
+    $("#pnlGridPending").on("click", "thead th a, tfoot a", function (e) {
+      e.preventDefault();
+      var param = $(this).attr('href').split('?')[1];
+      var url = '@Url.Action("ShowSitesPending", "Site")' + '?' + param;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: '',
+        dataType: 'html',
+        success: function (data) {
+          $('#pnlGridPending').html(data);
+        },
+        error: function () {
+          alert('Error!');
+        }
+      });
+    });
+  });
+
+  $(function () {
+    $("#pnlGridVerify").on("click", "thead th a, tfoot a", function (e) {
+      e.preventDefault();
+      var param = $(this).attr('href').split('?')[1];
+      var url = '@Url.Action("ShowSitesVerify", "Site")' + '?' + param;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: '',
+        dataType: 'html',
+        success: function (data) {
+          $('#pnlGridVerify').html(data);
+        },
+        error: function () {
+          alert('Error!');
+        }
+      });
+    });
+  });
+
+  function deleteSiteRow(idSite, url, isSiteVerified) {
+    var r = confirm("The site " + url + " will be deleted. Are you sure?");
+    if (r == true) {
+      var urlCall = '@Url.Action("DeleteSite", "Site")';
+      $.ajax({
+        url: urlCall,
+        data: { IdSite: idSite },
+        success: function (data) {
+          if (!data.isDeleted) {
+            alert('The site was not deleted because it has associated products.');
+          }
+          else {
+            alert('Site deleted successfully')
+            if (isSiteVerified)
+              $("#pnlGridVerifyAjax").submit();
+            else
+              $("#pnlGridPendingAjax").submit();
+          }
+        },
+        error: function (data) {
+          if (!data.isDeleted)
+            alert('The site was not deleted because it has associated products.');
+          else
+            alert('Error!');
+        }
+      });
+    }
+  }
+</script>

@@ -1,0 +1,61 @@
+@model captivate_express_webapp.Models.Publisher.ShowProductViewModel
+@{
+  ViewBag.Title = "Show Sites";
+  Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+  <div class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-12 main-bar">
+        <h1 class="title">My sites</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white-block">
+          <article class="datagrid">
+            <ul>
+              <li>Site name</li>
+              <li>Site url</li>
+              <li>Type product</li>
+            </ul>
+            <div>
+              @{int i = 0;
+                if (Model != null && Model.ListProductSites != null && Model.ListProductSites.Any())
+                {
+                  foreach (var product in Model.ListProductSites)
+                  {
+                    i = i + 1;
+                    <ul class="data-grid-heading">
+                      <li>
+                        @Ajax.ActionLink(product.SITE.Name, "ShowDetailSite", "Publisher", new { idSite = product.SITE.IdSite }, new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = ("DetailSite" + i.ToString()) }, new { @class = "btn" })
+                      </li>
+                      <li>
+                        @product.SITE.Name
+                      </li>
+                      <li>
+                        @product.PRODUCT_TYPE.Name
+                      </li>
+                    </ul>
+                    <div class="data-grid-content" id=@("DetailSite" + i.ToString() )>  </div>
+                  }
+                }
+              }
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@Scripts.Render("~/bundles/customjs")
+
+<script>
+  $(function () {
+    $('.link-site').addClass('active');
+  });
+</script>

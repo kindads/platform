@@ -1,0 +1,96 @@
+/* Vendor
+================================================== */
+  @import 'vendor/breakpoint';
+
+
+
+/* Base UI
+================================================== */
+  //helpers
+  @import 'tkatUI/base/_variables';                  // Variables
+  @import 'tkatUI/base/_reset';                      // Reset
+  @import 'tkatUI/base/_fonts';                      // Fonts
+
+  
+/* Global
+=================================================== */
+  html, body {
+    height:100%;
+    background: $off-white;
+  }
+  body {
+    font-family: $openSansRegular;
+    color: $charcoal-grey;
+  }
+  .wrapper {
+    font-size: 1em;
+    line-height: 1.25;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    max-width: 100vw;
+    min-height: 100%;
+	  flex-flow: column nowrap;
+    flex: 0 1 auto;
+    @include breakpoint($tablet) {
+      &.wrapper-landing {
+        .main-content {
+          height: 100%;
+        }
+        & + #footer {
+          position: relative;
+        }
+      }
+    }
+  }
+  .main-content {
+    position: relative;
+    height: calc(100vh - 0px);
+    background-color: $off-white;
+    &.admin {
+      height: calc(100vh - 76px);
+    }
+    @include breakpoint($tablet) {
+      min-height: 100%;
+      &.admin {
+        height: calc(100vh - 70px);
+        margin-top: 70px;
+      }
+    }
+    @include breakpoint($desktop-l) {
+      margin: 0 auto;
+      width: 1440px;
+      > .flexbox {
+        //border-right: solid 1px $soft-grey;
+        //border-left: solid 1px $soft-grey;
+      }
+    }
+  }
+  .flexbox,
+  .flexbox-item {
+    display: flex;
+  }
+  .flexbox-item {
+    flex-grow: 1;
+    flex-direction: column;
+    &.spaced {
+      justify-content: space-between;
+    }
+  }
+
+
+
+/* UI General
+================================================== */
+  //components
+  @import 'tkatUI/components/_typography';           // Typography
+  @import "tkatUI/components/_fonts-icons";          // Fonts
+  @import 'tkatUI/components/_buttons';              // Buttons
+  @import 'tkatUI/components/_forms';                // Forms
+
+
+  /* UI Modules
+================================================== */
+  @import 'tkatUI/custom/_atomic';                   // Atomic
+  @import 'tkatUI/custom/_header';                   // Head
+  @import 'tkatUI/custom/_pages';                    // Pages

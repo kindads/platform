@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="92825d6b6e8d4e78a38b8df4caaf0d73" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="KindadsModel.AspNetUser" Width="1.5" PointX="0.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.CATEGORY" Width="1.5" PointX="12.125" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.PARTNER_PRODUCT_SETTINGS" Width="2.5" PointX="10.875" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.PARTNER" Width="1.5" PointX="8.125" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.PRODUCT_TYPE" Width="1.5" PointX="13.375" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.PRODUCT" Width="1.5" PointX="3.875" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.SITE" Width="1.5" PointX="9.625" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.TAG" Width="1.5" PointX="14.375" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.TRANSACTION_TYPE" Width="2.625" PointX="6.375" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="KindadsModel.TRANSACTIONS_CAPT" Width="2.625" PointX="1.125" PointY="9.5" IsExpanded="true" />
+        <AssociationConnector Association="KindadsModel.FK_PRODUCTSAspNetUser" ManuallyRouted="false" />
+        <AssociationConnector Association="KindadsModel.FK_SITESAspNetUser" ManuallyRouted="false" />
+        <AssociationConnector Association="KindadsModel.FK_TRANSACTION_TYPETRANSACTIONS_CAPT" ManuallyRouted="false" />
+        <AssociationConnector Association="KindadsModel.PARTNERSPARTNER_SETTINGS" ManuallyRouted="false" />
+        <AssociationConnector Association="KindadsModel.PRODUCTSPARTNERS" ManuallyRouted="false" />
+        <AssociationConnector Association="KindadsModel.SITEPRODUCT" />
+        <EntityTypeShape EntityType="KindadsModel.CAMPAIGN" Width="1.5" PointX="4.5" PointY="7.875" />
+        <AssociationConnector Association="KindadsModel.AspNetUserCAMPAIGN" />
+        <AssociationConnector Association="KindadsModel.PARTNERPRODUCT" />
+        <AssociationConnector Association="KindadsModel.PRODUCTCAMPAIGN" />
+        <AssociationConnector Association="KindadsModel.CAMPAIGNTRANSACTIONS_CAPT" />
+        <AssociationConnector Association="KindadsModel.TAGCATEGORY" />
+        <AssociationConnector Association="KindadsModel.CATEGORYSITE" />
+        <AssociationConnector Association="KindadsModel.PRODUCT_TYPEPRODUCT" />
+        <AssociationConnector Association="KindadsModel.PRODUCT_TYPEPARTNER_PRODUCT_SETTINGS" />
+        <EntityTypeShape EntityType="KindadsModel.AspNetUserClaim" Width="1.75" PointX="5.125" PointY="0.5" />
+        <EntityTypeShape EntityType="KindadsModel.AspNetUserLogin" Width="1.875" PointX="7.25" PointY="0.5" />
+        <EntityTypeShape EntityType="KindadsModel.AspNetRole" Width="1.5" PointX="3" PointY="0.625" />
+        <AssociationConnector Association="KindadsModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="KindadsModel.TRANSACTIONS_EXTERNAL" Width="3.5" PointX="9.75" PointY="10.5" />
+        <AssociationConnector Association="KindadsModel.FK_TRANSACTION_TYPETRANSACTIONS_EXT" />
+        <EntityTypeShape EntityType="KindadsModel.CAT_CAMPAIGN_STATUS" Width="1.5" PointX="14.625" PointY="6.75" />
+        <AssociationConnector Association="KindadsModel.FK_CAT_CAMPAIGN_STATUSCAMPAIGN" />
+        <EntityTypeShape EntityType="KindadsModel.PARTNER_SETTINGS" Width="2.375" PointX="10.375" PointY="14.625" />
+        <EntityTypeShape EntityType="KindadsModel.PRODUCT_SETTINGS" Width="2.375" PointX="6.125" PointY="14.375" />
+        <AssociationConnector Association="KindadsModel.FK_PARTNERPARTNER_SETTINGS" />
+        <AssociationConnector Association="KindadsModel.FK_PRODUCTPRODUCT_SETTINGS" />
+        <EntityTypeShape EntityType="KindadsModel.CAMPAIGN_SETTINGS" Width="1.5" PointX="1.625" PointY="14.75" />
+        <AssociationConnector Association="KindadsModel.FK_CAMPAIGNs1_SETTINGS" />
+        <EntityTypeShape EntityType="KindadsModel.CAMPAIGN_CHAT" Width="1.5" PointX="16.5" PointY="3" />
+        <AssociationConnector Association="KindadsModel.FK_AspNetUserCAMPAIGN_CHAT" />
+        <AssociationConnector Association="KindadsModel.FK_CAMPAIGN_IdCampaign" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

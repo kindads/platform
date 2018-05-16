@@ -1,0 +1,864 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KindadsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Hometown" Type="nvarchar(max)" />
+          <Property Name="TokenAddress" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORIES">
+          <Key>
+            <PropertyRef Name="IdCategory" />
+          </Key>
+          <Property Name="IdCategory" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PARTNER_PRODUCT_SETTINGS">
+          <Key>
+            <PropertyRef Name="IdSetting" />
+          </Key>
+          <Property Name="IdSetting" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PRODUCT_TYPE_IdProductType" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PARTNERS">
+          <Key>
+            <PropertyRef Name="IdPartner" />
+          </Key>
+          <Property Name="IdPartner" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PRODUCT1_IdProduct" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PARTNERSPARTNER_SETTINGS">
+          <Key>
+            <PropertyRef Name="PARTNER_IdPartner" />
+            <PropertyRef Name="PARTNER_SETTINGS_IdSetting" />
+          </Key>
+          <Property Name="PARTNER_IdPartner" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PARTNER_SETTINGS_IdSetting" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCT_TYPE">
+          <Key>
+            <PropertyRef Name="IdProductType" />
+          </Key>
+          <Property Name="IdProductType" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PRODUCT_IdProduct" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCTS">
+          <Key>
+            <PropertyRef Name="IdProduct" />
+          </Key>
+          <Property Name="IdProduct" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdUsr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartTime" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EndTime" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AspNetUsers_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCTSPARTNERS">
+          <Key>
+            <PropertyRef Name="PRODUCT_IdProductType" />
+            <PropertyRef Name="PARTNERS_IdPartner" />
+          </Key>
+          <Property Name="PRODUCT_IdProductType" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PARTNERS_IdPartner" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SITES">
+          <Key>
+            <PropertyRef Name="IdSite" />
+          </Key>
+          <Property Name="IdSite" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="URL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PRODUCT_IdProduct" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AspNetUsers_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAGS">
+          <Key>
+            <PropertyRef Name="IdTag" />
+          </Key>
+          <Property Name="IdTag" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRANSACTION_TYPE">
+          <Key>
+            <PropertyRef Name="IdTransactionType" />
+          </Key>
+          <Property Name="IdTransactionType" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONS_CAPT">
+          <Key>
+            <PropertyRef Name="IdTransaction" />
+          </Key>
+          <Property Name="IdTransaction" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HashFrom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="HashTo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Amount" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BlockDate" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RegisterDate" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="HashTransaction" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gas" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PRODUCT_IdProduct" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TRANSACTION_TYPE_IdTransactionType" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARTNER_PRODUCT_SETTINGSPRODUCT_TYPE">
+          <End Role="PRODUCT_TYPE" Type="Self.PRODUCT_TYPE" Multiplicity="1" />
+          <End Role="PARTNER_PRODUCT_SETTINGS" Type="Self.PARTNER_PRODUCT_SETTINGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_TYPE">
+              <PropertyRef Name="IdProductType" />
+            </Principal>
+            <Dependent Role="PARTNER_PRODUCT_SETTINGS">
+              <PropertyRef Name="PRODUCT_TYPE_IdProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARTNERSPARTNER_SETTINGS_PARTNER_SETTINGS">
+          <End Role="PARTNER_PRODUCT_SETTINGS" Type="Self.PARTNER_PRODUCT_SETTINGS" Multiplicity="1" />
+          <End Role="PARTNERSPARTNER_SETTINGS" Type="Self.PARTNERSPARTNER_SETTINGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARTNER_PRODUCT_SETTINGS">
+              <PropertyRef Name="IdSetting" />
+            </Principal>
+            <Dependent Role="PARTNERSPARTNER_SETTINGS">
+              <PropertyRef Name="PARTNER_SETTINGS_IdSetting" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARTNERSPARTNER_SETTINGS_PARTNERS">
+          <End Role="PARTNERS" Type="Self.PARTNERS" Multiplicity="1" />
+          <End Role="PARTNERSPARTNER_SETTINGS" Type="Self.PARTNERSPARTNER_SETTINGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARTNERS">
+              <PropertyRef Name="IdPartner" />
+            </Principal>
+            <Dependent Role="PARTNERSPARTNER_SETTINGS">
+              <PropertyRef Name="PARTNER_IdPartner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTSAspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="AspNetUsers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTSPARTNERS_PARTNERS">
+          <End Role="PARTNERS" Type="Self.PARTNERS" Multiplicity="1" />
+          <End Role="PRODUCTSPARTNERS" Type="Self.PRODUCTSPARTNERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARTNERS">
+              <PropertyRef Name="IdPartner" />
+            </Principal>
+            <Dependent Role="PRODUCTSPARTNERS">
+              <PropertyRef Name="PARTNERS_IdPartner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTSPARTNERS_PRODUCTS">
+          <End Role="PRODUCT_TYPE" Type="Self.PRODUCT_TYPE" Multiplicity="1" />
+          <End Role="PRODUCTSPARTNERS" Type="Self.PRODUCTSPARTNERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_TYPE">
+              <PropertyRef Name="IdProductType" />
+            </Principal>
+            <Dependent Role="PRODUCTSPARTNERS">
+              <PropertyRef Name="PRODUCT_IdProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTSPARTNERS1">
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="1" />
+          <End Role="PARTNERS" Type="Self.PARTNERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="PARTNERS">
+              <PropertyRef Name="PRODUCT1_IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTSPRODUCT_TYPE">
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="1" />
+          <End Role="PRODUCT_TYPE" Type="Self.PRODUCT_TYPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="PRODUCT_TYPE">
+              <PropertyRef Name="PRODUCT_IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTSSITES">
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="1" />
+          <End Role="SITES" Type="Self.SITES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="SITES">
+              <PropertyRef Name="PRODUCT_IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTSTRANSACTIONS_CAPT">
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="1" />
+          <End Role="TRANSACTIONS_CAPT" Type="Self.TRANSACTIONS_CAPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS_CAPT">
+              <PropertyRef Name="PRODUCT_IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SITESAspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="SITES" Type="Self.SITES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SITES">
+              <PropertyRef Name="AspNetUsers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_TYPETRANSACTIONS_CAPT">
+          <End Role="TRANSACTION_TYPE" Type="Self.TRANSACTION_TYPE" Multiplicity="1" />
+          <End Role="TRANSACTIONS_CAPT" Type="Self.TRANSACTIONS_CAPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTION_TYPE">
+              <PropertyRef Name="IdTransactionType" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS_CAPT">
+              <PropertyRef Name="TRANSACTION_TYPE_IdTransactionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KindadsModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORIES" EntityType="Self.CATEGORIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PARTNER_PRODUCT_SETTINGS" EntityType="Self.PARTNER_PRODUCT_SETTINGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PARTNERS" EntityType="Self.PARTNERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PARTNERSPARTNER_SETTINGS" EntityType="Self.PARTNERSPARTNER_SETTINGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT_TYPE" EntityType="Self.PRODUCT_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTSPARTNERS" EntityType="Self.PRODUCTSPARTNERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SITES" EntityType="Self.SITES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAGS" EntityType="Self.TAGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANSACTION_TYPE" EntityType="Self.TRANSACTION_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANSACTIONS_CAPT" EntityType="Self.TRANSACTIONS_CAPT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARTNER_PRODUCT_SETTINGSPRODUCT_TYPE" Association="Self.FK_PARTNER_PRODUCT_SETTINGSPRODUCT_TYPE">
+            <End Role="PRODUCT_TYPE" EntitySet="PRODUCT_TYPE" />
+            <End Role="PARTNER_PRODUCT_SETTINGS" EntitySet="PARTNER_PRODUCT_SETTINGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARTNERSPARTNER_SETTINGS_PARTNER_SETTINGS" Association="Self.FK_PARTNERSPARTNER_SETTINGS_PARTNER_SETTINGS">
+            <End Role="PARTNER_PRODUCT_SETTINGS" EntitySet="PARTNER_PRODUCT_SETTINGS" />
+            <End Role="PARTNERSPARTNER_SETTINGS" EntitySet="PARTNERSPARTNER_SETTINGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARTNERSPARTNER_SETTINGS_PARTNERS" Association="Self.FK_PARTNERSPARTNER_SETTINGS_PARTNERS">
+            <End Role="PARTNERS" EntitySet="PARTNERS" />
+            <End Role="PARTNERSPARTNER_SETTINGS" EntitySet="PARTNERSPARTNER_SETTINGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTSAspNetUser" Association="Self.FK_PRODUCTSAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTSPARTNERS_PARTNERS" Association="Self.FK_PRODUCTSPARTNERS_PARTNERS">
+            <End Role="PARTNERS" EntitySet="PARTNERS" />
+            <End Role="PRODUCTSPARTNERS" EntitySet="PRODUCTSPARTNERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTSPARTNERS_PRODUCTS" Association="Self.FK_PRODUCTSPARTNERS_PRODUCTS">
+            <End Role="PRODUCT_TYPE" EntitySet="PRODUCT_TYPE" />
+            <End Role="PRODUCTSPARTNERS" EntitySet="PRODUCTSPARTNERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTSPARTNERS1" Association="Self.FK_PRODUCTSPARTNERS1">
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+            <End Role="PARTNERS" EntitySet="PARTNERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTSPRODUCT_TYPE" Association="Self.FK_PRODUCTSPRODUCT_TYPE">
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+            <End Role="PRODUCT_TYPE" EntitySet="PRODUCT_TYPE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTSSITES" Association="Self.FK_PRODUCTSSITES">
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+            <End Role="SITES" EntitySet="SITES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTSTRANSACTIONS_CAPT" Association="Self.FK_PRODUCTSTRANSACTIONS_CAPT">
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+            <End Role="TRANSACTIONS_CAPT" EntitySet="TRANSACTIONS_CAPT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SITESAspNetUser" Association="Self.FK_SITESAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="SITES" EntitySet="SITES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_TYPETRANSACTIONS_CAPT" Association="Self.FK_TRANSACTION_TYPETRANSACTIONS_CAPT">
+            <End Role="TRANSACTION_TYPE" EntitySet="TRANSACTION_TYPE" />
+            <End Role="TRANSACTIONS_CAPT" EntitySet="TRANSACTIONS_CAPT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KindadsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Hometown" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TokenAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCTS" Relationship="Self.FK_PRODUCTSAspNetUser" FromRole="AspNetUsers" ToRole="PRODUCTS" />
+          <NavigationProperty Name="SITES" Relationship="Self.FK_SITESAspNetUser" FromRole="AspNetUsers" ToRole="SITES" />
+          <NavigationProperty Name="AspNetRoles" Relationship="KindadsModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="CAMPAIGNs" Relationship="KindadsModel.AspNetUserCAMPAIGN" FromRole="AspNetUser" ToRole="CAMPAIGN" />
+          <Property Name="WalletAddress" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="IdCategory" />
+          </Key>
+          <Property Name="IdCategory" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TAG" Relationship="KindadsModel.TAGCATEGORY" FromRole="CATEGORY" ToRole="TAG" />
+          <NavigationProperty Name="SITEs" Relationship="KindadsModel.CATEGORYSITE" FromRole="CATEGORY" ToRole="SITE" />
+        </EntityType>
+        <EntityType Name="PARTNER_PRODUCT_SETTINGS">
+          <Key>
+            <PropertyRef Name="IdSetting" />
+          </Key>
+          <Property Name="IdSetting" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PRODUCT_TYPE_IdProductType" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="PARTNERS" Relationship="Self.PARTNERSPARTNER_SETTINGS" FromRole="PARTNER_PRODUCT_SETTINGS" ToRole="PARTNERS" />
+          <NavigationProperty Name="PRODUCT_TYPE" Relationship="KindadsModel.PRODUCT_TYPEPARTNER_PRODUCT_SETTINGS" FromRole="PARTNER_PRODUCT_SETTINGS" ToRole="PRODUCT_TYPE" />
+        </EntityType>
+        <EntityType Name="PARTNER">
+          <Key>
+            <PropertyRef Name="IdPartner" />
+          </Key>
+          <Property Name="IdPartner" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PARTNER_PRODUCT_SETTINGS" Relationship="Self.PARTNERSPARTNER_SETTINGS" FromRole="PARTNERS" ToRole="PARTNER_PRODUCT_SETTINGS" />
+          <NavigationProperty Name="PRODUCT_TYPE" Relationship="Self.PRODUCTSPARTNERS" FromRole="PARTNERS" ToRole="PRODUCT_TYPE" />
+          <NavigationProperty Name="PRODUCTs" Relationship="KindadsModel.PARTNERPRODUCT" FromRole="PARTNER" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="PRODUCT_TYPE">
+          <Key>
+            <PropertyRef Name="IdProductType" />
+          </Key>
+          <Property Name="IdProductType" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PARTNERS" Relationship="Self.PRODUCTSPARTNERS" FromRole="PRODUCT_TYPE" ToRole="PARTNERS" />
+          <NavigationProperty Name="PRODUCTs" Relationship="KindadsModel.PRODUCT_TYPEPRODUCT" FromRole="PRODUCT_TYPE" ToRole="PRODUCT" />
+          <NavigationProperty Name="PARTNER_PRODUCT_SETTINGS" Relationship="KindadsModel.PRODUCT_TYPEPARTNER_PRODUCT_SETTINGS" FromRole="PRODUCT_TYPE" ToRole="PARTNER_PRODUCT_SETTINGS" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="IdProduct" />
+          </Key>
+          <Property Name="IdProduct" Type="Guid" Nullable="false" />
+          <Property Name="StartTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EndTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AspNetUsers_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_PRODUCTSAspNetUser" FromRole="PRODUCTS" ToRole="AspNetUsers" />
+          <NavigationProperty Name="SITE" Relationship="KindadsModel.SITEPRODUCT" FromRole="PRODUCT" ToRole="SITE" />
+          <NavigationProperty Name="PRODUCT_TYPE" Relationship="KindadsModel.PRODUCT_TYPEPRODUCT" FromRole="PRODUCT" ToRole="PRODUCT_TYPE" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Image" Type="String" Nullable="false" />
+          <Property Name="ShortDescription" Type="String" Nullable="false" />
+          <Property Name="FullDescription" Type="String" Nullable="false" />
+          <NavigationProperty Name="PARTNER" Relationship="KindadsModel.PARTNERPRODUCT" FromRole="PRODUCT" ToRole="PARTNER" />
+          <NavigationProperty Name="CAMPAIGNs" Relationship="KindadsModel.PRODUCTCAMPAIGN" FromRole="PRODUCT" ToRole="CAMPAIGN" />
+        </EntityType>
+        <EntityType Name="SITE">
+          <Key>
+            <PropertyRef Name="IdSite" />
+          </Key>
+          <Property Name="IdSite" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AspNetUsers_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_SITESAspNetUser" FromRole="SITES" ToRole="AspNetUsers" />
+          <NavigationProperty Name="PRODUCTs" Relationship="KindadsModel.SITEPRODUCT" FromRole="SITE" ToRole="PRODUCT" />
+          <NavigationProperty Name="CATEGORY" Relationship="KindadsModel.CATEGORYSITE" FromRole="SITE" ToRole="CATEGORY" />
+        </EntityType>
+        <EntityType Name="TAG">
+          <Key>
+            <PropertyRef Name="IdTag" />
+          </Key>
+          <Property Name="IdTag" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CATEGORies" Relationship="KindadsModel.TAGCATEGORY" FromRole="TAG" ToRole="CATEGORY" />
+        </EntityType>
+        <EntityType Name="TRANSACTION_TYPE">
+          <Key>
+            <PropertyRef Name="IdTransactionType" />
+          </Key>
+          <Property Name="IdTransactionType" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TRANSACTIONS_CAPT" Relationship="Self.FK_TRANSACTION_TYPETRANSACTIONS_CAPT" FromRole="TRANSACTION_TYPE" ToRole="TRANSACTIONS_CAPT" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONS_CAPT">
+          <Key>
+            <PropertyRef Name="IdTransaction" />
+          </Key>
+          <Property Name="IdTransaction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HashFrom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HashTo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Amount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BlockDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegisterDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HashTransaction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRANSACTION_TYPE_IdTransactionType" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="TRANSACTION_TYPE" Relationship="Self.FK_TRANSACTION_TYPETRANSACTIONS_CAPT" FromRole="TRANSACTIONS_CAPT" ToRole="TRANSACTION_TYPE" />
+          <NavigationProperty Name="CAMPAIGN" Relationship="KindadsModel.CAMPAIGNTRANSACTIONS_CAPT" FromRole="TRANSACTIONS_CAPT" ToRole="CAMPAIGN" />
+        </EntityType>
+        <Association Name="FK_PRODUCTSAspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="AspNetUsers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SITESAspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="SITES" Type="Self.SITE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SITES">
+              <PropertyRef Name="AspNetUsers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANSACTION_TYPETRANSACTIONS_CAPT">
+          <End Role="TRANSACTION_TYPE" Type="Self.TRANSACTION_TYPE" Multiplicity="1" />
+          <End Role="TRANSACTIONS_CAPT" Type="Self.TRANSACTIONS_CAPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTION_TYPE">
+              <PropertyRef Name="IdTransactionType" />
+            </Principal>
+            <Dependent Role="TRANSACTIONS_CAPT">
+              <PropertyRef Name="TRANSACTION_TYPE_IdTransactionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PARTNERSPARTNER_SETTINGS">
+          <End Role="PARTNER_PRODUCT_SETTINGS" Type="Self.PARTNER_PRODUCT_SETTINGS" Multiplicity="*" />
+          <End Role="PARTNERS" Type="Self.PARTNER" Multiplicity="*" />
+        </Association>
+        <Association Name="PRODUCTSPARTNERS">
+          <End Role="PARTNERS" Type="Self.PARTNER" Multiplicity="*" />
+          <End Role="PRODUCT_TYPE" Type="Self.PRODUCT_TYPE" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="KindadsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="CATEGORIES" EntityType="KindadsModel.CATEGORY" />
+          <EntitySet Name="PARTNER_PRODUCT_SETTINGS" EntityType="Self.PARTNER_PRODUCT_SETTINGS" />
+          <EntitySet Name="PARTNERS" EntityType="Self.PARTNER" />
+          <EntitySet Name="PRODUCT_TYPE" EntityType="Self.PRODUCT_TYPE" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCT" />
+          <EntitySet Name="SITES" EntityType="Self.SITE" />
+          <EntitySet Name="TAGS" EntityType="Self.TAG" />
+          <EntitySet Name="TRANSACTION_TYPE" EntityType="Self.TRANSACTION_TYPE" />
+          <EntitySet Name="TRANSACTIONS_CAPT" EntityType="Self.TRANSACTIONS_CAPT" />
+          <AssociationSet Name="FK_PRODUCTSAspNetUser" Association="Self.FK_PRODUCTSAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SITESAspNetUser" Association="Self.FK_SITESAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="SITES" EntitySet="SITES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANSACTION_TYPETRANSACTIONS_CAPT" Association="Self.FK_TRANSACTION_TYPETRANSACTIONS_CAPT">
+            <End Role="TRANSACTION_TYPE" EntitySet="TRANSACTION_TYPE" />
+            <End Role="TRANSACTIONS_CAPT" EntitySet="TRANSACTIONS_CAPT" />
+          </AssociationSet>
+          <AssociationSet Name="PARTNERSPARTNER_SETTINGS" Association="Self.PARTNERSPARTNER_SETTINGS">
+            <End Role="PARTNER_PRODUCT_SETTINGS" EntitySet="PARTNER_PRODUCT_SETTINGS" />
+            <End Role="PARTNERS" EntitySet="PARTNERS" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCTSPARTNERS" Association="Self.PRODUCTSPARTNERS">
+            <End Role="PARTNERS" EntitySet="PARTNERS" />
+            <End Role="PRODUCT_TYPE" EntitySet="PRODUCT_TYPE" />
+          </AssociationSet>
+          <EntitySet Name="AspNetRoles" EntityType="KindadsModel.AspNetRole" />
+          <AssociationSet Name="AspNetUserRoles" Association="KindadsModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="SITEPRODUCT" Association="KindadsModel.SITEPRODUCT">
+            <End Role="SITE" EntitySet="SITES" />
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCT_TYPEPRODUCT" Association="KindadsModel.PRODUCT_TYPEPRODUCT">
+            <End Role="PRODUCT_TYPE" EntitySet="PRODUCT_TYPE" />
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCT_TYPEPARTNER_PRODUCT_SETTINGS" Association="KindadsModel.PRODUCT_TYPEPARTNER_PRODUCT_SETTINGS">
+            <End Role="PRODUCT_TYPE" EntitySet="PRODUCT_TYPE" />
+            <End Role="PARTNER_PRODUCT_SETTINGS" EntitySet="PARTNER_PRODUCT_SETTINGS" />
+          </AssociationSet>
+          <EntitySet Name="CAMPAIGNs1" EntityType="KindadsModel.CAMPAIGN" />
+          <AssociationSet Name="AspNetUserCAMPAIGN" Association="KindadsModel.AspNetUserCAMPAIGN">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="CAMPAIGN" EntitySet="CAMPAIGNs1" />
+          </AssociationSet>
+          <AssociationSet Name="PARTNERPRODUCT" Association="KindadsModel.PARTNERPRODUCT">
+            <End Role="PARTNER" EntitySet="PARTNERS" />
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCTCAMPAIGN" Association="KindadsModel.PRODUCTCAMPAIGN">
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+            <End Role="CAMPAIGN" EntitySet="CAMPAIGNs1" />
+          </AssociationSet>
+          <AssociationSet Name="CAMPAIGNTRANSACTIONS_CAPT" Association="KindadsModel.CAMPAIGNTRANSACTIONS_CAPT">
+            <End Role="CAMPAIGN" EntitySet="CAMPAIGNs1" />
+            <End Role="TRANSACTIONS_CAPT" EntitySet="TRANSACTIONS_CAPT" />
+          </AssociationSet>
+          <AssociationSet Name="TAGCATEGORY" Association="KindadsModel.TAGCATEGORY">
+            <End Role="TAG" EntitySet="TAGS" />
+            <End Role="CATEGORY" EntitySet="CATEGORIES" />
+          </AssociationSet>
+          <AssociationSet Name="CATEGORYSITE" Association="KindadsModel.CATEGORYSITE">
+            <End Role="CATEGORY" EntitySet="CATEGORIES" />
+            <End Role="SITE" EntitySet="SITES" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="KindadsModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="AspNetUserRoles">
+          <End Type="KindadsModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="KindadsModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <Association Name="SITEPRODUCT">
+          <End Type="KindadsModel.SITE" Role="SITE" Multiplicity="1" />
+          <End Type="KindadsModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+        </Association>
+        <Association Name="PRODUCT_TYPEPRODUCT">
+          <End Type="KindadsModel.PRODUCT_TYPE" Role="PRODUCT_TYPE" Multiplicity="1" />
+          <End Type="KindadsModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+        </Association>
+        <Association Name="PRODUCT_TYPEPARTNER_PRODUCT_SETTINGS">
+          <End Type="KindadsModel.PRODUCT_TYPE" Role="PRODUCT_TYPE" Multiplicity="1" />
+          <End Type="KindadsModel.PARTNER_PRODUCT_SETTINGS" Role="PARTNER_PRODUCT_SETTINGS" Multiplicity="*" />
+        </Association>
+        <EntityType Name="CAMPAIGN">
+          <Key>
+            <PropertyRef Name="IdCampaign" />
+          </Key>
+          <Property Name="IdCampaign" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="KindadsModel.AspNetUserCAMPAIGN" FromRole="CAMPAIGN" ToRole="AspNetUser" />
+          <NavigationProperty Name="PRODUCT" Relationship="KindadsModel.PRODUCTCAMPAIGN" FromRole="CAMPAIGN" ToRole="PRODUCT" />
+          <Property Name="RegisterDate" Type="DateTime" Nullable="false" />
+          <Property Name="AdText" Type="String" Nullable="false" />
+          <Property Name="AdUTM" Type="String" Nullable="false" />
+          <Property Name="AdMedium" Type="String" Nullable="false" />
+          <Property Name="AdURL" Type="String" Nullable="false" />
+          <Property Name="AdImage" Type="String" Nullable="false" />
+          <NavigationProperty Name="TRANSACTIONS_CAPT" Relationship="KindadsModel.CAMPAIGNTRANSACTIONS_CAPT" FromRole="CAMPAIGN" ToRole="TRANSACTIONS_CAPT" />
+        </EntityType>
+        <Association Name="AspNetUserCAMPAIGN">
+          <End Type="KindadsModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="KindadsModel.CAMPAIGN" Role="CAMPAIGN" Multiplicity="*" />
+        </Association>
+        <Association Name="PARTNERPRODUCT">
+          <End Type="KindadsModel.PARTNER" Role="PARTNER" Multiplicity="1" />
+          <End Type="KindadsModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+        </Association>
+        <Association Name="PRODUCTCAMPAIGN">
+          <End Type="KindadsModel.PRODUCT" Role="PRODUCT" Multiplicity="1" />
+          <End Type="KindadsModel.CAMPAIGN" Role="CAMPAIGN" Multiplicity="*" />
+        </Association>
+        <Association Name="CAMPAIGNTRANSACTIONS_CAPT">
+          <End Type="KindadsModel.CAMPAIGN" Role="CAMPAIGN" Multiplicity="1" />
+          <End Type="KindadsModel.TRANSACTIONS_CAPT" Role="TRANSACTIONS_CAPT" Multiplicity="*" />
+        </Association>
+        <Association Name="TAGCATEGORY">
+          <End Type="KindadsModel.TAG" Role="TAG" Multiplicity="*" />
+          <End Type="KindadsModel.CATEGORY" Role="CATEGORY" Multiplicity="*" />
+        </Association>
+        <Association Name="CATEGORYSITE">
+          <End Type="KindadsModel.CATEGORY" Role="CATEGORY" Multiplicity="*" />
+          <End Type="KindadsModel.SITE" Role="SITE" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KindadsModelStoreContainer" CdmEntityContainer="KindadsEntities">
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="KindadsModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Hometown" ColumnName="Hometown" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TokenAddress" ColumnName="TokenAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIES">
+            <EntityTypeMapping TypeName="KindadsModel.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORIES">
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PARTNER_PRODUCT_SETTINGS">
+            <EntityTypeMapping TypeName="KindadsModel.PARTNER_PRODUCT_SETTINGS">
+              <MappingFragment StoreEntitySet="PARTNER_PRODUCT_SETTINGS">
+                <ScalarProperty Name="IdSetting" ColumnName="IdSetting" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="PRODUCT_TYPE_IdProductType" ColumnName="PRODUCT_TYPE_IdProductType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PARTNERS">
+            <EntityTypeMapping TypeName="KindadsModel.PARTNER">
+              <MappingFragment StoreEntitySet="PARTNERS">
+                <ScalarProperty Name="IdPartner" ColumnName="IdPartner" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT_TYPE">
+            <EntityTypeMapping TypeName="KindadsModel.PRODUCT_TYPE">
+              <MappingFragment StoreEntitySet="PRODUCT_TYPE">
+                <ScalarProperty Name="IdProductType" ColumnName="IdProductType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTS">
+            <EntityTypeMapping TypeName="KindadsModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCTS">
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="AspNetUsers_Id" ColumnName="AspNetUsers_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SITES">
+            <EntityTypeMapping TypeName="KindadsModel.SITE">
+              <MappingFragment StoreEntitySet="SITES">
+                <ScalarProperty Name="IdSite" ColumnName="IdSite" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="AspNetUsers_Id" ColumnName="AspNetUsers_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAGS">
+            <EntityTypeMapping TypeName="KindadsModel.TAG">
+              <MappingFragment StoreEntitySet="TAGS">
+                <ScalarProperty Name="IdTag" ColumnName="IdTag" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTION_TYPE">
+            <EntityTypeMapping TypeName="KindadsModel.TRANSACTION_TYPE">
+              <MappingFragment StoreEntitySet="TRANSACTION_TYPE">
+                <ScalarProperty Name="IdTransactionType" ColumnName="IdTransactionType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTIONS_CAPT">
+            <EntityTypeMapping TypeName="KindadsModel.TRANSACTIONS_CAPT">
+              <MappingFragment StoreEntitySet="TRANSACTIONS_CAPT">
+                <ScalarProperty Name="IdTransaction" ColumnName="IdTransaction" />
+                <ScalarProperty Name="HashFrom" ColumnName="HashFrom" />
+                <ScalarProperty Name="HashTo" ColumnName="HashTo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="BlockDate" ColumnName="BlockDate" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="HashTransaction" ColumnName="HashTransaction" />
+                <ScalarProperty Name="Gas" ColumnName="Gas" />
+                <ScalarProperty Name="TRANSACTION_TYPE_IdTransactionType" ColumnName="TRANSACTION_TYPE_IdTransactionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PARTNERSPARTNER_SETTINGS" TypeName="KindadsModel.PARTNERSPARTNER_SETTINGS" StoreEntitySet="PARTNERSPARTNER_SETTINGS">
+            <EndProperty Name="PARTNER_PRODUCT_SETTINGS">
+              <ScalarProperty Name="IdSetting" ColumnName="PARTNER_SETTINGS_IdSetting" />
+            </EndProperty>
+            <EndProperty Name="PARTNERS">
+              <ScalarProperty Name="IdPartner" ColumnName="PARTNER_IdPartner" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PRODUCTSPARTNERS" TypeName="KindadsModel.PRODUCTSPARTNERS" StoreEntitySet="PRODUCTSPARTNERS">
+            <EndProperty Name="PARTNERS">
+              <ScalarProperty Name="IdPartner" ColumnName="PARTNERS_IdPartner" />
+            </EndProperty>
+            <EndProperty Name="PRODUCT_TYPE">
+              <ScalarProperty Name="IdProductType" ColumnName="PRODUCT_IdProductType" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="KindadsModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="KindadsModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

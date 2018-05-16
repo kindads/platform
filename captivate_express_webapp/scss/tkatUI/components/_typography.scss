@@ -1,0 +1,52 @@
+/* Typography
+================================================== */
+  // Headings
+  h1, h2, h3, h4, h5 {
+    font-size-adjust: 0.5;
+    text-rendering: optimizeLegibility;
+    margin: 0 0 8px 0;
+    font-family: $openSansRegular;
+  }
+  h1 {
+    font-size: 2em;
+    line-height: 2.25em;
+  }
+  h2 {
+    font-size: 1.625em;
+    line-height: 1.875em;
+    font-family: $openSansLight;
+  }
+  h3 {
+    font-size: 1.25em;
+    line-height: 1.365em;
+
+  }
+  h4 {
+    font-size: 1.125em;
+    line-height: 1.15em;
+  }
+
+  h1, h2, h3, h4 {
+    a {
+      font-weight:inherit;
+    }
+  }
+
+  h5 {
+    font-family: $openSansRegular;
+  }
+  a {
+    color: $rich-black;
+    text-decoration: none;
+    &:visited {
+      text-decoration: none;
+    }
+  }
+  blockquote {
+    font-size: 1.5em;
+    line-height: 1.458em;
+    @include breakpoint($tablet) {
+      font-size: 1.125em;
+      font-size: 1.25em;
+    }
+  }

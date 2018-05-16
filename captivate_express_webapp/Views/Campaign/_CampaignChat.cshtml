@@ -1,0 +1,22 @@
+@model List<captivate_express_webapp.Models.CAMPAIGN_CHAT>
+@{
+  var idUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
+
+
+  if (Model != null && Model.Any())
+  {
+    <div id="target" style="overflow-x: auto; height: 250px;">
+      @foreach (var message in Model)
+      {
+        bool isEqualUserCreator = idUser.Equals(message.AspNetUser_IdCreator.ToString());
+        string cssChat = isEqualUserCreator ? "pub-person" : "ad-person";
+
+        <div class="@cssChat clearfix">
+          <span class="text">@message.CampaignChatMessage</span>
+          <span class="time">@message.RegisterDate</span>
+        </div>
+      }
+    </div>
+
+  }
+}

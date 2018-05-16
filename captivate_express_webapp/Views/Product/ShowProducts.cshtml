@@ -1,0 +1,100 @@
+﻿@model Captivate.Comun.Models.ViewModel.ProductViewModel
+@{
+  ViewBag.Title = "ShowProducts";
+  Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+  <div class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-12 main-bar clearfix">
+        <h1 class="pull-left title">Products</h1>
+        <div class="pull-right">
+          @Html.ActionLink("Create Product", "CreateProduct", "Product", null, new { @class = "btn btn-primary" })
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white-block">
+          <ul class="nav nav-tabs flexbox">
+            <li class="active">
+              <a href="#tab01" data-toggle="tab">Your Products</a>
+            </li>
+          </ul>
+          <div class="tab-content clearfix">
+            <div id="tab01" class="tab-pane active">
+              <div id="pnlGridProducts">
+                @{Html.RenderAction("GetProducts", "Product");}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Modal de validacion-->
+    <div class="row">
+      @{
+      Html.RenderPartial("~/Views/Product/PartialViews/DeleteValidation.cshtml");
+      }
+    </div>
+  </div>
+</div>
+
+@Scripts.Render("~/bundles/customjs")
+
+<script>
+  $(function () {
+    $('.link-site').addClass('active');
+    $('.datagrid thead th:contains("Delete")').addClass('icon-delete');
+  });
+</script>
+<script type="text/javascript">
+  
+
+  $(document).ready(function () {
+
+    //Obtenemos el valor de
+
+    var sucessfulDelete = '@ViewBag.SuccessfulDelete'
+
+    console.log('Se pudo eliminar')
+    console.log(sucessfulDelete);
+
+    if (sucessfulDelete == "SI") {
+      // Mostramos el modal con la validacion
+      $("#delete_validation_message").text("The product was successfully deleted");
+      $('#deleteValidationModal').modal('show');
+    }
+    if (sucessfulDelete == "NO") {
+      // Mostramos el modal con la validacion
+      $("#delete_validation_message").text("The product can not be deleted because it is associated with some campaigns");
+      $('#deleteValidationModal').modal('show');
+    }
+
+
+    $("#pnlGridProducts").on("click", "thead th a, tfoot a", function (e) {
+        e.preventDefault();
+        var param = $(this).attr('href').split('?')[1];
+        var url = '@Url.Action("GetProducts", "Product")' + '?' + param;
+        $.ajax({
+            url: url,
+            type:'GET',
+            data: '',
+            dataType: 'html',
+            success: function (data) {
+              $('#pnlGridProducts').html(data);
+            },
+            error: function () {
+                alert('Error!');
+            }
+        });
+    });
+});
+</script>
+
+
+

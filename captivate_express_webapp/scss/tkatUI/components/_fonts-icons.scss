@@ -1,0 +1,64 @@
+/* Fonts
+================================================== */
+  // Vars
+  [data-icon]:before {
+    font-family: "kindads" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  [class^="kas-"]:before,
+  [class*=" kas-"]:before {
+    font-family: "kindads" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    font-size: 16px;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  // Menu
+  .#{$kas-prefix}name:before {
+    content: "\e000";
+  }
+  .#{$kas-prefix}email:before {
+    content: "\e001";
+  }
+  .#{$kas-prefix}phone:before {
+    content: "\e002";
+  }
+  .#{$kas-prefix}password:before {
+    content: "\e003";
+  }
+  .#{$kas-prefix}workspace:before {
+    content: "\e004";
+  }
+  .#{$kas-prefix}revisions:before {
+    content: "\e005";
+  }
+  .#{$kas-prefix}wallet:before {
+    content: "\e006";
+  }
+  .#{$kas-prefix}dashboards:before {
+    content: "\e007";
+  }
+  .#{$kas-prefix}sites:before {
+    content: "\e008";
+  }
+  .#{$kas-prefix}campaign:before {
+    content: "\e009";
+  }
+  .#{$kas-prefix}profile:before {
+    content: "\e00A";
+  }

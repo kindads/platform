@@ -1,0 +1,170 @@
+extends ./templates/defaultBase.pug
+
+
+block header
+  include ./templates/header.pug
+
+
+block headTitle
+  title Configure Site | Kind Ads System
+
+
+block append head
+  meta(name='theme-color' content='#29B5D4')
+  meta(name='msapplication-navbutton-color' content='#29B5D4')
+  meta(name='apple-mobile-web-app-capable' content='yes')
+  meta(name='apple-mobile-web-app-status-bar-style' content='black-translucent')
+  link(type='text/css' rel='stylesheet' href='../Content/vendor/bootstrap-select.min.css')
+  //-link(type='text/css' rel='stylesheet' href='../Content/vendor/rangeslider.css')
+
+
+block bodyWrapper
+  .main-content.admin
+    .flexbox.my-content
+      section.tab-nav
+        .btn-block
+          a.btn.btn-primary.disabled(href='') Create an AdSpace
+        ul.flexbox
+          li
+            a.active(href='start.html')
+              i.fif.fif-home
+              span Dashboard
+          li
+            a(href='my-ads.html')
+              i.fif.fif-ads
+              span My ads
+          li
+            a(href='my-sites.html')
+              i.fif.fif-sites
+              span My sites
+
+
+      section.form
+        .container-fluid
+          .row
+            .col-sm-12.main-bar
+              h1.title Configure your site
+
+          .row
+            .col-md-12
+              .white-block
+                .heading
+                  h2 Site Setup
+                .body-content
+                  div.form-data.form-horizontal
+                    form
+                      fieldset
+                        .row
+                          .col-md-12
+                            .form-group
+                              label.col-md-3.control-label(for='mysite') Site Name
+                              .col-md-9.form-inline
+                                input.form-control(type='text' id='mysite' value='' placeholder='My Website')
+                            .form-group
+                              label.col-md-3.control-label(for='myurl') Site Url
+                              .col-md-9.form-inline
+                                input.form-control(type='text' id='myurl' value='' placeholder='https://site.com')
+                                i.icon
+                            .form-group
+                              label.col-md-3.control-label(for='categories') Category of Site
+                              .col-md-9.form-inline
+                                select.form-control(id='categories')
+                                  option Pets and Dogs
+                                  option Puppies
+                                  option Blogging
+                                  option Personal Business
+                                  option Technology
+                                i.icon
+                            .form-group
+                              label.col-md-3.control-label(for='tags') Tags
+                              .col-md-9.form-inline
+                                select.form-control(id='categories')
+                                  option Pets, Dogs, Family
+                                  option Puppies, Golden Retiever
+                                  option Dog Health, Golden; Dog Health
+                        .row
+                          .col-md-12
+                            article.accordion(id='accordion' role='tablist' aria-multiselectable='true')
+                              .accordion-heading.clearfix(id='headingOne' data-toggle='collapse' data-parent='#accordion' href='#collapseOne' role='tab'  aria-expanded='true' aria-controls='collapseOne')
+                                h3 Configure Product
+
+                                span.pull-right.status
+                                  i.fif.fif-checked
+
+                                span.pull-right.caret
+                                  i.caret(aria-hidden='true')
+
+                              .accordion-body.collapse.in(id='collapseOne' role='tabpanel' aria-labelledby='headingOne')
+                                .form-group
+                                  label.col-md-3.control-label(for='mycategories') Add Product
+                                  .col-md-9.form-inline
+                                    select.form-control(id='mycategories')
+                                      option Push Notications
+                                      option SMS
+                                .form-group
+                                  label.col-md-3.control-label(for='myprovider') Provider
+                                    //-label.col-md-12.control-label.text-align-left(for='myprovider')
+                                      //-small Choose a provider
+                                  .col-md-9.form-inline
+                                    select.form-control.selectpicker.show-tick(id='myprovider' data-header='Choose a provider')
+                                      option Subscribers.com
+                                      option Pusher
+                                      i.icon
+                                .form-group
+                                  label.col-md-3.control-label() Set Price
+                                  .col-md-8.form-inline
+                                    div.form-slider
+                                      input.rangeslider(type='range' min='1' max='5' step='1' data-rangeslider)
+                                      span
+                                      output
+                                      span CAPX
+                                .form-group
+                                  label.col-md-3.control-label() Upload an image
+                                  .col-md-9.form-inline
+                                    .btn.btn-default.file
+                                      | Add photo
+                                      input(type='file' name='file')
+
+                        .row
+                          .col-md-12
+                            .btn-group
+                              a.btn.btn-primary.btn-lg(tabindex='-1' data-toggle='modal' data-target='#siteSucessModal') Finish
+
+          include ./partials/site-sucess.pug
+
+block append appScripts
+  //-script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js')
+  script(src='../Scripts/vendor/bootstrap-select/bootstrap-select.min.js')
+  script(src='../Scripts/vendor/rangeSlider/rangeslider.min.js')
+  //-script(src='../Scripts/vendor/jqueryTag/jquery.tag-editor.min.js')
+  script.
+    $(function() {
+      var $document = $(document);
+      var selector = '[data-rangeslider]';
+      var $element = $(selector);
+
+      // For ie8 support
+      var textContent = ('textContent' in document) ? 'textContent' : 'innerText';
+
+      // Example functionality to demonstrate a value feedback
+      function valueOutput(element) {
+          var value = element.value;
+          var output = element.parentNode.getElementsByTagName('output')[0] || element.parentNode.parentNode.getElementsByTagName('output')[0];
+          output[textContent] = value;
+      }
+      $document.on('input', 'input[type="range"], ' + selector, function(e) {
+          valueOutput(e.target);
+      });
+
+
+      // Basic rangeslider initialization
+      $element.rangeslider({
+        // Deactivate the feature detection
+        polyfill: true,
+
+        // Callback function
+        onInit: function() {
+          valueOutput(this.$element[0]);
+        },
+      });
+    });

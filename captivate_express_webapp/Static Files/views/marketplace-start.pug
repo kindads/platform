@@ -1,0 +1,211 @@
+extends ./templates/defaultBase.pug
+
+
+block header
+  include ./templates/headerMarketplace.pug
+
+
+block headTitle
+  title Welcome to Marketplace | Kind Ads System
+
+
+block append head
+  meta(name='theme-color' content='#29B5D4')
+  meta(name='msapplication-navbutton-color' content='#29B5D4')
+  meta(name='apple-mobile-web-app-capable' content='yes')
+  meta(name='apple-mobile-web-app-status-bar-style' content='black-translucent')
+  link(type='text/css' rel='stylesheet' href='../Content/vendor/bootstrap-select.min.css')
+  //-link(type='text/css' rel='stylesheet' href='../Content/vendor/rangeslider.css')
+
+
+block bodyWrapper
+  .main-content.admin
+    .flexbox.my-content
+      //-section.tab-nav
+        .btn-block
+          a.btn.btn-primary.disabled(href='') Create an AdSpace
+        ul.flexbox
+          li
+            a.active(href='start.html')
+              i.fif.fif-home
+              span Dashboard
+          li
+            a(href='my-ads.html')
+              i.fif.fif-ads
+              span My ads
+          li
+            a(href='my-sites.html')
+              i.fif.fif-sites
+              span My sites
+
+
+      section.form.form-extended
+        .container-fluid
+          .row
+            .col-sm-12.main-bar
+              span.legend * All prices are in KIND
+
+          .row
+            .col-sm-12.main-bar
+              .row
+                .col-sm-4
+                  button.btn-filter(data-toggle='collapse' data-target='#results-filter') Filter
+                    //-i.kas.kas-filter
+                  p.title Search results (12)
+
+                .col-sm-3
+                  select.form-control
+                    option Push Notifactions
+                    option SMS
+
+
+
+          .row
+            .col-md-12
+              div.filter-panel.collapse.clearfix(id='results-filter' class='collapse' aria-expanded='false')
+                h3 hola
+
+
+              .results-panel.clearfix
+                .col-sm-6.col-md-4
+                  .card
+                    img.img-responsive.card-img(src='../Img/Product/Photo.png')
+                    .card-body.clearfix
+                      h3.card-title SiteName
+                      .cost.clearfix
+                        div.label Price
+                        div.price 4
+                        div.currency KIND
+                      .btn-group
+                        a.btn.btn-secondary(tabindex='-1') Add to Cart
+                        //-a.card-link View details
+
+                .col-sm-6.col-md-4
+                  .card
+                    img.img-responsive.card-img(src='../Img/Product/Photo.png')
+                    .card-body.clearfix
+                      h3.card-title SiteName
+                      .cost.clearfix
+                        div.label Price
+                        div.price 4
+                        div.currency KIND
+                      .btn-group
+                        a.btn.btn-secondary(tabindex='-1') Add to Cart
+                        //-a.card-link View details
+
+                .col-sm-6.col-md-4
+                  .card
+                    img.img-responsive.card-img(src='../Img/Product/Photo.png')
+                    .card-body.clearfix
+                      h3.card-title SiteName
+                      .cost.clearfix
+                        div.label Price
+                        div.price 4.0000000
+                        div.currency KIND
+                      .btn-group
+                        a.btn.btn-secondary(tabindex='-1') Add to Cart
+                        //-a.card-link View details
+
+                .col-sm-6.col-md-4
+                  .card
+                    img.img-responsive.card-img(src='../Img/Product/Photo.png')
+                    .card-body.clearfix
+                      h3.card-title SiteName
+                      .cost.clearfix
+                        div.label Price
+                        div.price 4
+                        div.currency KIND
+                      .btn-group
+                        a.btn.btn-secondary(tabindex='-1') Add to Cart
+                        //-a.card-link View details
+
+
+
+        //-.container-fluid
+          .row
+            .col-sm-12.main-bar
+              h1.title Configure your site
+
+          .row
+            .col-md-12
+              .white-block
+                .heading
+                  h2 Site Setup
+                .body-content
+                  div.form-data.form-horizontal
+                    form
+                      fieldset
+                        .row
+                          .col-md-12
+                            .form-group
+                              label.col-md-3.control-label(for='mysite') Site Name
+                              .col-md-9.form-inline
+                                input.form-control(type='text' id='mysite' value='' placeholder='My Website')
+                            .form-group
+                              label.col-md-3.control-label(for='myurl') Site Url
+                              .col-md-9.form-inline
+                                input.form-control(type='text' id='myurl' value='' placeholder='https://site.com')
+                                i.icon
+                            .form-group
+                              label.col-md-3.control-label(for='categories') Category of Site
+                              .col-md-9.form-inline
+                                select.form-control(id='categories')
+                                  option Pets and Dogs
+                                  option Puppies
+                                  option Blogging
+                                  option Personal Business
+                                  option Technology
+                                i.icon
+                            .form-group
+                              label.col-md-3.control-label(for='phone') Tags
+                              .col-md-9.form-inline
+                                textarea.form-control(id='demo1')
+                                i.icon
+                        .row
+                          .col-md-12
+                            article.accordion(id='accordion' role='tablist' aria-multiselectable='true')
+                              .accordion-heading.clearfix(id='headingOne' data-toggle='collapse' data-parent='#accordion' href='#collapseOne' role='tab'  aria-expanded='true' aria-controls='collapseOne')
+                                h3 Configure Product
+
+                                span.pull-right.status
+                                  i.fif.fif-checked
+
+                                span.pull-right.caret
+                                  i.caret(aria-hidden='true')
+
+                              .accordion-body.collapse.in(id='collapseOne' role='tabpanel' aria-labelledby='headingOne')
+                                .form-group
+                                  label.col-md-3.control-label(for='mycategories') Add Product
+                                  .col-md-9.form-inline
+                                    select.form-control(id='mycategories')
+                                      option Push Notications
+                                      option SMS
+                                .form-group
+                                  div.col-md-3
+                                  .col-md-9.form-inline
+                                    label.col-md-12.control-label.text-align-left(for='myprovider')
+                                      //-small Choose a provider
+                                    select.form-control.selectpicker.show-tick(id='myprovider' data-header='Choose a provider')
+                                      option Subscribers.com
+                                      option Pusher
+                                    i.icon
+                                .form-group
+                                  label.col-md-3.control-label() Set Price
+                                  .col-md-8.form-inline
+                                    div.form-slider
+                                      input.rangeslider(type='range' min='1' max='5' step='1' data-rangeslider)
+                                      span
+                                      output
+                                      span CAPX
+                        .row
+                          .col-md-12
+                            .btn-group
+                              a.btn.btn-primary.btn-lg(tabindex='-1' data-toggle='modal' data-target='#siteSucessModal') Finish
+
+          include ./partials/site-sucess.pug
+
+block append appScripts
+  //-script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js')
+  script(src='../Scripts/vendor/bootstrap-select/bootstrap-select.min.js')
+  script(src='../Scripts/vendor/rangeSlider/rangeslider.min.js')
+  //-script(src='../Scripts/vendor/jqueryTag/jquery.tag-editor.min.js')

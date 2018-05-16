@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<correo>
+  <advertiser>\Email_templates\welcomeAdvertiser.html</advertiser>
+  <publisher>\Email_templates\welcomePublisher.html</publisher>
+  <createAccount>\Email_templates\confirmEmail.html</createAccount>
+  <recoverPassword>\Email_templates\resetPassword.html</recoverPassword>
+  <footer></footer>
+</correo>

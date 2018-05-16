@@ -1,0 +1,110 @@
+@{
+  ViewBag.Title = "Home";
+}
+
+
+
+@using (Html.BeginForm())
+{
+
+  <br />
+  <div>
+    @Html.Label("Select County")
+  </div>
+  <div>
+    @if (ViewData.ContainsKey("Country"))
+    {
+      @Html.DropDownList("Country", ViewData["country"] as List<SelectListItem>)
+    }
+  </div>
+  <br />
+  <div>
+    @Html.Label("Select State")
+  </div>
+  <div>
+    @Html.DropDownList("State", new SelectList(string.Empty, "Value", "Text"), "Please select a State")
+  </div>
+  <br />
+  <div>
+    @Html.Label("Select City")
+  </div>
+  <div>
+    @Html.DropDownList("city", new SelectList(string.Empty, "Value", "Text"), "Please select a city")
+  </div>
+  <br />
+  <input id="Submit1" type="submit" value="submit" />
+
+  
+}
+
+  <div class="col-sm-12 text-right">
+    @Ajax.ActionLink("Search", "MostrarResultado", "Test", null,
+                                               new AjaxOptions
+                                               {
+                                                 UpdateTargetId = "UpdateContentDiv",
+                                                 InsertionMode = InsertionMode.Replace,
+                                                 HttpMethod = "Get"
+                                               },
+                                                new { @class = "btn btn-primary" }
+                                               )
+  </div>
+
+<div id="UpdateContentDiv">
+
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#Country").change(function () {
+            $("#State").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStates")', // we are calling json method
+                dataType: 'json',
+                data: { id: $("#Country").val() },
+                success: function (states) {
+                  alert($("#Country").val());
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $.each(states, function (i, state) {
+                        $("#State").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    }); // here we are adding option for States
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#State").change(function () {
+            $("#city").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCity")',
+                dataType: 'json',
+                data: { id: $("#State").val() },
+                success: function (citys) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $.each(citys, function (i, city) {
+                        $("#city").append('<option value="'
+      + city.Value + '">'
+      + city.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>

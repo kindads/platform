@@ -1,0 +1,62 @@
+doctype html
+html(lang='es')
+  head
+    block head
+      include ./head.pug
+
+  body
+    block indexWrapper
+      .wrapper(role='main')#top
+        block header
+          //-header(role='banner' class='navbar navbar-custom')
+            .container-fluid
+              .row
+                .col-md-12
+                  .navbar-header
+                    a.navbar-brand(href='index.html' title='Kind Ads')
+                      //-include ../../../html/img/logo.svg
+
+                    button.navbar-toggle.collapsed.text-uppercase(role='button' type='button' data-toggle='collapse' data-target='#navbar-collapse')
+                      span.sr-only Menu
+                      .pull-right
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar.last
+
+                  //-nav.collapse.navbar-collapse(role='navigation' aria-expanded='false' id='navbar-collapse')
+                    block navBar
+                      ul.nav.navbar-nav
+                        //- li.hidden-activea(href='#page-top')
+                        //-li
+                          a(href='prestamistas.html') Prestamistas
+                        //-li
+                          a(href='embajadores.html') Embajadores
+                        //-li
+                          a(href='beneficiarios.html') Beneficiarios
+                        li
+                          a(href='iniciar-sesion.html') Ingresar
+
+        block bodyWrapper
+          .main-content
+
+    //-footer#footer
+      .container-fluid
+        .row
+          .col-sm-9
+
+          .col-sm-3
+
+    block appScripts
+      script.
+        document.write('<base href=" ' + document.location + ' " />')
+      script(src='https://ajax.microsoft.com/ajax/jquery/jquery-1.9.1.min.js')
+      script.
+        if (typeof jQuery == 'undefined') {
+          document.write(unescape("%3Cscript src='../Scripts/Vendor/jquery/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+      script(src='../Scripts/vendor/bootstrap/bootstrap.min.js')
+
+      //-script(src='js/generic.js')
+
+
+    block tagScripts

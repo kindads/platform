@@ -1,0 +1,33 @@
+
+@{
+  ViewBag.Title = "Index";
+  Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+
+@using (Html.BeginForm("CreateSite", "Site", FormMethod.Get))
+{
+  @*@Html.Hidden("isCreateSite", "true")*@
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 main-bar">
+        <h1 class="title">Dashboard</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="white-block shadow-block">
+          <div class="heading">
+            <h2>Welcome to Kind Ads</h2>
+          </div>
+          <div class="body-content">
+            <h3>You don't have sites yet!</h3>
+            <p>Get started by adding a site.</p>
+            <input type="submit" class="btn btn-primary btn-lg" value="Create a Site" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@Scripts.Render("~/bundles/customjs")

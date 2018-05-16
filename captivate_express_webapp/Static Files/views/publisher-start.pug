@@ -1,0 +1,55 @@
+extends ./templates/defaultBase.pug
+
+
+block header
+  include ./templates/header.pug
+
+
+block headTitle
+  title Welcome Publisher | Kind Ads System
+
+
+block append head
+  meta(name='theme-color' content='#29B5D4')
+  meta(name='msapplication-navbutton-color' content='#29B5D4')
+  meta(name='apple-mobile-web-app-capable' content='yes')
+  meta(name='apple-mobile-web-app-status-bar-style' content='black-translucent')
+
+
+block bodyWrapper
+  .main-content.admin
+    .flexbox.my-content
+      section.tab-nav
+        .btn-block
+          a.btn.btn-primary.disabled(href='') Create an AdSpace
+        ul.flexbox
+          li
+            a.active(href='publisher-start.html')
+              i.fif.fif-home
+              span Dashboard
+          li
+            a(href='my-products.html')
+              i.fif.fif-ads
+              span My products
+          li
+            a(href='my-sites.html')
+              i.fif.fif-sites
+              span My sites
+
+
+      section.form
+        .container-fluid
+          .row
+            .col-sm-12.main-bar
+              h1.title Dashboard
+
+          .row
+            .col-md-8
+              .white-block.shadow-block
+                .heading
+                  i.fif.fif-dashboard
+                  h2 Welcome to Kind Ads System!
+                .body-content
+                  h3 Get started by adding a site.
+                  p It looks like you don't have loaded any product.
+                  a.btn.btn-primary.btn-lg(href='create-site.html') Configure a Site

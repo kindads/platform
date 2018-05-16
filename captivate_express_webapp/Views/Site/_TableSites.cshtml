@@ -1,0 +1,14 @@
+@model captivate_express_webapp.Models.Publisher.ShowSitesViewModel
+
+
+<div class="col-md-12">
+  @{
+      var grid = new WebGrid(Model.ListSitesPending);
+      grid.Pager(WebGridPagerModes.NextPrevious);
+
+      @grid.GetHtml(htmlAttributes: new { id = "DataTable" } ,columns: grid.Columns(
+   grid.Column(columnName: "URL", header: "Url",  canSort:true)
+   ));
+  }
+</div>
+

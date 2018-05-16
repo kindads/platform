@@ -1,0 +1,1172 @@
+
+@model captivate_express_webapp.Models.Publisher.CreateProductModel
+@{
+    ViewBag.Title = "Create Product";
+    Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+    var listCategory = ViewBag.listCategory as SelectList;
+    var listTag = ViewBag.listTag as SelectList;
+    var listParter = ViewBag.listParter as SelectList;
+}
+<script type="text/javascript">
+  var IsChannelIContact = false;
+</script>
+
+<h2>Create Product</h2>
+
+@using (Html.BeginForm("CreateProduct", "Product", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "form" }))
+{
+  @Html.AntiForgeryToken()
+  <div class="container-fluid">
+    <div class="form-horizontal">
+
+      <div class="row">
+        <div class="col-sm-12 main-bar">
+          <h1 class="title">Configure your product</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="white-block">
+            @if (@ViewBag.Message != null && !string.IsNullOrEmpty(@ViewBag.Message))
+        {
+          <div class="callout callout-info">
+            <h4>@ViewBag.Message</h4>
+            In order to see all your products go to  @Html.ActionLink("Products", "ShowProducts", "Product", null, new { @class = "link" }) page.
+          </div>
+    }
+            <div class="heading" style="display:none;">
+              <h2>Site Setup</h2>
+            </div>
+            <div class="body-content">
+              <div class="form-data form-horizontal">
+                <form>
+                  <fieldset>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          @Html.Label("Sites", htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.DropDownList("Sites", ViewData["sites"] as List<SelectListItem>, "Please select",
+                          new { @class = "form-control", @required = "true", @data_msg_required = "Site is required", @onchange = "onSeleccionarSite()" })
+                            @Html.ValidationMessage("Sites")
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="subheading">
+                          <h2>Configure Product</h2>
+                        </div>
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @required = "true", @data_msg_required = "Name is required" })
+                            @Html.ValidationMessageFor(model => model.Name)
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.ProductTypeSelect, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.DropDownList("Products", ViewData["products"] as List<SelectListItem>, "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Channel is required" })
+                            @Html.ValidationMessage("Products")
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          @Html.LabelFor(model => model.ParterTypeSelect, htmlAttributes: new { @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.DropDownList("Partners", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Partner is required" })
+                            @Html.ValidationMessage("Partners")
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div class="col-md-3"></div>
+                          <div class="col-md-9 form-inline">
+                            <a id="linkAweber" href="" target="_blank" style="display:none">Please authorize your aWeber account clicking here.</a>
+                          </div>
+                        </div>
+
+                        <div id="pnlApiToken" class="form-group has-success has-feedback">
+                          @Html.LabelFor(model => model.Token, htmlAttributes: new { id = "DescToken", @class = "control-label col-md-3" })
+                          <div class="col-md-9 form-inline">
+                            @Html.TextBoxFor(model => model.Token, new { @class = "form-control", @required = "true", @data_msg_required = "API Token is required" })
+                            <a href="#" data-toggle="tooltip" title="API token is a unique identifier of an application requesting access to your service">
+                              <i class="fa fa-question-circle-o"></i>
+                            </a>
+                            @Html.ValidationMessageFor(model => model.Token)
+                            <div id="spanTokenNotValid" style="color:red; display:none">This API Token is not valid.</div>
+                          </div>
+                        </div>
+
+                        <!--Formulario de IContact-->
+                        <div id="pnlChannelIContact" style="display:none">
+                          @*@{ Html.RenderPartial("~/Views/Product/PartialViews/IContactForm.cshtml"); }*@
+                          <!-- API AppId-->
+                          <div class="form-group">
+                            @Html.LabelFor(model => model.IContact.ApiAppId, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.TextBoxFor(model => model.IContact.ApiAppId, new { @class = "form-control", @required = "true", @data_msg_required = "API APP Id  is required", id = "IContactApiAppId" })
+                              @Html.ValidationMessageFor(model => model.IContact.ApiAppId)
+                            </div>
+                          </div>
+
+                          <!-- API Username-->
+                          <div class="form-group">
+                            @Html.LabelFor(model => model.IContact.ApiUserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.TextBoxFor(model => model.IContact.ApiUserName, new { @class = "form-control", @required = "true", @data_msg_required = "API Username is required", id = "IContactApiUserName" })
+                              @Html.ValidationMessageFor(model => model.IContact.ApiUserName)
+                            </div>
+                          </div>
+
+                          <!-- API Userpassword-->
+                          <div class="form-group">
+                            @Html.LabelFor(model => model.IContact.ApiUserPassword, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.TextBoxFor(model => model.IContact.ApiUserPassword, new { @class = "form-control", @required = "true", @data_msg_required = "API Password is required", id = "IContactApiUserPassword" })
+                              @Html.ValidationMessageFor(model => model.IContact.ApiUserPassword)
+                            </div>
+                          </div>
+
+                          <!-- Account ID-->
+                          <div class="form-group">
+                            @Html.LabelFor(model => model.IContact.AccountId, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.TextBoxFor(model => model.IContact.AccountId, new { @class = "form-control", @required = "true", @data_msg_required = "AccountId is required", id = "IContactAccountId" })
+                              @Html.ValidationMessageFor(model => model.IContact.AccountId)
+                            </div>
+                          </div>
+
+                          <!-- Client Folder Id -->
+                          <div class="form-group">
+                            @Html.LabelFor(model => model.IContact.ClientFolderId, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.TextBoxFor(model => model.IContact.ClientFolderId, new { @class = "form-control", @required = "true", @data_msg_required = "Client Folder Id is required", id = "IContactClientFolderId" })
+                              @Html.ValidationMessageFor(model => model.IContact.ClientFolderId)
+                            </div>
+                          </div>
+                          <div id="spanAppIdNotValid" style="color:red; display:none">This API APP Id is not valid.</div>
+
+                        </div>
+
+                        <div id="pnlUrlActiveCampaign" style="display:none;">
+                          <div class="form-group">
+                            @Html.LabelFor(model => model.UrlActiveCampaign, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.TextBoxFor(model => model.UrlActiveCampaign, new { @class = "form-control", @required = "true", @data_msg_required = "Url is required" })
+                              @Html.ValidationMessageFor(model => model.UrlActiveCampaign)
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                        <div id="pnlActionValidateToken">
+                          <div class="btn-group col-md-12">
+                            <input id="btnValidateToken" type="button" class="btn btn-default" value="Validate" />
+                          </div>
+                        </div>
+
+                        <div id="pnlTokenValidate" style="display:none">
+                          <div class="form-group">
+                            @Html.LabelFor(model => model.PriceSelecc, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.TextBoxFor(model => model.PriceSelecc, new { @type = "number", max = 100000, min = 1, @class = "form-control form-tooltip", @required = "true", @data_msg_required = "Price is required" })
+                              <a href="#" data-toggle="tooltip" title="KIND is the token used to make transactions">
+                                <i class="fa fa-question-circle-o"></i>
+                              </a>
+                              @Html.ValidationMessage("Prices")
+                            </div>
+                          </div>
+                          <div id="pnlChannelPushNotification" style="display:none">
+                          </div>
+
+                          <div class="form-group">
+                            @Html.Label("Upload an image", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              <div class="btn btn-default file">
+                                Add photo
+                                <input id="fileup" name="fileup" type="file" />
+                              </div>
+                              <label id="filename"></label>
+                            </div>
+                          </div>
+
+                          <div id="pnlChannelMailChimp" style="display:none">
+                            <div class="form-group">
+                              @Html.Label("Templates", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("TemplatesMC", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Template is required" })
+                                @Html.ValidationMessage("TemplatesMC")
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsMC", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsMC")
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="pnlChannelCampaignMonitor" style="display:none">
+                            <div class="form-group">
+                              @Html.Label("Client", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ClientCM", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Client is required" })
+                                @Html.ValidationMessage("ClientCM")
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsCM", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsCM")
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              @Html.Label("Segment", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("SegmentCM", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Segment is required" })
+                                @Html.ValidationMessage("SegmentCM")
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="pnlChannelAWeber" style="display:none">
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsAW", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsAW")
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="pnlChannelSendGrid" style="display:none">
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsSG", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsSG")
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              @Html.Label("Sender", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("SenderSG", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Sender is required" })
+                                @Html.ValidationMessage("SenderSG")
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              @Html.Label("Unsubscribe group", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("UnsubscribeGroupSG", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "UnsubscribeGroupSG is required" })
+                                @Html.ValidationMessage("UnsubscribeGroupSG")
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="pnlChannelActiveCampaign" style="display:none">
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsAC", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsAC")
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="pnlChannelGetResponse" style="display:none">
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsGR", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsGR")
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              @Html.Label("From Field", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("FromFieldGR", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "From field is required" })
+                                @Html.ValidationMessage("FromFieldGR")
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="pnlChannelIContactList">
+                            <!-- Seleccionar la lista-->
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsIC", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsIC")
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="pnlActionCreateProduct" class="row" style="display:none">
+                      <div class="col-md-12">
+                        <div class="btn-group">
+                          <input type="submit" value="Create" class="btn btn-primary btn-lg" />
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        @{
+            Html.RenderPartial("~/Views/Product/PartialViews/PartnerValidation.cshtml");
+        }
+     </div>
+   
+    </div>
+  </div>
+}
+@Scripts.Render("~/bundles/customjs")
+<script>
+  $("#btnValidateToken").click(function (event) {
+    if ($("#form").valid()) {
+      //Checar de donde viene el dato
+      if (IsChannelIContact == true) {
+        if ('@Model.IContact' != null) {
+
+          var api_token = $("#Token").val();
+          var id_site = $("#Sites").val();
+          var wildCard = $("#UrlActiveCampaign").val();
+
+          var ApiAppId = $("#IContactApiAppId").val();
+          var UserName = $("#IContactApiUserName").val();
+          var UserPassword = $("#IContactApiUserPassword").val();
+          var AccountId = $("#IContactAccountId").val();
+          var ClientFolderId = $("#IContactClientFolderId").val();
+
+          validateApiAppId(api_token, ApiAppId, UserName, UserPassword, AccountId, ClientFolderId, id_site, wildCard);
+        }
+      } else {
+        var api_token = $("#Token").val();
+        var id_site = $("#Sites").val();
+        var wildCard = $("#UrlActiveCampaign").val();
+        validateApiToken(api_token, id_site, wildCard);
+      }     
+    }
+  });
+
+  function validateApiAppId(api_token, ApiAppId, UserName, UserPassword, AccountId, ClientFolderId, id_Site, wildCard) {
+      var id_Provider = $("#Partners option:selected").val();
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("ValidateApiAppId")',
+          dataType: 'json',
+        data: { ApiAppId: ApiAppId, UserName: UserName, UserPassword: UserPassword, AccountId: AccountId, ClientFolderId: ClientFolderId, ApiToken: api_token, idSite: id_Site, idProvider: id_Provider, wildCard: wildCard },
+          success: function (result) {
+            if (result.success) {
+              showElementsSuccess(result);
+              invokeChannelIContact();
+              //Dejamos de mostrar el boton de validar
+              $("#pnlActionValidateToken").hide();
+              //Mostramos el boton de crear
+              $("#pnlActionCreateProduct").show();
+
+            } else {
+              // Mostramos el modal con la validacion
+              $("#partners_validation_message").text(result.message);            
+              $('#partnerValidationModal').modal('show');
+            }
+          },
+          error: function (ex) {
+            alert('Failed to validate token.');
+          }
+        });
+  }
+
+
+
+  function validateApiToken(api_token, id_Site, wild_card) {
+      var id_Provider = $("#Partners option:selected").val();
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("ValidateApiToken")',
+          dataType: 'json',
+          data: { ApiToken: api_token, idSite: id_Site, idProvider: id_Provider, wildCard: wild_card },
+          success: function (result) {
+            if (result.success) {
+              showElementsSuccess(result);
+              if (result.isMailChimp) {
+                invokeChannelMailChimp();
+              } else if (result.isCampaignMonitor) {
+                invokeChannelCampaignMonitor();
+              } else if (result.isAweber) {
+                invokeChannelAWeber();
+              } else if (result.isGetResponse) {
+                invokeChannelGetResponse();
+              } else if (result.isSendGrid) {
+                invokeChannelSendGrid();
+              } else if (result.IsActiveCampaign) {
+                invokeChannelActiveCampaign();
+              } 
+
+            } else {
+              showElementsError();
+            }
+          },
+          error: function (ex) {
+            alert('Failed to validate token.');
+          }
+        });
+  }
+
+  function invokeChannelMailChimp() {
+          $("#ListsMC").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListMailChimp")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsMC").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#ListsMC").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsMC").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from mail chimp.' + ex);
+              }
+          });
+
+          $("#TemplatesMC").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetTagMailChimp")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#TemplatesMC").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#TemplatesMC").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#TemplatesMC").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve templates from mail chimp.' + ex);
+              }
+          });
+  }
+
+  function invokeChannelCampaignMonitor() {
+          $("#ClientCM").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetClientCampaignMonitor")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ClientCM").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#ClientCM").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ClientCM").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from campaign monitor.' + ex);
+              }
+          });
+  }
+
+  function invokeChannelAWeber() {
+    $("#ListsAW").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListAWeber")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsAW").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#ListsAW").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsAW").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from aweber.' + ex);
+              }
+          });
+  }
+
+   function invokeChannelGetResponse() {
+    $("#ListsGR").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListGetResponse")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsGR").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#ListsGR").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsGR").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from get response.' + ex);
+              }
+          });
+
+          $("#FromFieldGR").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetFromFieldGetResponse")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#FromFieldGR").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#FromFieldGR").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#FromFieldGR").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from get response.' + ex);
+              }
+          });
+   }
+
+
+   function invokeChannelSendGrid() {
+     $("#ListsSG").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListSendGrid")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsSG").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#ListsSG").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsSG").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from sendgrid.' + ex);
+              }
+          });
+
+          $("#SenderSG").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetSenderSendGrid")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#SenderSG").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#SenderSG").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#SenderSG").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from sendgrid.' + ex);
+              }
+          });
+
+          $("#UnsubscribeGroupSG").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetUnsubscribeGroupSendGrid")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#UnsubscribeGroupSG").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#UnsubscribeGroupSG").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#UnsubscribeGroupSG").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from sendgrid.' + ex);
+              }
+          });
+   }
+
+  function invokeChannelIContact() {
+     $("#ListsIC").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListIContact")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsIC").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#ListsIC").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsIC").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from active campaign.' + ex);
+              }
+          });
+  }
+
+   function invokeChannelActiveCampaign() {
+     $("#ListsAC").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListActiveCampaign")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsAC").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#ListsAC").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsAC").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from active campaign.' + ex);
+              }
+          });
+   }
+
+function showElementsSuccess(result) {
+    //Deshabilitar los selectores de name y channel
+    $('#Products option:not(:selected)').attr('disabled', true);
+    $('#Partners option:not(:selected)').attr('disabled', true);
+    $("#Products").prop("disabled", true);
+    $("#Partners").prop("disabled", true);
+
+
+    //Mostrar segunda parte del formulario
+    $("#pnlTokenValidate").show();
+    $("#pnlActionCreateProduct").show();
+    $("#pnlActionValidateToken").hide();
+    $("#iconApiToken").removeClass().addClass("fa fa-check-circle").css("color", "green").css("font-size", "20px");
+    $("#pnlApiToken").addClass("has-success");
+    $("#spanTokenNotValid").hide();
+    $("#Token").prop("disabled", true);
+    showElementsByChannel(result);
+  }
+
+  function showElementsError() {
+    $("#iconApiToken").css("color", "red");
+    $("#Token").tooltip('show');
+    $("#spanTokenNotValid").show();   
+  }
+
+  function showElementsByChannel(result) {
+    if (result.isPushCrew || result.isSubscribers) {
+      $("#pnlChannelPushNotification").show();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContact").hide();
+    } else if (result.isMailChimp) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").show();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContact").hide();
+    } else if (result.isCampaignMonitor) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").show();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContact").hide();
+    } else if (result.isAweber) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").show();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContact").hide();
+    } else if (result.isSendGrid) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").show();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContact").hide();
+    } else if (result.IsActiveCampaign) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").show();
+      $("#pnlChannelGetResponse").hide();
+    } else if (result.isGetResponse) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").show();
+      $("#pnlChannelIContact").hide();
+    }
+    else if (result.IsActiveIContact) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContactList").show();
+    }
+  }
+
+</script>
+
+<script>
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+  $(function () {
+    $('.link-site').addClass('active');
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#Products").change(function () {
+        $("#Partners").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetPartners")',
+                dataType: 'json',
+                data: { id: $("#Products").val() },
+                success: function (partners) {
+                  if (partners != null && partners != '') {
+                    $("#Partners").append('<option value="">' + 'Please select' + '</option>');
+                    $.each(partners, function (i, state) {
+                      $("#Partners").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                  } else {
+                    $("#Partners").append('<option value="">' + 'Please select' + '</option>');
+                  }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#Categories").change(function () {
+        $("#Tags").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTags")',
+                dataType: 'json',
+                data: { id: $("#Categories").val() },
+                success: function (tags) {
+                  if (tags != null && tags != '') {
+                    $("#Tags").append('<option value="">' + 'Please select' + '</option>');
+                    $.each(tags, function (i, state) {
+                      $("#Tags").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                  } else {
+                    $("#Tags").append('<option value="">' + 'Please select' + '</option>');
+                  }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve categories.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#ClientCM").change(function () {
+        $("#ListsCM").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetListCampaignMonitor")',
+                dataType: 'json',
+                data: { idClient: $("#ClientCM").val() },
+                success: function (tags) {
+                  if (tags != null && tags != '') {
+                    $("#ListsCM").append('<option value="">' + 'Please select' + '</option>');
+                    $.each(tags, function (i, state) {
+                      $("#ListsCM").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                  } else {
+                    $("#ListsCM").append('<option value="">' + 'Please select' + '</option>');
+                  }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve list.' + ex);
+                }
+            });
+
+          $("#SegmentCM").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetSegmentCampaignMonitor")',
+              dataType: 'json',
+              data: { idClient: $("#ClientCM").val() },
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#SegmentCM").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#SegmentCM").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#SegmentCM").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                alert('Failed to retrieve segment from campaign monitor.' + ex);
+              }
+          });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#Tags").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("TagSelecc")',
+                data: { id: $("#Tags").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve tags.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+      //var IsChannelIContact = false;
+      $("#Partners").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PartnerSelecc")',
+                data: { id: $("#Partners").val() },
+              success: function (result) {
+                  //Siempre ocultamos IContact
+                   $("#pnlChannelIContact").hide();
+                   $("#pnlApiToken").show(); 
+
+                  if (result.success && result.isProviderAWeber) {
+                    $("#linkAweber").attr("href", result.linkAWeber);
+                    $("#linkAweber").show();
+                    document.getElementById('DescToken').innerHTML = 'Authorization Code';
+                  } else {
+                    $("#linkAweber").hide();
+                    $("#pnlUrlActiveCampaign").hide();
+                    document.getElementById('DescToken').innerHTML = 'API Token';
+                    if (result.success && result.isProviderActiveCampaign) {
+                      $("#pnlUrlActiveCampaign").show();
+                    }
+                  }
+                  if (result.success && result.isProviderIContact) {
+                    IsChannelIContact = true;
+                    $("#pnlApiToken").hide(); //Escondemos el del token
+                    $("#pnlChannelIContact").show(); //Mostramos el formulario para autenticarse
+                  }
+                },
+                error: function (ex) {
+                  alert('Failed to change partner.');
+                }
+            });
+        })
+    });
+</script>
+<script type="text/javascript">
+  $().ready(function () {
+    //var IsChannelIContact = false;
+    $("#form").validate();
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+    $("#PriceSelecc").on('blur', function () {
+      $.ajax({
+        type: 'POST',
+        url: '@Url.Action("PriceSelecc")',
+        data: { id: $("#PriceSelecc").val() }
+      });
+      return false;
+    })
+  });
+
+  $('#PriceSelecc').on('keypress', function (e) {
+    var reg = /^[0-9]*$/;
+    if (!reg.test(String.fromCharCode(e.which))) {
+      e.preventDefault();
+    }
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#TemplatesMC").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("TemplateMCSelecc")',
+                data: { id: $("#TemplatesMC").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#ListsMC").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListMCSelecc")',
+                data: { id: $("#ListsMC").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#ListsCM").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListCMSelecc")',
+                data: { id: $("#ListsCM").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#SegmentCM").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SegmentCMSelecc")',
+                data: { id: $("#SegmentCM").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#ListsAW").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListAWSelecc")',
+                data: { id: $("#ListsAW").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#Sites").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SiteSelecc")',
+                data: { id: $("#Sites").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $("#fileup").change(function () {
+    var file = $('#fileup')[0].files[0]
+    if (file) {
+      $("#filename").text(file.name);
+    }
+  });
+</script>
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#ListsSG").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListsSGSelecc")',
+                data: { id: $("#ListsSG").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#SenderSG").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SenderSGSelecc")',
+                data: { id: $("#SenderSG").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#UnsubscribeGroupSG").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UnsubscribeGroupSGSelecc")',
+                data: { id: $("#UnsubscribeGroupSG").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#ListsAC").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListsACSelecc")',
+                data: { id: $("#ListsAC").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#ListsGR").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListsGRSelecc")',
+                data: { id: $("#ListsGR").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#ListsIC").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListsICSelecc")',
+                data: { id: $("#ListsIC").val() }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+      $("#FromFieldGR").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("FromFieldSelecc")',
+                data: { id: $("#FromFieldGR").val() }
+            });
+            return false;
+        })
+    });
+</script>
+
+
+<script>
+  function onSeleccionarSite() {
+
+    //Habilitar los selectores de name y channel
+    $('#Products option:not(:selected)').attr('disabled', false);
+    $('#Partners option:not(:selected)').attr('disabled', false);
+    $("#Products").prop("disabled", false);
+    $("#Partners").prop("disabled", false);
+
+    //Ocultar segunda parte del formulario
+    $("#pnlTokenValidate").hide();
+    $("#pnlActionCreateProduct").hide();
+    $("#pnlActionValidateToken").show();
+    $("#iconApiToken").addClass().addClass("fa fa-check-circle").css("color", "green").css("font-size", "20px");
+    $("#pnlApiToken").removeClass("has-success");
+    //$("#spanTokenNotValid").show();
+    $("#Token").prop("disabled", false);
+    $("#Token").val("");
+    //showElementsByChannel(result);
+  }
+</script>
