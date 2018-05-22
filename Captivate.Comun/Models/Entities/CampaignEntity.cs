@@ -31,7 +31,9 @@ namespace Captivate.Comun.Models.Entities
         public string UTM_Campaign { get; set; }
       
         public string IdCampaign3rdParty { get; set; }
+        [Column(TypeName = "datetime2")]
         public Nullable<System.DateTime> StartDate { get; set; }
+        [Column(TypeName = "datetime2")]
         public Nullable<System.DateTime> EndDate { get; set; }
 
 

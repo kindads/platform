@@ -67,7 +67,8 @@ namespace Captivate.Negocio.Partners.Push
                     }
                     catch (Exception ex)
                     {
-                        return ex.Message;
+                        var messageException = telemetria.MakeMessageException(ex, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                        telemetria.Critical(messageException);
                     }
                 }
             }

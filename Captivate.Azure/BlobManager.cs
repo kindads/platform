@@ -47,7 +47,7 @@ namespace Captivate.Azure
 
         public static string CreateHtmlTemplateAzure(string htmlText)
         {
-            string storageConnectionString = ConfigurationManager.ConnectionStrings["HtmlTemplateStorageConnection"].ConnectionString;
+            string storageConnectionString = ConfigurationManager.AppSettings["HtmlTemplateStorageConnection"];
             string filextension = ".html";
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 

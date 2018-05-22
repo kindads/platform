@@ -46,6 +46,9 @@
     var showCreateSite = _service.ShowCreateSite(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity));
     var redirectLogo = showCreateSite ? "/Publisher/Index" : "/Site/ShowSites";
   }
+  <audio id="soundNotification" controls="controls" style="visibility:collapse; display:none">
+    <source src="~/Content/Sound/whatsapp-apple.mp3" type="audio/mpeg" />
+  </audio>
   <div class="wrapper" role="main" id="top">
     <header class="navbar navbar-custom fixed-header" role="banner">
       @using (Html.BeginForm("LogOff", "Access", FormMethod.Post, new { id = "logoutForm" }))
@@ -86,7 +89,6 @@
     <div class="main-content admin">
       <div class="flexbox my-content">
         <section class="tab-nav">
-
           <ul class="flexbox">
             <li>
               @Html.ActionLink("My sites", "ShowSites", "Site", null, new { @class = "link-dashboard" })
@@ -115,7 +117,6 @@
             </div>
           </footer>
         </section>
-     
         <!--Div de notificacion-->
         <div id="notification-tile" class="notification-tile">
           <a href="#">
@@ -124,23 +125,20 @@
                 <span id="notification-title" class="notification-title"></span>
               </div>
               <div class="col-md-1" onclick="closePushNotification()">
-                <span class="color-black" >x</span>
+                <span class="color-black">x</span>
               </div>
             </div>
-           <div class="row">
-             <div class="col-md-12">
-               <div id="notification-message" class="notification-message"></div>
-             </div>
-           </div>           
+            <div class="row">
+              <div class="col-md-12">
+                <div id="notification-message" class="notification-message"></div>
+              </div>
+            </div>
           </a>
         </div>
         <!--End Div notificacion-->
-
       </div>
     </div>
   </div>
-
-  
 
 
   @RenderSection("scripts", required: false)
@@ -173,7 +171,7 @@
           valueOutput(this.$element[0]);
         },
       });
-      
+
     });
   </script>
   <script>
@@ -186,10 +184,20 @@
           $(item).load(url);
         }
       });
-      
+
     });
   </script>
   <script>site.baseUrl = "@Url.Content("~/").TrimEnd('/')";</script>
+  <!-- GTA -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114897255-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-114897255-1');
+  </script>
+  <!-- GA -->
   <script>
     (function (i, s, o, g, r, a, m) {
       i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {

@@ -13,7 +13,7 @@ mailFlowHubProxy.on('showNotification', function (title, message) {
 function showNotification(title,message) {
     //Checar hasta que se libere  
     if( currentMessage === 1) {
-        setTimeout(function () {
+      setTimeout(function () {    
             showNotification(title, message);
         }, 8000);        
     }
@@ -28,7 +28,8 @@ function showNotification(title,message) {
         $("#notification-message").text(message);
 
         // Show tile
-        $("#notification-tile").show("fast"); 
+      $("#notification-tile").show("fast");
+      $('#soundNotification')[0].play();
     } 
 }
 

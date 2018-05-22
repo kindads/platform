@@ -466,7 +466,7 @@ namespace captivate_express_webapp.Services
       return (from r in _context.CAMPAIGNs1 where r.IdCampaign.Equals(new Guid(idCampaign)) select r).FirstOrDefault();
     }
 
-    public TableCampaignViewModel GetTableCampaignPending(int idUserRole, string idUser, int page = 1, string sort = "Name", string sortdir = "ASC")
+    public TableCampaignViewModel GetTableCampaignPending(int idUserRole, string idUser, int page = 1, string sort = "RegisterDate", string sortdir = "DESC")
     {
       List<int> status = new List<int>() { (int)CatCampaignStatusEnum.In_Review, (int)CatCampaignStatusEnum.Waiting_For_Response };
       TableCampaignViewModel m = new TableCampaignViewModel();
@@ -504,7 +504,7 @@ namespace captivate_express_webapp.Services
       return m;
     }
 
-    public TableCampaignViewModel GetTableCampaignVerify(int idUserRole, string idUser, int page = 1, string sort = "Name", string sortdir = "ASC")
+    public TableCampaignViewModel GetTableCampaignVerify(int idUserRole, string idUser, int page = 1, string sort = "RegisterDate", string sortdir = "DESC")
     {
       List<int> status = new List<int>() { (int)CatCampaignStatusEnum.Authorized };
       TableCampaignViewModel m = new TableCampaignViewModel();

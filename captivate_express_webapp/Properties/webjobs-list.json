@@ -1,0 +1,11 @@
+﻿{
+  "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
+  "WebJobs": [
+    {
+      "filePath": "../Captivate.Notifications/Captivate.WebJob.Notifications.csproj"
+    },
+    {
+      "filePath": "../Captivate.WebJob.CampaignValidator/Captivate.WebJob.CampaignValidator.csproj"
+    }
+  ]
+}

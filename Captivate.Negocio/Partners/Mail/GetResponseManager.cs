@@ -32,69 +32,78 @@ namespace Captivate.Negocio.Partners.Mail
 
         public string ValidateCampaign(string idCampaign)
         {
-            dynamic json = new ExpandoObject();
-            dynamic fromField = new ExpandoObject();
-            dynamic campaign = new ExpandoObject();
-            dynamic content = new ExpandoObject();
-            dynamic sendSettings = new ExpandoObject();
-            dynamic selectedCampaigns = new List<string>();
-
-            string apiKey = null;
-            string idList = null;
-            string idFromField = null;
-            string subject = null;
-
-            CampaignEntity _campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
-            ProductEntity _product = ProductRepository.FindBy(p => p.IdProduct == _campaign.PRODUCT_IdProduct).FirstOrDefault();
-
-            if (_product.ProductSettingsEntitys != null && _product.ProductSettingsEntitys.Any())
+            try
             {
-                foreach (var item in _product.ProductSettingsEntitys)
-                {
-                    apiKey = item.SettingName.Equals("getResponseApiToken") ? item.SettingValue : apiKey;
-                    idList = item.SettingName.Equals("getResponseList") ? item.SettingValue : idList;
-                    idFromField = item.SettingName.Equals("getResponseFromField") ? item.SettingValue : idFromField;
-                }
-            }
+                dynamic json = new ExpandoObject();
+                dynamic fromField = new ExpandoObject();
+                dynamic campaign = new ExpandoObject();
+                dynamic content = new ExpandoObject();
+                dynamic sendSettings = new ExpandoObject();
+                dynamic selectedCampaigns = new List<string>();
 
-            if (_campaign.CAMPAIGN_SETTINGS != null && _campaign.CAMPAIGN_SETTINGS.Any())
+                string apiKey = null;
+                string idList = null;
+                string idFromField = null;
+                string subject = null;
+
+                CampaignEntity _campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
+                ProductEntity _product = ProductRepository.FindBy(p => p.IdProduct == _campaign.PRODUCT_IdProduct).FirstOrDefault();
+
+                if (_product.ProductSettingsEntitys != null && _product.ProductSettingsEntitys.Any())
+                {
+                    foreach (var item in _product.ProductSettingsEntitys)
+                    {
+                        apiKey = item.SettingName.Equals("getResponseApiToken") ? item.SettingValue : apiKey;
+                        idList = item.SettingName.Equals("getResponseList") ? item.SettingValue : idList;
+                        idFromField = item.SettingName.Equals("getResponseFromField") ? item.SettingValue : idFromField;
+                    }
+                }
+
+                if (_campaign.CAMPAIGN_SETTINGS != null && _campaign.CAMPAIGN_SETTINGS.Any())
+                {
+                    foreach (var setting in _campaign.CAMPAIGN_SETTINGS)
+                    {
+                        subject = setting.SettingName.Equals("getResponseSubject") ? setting.SettingValue : subject;
+                    }
+                }
+
+                json.name = _campaign.Name;
+                json.type = "broadcast";
+                json.subject = subject;
+
+                fromField.fromFieldId = idFromField;
+                json.fromField = fromField;
+
+                campaign.campaignId = idList;
+                json.campaign = campaign;
+
+                content.html = _campaign.AdText;
+                content.plain = null;
+                json.content = content;
+
+                json.replyTo = fromField;
+
+                selectedCampaigns.Add(idList);
+                sendSettings.timeTravel = "false";
+                sendSettings.perfectTiming = "true";
+                sendSettings.selectedCampaigns = selectedCampaigns;
+                sendSettings.selectedSegments = new List<string>();
+                sendSettings.selectedSuppressions = new List<string>();
+                sendSettings.excludedCampaigns = new List<string>();
+                sendSettings.excludedSegments = new List<string>();
+                sendSettings.selectedContacts = new List<string>();
+
+                json.sendSettings = sendSettings;
+                var result = MethodPost(apiKey, "newsletters", (IDictionary<string, object>)json);
+                dynamic data = JsonConvert.DeserializeObject(result.Data);
+                return (string)data.newsletterId;
+            }
+            catch (Exception ex)
             {
-                foreach (var setting in _campaign.CAMPAIGN_SETTINGS)
-                {
-                    subject = setting.SettingName.Equals("getResponseSubject") ? setting.SettingValue : subject;
-                }
+                var messageException = telemetria.MakeMessageException(ex, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(messageException);
             }
-
-            json.name = _campaign.Name;
-            json.type = "broadcast";
-            json.subject = subject;
-
-            fromField.fromFieldId = idFromField;
-            json.fromField = fromField;
-
-            campaign.campaignId = idList;
-            json.campaign = campaign;
-
-            content.html = _campaign.AdText;
-            content.plain = null;
-            json.content = content;
-
-            json.replyTo = fromField;
-
-            selectedCampaigns.Add(idList);
-            sendSettings.timeTravel = "false";
-            sendSettings.perfectTiming = "true";
-            sendSettings.selectedCampaigns = selectedCampaigns;
-            sendSettings.selectedSegments = new List<string>();
-            sendSettings.selectedSuppressions = new List<string>();
-            sendSettings.excludedCampaigns = new List<string>();
-            sendSettings.excludedSegments = new List<string>();
-            sendSettings.selectedContacts = new List<string>();
-
-            json.sendSettings = sendSettings;
-            var result = MethodPost(apiKey, "newsletters", (IDictionary<string, object>)json);
-            dynamic data = JsonConvert.DeserializeObject(result.Data);
-            return (string)data.newsletterId;
+            return null;
         }
 
         public static ApiResult MethodGet(string apikey, string action)

@@ -12,7 +12,7 @@ namespace Captivate.DataAccess
     {
         public CampaignEntity GetById(Guid idCampaign)
         {
-            return (from c in Context.Campaigns where c.IdCampaign.Equals(idCampaign) select c).FirstOrDefault();
+            return (from c in Context.Campaigns where c.IdCampaign == idCampaign select c).FirstOrDefault();
         }
     }
 }

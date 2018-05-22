@@ -12,16 +12,21 @@ using Captivate.Comun.Interfaces;
 using Captivate.Negocio.Partners.IContact;
 using Captivate.Negocio;
 using Captivate.Comun.Models;
+using Captivate.Common.Interfaces;
+using Captivate.Business;
+using Captivate.Comun.Models.Entities;
+using Newtonsoft.Json;
 
 namespace Captivate.WebJob.CampaignValidator
 {
     public class Functions
     {
         CampaignManager campaignManager;
-
+        public ITrace telemetria { set; get; }
         public Functions()
         {
             campaignManager = new CampaignManager();
+            telemetria = new Trace();
         }
 
         // This function will get triggered/executed when a new message is written 
@@ -29,7 +34,7 @@ namespace Captivate.WebJob.CampaignValidator
         public void ProcessQueueMessage([QueueTrigger("campaignqueue")] string message, TextWriter log)
         {
             //Obtenemos el objeto de la notificacion
-
+            CampaignEntity campaign = new CampaignEntity();
             NotificationManager notificationManager = new NotificationManager();
             Notification notification = notificationManager.GetNotification(message);
 
@@ -39,10 +44,10 @@ namespace Captivate.WebJob.CampaignValidator
             {
                 if (!String.IsNullOrEmpty(idCampaign))
                 {
-                    var campaign = campaignManager.GetById(new Guid(idCampaign));
+                    campaign = campaignManager.GetById(new Guid(idCampaign));
                     var product = campaign.PRODUCT;
 
-                    if (campaignManager.AutorizeCampaign(campaign, IdUser))
+                    if (campaignManager.AutorizeCampaign(campaign.IdCampaign, IdUser))
                     {
                         switch (product.PARTNER.IdPartner.ToString())
                         {
@@ -100,7 +105,10 @@ namespace Captivate.WebJob.CampaignValidator
             }
             catch (Exception ex)
             {
-
+                string campaignRaw = JsonConvert.SerializeObject(campaign);
+                var messageException = telemetria.MakeMessageException(ex, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                messageException += String.Format(" campaign:{0}", campaignRaw);
+                telemetria.Critical(messageException);
             }
         }
     }

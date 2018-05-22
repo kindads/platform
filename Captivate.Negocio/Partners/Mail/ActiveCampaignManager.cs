@@ -28,46 +28,48 @@ namespace Captivate.Negocio.Partners.Mail
 
         public string ValidateCampaign(string idCampaign)
         {
-            string apiKey = null;
-            string idList = null;
-            string url = null;
-            string subject = null;
-            string idCampaignActiveCampaign = null;
-            string fromName = null;
-            string fromEmail = null;
-            string idMessage = null;
-
-            CampaignEntity campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
-            ProductEntity product = ProductRepository.FindBy(p => p.IdProduct == campaign.PRODUCT_IdProduct).FirstOrDefault();
-
-            if (product.ProductSettingsEntitys != null && product.ProductSettingsEntitys.Any())
+            try
             {
-                foreach (var item in product.ProductSettingsEntitys)
+                string apiKey = null;
+                string idList = null;
+                string url = null;
+                string subject = null;
+                string idCampaignActiveCampaign = null;
+                string fromName = null;
+                string fromEmail = null;
+                string idMessage = null;
+
+                CampaignEntity campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
+                ProductEntity product = ProductRepository.FindBy(p => p.IdProduct == campaign.PRODUCT_IdProduct).FirstOrDefault();
+
+                if (product.ProductSettingsEntitys != null && product.ProductSettingsEntitys.Any())
                 {
-                    apiKey = item.SettingName.Equals("activeCampaignApiToken") ? item.SettingValue : apiKey;
-                    idList = item.SettingName.Equals("activeCampaignList") ? item.SettingValue : idList;
-                    url = item.SettingName.Equals("activeCampaignUrl") ? item.SettingValue : url;
+                    foreach (var item in product.ProductSettingsEntitys)
+                    {
+                        apiKey = item.SettingName.Equals("activeCampaignApiToken") ? item.SettingValue : apiKey;
+                        idList = item.SettingName.Equals("activeCampaignList") ? item.SettingValue : idList;
+                        url = item.SettingName.Equals("activeCampaignUrl") ? item.SettingValue : url;
+                    }
                 }
-            }
 
-            if (campaign.CAMPAIGN_SETTINGS != null && campaign.CAMPAIGN_SETTINGS.Any())
-            {
-                foreach (var setting in campaign.CAMPAIGN_SETTINGS)
+                if (campaign.CAMPAIGN_SETTINGS != null && campaign.CAMPAIGN_SETTINGS.Any())
                 {
-                    subject = setting.SettingName.Equals("activeCampaignSubject") ? setting.SettingValue : subject;
+                    foreach (var setting in campaign.CAMPAIGN_SETTINGS)
+                    {
+                        subject = setting.SettingName.Equals("activeCampaignSubject") ? setting.SettingValue : subject;
+                    }
                 }
-            }
 
-            ActiveCampaignClient activeCampaignClient = new ActiveCampaignClient(apiKey, url);
-            Dictionary<string, string> parameters = new Dictionary<string, string>() { };
+                ActiveCampaignClient activeCampaignClient = new ActiveCampaignClient(apiKey, url);
+                Dictionary<string, string> parameters = new Dictionary<string, string>() { };
 
-            var result = activeCampaignClient.ApiAsync("account_view", parameters);
-            dynamic data = JsonConvert.DeserializeObject(result.Data);
-            fromEmail = data.email;
-            fromName = data.fname;
+                var result = activeCampaignClient.ApiAsync("account_view", parameters);
+                dynamic data = JsonConvert.DeserializeObject(result.Data);
+                fromEmail = data.email;
+                fromName = data.fname;
 
-            activeCampaignClient = new ActiveCampaignClient(apiKey, url);
-            parameters = new Dictionary<string, string>
+                activeCampaignClient = new ActiveCampaignClient(apiKey, url);
+                parameters = new Dictionary<string, string>
       {
         { "format", "mime" },
         { "subject", subject },
@@ -82,13 +84,13 @@ namespace Captivate.Negocio.Partners.Mail
         { "textconstructor", "editor" },
         { "p[" + idList + "]", idList }
       };
-            result = activeCampaignClient.ApiAsync("message_add", parameters);
-            data = JsonConvert.DeserializeObject(result.Data);
-            idMessage = data.id;
-            //Console.WriteLine(result.Code);//1 successfull
+                result = activeCampaignClient.ApiAsync("message_add", parameters);
+                data = JsonConvert.DeserializeObject(result.Data);
+                idMessage = data.id;
+                //Console.WriteLine(result.Code);//1 successfull
 
-            activeCampaignClient = new ActiveCampaignClient(apiKey, url);
-            parameters = new Dictionary<string, string>
+                activeCampaignClient = new ActiveCampaignClient(apiKey, url);
+                parameters = new Dictionary<string, string>
       {
         { "type", "text" },
         { "segmentid", "0" },
@@ -107,15 +109,23 @@ namespace Captivate.Negocio.Partners.Mail
         { "p[" + idList + "]", idList },
         { "m["+ idMessage +"]", "100" }
       };
-            result = activeCampaignClient.ApiAsync("campaign_create", parameters);
-            data = JsonConvert.DeserializeObject(result.Data);
-            idCampaignActiveCampaign = data.id;
-            //Console.WriteLine(data.id);
-            //Console.WriteLine(result.Code);//1 successfull
+                result = activeCampaignClient.ApiAsync("campaign_create", parameters);
+                data = JsonConvert.DeserializeObject(result.Data);
+                idCampaignActiveCampaign = data.id;
+                //Console.WriteLine(data.id);
+                //Console.WriteLine(result.Code);//1 successfull
 
-            idCampaignActiveCampaign = Convert.ToBoolean(result.Code) ? data.id : null;
-            return idCampaignActiveCampaign;
+                idCampaignActiveCampaign = Convert.ToBoolean(result.Code) ? data.id : null;
+                return idCampaignActiveCampaign;
+            }
+            catch (Exception ex)
+            {
+                var messageException = telemetria.MakeMessageException(ex, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(messageException);
+            }
+            return null;
         }
+
     }
 
 

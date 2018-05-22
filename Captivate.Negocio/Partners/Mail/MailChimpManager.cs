@@ -17,12 +17,14 @@ namespace Captivate.Negocio.Partners.Mail
         public ITrace telemetria { set; get; }
         public CampaignRepository CampaignRepository { set; get; }
         public ProductRepository ProductRepository { set; get; }
+        public CategoryRepository CategoryRepository { set; get; }
         public MailChimpManager()
         {
             KindadsContext context = new KindadsContext();
             telemetria = new Trace();
             CampaignRepository = new CampaignRepository { Context = context };
             ProductRepository = new ProductRepository { Context = context };
+            CategoryRepository = new CategoryRepository { Context = context };
         }
 
         public string ValidateCampaign(string idCampaign)
@@ -69,9 +71,10 @@ namespace Captivate.Negocio.Partners.Mail
                 };
 
                 Dictionary<string, string> sections = new Dictionary<string, string>();
-                if (product.SITE.CATEGORYs != null && product.SITE.CATEGORYs.Any())
+                var categorys = CategoryRepository.GetByIdSite(campaign.PRODUCT.SITE.IdSite);
+                if (categorys != null && categorys.Any())
                 {
-                    foreach (var item in product.SITE.CATEGORYs)
+                    foreach (var item in categorys)
                     {
                         sections.Add(item.IdCategory.ToString(), item.Description);
                     }

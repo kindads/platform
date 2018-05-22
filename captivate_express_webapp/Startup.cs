@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Owin;
@@ -15,7 +15,8 @@ namespace captivate_express_webapp
         public void Configuration(IAppBuilder app)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["ServiceBusDefaultConnection"].ConnectionString;
-            GlobalHost.DependencyResolver.UseServiceBus(connectionString, "notification-topic");
+            string TopicName = ConfigurationManager.AppSettings["TopicName"];
+            GlobalHost.DependencyResolver.UseServiceBus(connectionString, TopicName);
             app.MapSignalR();
 
             ConfigureAuth(app);

@@ -76,9 +76,10 @@ namespace Captivate.Negocio.Partners.Push
                             }
                         }
                     }
-                    catch (WebException eresp)
+                    catch (WebException e)
                     {
-                        //Do nothing
+                        var messageException = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                        telemetria.Critical(messageException);
                     }
                 }
             }

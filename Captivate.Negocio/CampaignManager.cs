@@ -29,9 +29,10 @@ namespace Captivate.Negocio
             return repository.GetById(id);
         }
 
-        public bool AutorizeCampaign(CampaignEntity campaign,string IdUser)
+        public bool AutorizeCampaign(Guid idCampaign,string IdUser)
         {
             bool result = false;
+            var campaign = GetById(idCampaign);
             var product = campaign.PRODUCT;
             var user = userRepository.GetByEmail(campaign.AspNetUser.Email);
 

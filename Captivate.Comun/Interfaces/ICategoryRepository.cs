@@ -10,5 +10,6 @@ namespace Captivate.Comun.Interfaces
     public interface ICategoryRepository : IGenericRepository<CategoryEntity>
     {
         CategoryEntity GetSingle(short IdSite);
+        List<CategoryEntity> GetByIdSite(Guid idCampaign);
     }
 }

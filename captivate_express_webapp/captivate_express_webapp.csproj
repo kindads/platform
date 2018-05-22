@@ -475,6 +475,7 @@
     <Content Include="Content\jHtmlArea\jHtmlArea.png" />
     <Content Include="Content\jHtmlArea\jHtmlArea_Toolbar_Group_BG.png" />
     <Content Include="Content\jHtmlArea\jHtmlArea_Toolbar_Group__Btn_Select_BG.png" />
+    <Content Include="Content\Sound\whatsapp-apple.mp3" />
     <Content Include="Email_templates\captivate_express_webapp_mail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -632,7 +633,12 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\kindads - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\kindads-dev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\kindads-qa - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\kindads-staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\kindadsportalqa - Web Deploy.pubxml" />
+    <Content Include="Properties\webjobs-list.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -653,8 +659,6 @@
     <Content Include="Content\kind-ads-whitepaper.pdf" />
     <Content Include="Content\Notification.min.css" />
     <None Include="Properties\PublishProfiles\KindAdsPortalDev - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\kindadsstagejp - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\wakindads - Web Deploy.pubxml" />
     <None Include="Resources\abi.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jHtmlArea-0.8.js" />
@@ -1024,7 +1028,13 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets'))" />
   </Target>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

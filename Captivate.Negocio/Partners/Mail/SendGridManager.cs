@@ -29,62 +29,70 @@ namespace Captivate.Negocio.Partners.Mail
         }
         public string ValidateCampaign(string idCampaign)
         {
-            string apiKey = null;
-            string idList = null;
-            string idSender = null;
-            string idUnsubscriberGroup = null;
-            string subject = null;
-            string idCampaignSendGrid = null;
-
-            CampaignEntity campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
-            ProductEntity product = ProductRepository.FindBy(p => p.IdProduct == campaign.PRODUCT_IdProduct).FirstOrDefault();
-
-            if (product.ProductSettingsEntitys != null && product.ProductSettingsEntitys.Any())
+            try
             {
-                foreach (var item in product.ProductSettingsEntitys)
+                string apiKey = null;
+                string idList = null;
+                string idSender = null;
+                string idUnsubscriberGroup = null;
+                string subject = null;
+                string idCampaignSendGrid = null;
+
+                CampaignEntity campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
+                ProductEntity product = ProductRepository.FindBy(p => p.IdProduct == campaign.PRODUCT_IdProduct).FirstOrDefault();
+
+                if (product.ProductSettingsEntitys != null && product.ProductSettingsEntitys.Any())
                 {
-                    apiKey = item.SettingName.Equals("sendGridApiToken") ? item.SettingValue : apiKey;
-                    idList = item.SettingName.Equals("sendGridList") ? item.SettingValue : idList;
-                    idSender = item.SettingName.Equals("sendGridSender") ? item.SettingValue : idSender;
-                    idUnsubscriberGroup = item.SettingName.Equals("sendGridUnsubscribeGroup") ? item.SettingValue : idUnsubscriberGroup;
+                    foreach (var item in product.ProductSettingsEntitys)
+                    {
+                        apiKey = item.SettingName.Equals("sendGridApiToken") ? item.SettingValue : apiKey;
+                        idList = item.SettingName.Equals("sendGridList") ? item.SettingValue : idList;
+                        idSender = item.SettingName.Equals("sendGridSender") ? item.SettingValue : idSender;
+                        idUnsubscriberGroup = item.SettingName.Equals("sendGridUnsubscribeGroup") ? item.SettingValue : idUnsubscriberGroup;
+                    }
                 }
-            }
 
-            if (campaign.CAMPAIGN_SETTINGS != null && campaign.CAMPAIGN_SETTINGS.Any())
-            {
-                foreach (var setting in campaign.CAMPAIGN_SETTINGS)
+                if (campaign.CAMPAIGN_SETTINGS != null && campaign.CAMPAIGN_SETTINGS.Any())
                 {
-                    subject = setting.SettingName.Equals("sendGridSubject") ? setting.SettingValue : subject;
+                    foreach (var setting in campaign.CAMPAIGN_SETTINGS)
+                    {
+                        subject = setting.SettingName.Equals("sendGridSubject") ? setting.SettingValue : subject;
+                    }
                 }
+
+                var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
+                var sg = new SendGridClient(apiKey, apiHost, headers);
+                JsonCampaign jsonCampaign = new JsonCampaign()
+                {
+                    categories = new List<string>(),
+                    custom_unsubscribe_url = "",
+                    html_content = "<html><head><title></title></head><body>" + campaign.AdText + "[unsubscribe]</body></html>",
+                    list_ids = new List<int>() { Convert.ToInt32(idList) },
+                    plain_content = "",
+                    segment_ids = new List<int>(),
+                    sender_id = Convert.ToInt32(idSender),
+                    subject = subject,
+                    suppression_group_id = Convert.ToInt32(idUnsubscriberGroup),
+                    title = campaign.Name
+                };
+                var data = JsonConvert.SerializeObject(jsonCampaign);
+                var response = sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns", requestBody: data).GetAwaiter().GetResult();
+                var deserializeBody = response.DeserializeResponseBody(response.Body);
+
+                if (response.StatusCode.Equals(HttpStatusCode.Created))
+                {
+                    idCampaignSendGrid = Convert.ToString(deserializeBody["id"]);
+                    SendCampaign(apiKey, idCampaignSendGrid);
+                }
+
+                return idCampaignSendGrid;
             }
-
-            var headers = new Dictionary<string, string> { { "X-Mock", "201" } };
-            var sg = new SendGridClient(apiKey, apiHost, headers);
-            JsonCampaign jsonCampaign = new JsonCampaign()
+            catch(Exception ex)
             {
-                categories = new List<string>(),
-                custom_unsubscribe_url = "",
-                html_content = "<html><head><title></title></head><body>" + campaign.AdText + "[unsubscribe]</body></html>",
-                list_ids = new List<int>() { Convert.ToInt32(idList) },
-                plain_content = "",
-                segment_ids = new List<int>(),
-                sender_id = Convert.ToInt32(idSender),
-                subject = subject,
-                suppression_group_id = Convert.ToInt32(idUnsubscriberGroup),
-                title = campaign.Name
-            };
-            var data = JsonConvert.SerializeObject(jsonCampaign);
-            var response = sg.RequestAsync(method: SendGridClient.Method.POST, urlPath: "campaigns", requestBody: data).GetAwaiter().GetResult();
-            var deserializeBody = response.DeserializeResponseBody(response.Body);
-
-            if (response.StatusCode.Equals(HttpStatusCode.Created))
-            {
-                idCampaignSendGrid = Convert.ToString(deserializeBody["id"]);
-                SendCampaign(apiKey, idCampaignSendGrid);
+                var messageException = telemetria.MakeMessageException(ex, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(messageException);
             }
-
-            return idCampaignSendGrid;
-
+            return null;
         }
 
         private HttpStatusCode SendCampaign(string apiKey, string idCampaignSendGrid)

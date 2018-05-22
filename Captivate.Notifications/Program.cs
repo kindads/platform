@@ -17,6 +17,7 @@ namespace Captivate.WebJob.Notifications
         {
             var config = new JobHostConfiguration();
             config.Queues.MaxDequeueCount = 1;
+            config.Queues.MaxPollingInterval = TimeSpan.FromSeconds(2);
 
             var host = new JobHost(config);
             // The following code ensures that the WebJob will be running continuously

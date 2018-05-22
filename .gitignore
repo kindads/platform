@@ -12,9 +12,14 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+#WebApp
 captivate_express_webapp/Web.Debug.config
 captivate_express_webapp/Web.config
 captivate_express_webapp/Web.Release.config
+
+#WebJob
+Captivate.Notifications/App.config
+Captivate.WebJob.CampaignValidator/App.config
 
 # Build results
 [Dd]ebug/

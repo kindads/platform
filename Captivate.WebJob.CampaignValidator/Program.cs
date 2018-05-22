@@ -15,6 +15,7 @@ namespace Captivate.WebJob.CampaignValidator
         static void Main()
         {
             var config = new JobHostConfiguration();
+            config.Queues.MaxPollingInterval = TimeSpan.FromSeconds(2);
             var host = new JobHost(config);
             // The following code ensures that the WebJob will be running continuously
             host.RunAndBlock();

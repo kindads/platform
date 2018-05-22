@@ -46,5 +46,10 @@ namespace Captivate.DataAccess
         {
             return base.FindBy(predicate);
         }
+
+        public List<CategoryEntity> GetByIdSite(Guid idSite)
+        {
+           return (from r in Context.CategorySites join c in Context.Categories on r.CATEGORY_IdCategory equals c.IdCategory where r.SITEs_IdSite.Equals(idSite) select c).ToList();
+        }
     }
 }

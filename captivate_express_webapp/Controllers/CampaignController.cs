@@ -19,6 +19,8 @@ using Captivate.Comun.Models;
 using Captivate.DataAccess;
 using Captivate.Comun.Models.Entities;
 using Captivate.Negocio.Partners.IContact;
+using Captivate.Common.Interfaces;
+using Captivate.Business;
 
 namespace captivate_express_webapp.Controllers
 {
@@ -32,6 +34,7 @@ namespace captivate_express_webapp.Controllers
     private AccessService _accessService;
     List<Models.CAMPAIGN_CHAT> listCampaignChats;
     KindadsContext context;
+    public ITrace telemetria { set; get; }
 
 
     public CampaignController()
@@ -43,7 +46,7 @@ namespace captivate_express_webapp.Controllers
       _activeCampaignService = new ActiveCampaignService();
       _getResponseService = new GetResponseService();
       context = new KindadsContext();
-
+      telemetria = new Trace();
     }
 
     public async Task<ActionResult> Index(string idProduct)
@@ -148,6 +151,8 @@ namespace captivate_express_webapp.Controllers
             GetProviderViewPushCrew();
             model.Campaign.AdURL = model.UrlText;
             model.Campaign.AdText = model.MessageText;
+            model.Campaign.StartDate = DateTime.Now;
+            model.Campaign.EndDate = null;
             operationResult = _service.RegisterCampaign(model.Campaign, GeneratePushNotifSettings(model), GetFileUpload());
           }
           else if (Utils.Constants.PROVIDER_MAIL_CHIMP.Equals(TempData["TypeChannel"].ToString()))
@@ -470,7 +475,7 @@ namespace captivate_express_webapp.Controllers
       else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_PUSH_CREW)))
       {
         GetProviderViewPushCrew();
-        FillMailChimpSettings(model, campaign);
+        FillPushNotifSettings(model, campaign);
       }
       else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_MAIL_CHIMP)))
       {
@@ -544,7 +549,7 @@ namespace captivate_express_webapp.Controllers
         {
           GetProviderViewPushCrew();
           model.UrlText = String.IsNullOrEmpty(model.UrlText) ? "-" : (String.IsNullOrEmpty(protocolSelecc) ? "https://" : protocolSelecc) + model.UrlText;
-          GetPushNotifSettings(model, campaign.CAMPAIGN_SETTINGS);
+          GetPushCrewSettings(model, campaign.CAMPAIGN_SETTINGS);
           operationResult = _service.ModifyCampaign(model.Campaign, campaign.CAMPAIGN_SETTINGS, GetFileUpload());
         }
         else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_MAIL_CHIMP)))
@@ -892,6 +897,21 @@ namespace captivate_express_webapp.Controllers
       }
     }
 
+    private void GetPushCrewSettings(CreateCampaingModel model, ICollection<Models.CAMPAIGN_SETTINGS> listCampaignSettings)
+    {
+      if (listCampaignSettings != null && listCampaignSettings.Any())
+      {
+        foreach (var setting in listCampaignSettings)
+        {
+          setting.SettingValue = setting.SettingName.Equals("pushNotifUrl") ? model.UrlText : setting.SettingValue;
+          setting.SettingValue = setting.SettingName.Equals("pushNotifMessageText") ? model.MessageText : setting.SettingValue;
+          //setting.SettingValue = setting.SettingName.Equals("pushNotifUtmSource") ? model.UTM_Source : setting.SettingValue;
+          //setting.SettingValue = setting.SettingName.Equals("pushNotifUtmMedium") ? model.UTM_Medium : setting.SettingValue;
+          //setting.SettingValue = setting.SettingName.Equals("pushNotifUtmCampaign") ? model.UTM_Campaign : setting.SettingValue;
+        }
+      }
+    }
+
     private static string GetUrlWithoutProtocol(string url)
     {
       try
@@ -935,13 +955,13 @@ namespace captivate_express_webapp.Controllers
       return View();
     }
 
-    public ActionResult GetTableCampaignsPending(int page = 1, string sort = "Name", string sortdir = "ASC")
+    public ActionResult GetTableCampaignsPending(int page = 1, string sort = "RegisterDate", string sortdir = "DESC")
     {
       string idUser = IdentityExtensions.GetUserId(User.Identity);
       return PartialView("_TableCampaignPending", _service.GetTableCampaignPending(GetRoleUser(), idUser, page, sort, sortdir));
     }
 
-    public ActionResult GetTableCampaignsVerify(int page = 1, string sort = "Name", string sortdir = "ASC")
+    public ActionResult GetTableCampaignsVerify(int page = 1, string sort = "RegisterDate", string sortdir = "DESC")
     {
       string idUser = IdentityExtensions.GetUserId(User.Identity);
       return PartialView("_TableCampaignVerify", _service.GetTableCampaignVerify(GetRoleUser(), idUser, page, sort, sortdir));
@@ -1078,6 +1098,8 @@ namespace captivate_express_webapp.Controllers
       }
       catch (Exception ex)
       {
+        var messageException = telemetria.MakeMessageException(ex, System.Reflection.MethodBase.GetCurrentMethod().Name);
+        telemetria.Critical(messageException);
         return ResponseError();
       }
 
