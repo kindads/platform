@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Interfaces
 {
-    public interface ITransactionCaptRepository : IGenericRepository<TransactionsCaptEntity>
+    public interface ITransactionCaptRepository : IDapperGenericRepository<TransactionsCaptEntity>
     {
     }
 }

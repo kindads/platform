@@ -17,7 +17,19 @@ namespace Captivate.Negocio
 
         public AspNetUserManager()
         {
+            repository = new AspNetUserRepository();
+        }
 
+        public AspNetUserEntity GetById(Guid id)
+        {
+            return repository.GetById(id);
+        }
+
+        public bool Update(AspNetUserEntity aspNetUserEntity)
+        {
+            repository.Edit(aspNetUserEntity);
+            return true;
         }
     }
+
 }

@@ -6,6 +6,12 @@
     },
     {
       "filePath": "../Captivate.WebJob.CampaignValidator/Captivate.WebJob.CampaignValidator.csproj"
+    },
+    {
+      "filePath": "../Captivate.WebJob.SiteValidator/Captivate.WebJob.SiteValidator.csproj"
+    },
+    {
+      "filePath": "../Captivate.WebJob.UserWallet/Captivate.WebJob.UserWallet.csproj"
     }
   ]
 }

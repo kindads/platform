@@ -6,6 +6,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>@ViewBag.Title | Kind Ads</title>
   <link rel="shortcut icon" href="../favicon.ico">
   <link rel="apple-touch-icon" href="../Img/favicon/apple-icon-precomposed.png">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../Img/favicon/apple-icon-144x144.png">
@@ -34,12 +35,13 @@
       currentMessage = 0;
     }
   </script>
+
+  
+
   <script src="~/Scripts/jquery-3.3.1.min.js"></script>
   <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
   <script src="~/signalr/hubs"></script>
   <script src="~/Scripts/signalr/signalRProducts.js"></script>
-
-  <title>@ViewBag.Title</title>
 </head>
 <body>
   @{ captivate_express_webapp.Services.PublisherService _service = new captivate_express_webapp.Services.PublisherService();
@@ -50,7 +52,7 @@
     <source src="~/Content/Sound/whatsapp-apple.mp3" type="audio/mpeg" />
   </audio>
   <div class="wrapper" role="main" id="top">
-    <header class="navbar navbar-custom fixed-header" role="banner">
+    <header class="navbar navbar-custom fixed-header2" role="banner">
       @using (Html.BeginForm("LogOff", "Access", FormMethod.Post, new { id = "logoutForm" }))
       {
         <div class="container-fluid">
@@ -60,7 +62,8 @@
                 <button class="navbar-toggle collapsed text-uppercase" role="button" type="button" data-toggle="collapse" data-target="#navbar-collapse">
                   <span class="sr-only">Menu</span>
                   <div class="pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar last"></span></div>
-                </button><a class="navbar-brand" href="@redirectLogo" title="Kind Ads"><img class="img-responsive" src="../Img/UI/logo.png"></a>
+                </button>
+                <a class="navbar-brand" href="@redirectLogo" title="Kind Ads"><img class="img-responsive" src="~/Img/UI/logo.png"></a>
               </div>
               <nav class="collapse navbar-collapse" role="navigation" aria-expanded="false" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left">
@@ -89,14 +92,17 @@
     <div class="main-content admin">
       <div class="flexbox my-content">
         <section class="tab-nav">
+          <div>
+            <a class="navbar-brand" href="@redirectLogo" title="Kind Ads"><img class="img-responsive" src="~/Img/UI/logo.png"></a>
+          </div>
           <ul class="flexbox">
             <li>
               @Html.ActionLink("My sites", "ShowSites", "Site", null, new { @class = "link-dashboard" })
             </li>
-            <li>
+            <li class="bal-right">
               @Html.ActionLink("Products", "ShowProducts", "Product", null, new { @class = "link-site" })
             </li>
-            <li>
+            <li class="bal-left">
               @Html.ActionLink("Campaigns", "SortCampaigns", "Campaign", null, new { @class = "link-campaign" })
             </li>
             <li>
@@ -118,11 +124,13 @@
           </footer>
         </section>
         <!--Div de notificacion-->
-        <div id="notification-tile" class="notification-tile">
+        <div id="notification-tile" class="notification-tile" style="display:none;">
           <a href="#">
             <div class="row">
               <div class="col-md-11">
-                <span id="notification-title" class="notification-title"></span>
+                <span id="notification-title" class="notification-title">
+                  Campaign notification 5/30/2018 6:23:32 PM
+                </span>
               </div>
               <div class="col-md-1" onclick="closePushNotification()">
                 <span class="color-black">x</span>
@@ -130,7 +138,9 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div id="notification-message" class="notification-message"></div>
+                <div id="notification-message" class="notification-message">
+                  Congratulations your campaign MailJet Demo has been approved
+                </div>
               </div>
             </div>
           </a>
@@ -209,6 +219,16 @@
     ga('create', 'UA-114655123-1', 'auto');
     ga('send', 'pageview');
   </script>
+  <!-- site validation-->
+  <!-- Dev environment -->
+  <script src="https://kindadsscripts.blob.core.windows.net/site-validation-dev/KindAdsSites.js"></script>
+  <script type="text/javascript">
+    var url = 'https://captivateapi-dev.azurewebsites.net/api/site';
+    var apiToken = 'e6b227d5c327ed276de2ec7b4e3de5e8a36ba290866821bb4659506819957598'; // Ejemplo
+    var idSite = '09C23B4E-C8BE-4BE0-9DF3-8AEBDDC434D1'; //Ejemplo
+    kindAds.validateSite(url, apiToken, idSite);
+  </script>
+  <!-- end site validation-->
 </body>
 </html>
 

@@ -44,7 +44,7 @@
     <source src="~/Content/Sound/whatsapp-apple.mp3" type="audio/mpeg" />
   </audio>
   <div class="wrapper" role="main" id="top">
-    <header class="navbar navbar-custom navbar-marketplace fixed-header" role="banner">
+    <header class="navbar navbar-custom navbar-marketplace fixed-header2" role="banner">
       @using (Html.BeginForm("LogOff", "Access", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
       {
         <div class="container-fluid">
@@ -54,7 +54,10 @@
                 <button class="navbar-toggle collapsed text-uppercase" role="button" type="button" data-toggle="collapse" data-target="#navbar-collapse">
                   <span class="sr-only">Menu</span>
                   <div class="pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar last"></span></div>
-                </button><a class="navbar-brand" href="/Advertiser/Home" title="Kind Ads"><img class="img-responsive" src="../Img/UI/logo-white.png"></a>
+                </button>
+                <a class="navbar-brand" href="/Advertiser/Home" title="Kind Ads">
+                  <img class="img-responsive" src="~/Img/UI/logo-white.png">
+                </a>
               </div>
               <nav class="collapse navbar-collapse" role="navigation" aria-expanded="false" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left">

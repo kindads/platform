@@ -445,6 +445,38 @@
       }
     }
 
+    .cookies {
+      background: darken(#f5f5f1, 4);
+      z-index: 100;
+      position: fixed;
+      width: 100%;
+      padding: 16px 40px;
+      bottom: 0;
+      border-top: solid 1px $dim-grey;
+      transition: all ease-out .5s;
+      display: inline-block;
+      text-align: center;
+      &.fadeIn {
+        opacity: 0;
+        transform: translate(0, 70px);
+      }
+
+      span {
+        font-size: 14px;
+        letter-spacing: 0.035em;
+        padding: 8px 4px 4px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 10px;
+      }
+      .btn {
+        background-color: $vivid-green;
+        color: $off-white;
+        font-family: $openSansSemibold;
+        padding: 8px 32px;
+        font-size: 16px;
+      }
+    }
     .modal {
       background-color: rgba($black, .3);
 
@@ -580,6 +612,16 @@
     }
 
     @include breakpoint($tablet) {
+      .cookies {
+        text-align: left;
+        span {
+          margin-bottom: 0px;
+        }
+        .btn {
+          float: right;
+        }
+      }
+
       .hero {
         flex-direction: row;
       }
@@ -787,298 +829,303 @@
         }
       }
     }
+    @include breakpoint($desktop-l) {
+      .cookies {
+        width: 1440px;
+      }
+    }
   }
 
-    // Authentication
-    .sign {
-      background: linear-gradient(to bottom, #06297C 0%,#00021A 100%);
-      //background: url(#{$images-path}/stock/bg-mask.png) no-repeat center top;
-      min-height: 100%;
-      flex-direction: column;
+  // Authentication
+  .sign {
+    background: linear-gradient(to bottom, #06297C 0%,#00021A 100%);
+    //background: url(#{$images-path}/stock/bg-mask.png) no-repeat center top;
+    min-height: 100%;
+    flex-direction: column;
 
-      .info {
-        background: $soft-grey;
-        display: none;
-        width: 50%;
+    .info {
+      background: $soft-grey;
+      display: none;
+      width: 50%;
 
-        .content {
-          justify-content: center;
+      .content {
+        justify-content: center;
+      }
+    }
+
+    .form {
+      margin: 0;
+      padding: 24px 0;
+      color: $white;
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover, 
+      input:-webkit-autofill:focus,
+      textarea:-webkit-autofill,
+      textarea:-webkit-autofill:hover,
+      textarea:-webkit-autofill:focus,
+      select:-webkit-autofill,
+      select:-webkit-autofill:hover,
+      select:-webkit-autofill:focus {
+        border-bottom: solid 2px $main-blue;
+        background-color: $black;
+        -webkit-text-fill-color: $off-white;
+        -webkit-box-shadow: 0 0 0px 100px $vivid-violet inset;
+        transition: background 5000s ease-in-out 0s;
+      }
+
+      &:before {
+        background: url(#{$images-path}/stock/fg.png) no-repeat right bottom;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .title {
+        margin-bottom: 20px;
+        text-align: center;
+        position: relative;
+
+        h1 {
+          font-size: 1.375em;
+          line-height: 100%;
+          position: absolute;
+          top: 4px;
+          width: 100%;
+        }
+
+        .logo-mobile {
+          margin-top: calc(10px + 20px);
         }
       }
 
-      .form {
-        margin: 0;
-        padding: 24px 0;
-        color: $white;
+      .form-group {
+        position: relative;
+        margin-bottom: 5%;
 
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover, 
-        input:-webkit-autofill:focus,
-        textarea:-webkit-autofill,
-        textarea:-webkit-autofill:hover,
-        textarea:-webkit-autofill:focus,
-        select:-webkit-autofill,
-        select:-webkit-autofill:hover,
-        select:-webkit-autofill:focus {
-          border-bottom: solid 2px $main-blue;
-          background-color: $black;
-          -webkit-text-fill-color: $off-white;
-          -webkit-box-shadow: 0 0 0px 100px $vivid-violet inset;
-          transition: background 5000s ease-in-out 0s;
+        .label {
+          display: none;
         }
 
-        &:before {
-          background: url(#{$images-path}/stock/fg.png) no-repeat right bottom;
-          background-size: cover;
-          position: absolute;
-          top: 0;
-          left: 0;
+        &.simple {
+
+        }
+
+        i.kas {
+          width: 28px;
+          height: 28px;
+          padding-top: 2px;
+          text-align: center;
           display: block;
-          width: 100%;
-          height: 100%;
+          position: relative;
+          top: 10px;
+          z-index: 20;
+          font-size: 20px;
+          float: left;
+          margin-right: 4px;
+          &:before {
+            font-size: 24px;
+          }
+        }
+      }
+
+      .role {
+        padding-left: 32px;
+        .label {
+          margin-top: 10px;
+          width: 44px;
+          display: inline-block;
+        }
+        .select.form-control {
+          width: calc(100% - 48px);
+          display: inline-block;
+          min-width: initial;
+          max-width: initial;
+        }
+      }
+
+      .last {
+        margin: 20px;
+        li {
+          float: left;
+          color: lighten($dim-grey, 5);
+          font-size: 13px;
+
+          a {
+            color: $off-white;
+          }
+
+          &:last-child {
+            float: right;
+          }
+        }
+      }
+    }
+
+    @include breakpoint($tablet) {
+      flex-direction: row;
+
+      .info {
+        padding: 0;
+        display: flex;
+        background: url(#{$images-path}/stock/sign-fg.jpg) no-repeat left top;
+        background-size: cover;
+      }
+
+      .form {
+        width: 50%;
+        padding: 24px 24px 0 24px;
+
+        &:before {
+          content: '';
         }
 
         .title {
-          margin-bottom: 20px;
-          text-align: center;
-          position: relative;
-
           h1 {
-            font-size: 1.375em;
-            line-height: 100%;
-            position: absolute;
-            top: 4px;
-            width: 100%;
+            position: relative;
+            margin: 40px 0 20px;
           }
 
           .logo-mobile {
-            margin-top: calc(10px + 20px);
+            margin-top: 4px;
+            text-align: left;
+            width: 148px;
           }
         }
 
         .form-group {
-          position: relative;
-          margin-bottom: 5%;
-
-          .label {
-            display: none;
-          }
-
+          width: 80%;
+          margin-left: 10%;
+          overflow: hidden;
           &.simple {
-
-          }
-
-          i.kas {
-            width: 28px;
-            height: 28px;
-            padding-top: 2px;
-            text-align: center;
-            display: block;
-            position: relative;
-            top: 10px;
-            z-index: 20;
-            font-size: 20px;
-            float: left;
-            margin-right: 4px;
-            &:before {
-              font-size: 24px;
+            margin-left: 0;
+            width: 100%;
+            .btn {
+              width: 80%;
+              max-width: inherit;
             }
           }
         }
 
-        .role {
-          padding-left: 32px;
-          .label {
-            margin-top: 10px;
-            width: 44px;
-            display: inline-block;
-          }
-          .select.form-control {
-            width: calc(100% - 48px);
-            display: inline-block;
-            min-width: initial;
-            max-width: initial;
-          }
+        .form-data {
+          margin-bottom: calc(10% + 0px);
         }
-
         .last {
-          margin: 20px;
-          li {
-            float: left;
-            color: lighten($dim-grey, 5);
-            font-size: 13px;
-
-            a {
-              color: $off-white;
-            }
-
-            &:last-child {
-              float: right;
-            }
-          }
-        }
-      }
-
-      @include breakpoint($tablet) {
-        flex-direction: row;
-
-        .info {
-          padding: 0;
-          display: flex;
-          background: url(#{$images-path}/stock/sign-fg.jpg) no-repeat left top;
-          background-size: cover;
-        }
-
-        .form {
-          width: 50%;
-          padding: 24px 24px 0 24px;
-
-          &:before {
-            content: '';
-          }
-
-          .title {
-            h1 {
-              position: relative;
-              margin: 40px 0 20px;
-            }
-
-            .logo-mobile {
-              margin-top: 4px;
-              text-align: left;
-              width: 148px;
-            }
-          }
-
-          .form-group {
-            width: 80%;
-            margin-left: 10%;
-            overflow: hidden;
-            &.simple {
-              margin-left: 0;
-              width: 100%;
-              .btn {
-                width: 80%;
-                max-width: inherit;
-              }
-            }
-          }
-
-          .form-data {
-            margin-bottom: calc(10% + 0px);
-          }
-          .last {
-            margin: 40px 20px;
-          }
+          margin: 40px 20px;
         }
       }
     }
+  }
 
-    .carousel.slide {
-      @include breakpoint($tablet) {
-        margin-top: 120px;
+  .carousel.slide {
+    @include breakpoint($tablet) {
+      margin-top: 120px;
 
-        .carousel-indicators {
-          position: relative;
-          bottom: 0;
-          margin: 20px -30%;
+      .carousel-indicators {
+        position: relative;
+        bottom: 0;
+        margin: 20px -30%;
 
-          li {
-            width: 16px;
-            height: 16px;
-            margin: 2px 4px;
-            background-color: rgba($main-blue, .4);
+        li {
+          width: 16px;
+          height: 16px;
+          margin: 2px 4px;
+          background-color: rgba($main-blue, .4);
 
-            &.active {
-              background-color: $main-blue;
-            }
+          &.active {
+            background-color: $main-blue;
           }
         }
+      }
 
-        .carousel-inner {
-          text-align: center;
-          padding: 0 20px;
+      .carousel-inner {
+        text-align: center;
+        padding: 0 20px;
 
-          img {
-            margin: 0 auto 20px;
-            max-width: 280px;
-          }
+        img {
+          margin: 0 auto 20px;
+          max-width: 280px;
+        }
 
-          h3, p {
-            font-size: 14px;
-            line-height: 1.4em;
-            color: $charcoal-grey;
-          }
+        h3, p {
+          font-size: 14px;
+          line-height: 1.4em;
+          color: $charcoal-grey;
+        }
 
-          h3 {
-            color: $rich-black;
-            font-size: 20px;
-            font-family: $openSansSemibold;
-          }
+        h3 {
+          color: $rich-black;
+          font-size: 20px;
+          font-family: $openSansSemibold;
         }
       }
     }
+  }
 
-    // My Content
-    .my-content {
-      flex-direction: column;
-      min-height: 100%;
+  // My Content
+  .my-content {
+    flex-direction: column;
+    min-height: 100%;
 
-      .form-control.verify-site {
-        border: none;
+    .form-control.verify-site {
+      border: none;
+    }
+
+    .form-data {
+      .field-validation-error {
+        margin: 0;
+        max-width: 320px;
+      }
+    }
+
+    .filter-panel {
+      input.form-control,
+      select.form-control,
+      .bootstrap-select {
       }
 
-      .form-data {
-        .field-validation-error {
-          margin: 0;
-          max-width: 320px;
-        }
-      }
-
-      .filter-panel {
+      @include breakpoint($tablet) {
         input.form-control,
         select.form-control,
         .bootstrap-select {
+          min-width: initial;
+          max-width: 320px;
         }
-
-        @include breakpoint($tablet) {
-          input.form-control,
-          select.form-control,
-          .bootstrap-select {
-            min-width: initial;
-            max-width: 320px;
-          }
-        }
-      }
-
-      .phone {
-        //background: url(../../Img/product/product.PNG) no-repeat center bottom;
-        min-height: 120px;
-        width: 100%;
-        //background-size: cover;
-        border: solid 1px green;
-        position: relative;
-        margin-top: 20px;
-        padding: 8px;
-        .preview-text {
-          margin: 0;
-          .title {
-
-          }
-          .message {
-            margin-top: 10px;
-          }
-
-        }
-      }
-
-      .summary-bar {
-        background: $black;
-        color: $soft-grey;
-        padding: 8px;
-      }
-
-      @include breakpoint($tablet) {
-        flex-direction: row;
       }
     }
+
+    .phone {
+      //background: url(../../Img/product/product.PNG) no-repeat center bottom;
+      min-height: 120px;
+      width: 100%;
+      //background-size: cover;
+      border: solid 1px green;
+      position: relative;
+      margin-top: 20px;
+      padding: 8px;
+      .preview-text {
+        margin: 0;
+        .title {
+
+        }
+        .message {
+          margin-top: 10px;
+        }
+
+      }
+    }
+
+    .summary-bar {
+      background: $black;
+      color: $soft-grey;
+      padding: 8px;
+    }
+
+    @include breakpoint($tablet) {
+      flex-direction: row;
+    }
+  }

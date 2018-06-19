@@ -202,7 +202,13 @@
     var isChannelActiveCampaign = "@ViewBag.IsChannelActiveCampaign".toLowerCase() == "true";
     var isChannelGetResponse = "@ViewBag.IsChannelGetResponse".toLowerCase() == "true";
 
-    if (isChannelMailChimp || isChannelCampaignMonitor || isChannelAweber || isChannelSendGrid || isChannelActiveCampaign || isChannelGetResponse) {
+    var isChannelIContact = "@ViewBag.IsChannelIContact".toLowerCase() == "true";
+    var isChannelSendinBlue = "@ViewBag.IsChannelSendinBlue".toLowerCase() == "true";
+    var isChannelOneSignal = "@ViewBag.IsChannelOneSignal".toLowerCase() == "true";
+    var isChannelMailJet= "@ViewBag.IsChannelMailJet".toLowerCase() == "true";
+
+    if (isChannelMailChimp || isChannelCampaignMonitor || isChannelAweber || isChannelSendGrid || isChannelActiveCampaign || isChannelGetResponse
+      || isChannelIContact || isChannelSendinBlue || isChannelOneSignal || isChannelMailJet) {
       $("#lblMessageTextHtml").hide();
       //tinyMCE.triggerSave();
       //var textHtml = tinyMCE.get('MessageTextHtml').getContent();

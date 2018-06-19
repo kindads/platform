@@ -20,6 +20,9 @@ using Captivate.Comun.Interfaces;
 using Captivate.Negocio;
 using Captivate.Comun.Models.ViewModel;
 using Captivate.Negocio.Partners.IContact;
+using Captivate.Negocio.Partners.Mail;
+using Captivate.Comun.Partners.Mail.SendinBlue;
+using Captivate.Negocio.Partners.Push;
 
 namespace captivate_express_webapp.Controllers
 {
@@ -34,7 +37,7 @@ namespace captivate_express_webapp.Controllers
     private Services.ActiveCampaignService _activeCampaignService;
     private Services.GetResponseService _getResponseService;
 
-   
+
     public ProductController()
     {
       _publisherService = new Services.PublisherService();
@@ -72,10 +75,10 @@ namespace captivate_express_webapp.Controllers
         var productType = new Guid(Session["ProductTypeSelecc"].ToString());
         var partner = new Guid(Session["PartnerSelecc"].ToString());
         var apiToken = Session["ApiToken"].ToString();
-        var price = Session["ProceSelecc"]==null? _createProduct.PriceSelecc: Convert.ToDouble(Session["PriceSelecc"].ToString());
+        var price = Session["ProceSelecc"] == null ? _createProduct.PriceSelecc : Convert.ToDouble(Session["PriceSelecc"].ToString());
         var site = new Guid(Session["SiteSelecc"].ToString());
         var userId = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
-       
+
 
         if (partner.Equals(new Guid(Utils.Constants.PROVIDER_MAIL_CHIMP)))
         {
@@ -106,18 +109,19 @@ namespace captivate_express_webapp.Controllers
           _createProduct.ListGRSelecc = (string)TempData["ListsGRSelecc"];
           _createProduct.FromFieldGRSelecc = (string)TempData["FromFieldSelecc"];
         }
-        else if(partner.Equals(new Guid(Utils.Constants.PROVIDER_SEND_GRID)))
+        else if (partner.Equals(new Guid(Utils.Constants.PROVIDER_SEND_GRID)))
         {
           _createProduct.ListSGSelecc = (string)TempData["ListsSGSelecc"];
           _createProduct.SenderSGSelecc = (string)TempData["SenderSGSelecc"];
           _createProduct.UnsubscribeGroupSGSelecc = (string)TempData["UnsubscribeGroupSGSelecc"];
         }
-        else if(partner.Equals(new Guid(Utils.Constants.PROVIDER_ACTIVE_CAMPAIGN)))
+        else if (partner.Equals(new Guid(Utils.Constants.PROVIDER_ACTIVE_CAMPAIGN)))
         {
           _createProduct.ListACSelecc = (string)TempData["ListsACSelecc"];
           _createProduct.URLACSelecc = (string)Session["WildCard"];
         }
-        else if(partner.Equals(new Guid(Utils.Constants.PROVIDER_ICONTACT))){
+        else if (partner.Equals(new Guid(Utils.Constants.PROVIDER_ICONTACT)))
+        {
           _createProduct.ListICSelecc = (string)TempData["ListsICSelecc"];
           _createProduct.IContact.ListId = _createProduct.ListICSelecc;
 
@@ -130,10 +134,25 @@ namespace captivate_express_webapp.Controllers
           // Fill object
           requestBody.fromEmail = requestFrm.ApiUserName;
           requestBody.name = _createProduct.Name;
-          requestBody.fromName= requestFrm.ApiUserName;
-          responseCampaign = (IContactPostCampaignsResponse)iContactProvider.CreateCampaign(requestBody,requestFrm);
+          requestBody.fromName = requestFrm.ApiUserName;
+          responseCampaign = (IContactPostCampaignsResponse)iContactProvider.CreateCampaign(requestBody, requestFrm);
           _createProduct.IContact.IdCampaign = responseCampaign.campaigns[0].campaignId;
-            ;
+
+        }
+        else if (partner.Equals(new Guid(Utils.Constants.PROVIDER_SENDINBLUE)))
+        {
+          _createProduct.ListSBSelecc = (string)TempData["ListsSBSelecc"];
+          _createProduct.SendinBlue.ListIds = new List<int> { Convert.ToInt32(_createProduct.ListSBSelecc) };
+        }
+        else if (partner.Equals(new Guid(Utils.Constants.PROVIDER_ONE_SIGNAL)))
+        {
+          _createProduct.ListAppOSSelecc = (string)TempData["ListsAppOSSelecc"];
+          _createProduct.AuthAppOSSelecc = (string)TempData["AuthAppOSSelecc"];
+        }
+        else if (partner.Equals(new Guid(Utils.Constants.PROVIDER_MAILJET)))
+        {
+          _createProduct.ListMJSelecc = (string)TempData["ListsMJSelecc"];
+          _createProduct.SegmentMJSelecc = (string)TempData["SegmentMJSelecc"];
         }
 
         _createProduct.PriceSelecc = price;
@@ -141,8 +160,6 @@ namespace captivate_express_webapp.Controllers
         _createProduct.ProductTypeSelect = productType;
         _createProduct.ParterTypeSelect = partner;
         _createProduct.SiteTypeSelecc = site;
-
-        
 
         if (_productService.SaveProduct(_createProduct, userId, GetFileUpload(fileup)))
         {
@@ -209,17 +226,34 @@ namespace captivate_express_webapp.Controllers
       bool resultado = false;
       string idUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
       ProductManager manager = new ProductManager();
-      resultado=manager.LogicalDelete(Id);
+      resultado = manager.LogicalDelete(Id);
       Session["SuccessfulDelete"] = resultado == true ? "SI" : "NO";
-      var model = manager.GetBlock(idUser,1);
+      var model = manager.GetBlock(idUser, 1);
       return RedirectToAction("ShowProducts");
     }
+
 
     public JsonResult GetPartners(string id)
     {
       Session["ProductTypeSelecc"] = id;
       var listPartners = _publisherService.GetPartnersByIdProductType(id);
       return Json(new SelectList(listPartners, "IdPartner", "Name"));
+    }
+
+
+    public JsonResult ObtenerListsFromFolder(int ids)
+    {
+      Session["FolderTypeSelect"] = ids;
+      string ApiKey = Session["ApiToken"].ToString();
+      SendinBlueManager sendinBlueManager = new SendinBlueManager(ApiKey);
+      List<Folder> folders = sendinBlueManager.GetAllFolders();
+      List<Lista> listas = (from folder in folders
+                            where folder.id == ids
+                            select folder.Listas).FirstOrDefault();
+
+      SelectList selectList = new SelectList(listas, "id", "name");
+      return Json(selectList);
+
     }
 
     private async Task<List<PRODUCT_TYPE>> FillProductTypeAsync()
@@ -267,16 +301,21 @@ namespace captivate_express_webapp.Controllers
       Session["PartnerSelecc"] = id;
       if (Utils.Constants.PROVIDER_AWEBER.Equals(id))
       {
-        return Json(new { success = true, isProviderAWeber = true, linkAWeber = Utils.Configuration.AppSettings.AWeberAuthorizeAppUrl, isProviderActiveCampaign = false , isProviderIContact =false});
-      }else if (Utils.Constants.PROVIDER_ACTIVE_CAMPAIGN.Equals(id))
-      {
-        return Json(new { success = true, isProviderActiveCampaign = true, isProviderAWeber = false , isProviderIContact =false});
+        return Json(new { success = true, isProviderAWeber = true, linkAWeber = Utils.Configuration.AppSettings.AWeberAuthorizeAppUrl, isProviderActiveCampaign = false, isProviderIContact = false });
       }
-      else if(Utils.Constants.PROVIDER_ICONTACT.Equals(id))
+      else if (Utils.Constants.PROVIDER_ACTIVE_CAMPAIGN.Equals(id))
       {
-        return Json(new { success = true, isProviderActiveCampaign = false, isProviderAWeber = false , isProviderIContact=true});
+        return Json(new { success = true, isProviderActiveCampaign = true, isProviderAWeber = false, isProviderIContact = false });
       }
-      return Json(new { success = true, isProviderAWeber = false, isProviderActiveCampaign = false , isProviderIContact =false});
+      else if (Utils.Constants.PROVIDER_ICONTACT.Equals(id))
+      {
+        return Json(new { success = true, isProviderActiveCampaign = false, isProviderAWeber = false, isProviderIContact = true });
+      }
+      else if (Utils.Constants.PROVIDER_MAILJET.Equals(id))
+      {
+        return Json(new { success = true, isProviderMailJet = true });
+      }
+      return Json(new { success = true, isProviderAWeber = false, isProviderActiveCampaign = false, isProviderIContact = false });
     }
 
     public JsonResult PriceSelecc(string id)
@@ -363,12 +402,37 @@ namespace captivate_express_webapp.Controllers
       return Json("success");
     }
 
+    public JsonResult ListsSBSelecc(string id)
+    {
+      TempData["ListsSBSelecc"] = id;
+      return Json("success");
+    }
 
-    public JsonResult ValidateApiAppId(string ApiAppId, string UserName, string UserPassword,string AccountId,string ClientFolderId,string ApiToken, string idSite, string idProvider, string wildCard)
-    {      
+    public JsonResult ListsAppsOSSelecc(string id)
+    {
+      OneSignalManager oneSignalManager = new OneSignalManager();
+      TempData["ListsAppOSSelecc"] = id;
+      TempData["AuthAppOSSelecc"] = oneSignalManager.GetApp(Session["ApiToken"].ToString(), id).basic_auth_key;
+      return Json("success");
+    }
 
-      Session["ApiToken"] = ApiToken; 
-      Session["AccountId"]= wildCard;
+    public JsonResult ListsMJSelecc(string id)
+    {
+      TempData["ListsMJSelecc"] = id;
+      return Json("success");
+    }
+
+    public JsonResult SegmentMJSelecc(string id)
+    {
+      TempData["SegmentMJSelecc"] = id;
+      return Json("success");
+    }
+
+    public JsonResult ValidateApiAppId(string ApiAppId, string UserName, string UserPassword, string AccountId, string ClientFolderId, string ApiToken, string idSite, string idProvider, string wildCard)
+    {
+
+      Session["ApiToken"] = ApiToken;
+      Session["AccountId"] = wildCard;
       Session["WildCard"] = wildCard;
       string mailingProvider = Session["PartnerSelecc"].ToString();
 
@@ -405,7 +469,7 @@ namespace captivate_express_webapp.Controllers
       IValidateProvider resultValidation = new ValidateProvider(EnumMailProviders.IContact);
 
       switch (mailingProvider)
-      {        
+      {
         case Utils.Constants.PROVIDER_ICONTACT:
           {
             IContactService<ICampaign, IContactGetListsResponse> contactService = new IContactService<ICampaign, IContactGetListsResponse>();
@@ -415,7 +479,7 @@ namespace captivate_express_webapp.Controllers
           break;
       }
 
-      return Json(new { message= resultValidation.Message, success = resultValidation.IsValid, isPushCrew = _isPushCrew, isSubscribers = _isSubscribers, isMailChimp = _isMailChimp, isCampaignMonitor = _isCampaignMonitor, isAweber = _isAweber, isGetResponse = _isGetResponse, isSendGrid = _isSendGrid, IsActiveCampaign = _isActiveCampaign, IsActiveIContact = _isActiveIContact });
+      return Json(new { message = resultValidation.Message, success = resultValidation.IsValid, isPushCrew = _isPushCrew, isSubscribers = _isSubscribers, isMailChimp = _isMailChimp, isCampaignMonitor = _isCampaignMonitor, isAweber = _isAweber, isGetResponse = _isGetResponse, isSendGrid = _isSendGrid, IsActiveCampaign = _isActiveCampaign, IsActiveIContact = _isActiveIContact });
 
     }
 
@@ -438,6 +502,10 @@ namespace captivate_express_webapp.Controllers
         bool _isSendGrid = false;
         bool _isActiveCampaign = false;
         bool _isActiveIContact = false;
+        bool _isSendinBlue = false;
+        bool _isPushEngage = false;
+        bool _isOneSignal = false;
+        bool _isMailJet = false;
 
         switch (mailingProvider)
         {
@@ -450,7 +518,7 @@ namespace captivate_express_webapp.Controllers
             _isSubscribers = true;
             break;
           case Utils.Constants.PROVIDER_MAIL_CHIMP:
-            IMailChimpManager mailChimpManager = new MailChimpManager(ApiToken);
+            IMailChimpManager mailChimpManager = new MailChimp.MailChimpManager(ApiToken);
             var message = mailChimpManager.Ping();
             result = message != null;
             _isMailChimp = true;
@@ -476,9 +544,27 @@ namespace captivate_express_webapp.Controllers
             result = IsValidApiKeyActiveCampaign(ApiToken, wildCard);
             _isActiveCampaign = true;
             break;
-         
+          case Utils.Constants.PROVIDER_SENDINBLUE:
+            result = IsValidApiKeySendingBlue(ApiToken);
+            _isSendinBlue = true;
+            break;
+          case Utils.Constants.PROVIDER_PUSH_ENGAGE:
+            result = IsValidApiKeyPushEngage(ApiToken);
+            _isPushEngage = true;
+            break;
+          case Utils.Constants.PROVIDER_ONE_SIGNAL:
+            result = IsValidApiKeyOneSignal(ApiToken);
+            _isOneSignal = true;
+            break;
+          case Utils.Constants.PROVIDER_MAILJET:
+            result = IsValidApiKeyMailJet(ApiToken, wildCard);
+            _isMailJet = true;
+            break;
+
         }
-        return Json(new { success = result, isPushCrew = _isPushCrew, isSubscribers = _isSubscribers, isMailChimp = _isMailChimp, isCampaignMonitor = _isCampaignMonitor, isAweber = _isAweber, isGetResponse = _isGetResponse, isSendGrid = _isSendGrid, IsActiveCampaign = _isActiveCampaign , IsActiveIContact = _isActiveIContact });
+        return Json(new { success = result, isPushCrew = _isPushCrew, isSubscribers = _isSubscribers, isMailChimp = _isMailChimp, isCampaignMonitor = _isCampaignMonitor,
+          isAweber = _isAweber, isGetResponse = _isGetResponse, isSendGrid = _isSendGrid, IsActiveCampaign = _isActiveCampaign, IsActiveIContact = _isActiveIContact,
+          IsSendinBlue = _isSendinBlue, IsPushEngage = _isPushEngage, IsOneSignal = _isOneSignal , IsMailJet = _isMailJet});
       }
       else
       {
@@ -488,7 +574,7 @@ namespace captivate_express_webapp.Controllers
 
     public JsonResult GetListMailChimp()
     {
-      IMailChimpManager mailChimpManager = new MailChimpManager(Session["ApiToken"].ToString());
+      IMailChimpManager mailChimpManager = new MailChimp.MailChimpManager(Session["ApiToken"].ToString());
       var list = mailChimpManager.GetLists(null, 0, 100, "", "");
       return Json(new SelectList(list.Data, "Id", "Name"));
     }
@@ -557,6 +643,32 @@ namespace captivate_express_webapp.Controllers
       return _sendGridService.IsValid(key);
     }
 
+    public bool IsValidApiKeySendingBlue(string key)
+    {
+      bool result = false;
+      SendinBlueManager sendinBlueManager = new SendinBlueManager(key);
+      result = sendinBlueManager.ValidateApiKey();
+      return result;
+    }
+
+    public bool IsValidApiKeyPushEngage(string key)
+    {
+      PushEngageManger pushEngageManger = new PushEngageManger();
+      return pushEngageManger.IsValid(key);
+    }
+
+    public bool IsValidApiKeyOneSignal(string key)
+    {
+      OneSignalManager oneSignalManager = new OneSignalManager();
+      return oneSignalManager.IsValid(key);
+    }
+
+    public bool IsValidApiKeyMailJet(string key, string privateKey)
+    {
+      MailJetManager mailJetManager = new MailJetManager();
+      return mailJetManager.IsValidAsync(key, privateKey);
+    }
+
     public bool IsValidApiKeyActiveCampaign(string key, string url)
     {
       return _activeCampaignService.IsValid(key, url);
@@ -600,7 +712,7 @@ namespace captivate_express_webapp.Controllers
 
     public JsonResult GetTagMailChimp()
     {
-      IMailChimpManager mailChimpManager = new MailChimpManager(Session["ApiToken"].ToString());
+      IMailChimpManager mailChimpManager = new MailChimp.MailChimpManager(Session["ApiToken"].ToString());
       MailChimp.Templates.TemplateTypes tt = new MailChimp.Templates.TemplateTypes() { Base = true, Gallery = true, User = true };
       MailChimp.Templates.TemplateFilters tf = new MailChimp.Templates.TemplateFilters() { IncludeDragAndDrop = true };
 
@@ -628,13 +740,23 @@ namespace captivate_express_webapp.Controllers
     }
 
     public JsonResult GetListIContact()
-    {     
+    {
       IContactRequest request = (IContactRequest)Session["IContactRequest"];
 
       IContactService<ICampaign, IContactGetListsResponse> IContactProvider = new IContactService<ICampaign, IContactGetListsResponse>();
-      IResponse response=IContactProvider.GetLists(request);
+      IResponse response = IContactProvider.GetLists(request);
       IContactGetListsResponse data = (IContactGetListsResponse)response;
       SelectList lista = new SelectList(data.lists, "listId", "name");
+      return Json(lista);
+    }
+
+
+    public JsonResult GetListFoldersSendinBlue()
+    {
+      string ApiKey = Session["ApiToken"].ToString();
+      SendinBlueManager sendinBlueManager = new SendinBlueManager(ApiKey);
+      List<Folder> folders = sendinBlueManager.GetAllFolders();
+      SelectList lista = new SelectList(folders, "id", "name");
       return Json(lista);
     }
 
@@ -667,6 +789,28 @@ namespace captivate_express_webapp.Controllers
     {
       var list = _sendGridService.GetUnsubscribeGroups(Session["ApiToken"].ToString());
       return Json(new SelectList(list, "Id", "name"));
+    }
+
+    public JsonResult GetListAppsOneSignal()
+    {
+      System.Threading.Thread.Sleep(1000);
+      OneSignalManager oneSignalManager = new OneSignalManager();
+      var list = oneSignalManager.GetApps(Session["ApiToken"].ToString());
+      return Json(new SelectList(list, "Id", "name"));
+    }
+
+    public JsonResult GetListsMailJet()
+    {
+      MailJetManager mailJetManager = new MailJetManager();
+      var list = mailJetManager.GetLists(Session["ApiToken"].ToString(), Session["WildCard"].ToString());
+      return Json(new SelectList(list, "Id", "Name"));
+    }
+
+    public JsonResult GetSegmentMailJet()
+    {
+      MailJetManager mailJetManager = new MailJetManager();
+      var list = mailJetManager.GetSegments(Session["ApiToken"].ToString(), Session["WildCard"].ToString());
+      return Json(new SelectList(list, "Id", "Name"));
     }
 
     private void CleanSession()

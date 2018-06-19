@@ -23,6 +23,8 @@ namespace Captivate.Comun.Models.Entities
         public string Name { get; set; }
         public string URL { get; set; }
 
+        public string Token { set; get; }
+
         [ForeignKey("AspNetUser")]
         public string AspNetUsers_Id { get; set; }
         public Nullable<bool> Verified { get; set; }

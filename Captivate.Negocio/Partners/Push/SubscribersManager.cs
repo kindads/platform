@@ -20,15 +20,15 @@ namespace Captivate.Negocio.Partners.Push
         public ProductRepository ProductRepository { set; get; }
         public SubscribersManager()
         {
-            KindadsContext context = new KindadsContext();
+            
             telemetria = new Trace();
-            CampaignRepository = new CampaignRepository { Context = context };
-            ProductRepository = new ProductRepository { Context = context };
+            CampaignRepository = new CampaignRepository ();
+            ProductRepository = new ProductRepository ();
         }
         public string ValidateCampaign(string idCampaign)
         {
-            CampaignEntity _campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
-            ProductEntity product = ProductRepository.FindBy(p => p.IdProduct == _campaign.PRODUCT_IdProduct).FirstOrDefault();
+            CampaignEntity _campaign = CampaignRepository.FindById(new Guid(idCampaign));
+            ProductEntity product = ProductRepository.FindById(_campaign.PRODUCT_IdProduct);
             if (_campaign != null)
             {
                 var _apikey = (from d in _campaign.PRODUCT.ProductSettingsEntitys where d.SettingName.Equals("pushApiToken") where d.PRODUCT_IdProduct.Equals(_campaign.PRODUCT.IdProduct) select d).FirstOrDefault();

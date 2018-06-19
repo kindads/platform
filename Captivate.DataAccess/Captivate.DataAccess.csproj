@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Captivate.DataAccess</RootNamespace>
     <AssemblyName>Captivate.DataAccess</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -30,7 +30,25 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <OutputPath>bin\Dev\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Qa|AnyCPU'">
+    <OutputPath>bin\Qa\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <OutputPath>bin\Staging\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <OutputPath>bin\Prod\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DapperExtensions, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -50,19 +68,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AspNetUserRepository.cs" />
-    <Compile Include="CampaignRepository.cs" />
-    <Compile Include="CategoryRepository.cs" />
-    <Compile Include="CategorySiteRepository.cs" />
-    <Compile Include="KindadsContext.cs" />
-    <Compile Include="KindAdsDBContext.cs" />
-    <Compile Include="PartnerRepository.cs" />
-    <Compile Include="ProductRepository.cs" />
-    <Compile Include="ProductSettingsRepository.cs" />
-    <Compile Include="ProductTypeRepository.cs" />
+    <Compile Include="Repositories\AspNetUserRepository.cs" />
+    <Compile Include="Repositories\AzureSubscriptionRepository.cs" />
+    <Compile Include="Repositories\CampaignSettingsRepository.cs" />
+    <Compile Include="Repositories\CampaignRepository.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\CategorySiteRepository.cs" />
+    <Compile Include="Mappers\AspNetUserMapper.cs" />
+    <Compile Include="Mappers\AzureSubscriptionMapper.cs" />
+    <Compile Include="Mappers\CampaignSettingsMapper.cs" />
+    <Compile Include="Mappers\CategorySiteMapper.cs" />
+    <Compile Include="Mappers\CategoryMapper.cs" />
+    <Compile Include="Mappers\CampaignMapper.cs" />
+    <Compile Include="Mappers\PartnerMapper.cs" />
+    <Compile Include="Mappers\ProductMapper.cs" />
+    <Compile Include="Mappers\ProductSettingsMapper.cs" />
+    <Compile Include="Mappers\ProductTypeMapper.cs" />
+    <Compile Include="Mappers\SiteMapper.cs" />
+    <Compile Include="Mappers\TagMapper.cs" />
+    <Compile Include="Mappers\TransactionCaptMapper.cs" />
+    <Compile Include="Repositories\PartnerRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\ProductSettingsRepository.cs" />
+    <Compile Include="Repositories\ProductTypeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SiteRepository.cs" />
-    <Compile Include="TransactionCaptRepository.cs" />
+    <Compile Include="Repositories\SiteRepository.cs" />
+    <Compile Include="Repositories\TagDapperRepository.cs" />
+    <Compile Include="Repositories\TransactionCaptRepository.cs" />
+    <Compile Include="TwilioManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -77,5 +110,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -18,18 +18,24 @@ namespace Captivate.Negocio.Partners.Mail
         public ITrace telemetria { set; get; }
         public CampaignRepository CampaignRepository { set; get; }
         public ProductRepository ProductRepository { set; get; }
+
+        private readonly ProductSettingsRepository productSettingsRepository;
+        private readonly CampaignSettingsRepository campaignSettingsRepository;
         public CampaignMonitorManager()
         {
-            KindadsContext context = new KindadsContext();
             telemetria = new Trace();
-            CampaignRepository = new CampaignRepository { Context = context };
-            ProductRepository = new ProductRepository { Context = context };
+            CampaignRepository = new CampaignRepository();
+            campaignSettingsRepository = new CampaignSettingsRepository();
+            ProductRepository = new ProductRepository();
+            productSettingsRepository = new ProductSettingsRepository();
         }
 
         public string ValidateCampaign(string idCampaign)
         {
-            CampaignEntity campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
-            ProductEntity product = ProductRepository.FindBy(p => p.IdProduct == campaign.PRODUCT_IdProduct).FirstOrDefault();
+            CampaignEntity campaign = CampaignRepository.FindById(new Guid(idCampaign));
+            campaign.CAMPAIGN_SETTINGS = campaignSettingsRepository.GetCampaignSettingsByIdCampaign(campaign.IdCampaign);
+            ProductEntity product = ProductRepository.FindById(campaign.PRODUCT_IdProduct);
+            product.ProductSettingsEntitys = productSettingsRepository.GetProductSettingsByIdProduct(product.IdProduct);
             string idList = null;
             string apiKey = null;
             string clientID = null;

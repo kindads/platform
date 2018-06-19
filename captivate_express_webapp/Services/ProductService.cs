@@ -18,12 +18,12 @@ namespace captivate_express_webapp.Services
   public class ProductService
   {
     private KindadsEntities _context;
-    public KindadsContext context { set; get; }
+
 
     public ProductService()
     {
       _context = new KindadsEntities();
-      context = new KindadsContext();
+
     }
 
     
@@ -31,11 +31,11 @@ namespace captivate_express_webapp.Services
     public bool SaveProduct(Models.Publisher.CreateProductModel _createModel, string UserIdentity, Models.Core.FileUpload fileUpload)
     {    
      //Creamos los repositorios      
-      SiteRepository siteRepository = new SiteRepository { Context= context };
-      AspNetUserRepository aspNetUserRepository = new AspNetUserRepository { Context = context };
-      ProductTypeRepository productTypeRepository = new ProductTypeRepository { Context = context };
-      PartnerRepository partnerRepository = new PartnerRepository { Context = context };
-      ProductRepository productRepository = new ProductRepository { Context = context };
+      SiteRepository siteRepository = new SiteRepository();
+      AspNetUserRepository aspNetUserRepository = new AspNetUserRepository ();
+      ProductTypeRepository productTypeRepository = new ProductTypeRepository ();
+      PartnerRepository partnerRepository = new PartnerRepository ();
+      ProductRepository productRepository = new ProductRepository ();
 
       //Obtenemos los conjuntos
       List<SiteEntity> sites = siteRepository.GetAll().ToList();
@@ -57,9 +57,10 @@ namespace captivate_express_webapp.Services
       PartnerEntity partner= (from p in partners
                               where p.IdPartner == _createModel.ParterTypeSelect
                               select p).FirstOrDefault();
+
       ProductEntity product = new ProductEntity
       {
-        AspNetUser = user,
+        //AspNetUser = user,
         AspNetUsers_Id = UserIdentity,
         IdProduct = Guid.NewGuid(),
         Price = _createModel.PriceSelecc,
@@ -68,9 +69,9 @@ namespace captivate_express_webapp.Services
         StartTime = Helpers.DateTimeHelper.GetCurrentDateString(),
         EndTime = Helpers.DateTimeHelper.GetCurrentDateString(0, 30),
         RegistrationDate = DateTime.Now,
-        SITE = site,
-        PRODUCT_TYPE = productType,
-        PARTNER = partner,
+        SITE_IdSite = site.IdSite,
+        PRODUCT_TYPE_IdProductType = productType.IdProductType,
+        PARTNER_IdPartner = partner.IdPartner,
         Image = string.Empty,
         IsActive=true
       };
@@ -86,42 +87,10 @@ namespace captivate_express_webapp.Services
 
       
       productRepository.Add(product);
-      //productRepository.Save();
 
-      //SITE _site = (from r in _context.SITES where r.IdSite.Equals(_createModel.SiteTypeSelecc) select r).FirstOrDefault();
-      //AspNetUser _aspnetuser = (AspNetUser)((from d in _context.AspNetUsers where d.Id == UserIdentity select d).FirstOrDefault());
-      //PRODUCT_TYPE _productType = (PRODUCT_TYPE)((from d in _context.PRODUCT_TYPE where d.IdProductType == _createModel.ProductTypeSelect select d).FirstOrDefault());
-      //PARTNER _partner = (PARTNER)((from d in _context.PARTNERS where d.IdPartner == _createModel.ParterTypeSelect select d).FirstOrDefault());
-
-      //PRODUCT _product = new PRODUCT();
-      //_product.AspNetUser = _aspnetuser;
-      //_product.AspNetUsers_Id = UserIdentity;
-      //_product.IdProduct = Guid.NewGuid();
-      //_product.Price = _createModel.PriceSelecc;
-      //_product.ShortDescription = _createModel.Name;
-      //_product.FullDescription = "";
-      //_product.StartTime = Helpers.DateTimeHelper.GetCurrentDateString();
-      //_product.EndTime = Helpers.DateTimeHelper.GetCurrentDateString(0, 30);
-      //_product.RegistrationDate = DateTime.Now;
-
-      //_product.SITE = _site;
-      //_product.PRODUCT_TYPE = _productType;
-      //_product.PARTNER = _partner;
-      //_product.Image = "";
-
-      //if (fileUpload != null)
-      //{
-      //  _product.Image = Helpers.AzureStorageHelper.CreateBlobFile(fileUpload.FileData, fileUpload.Filextension);
-      //}
-      //else
-      //{
-      //  _product.Image = Helpers.AzureStorageHelper.CreateBlobFile(getImageFromUrl(""), ".png");
-      //}
-
-      //_context.PRODUCTS.Add(_product);
-
-
-      if (_createModel.ParterTypeSelect.Equals(new Guid(Utils.Constants.PROVIDER_SUBSCRIBERS)) || _createModel.ParterTypeSelect.Equals(new Guid(Utils.Constants.PROVIDER_PUSH_CREW)))
+      if (_createModel.ParterTypeSelect.Equals(new Guid(Utils.Constants.PROVIDER_SUBSCRIBERS)) ||
+        _createModel.ParterTypeSelect.Equals(new Guid(Utils.Constants.PROVIDER_PUSH_CREW)) ||
+        _createModel.ParterTypeSelect.Equals(new Guid(Utils.Constants.PROVIDER_PUSH_ENGAGE)))
       {
         AddProductSettingEntity(product, "pushApiToken", _createModel.Token);
       }
@@ -183,8 +152,29 @@ namespace captivate_express_webapp.Services
         AddProductSettingEntity(product, "icontactIdList", _createModel.IContact.ListId);
 
       }
-    
-      return context.SaveChanges() > 0;
+      else if (_createModel.ParterTypeSelect.Equals(new Guid(Utils.Constants.PROVIDER_SENDINBLUE)))
+      {
+        //Store product settings
+        AddProductSettingEntity(product, "sendinBlueApiKey", _createModel.Token);
+        AddProductSettingEntity(product, "sendinBlueCategory", _createModel.SendinBlue.Category);
+        AddProductSettingEntity(product, "sendinBlueFromEmail", _createModel.SendinBlue.FromEmail);
+        AddProductSettingEntity(product, "sendinBlueListId", _createModel.SendinBlue.ListIds[0].ToString());
+      }
+      else if (_createModel.ParterTypeSelect.Equals(new Guid(Utils.Constants.PROVIDER_ONE_SIGNAL)))
+      {
+        AddProductSettingEntity(product, "oneSignalApiKey", _createModel.Token);
+        AddProductSettingEntity(product, "oneSignalAppId", _createModel.ListAppOSSelecc);
+        AddProductSettingEntity(product, "oneSignalAppKey", _createModel.AuthAppOSSelecc);
+      }
+      else if (_createModel.ParterTypeSelect.Equals(new Guid(Utils.Constants.PROVIDER_MAILJET)))
+      {
+        AddProductSettingEntity(product, "mailJetApiKey", _createModel.Token);
+        AddProductSettingEntity(product, "mailJetList", _createModel.ListMJSelecc);
+        AddProductSettingEntity(product, "mailJetSegment", _createModel.SegmentMJSelecc);
+        AddProductSettingEntity(product, "mailJetSecretKey", _createModel.SecretKeyMJ);
+      }
+
+      return true;
 
     }
 
@@ -204,7 +194,7 @@ namespace captivate_express_webapp.Services
 
     private void AddProductSettingEntity(ProductEntity product, string settingName, string settingValue)
     {
-      ProductSettingsRepository productSettingsRepository = new ProductSettingsRepository { Context = context };
+      ProductSettingsRepository productSettingsRepository = new ProductSettingsRepository ();
       ProductSettingsEntity productSettings = new ProductSettingsEntity()
       {
         IdProductSetting = Guid.NewGuid(),
@@ -213,7 +203,7 @@ namespace captivate_express_webapp.Services
         SettingValue = settingValue
       };
 
-      productSettings.PRODUCT = product;
+      //productSettings.PRODUCT = product;
       productSettingsRepository.Add(productSettings);
       //productSettingsRepository.Save();
     }

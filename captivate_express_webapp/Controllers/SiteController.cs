@@ -10,167 +10,161 @@ using System.Linq;
 using System.Web.Helpers;
 using Captivate.DataAccess;
 using Captivate.Comun.Models.Entities;
+using Captivate.Comun.Models.ViewModel;
+using Captivate.Comun.Models;
+using Captivate.Negocio.ViewModels;
+using captivate_express_webapp.Models.Publisher;
+using SitesVM = Captivate.Comun.Models.ViewModel.ShowSitesViewModel;
+using System.Web.Http;
 
 namespace captivate_express_webapp.Controllers
 {
   [AuthorizeRoles(Roles.Publisher)]
   public class SiteController : Controller
   {
-    SiteService _siteService;
-    CatalogService _catalogService;
-    public SiteController()
+    #region properties
+    SiteViewModelManager manager;
+    string IdUser { set; get; }
+    #endregion
+
+    #region public methods
+
+    [System.Web.Mvc.HttpGet]
+    public ActionResult CreateSite()
     {
-      _siteService = new SiteService();
-      _catalogService = new CatalogService();
+      manager = new SiteViewModelManager();
+      ModelState.Clear();
+      return View(manager);
     }
 
-    public ActionResult Index()
-    {
-      return View();
-    }
 
-    public async Task<ActionResult> CreateSite()
+    [System.Web.Mvc.HttpPost]
+    public JsonResult CreateSite([FromBody] SiteViewModel viewModel)
     {
-      CleanSession();
-      await FillCategory();
-      FillProtocols();
-      return View();
-    }
-
-    [HttpPost]
-    public async Task<ActionResult> CreateSite(Models.Publisher.CreateSiteModel _createsite)
-    {
-      try
+      if (ModelState.IsValid)
       {
-        await FillCategory();
-        FillProtocols();
-
-        if (ModelState.IsValid)
-        {
-          string protocolSelecc = (String)Session["protocolSelecc"];
-          _createsite.CategoryTypeSelect = Session["CategorySelecc"] != null ? Convert.ToInt16(Session["CategorySelecc"].ToString()) : _createsite.CategoryTypeSelect;
-          _createsite.URL = String.IsNullOrEmpty(_createsite.URL) ? "-" : (String.IsNullOrEmpty(protocolSelecc) ? "https://" : protocolSelecc) + _createsite.URL;
-
-          var result = _siteService.CreateSite(_createsite, Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity));
-
-          if (result != null && !result.Equals(Guid.Empty))
-          {
-            return Json(new { success = true, message = "Site created successfully", idSite = result.ToString() });
-          }
-          else
-          {
-            return Json(new { error = "Error creating site" });
-          }
-        }
-
+        return CreateSiteWithToken(viewModel);
       }
-      catch (Exception)
-      {
-        return Json(new { error = "Error creating site" });
-      }
-
-      return View(_createsite);
+      return Json(new { success = false });
     }
 
-    public async Task<ActionResult> ValidateSite(string idSite)
+    public ActionResult ValidateSite(string idSite)
     {
-      SITE site = new SITE();
+      SiteEntity site = new SiteEntity();
+      SiteViewModel model = new SiteViewModel();
+
       if (idSite != null)
       {
-        site = await _siteService.GetSiteById(idSite);
-        Session["IdSite"] = site.IdSite;
+        site = manager.GetSiteById(idSite);      
+        model.IdSite = site.IdSite.ToString();
+        model.URL = site.URL;
       }
-      return View(site);
+      return View(model);
     }
 
-    public ActionResult DownloadFileSite()
+    public FileStreamResult DownloadFileSite(string IdSite)
     {
-      return _siteService.CreateVerificationFile(new Guid(Session["IdSite"].ToString()));
+      FileStreamResult result = manager.CreateVerificationFile(new Guid(IdSite));
+      return result;
     }
 
-    public async Task<ActionResult> VerifySite()
+    public FileStreamResult DownloadScriptSite(string IdSite)
     {
-      var result = _siteService.VerifySite(new Guid(Session["IdSite"].ToString()));
-      SITE site = await _siteService.GetSiteById(Session["IdSite"].ToString());
+      FileStreamResult result = manager.CreateScriptFile(new Guid(IdSite));
+      return result;
+    }
+
+    // Call from siteModule.js ( To generate copy and paste script in google tag manager )
+    public JsonResult GetGoogleTagManagerToken([FromBody] string IdSite)
+    {
+      string token = string.Empty;
+      token = manager.GetGoogleTagManagerToken(IdSite);
+      return Json(new { success = true, Token = token });
+    }
+
+    // Call from siteModule.js
+    public ActionResult VerifySiteTxtAndGTM([FromBody] string IdSite, int Type)
+    {
+      var Token = string.Empty;
+      var result = manager.VerifySite(new Guid(IdSite), Type);
       return Json(new { success = result });
     }
+
+    // Call from siteModule.js
+    public ActionResult VerifySiteAzure([FromBody] string IdSite, string ClientAppId, string SubscriptionId, string TenantId, string AppKey, int Type)
+    {
+      //Encapsulamos
+      AzureADSiteValidation Properties = new AzureADSiteValidation
+      {
+        ClientAppId= ClientAppId,
+        SubscriptionId= SubscriptionId,
+        TenantId= TenantId,
+        AppKey= AppKey
+      };
+
+      var result = manager.VerifyAzureSite(new Guid(IdSite), Properties, Type);
+      return Json(new { success = result });
+    }
+
 
     public ActionResult ShowSites()
     {
       return View();      
     }
-
+   
     public ActionResult ShowSitesPending(int page = 1, string sort = "URL", string sortdir = "ASC")
     {
-      string idUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
-      return PartialView("_PendingVerifySites", _siteService.GetSitesPendingByIdUser(idUser,page,sort,sortdir));
+      IdUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
+      SitesVM sitesPending = manager.GetSitesPendingByIdUser(IdUser, page, sort, sortdir);
+      return PartialView("_PendingVerifySites", sitesPending );
     }
-
+      
     public ActionResult ShowSitesVerify(int page = 1, string sort = "URL", string sortdir = "ASC")
     {
-      string idUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
-      return PartialView("_VerifiedSites", _siteService.GetSitesVerifyByIdUser(idUser, page, sort, sortdir));
-    }
-
-    private async Task<List<CATEGORY>> FillCategory()
-    {
-      var listCategory = await _catalogService.GetAllCategoryAsync();
-      ViewData["categories"] = new SelectList(listCategory, "IdCategory", "Description");
-      return listCategory;
-    }
-
-    private List<string> FillProtocols()
-    {
-      List<string> listProtocol = new List<string>();
-      listProtocol.Add("https://");
-      listProtocol.Add("http://");
-      ViewData["protocols"] = new SelectList(listProtocol);
-      return listProtocol;
-    }
-
-    public JsonResult CategorySelecc(string id)
-    {
-      Session["CategorySelecc"] = id;
-      return Json("success");
-    }
-
-    public JsonResult SiteSelecc(string id)
-    {
-      Session["SiteSelecc"] = id;
-      return Json("success");
-    }
-
-    public JsonResult ProtocolSelecc(string id)
-    {
-      Session["ProtocolSelecc"] = id;
-      return Json("success");
+      IdUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
+      SitesVM sitesVerify = manager.GetSitesVerifyByIdUser(IdUser, page, sort, sortdir);
+      return PartialView("_VerifiedSites", sitesVerify );
     }
 
     public JsonResult DeleteSite(Guid IdSite)
     {
-      Boolean isSuccessfulDelete = true;
+      bool result = manager.DeleteSite(IdSite);
+      return Json(new { isDeleted = result }, JsonRequestBehavior.AllowGet);
+    }
 
-      SiteEntity site = _siteService.GetSingleSiteById(IdSite);
-      if (site.PRODUCTs.Any()) //Si el sitio tiene productos asociados no se puede borrar
+    #endregion
+
+    #region Helpers de Site view model
+   
+
+    private JsonResult CreateSiteWithToken(SiteViewModel viewModel)
+    {
+      SiteViewModelManager manager = new SiteViewModelManager();
+      IdUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
+      string messageOut = string.Empty;
+      string siteId = string.Empty;
+      bool result = false;
+
+      //Falta hacerlo transaccional
+      result = manager.CreateSite(viewModel,IdUser, out messageOut, out siteId);
+      if (result)
       {
-        isSuccessfulDelete = false;
+        var resultToken = manager.AddToken(new Guid(siteId));
+        return Json(new { success = result, message = messageOut, idSite = siteId });
       }
       else
       {
-        site.IsActive = false;
-        _siteService.UpdateSingleSite(site);
+        return Json(new { error = "Error creating site" });
       }
-      return Json(new { isDeleted = isSuccessfulDelete }, JsonRequestBehavior.AllowGet);
     }
 
-    private void CleanSession()
+   
+
+    #endregion
+
+    public SiteController()
     {
-      Session["ProductTypeSelecc"] = null;
-      Session["CategorySelecc"] = null;
-      Session["TagSelecc"] = null;
-      Session["PartnerSelecc"] = null;
-      Session["SiteSelecc"] = null;
-      Session["IdSite"] = null;
+      manager = new SiteViewModelManager();
     }
   }
 }

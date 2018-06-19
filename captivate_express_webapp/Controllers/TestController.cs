@@ -159,24 +159,24 @@ namespace captivate_express_webapp.Controllers
       return Json("{ok}");
     }
 
-    [HttpGet]
-    public JsonResult VerifySiteTest()
-    {
-      Services.SiteService _service = new Services.SiteService();
+    //[HttpGet]
+    //public JsonResult VerifySiteTest()
+    //{
+    //  Services.SiteService _service = new Services.SiteService();
 
-      Boolean bresult = _service.VerifySite(Guid.Parse("C645ADC2-6EA1-4797-82C7-CF013FADB09D"));
+    //  Boolean bresult = _service.VerifySite(Guid.Parse("C645ADC2-6EA1-4797-82C7-CF013FADB09D"));
 
-      return Json("{ok}");
-    }
+    //  return Json("{ok}");
+    //}
 
-    public ActionResult CreateVerificationFile()
-    {
+    //public ActionResult CreateVerificationFile()
+    //{
 
-      Services.SiteService _service = new Services.SiteService();
+    //  //Services.SiteService _service = new Services.SiteService();
 
-      var bresult = _service.CreateVerificationFile(Guid.Parse("759a3e64-6369-4ed9-9f49-474254d637eb"));
-      return bresult;
-    }
+    //  //var bresult = _service.CreateVerificationFile(Guid.Parse("759a3e64-6369-4ed9-9f49-474254d637eb"));
+    //  //return bresult;
+    //}
 
     public JsonResult subscriberskey()
     {

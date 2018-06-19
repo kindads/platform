@@ -1,3 +1,5 @@
+using Captivate.Business;
+using Captivate.Common.Interfaces;
 using captivate_express_webapp.Models;
 using captivate_express_webapp.Utils.Configuration;
 using Nethereum.ABI.FunctionEncoding.Attributes;
@@ -13,8 +15,15 @@ using System.Web;
 
 namespace captivate_express_webapp.Helpers
 {
-  public class NethereumHelper
+  public class NethereumHelper : ITelemetria
   {
+    public ITrace telemetria { set; get; }
+
+    public NethereumHelper()
+    {
+      telemetria = new Trace();
+    }
+
     public static string GetUserWalletPassphrase(string usrwallet)
     {
       Services.AccessService _service = new Services.AccessService();
@@ -42,16 +51,27 @@ namespace captivate_express_webapp.Helpers
 
     public async Task<Models.Wallet.CreateWalletModel> CreateUserWallet()
     {
-      //Generate RandomPassword
-      string _passphrase = Guid.NewGuid().ToString().Replace("-", "") + Helpers.AzureStorageHelper.GetRandomNumber(1842).ToString();
+      Models.Wallet.CreateWalletModel _walletModel = new Models.Wallet.CreateWalletModel();
 
-      string _blobname = AzureStorageHelper.CreateUsrWalletBlobFile(_passphrase);
+      try
+      {
+        string _passphrase = Guid.NewGuid().ToString().Replace("-", "") + Helpers.AzureStorageHelper.GetRandomNumber(1842).ToString();
 
-      var web3 = new Nethereum.Web3.Web3(AppSettings.BlockchainURL);
-      var _walletAddress = await web3.Personal.NewAccount.SendRequestAsync(_passphrase);
+        string _blobname = AzureStorageHelper.CreateUsrWalletBlobFile(_passphrase);
 
-      Models.Wallet.CreateWalletModel _walletModel = new Models.Wallet.CreateWalletModel() { blobname=_blobname, walletaddress=_walletAddress };
+        var BlockChainUrl = AppSettings.BlockchainURL;
+        var web3 = new Nethereum.Web3.Web3(BlockChainUrl);
+        var _walletAddress = await web3.Personal.NewAccount.SendRequestAsync(_passphrase);
 
+        _walletModel = new Models.Wallet.CreateWalletModel() { blobname = _blobname, walletaddress = _walletAddress };
+
+      }
+      catch (Exception e)
+      {
+        var messageException = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
+        telemetria.Critical(messageException);
+      }
+     
       return _walletModel;
     }
 

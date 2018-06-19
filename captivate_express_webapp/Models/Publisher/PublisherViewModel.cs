@@ -1,4 +1,5 @@
 using Captivate.Comun.Models.Entities;
+using Captivate.Comun.Partners.Mail.SendinBlue;
 using Captivate.Comun.Utils;
 using Captivate.Negocio.Partners.IContact;
 using captivate_express_webapp.Models.Core;
@@ -81,11 +82,26 @@ namespace captivate_express_webapp.Models.Publisher
 
     public Captivate.Negocio.Partners.IContact.IContactRequest IContact { set; get; }
 
+    public SendinBlueCampaignRequest SendinBlue { set; get; }
+
     public string ListICSelecc { set; get; }
+
+    public string ListSBSelecc { set; get; }
+
+    public string ListAppOSSelecc { set; get; }
+    public string AuthAppOSSelecc { set; get; }
+
+    [Display(Name = "Secret Key")]
+    public string SecretKeyMJ { set; get; }
+
+    public string ListMJSelecc { set; get; }
+    public string SegmentMJSelecc { set; get; }
+    public string SecretKeySelecc { set; get; }
 
     public CreateProductModel()
     {
       IContact = new Captivate.Negocio.Partners.IContact.IContactRequest(ProviderEnvironment.Production);
+      SendinBlue = new SendinBlueCampaignRequest();
     }
 
   }

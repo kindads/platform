@@ -15,30 +15,41 @@ namespace Captivate.Negocio
         public CampaignRepository repository { set; get; }
         public AspNetUserRepository userRepository { set; get; }
         public TransactionCaptRepository transactionCaptRepository { set; get; }
+
+
+        private readonly ProductRepository productRepository;
         public CampaignManager()
-        {
-            KindadsContext context = new KindadsContext();
+        {            
             telemetria = new Trace();
-            repository = new CampaignRepository { Context = context };
-            userRepository = new AspNetUserRepository { Context = context };
-            transactionCaptRepository = new TransactionCaptRepository { Context = context };
+            repository = new CampaignRepository();
+            userRepository = new AspNetUserRepository();
+            transactionCaptRepository = new TransactionCaptRepository();
+            productRepository = new ProductRepository();
         }
 
         public CampaignEntity GetById(Guid id)
         {
-            return repository.GetById(id);
+            return repository.FindById(id);
+        }
+
+
+        public ProductEntity FindProductById(Guid idProduct)
+        {
+            return productRepository.FindById(idProduct);
         }
 
         public bool AutorizeCampaign(Guid idCampaign,string IdUser)
         {
             bool result = false;
             var campaign = GetById(idCampaign);
-            var product = campaign.PRODUCT;
-            var user = userRepository.GetByEmail(campaign.AspNetUser.Email);
+            var product = productRepository.FindById(campaign.PRODUCT_IdProduct) ;
+            var userProduct = userRepository.FindById(product.AspNetUsers_Id);
+            var user = userRepository.FindById(campaign.AspNetUser_Id);
 
+           
             try
             {
-                var _createTransaction = AsyncHelpers.RunSync<CreateTransactionModel>(() => NethereumHelper.DoTransaction(IdUser,user.WalletAddress, product.AspNetUser.WalletAddress, ((Double)product.Price * (Double)100000000).ToString()));
+                var _createTransaction = AsyncHelpers.RunSync<CreateTransactionModel>(() => NethereumHelper.DoTransaction(IdUser,user.WalletAddress, userProduct.WalletAddress, ((Double)product.Price * (Double)100000000).ToString()));
 
                 if (campaign != null && campaign.IdCampaign != Guid.Empty && _createTransaction != null && _createTransaction.hashTransaction.Length > 5)
                 {
@@ -55,12 +66,12 @@ namespace Captivate.Negocio
                         BlockDate = DateTimeHelper.CurrentDateTimeString(),
                         Gas = "0",
                         RegisterDate = DateTimeHelper.CurrentDateTimeString(),
-                        CAMPAIGN = campaign
+                        CAMPAIGN_IdCampaign = campaign.IdCampaign
                     };
 
                     transactionCaptRepository.Add(_transaction);
 
-                    repository.Save();
+                
                     result= true;
                 }
             }
@@ -78,9 +89,6 @@ namespace Captivate.Negocio
             repository.Edit(campaign);
         }
 
-        public void Save()
-        {
-            repository.Save();
-        }
+     
     }
 }

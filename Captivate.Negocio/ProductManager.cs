@@ -19,15 +19,14 @@ namespace Captivate.Negocio
 
         public ProductManager()
         {
-            KindadsContext context = new KindadsContext();
             telemetria = new Trace();
-            repository = new ProductRepository { Context=context};
+            repository = new ProductRepository();
         }
 
         public  List<ProductEntity> GetAllActive()
         {
             List<ProductEntity> productos = new List<ProductEntity>();
-            productos = repository.FindBy( o=>o.IsActive==true).ToList();
+            productos = repository.GetActiveProducts();
             return productos;
         }
 
@@ -35,17 +34,19 @@ namespace Captivate.Negocio
         public ProductViewModel GetBlock(string idUser,int page)
         {
             ProductViewModel model = new ProductViewModel();
-            var products = GetAllActive();
+            var products = repository.GetActiveProductsByUserId(Guid.Parse(idUser)); // GetAllActive();
             //Todo
             int pageSize = 4;
 
             model.PageSize = pageSize;
-            model.TotalRecord = (from r in products where r.AspNetUsers_Id.Equals(idUser) select r).Count();
+            model.TotalRecord = products.Count();
             model.NoOfPages = (model.TotalRecord / model.PageSize) + ((model.TotalRecord % model.PageSize) > 0 ? 1 : 0);
-            model.ListProducts= (from product in products
-                                 orderby product.ShortDescription ascending
-                                 where product.AspNetUsers_Id==idUser
-                                 select product).ToList().Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+            model.ListProducts = (from product in products
+             orderby product.ShortDescription ascending
+             select product)
+            .ToList()
+            .Skip((page - 1) * model.PageSize)
+            .Take(model.PageSize).ToList();
 
             return model;
         }

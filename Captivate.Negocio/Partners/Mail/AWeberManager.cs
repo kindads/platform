@@ -24,16 +24,16 @@ namespace Captivate.Negocio.Partners.Mail
 
         public AWeberManager()
         {
-            KindadsContext context = new KindadsContext();
+
             telemetria = new Trace();
-            CampaignRepository = new CampaignRepository { Context = context };
-            ProductRepository = new ProductRepository { Context = context };
+            CampaignRepository = new CampaignRepository();
+            ProductRepository = new ProductRepository();
         }
 
         public string ValidateCampaign(string idCampaign)
         {
-            CampaignEntity campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
-            ProductEntity product = ProductRepository.FindBy(p => p.IdProduct == campaign.PRODUCT_IdProduct).FirstOrDefault();
+            CampaignEntity campaign = CampaignRepository.FindById(new Guid(idCampaign));
+            ProductEntity product = ProductRepository.FindById(campaign.PRODUCT_IdProduct);
             string campaignID = null;
             string appKey = null;
             string appSecret = null;

@@ -22,6 +22,8 @@ namespace Captivate.WebJob.CampaignValidator
     public class Functions
     {
         CampaignManager campaignManager;
+
+
         public ITrace telemetria { set; get; }
         public Functions()
         {
@@ -31,7 +33,7 @@ namespace Captivate.WebJob.CampaignValidator
 
         // This function will get triggered/executed when a new message is written 
         // on an Azure Queue called queue.
-        public void ProcessQueueMessage([QueueTrigger("campaignqueue")] string message, TextWriter log)
+        public void ProcessQueueMessage([QueueTrigger("%campaignQueue%")] string message, TextWriter log)
         {
             //Obtenemos el objeto de la notificacion
             CampaignEntity campaign = new CampaignEntity();
@@ -45,11 +47,12 @@ namespace Captivate.WebJob.CampaignValidator
                 if (!String.IsNullOrEmpty(idCampaign))
                 {
                     campaign = campaignManager.GetById(new Guid(idCampaign));
-                    var product = campaign.PRODUCT;
+                    var product = campaignManager.FindProductById(campaign.PRODUCT_IdProduct);
 
                     if (campaignManager.AutorizeCampaign(campaign.IdCampaign, IdUser))
                     {
-                        switch (product.PARTNER.IdPartner.ToString())
+                    
+                        switch (product.PARTNER_IdPartner.ToString())
                         {
                             case Constants.PROVIDER_SUBSCRIBERS:
                                 SubscribersManager subscribersManager = new SubscribersManager();
@@ -87,6 +90,22 @@ namespace Captivate.WebJob.CampaignValidator
                                 IContactManager icontactManager = new IContactManager();
                                 campaign.IdCampaign3rdParty = icontactManager.ValidateCampaign(notification.IdCampaignExternal, notification.IdUser.ToString());
                                 break;
+                            case Constants.PROVIDER_SENDINBLUE:
+                                SendinBlueManager sendingBlueManager = new SendinBlueManager();
+                                campaign.IdCampaign3rdParty = sendingBlueManager.ValidateCampaign(notification.IdCampaignExternal, notification.IdUser.ToString());
+                                break;
+                            case Constants.PROVIDER_PUSH_ENGAGE:
+                                PushEngageManger pushEngageManger = new PushEngageManger();
+                                campaign.IdCampaign3rdParty = pushEngageManger.ValidateCampaign(idCampaign);
+                                break;
+                            case Constants.PROVIDER_ONE_SIGNAL:
+                                OneSignalManager oneSignalManager = new OneSignalManager();
+                                campaign.IdCampaign3rdParty = oneSignalManager.ValidateCampaign(idCampaign);
+                                break;
+                            case Constants.PROVIDER_MAILJET:
+                                MailJetManager mailJetManager = new MailJetManager();
+                                campaign.IdCampaign3rdParty = mailJetManager.ValidateCampaign(idCampaign);
+                                break;
                             default:
                                 break;
 
@@ -95,7 +114,7 @@ namespace Captivate.WebJob.CampaignValidator
                         if (!string.IsNullOrEmpty(campaign.IdCampaign3rdParty))
                         {
                             campaignManager.Edit(campaign);
-                            campaignManager.Save();
+                    
                             message = string.Format("Congratulations your campaign {0} has been approved", campaign.Name);
                             notificationManager.EnqueueMailNotification(campaign.Name, message, IdUser);
                         }

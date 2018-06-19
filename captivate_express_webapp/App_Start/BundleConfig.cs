@@ -65,11 +65,9 @@ namespace captivate_express_webapp
         "~/Scripts/jquery-{version}.js",
         "~/Scripts/jquery-{version}.js",
         //bootstrap
-        "~/Scripts/bootstrap.js",
+        "~/Scripts/vendor/bootstrap/bootstrap.min.js",
         "~/Scripts/respond.js",
-        "~/Scripts/vendor/retina/retina.min.js",
-        //customjs
-        "~/Scripts/vendor/bootstrap/bootstrap.min.js"
+        "~/Scripts/vendor/retina/retina.min.js"
         ));
     }
   }

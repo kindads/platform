@@ -1,4 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Captivate.Business;
+using Captivate.Common.Interfaces;
+using Captivate.Comun.Interfaces;
+using Captivate.Comun.Models.Entities;
+using Captivate.Comun.Partners.Mail.SendinBlue;
+using Captivate.DataAccess;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,65 +18,300 @@ using System.Web;
 
 namespace Captivate.Negocio.Partners.Mail
 {
-    public class SendinBlueManager
+    public class SendinBlueManager : ITelemetria, IEmailProviders
     {
+        public CampaignRepository CampaignRepository { set; get; }
+        public ProductRepository ProductRepository { set; get; }
+
         public string ApiKey { set; get; }
+        public ITrace telemetria { set; get; }
+        public NotificationManager notificationManager { set; get; }
 
         public SendinBlueManager()
         {
+            
+            telemetria = new Trace();
+            CampaignRepository = new CampaignRepository();
+            ProductRepository = new ProductRepository ();
             ApiKey = string.Empty;
+            notificationManager = new NotificationManager();
+        }
+
+        public SendinBlueManager(string ApiKey)
+        {
+            
+            telemetria = new Trace();
+            CampaignRepository = new CampaignRepository ();
+            ProductRepository = new ProductRepository ();
+            this.ApiKey = string.Empty;
+            this.ApiKey = ApiKey;
+            notificationManager = new NotificationManager();
         }
 
         public void GetAllLists(string IdCampaign,int IdFolder)
         {
-            APISendingBlue sendinBlue = new APISendingBlue("YsQDFHN0nj1x4fht");
-            Dictionary<string, int> data = new Dictionary<string, int>();
-            data.Add("list_parent", 1);
-            data.Add("page", 1);
-            data.Add("page_limit", 10);
-
-            Object getLists = sendinBlue.get_lists(data);
-            Console.WriteLine(getLists);
+            try
+            {
+                if (ApiKey != string.Empty)
+                {
+                    APISendingBlue sendinBlue = new APISendingBlue(ApiKey);
+                    Dictionary<string, int> data = new Dictionary<string, int>();
+                    data.Add("list_parent", 1);
+                    data.Add("page", 1);
+                    data.Add("page_limit", 10);
+                    Object getLists = sendinBlue.get_lists(data);
+                    Console.WriteLine(getLists);
+                }
+            }
+            catch (Exception e)
+            {
+                string exceptionMessage = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(exceptionMessage);
+            }           
         }
 
-        public void GetAllFolders()
+        public List<Folder> GetAllFolders()
         {
-            APISendingBlue sendinBlue = new APISendingBlue("YsQDFHN0nj1x4fht");
-            Dictionary<string, int> data = new Dictionary<string, int>();
-            data.Add("page", 1);
-            data.Add("page_limit", 10);
+            List<Folder> folders = new List<Folder>{ };
 
-            Object getFolders = sendinBlue.get_folders(data);
-            Console.WriteLine(getFolders);
+            try
+            {
+                if (ApiKey != string.Empty)
+                {
+                    APISendingBlue sendinBlue = new APISendingBlue(ApiKey);
+                    Dictionary<string, int> data = new Dictionary<string, int>();
+                    data.Add("page", 1);
+                    data.Add("page_limit", 10);
+
+                    dynamic foldersResponse = sendinBlue.get_folders(data);
+                    if(foldersResponse.code== "success")
+                    {
+                        folders = foldersResponse.data.folders.ToObject<List<Folder>>();
+                        for(var i=0; i<=(folders.Count-1);i++)
+                        {
+                            folders[i].Listas=folders[i].lists.ToObject<List<Lista>>();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                string exceptionMessage = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(exceptionMessage);
+            }
+            return folders.ToList();
         }
 
-        public void CreateCampaign()
-        {
-            APISendingBlue sendinBlue = new APISendingBlue("YsQDFHN0nj1x4fht");
-            Dictionary<string, Object> data = new Dictionary<string, Object>();
-            List<int> listid = new List<int>();
-            listid.Add(2);
-            data.Add("category", "My category");
-            data.Add("from_name", "[DEFAULT_FROM_NAME]");
-            data.Add("name", "My Campaign 1");
-            data.Add("bat", "");
-            data.Add("html_content", "<html><body><pre> Corramos con el peje este 4 de julio a festejar a su depa </pre></body></html>");
-            data.Add("html_url", "");
-            data.Add("listid", listid);
-            data.Add("scheduled_date", "2018-05-16 16:05:01");
-            data.Add("subject", "My Subject");
-            data.Add("from_email", "angel.alvarado@blockbliss.com");
-            data.Add("reply_to", "[DEFAULT_REPLY_TO]");
-            data.Add("to_field", "[PRENOM] [NOM]");
-            data.Add("exclude_list", new List<int>());
-            data.Add("attachment_url", "");
-            data.Add("inline_image", 1);
-            data.Add("mirror_active", 0);
-            data.Add("send_now", 0);
-            data.Add("utm_campaign", "My UTM Value1");
 
-            Object createCampaign = sendinBlue.create_campaign(data);
-            Console.WriteLine(createCampaign);
+        public string GetAccountEmail()
+        {
+            string email = string.Empty;
+            try
+            {
+                if (ApiKey != string.Empty)
+                {
+                    APISendingBlue sendinBlue = new APISendingBlue(ApiKey);
+                    dynamic authentication = sendinBlue.get_account();
+                    if (authentication.code == "success")
+                    {
+                        email = authentication.data[2].email;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                string exceptionMessage = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(exceptionMessage);
+            }
+            return email;
+        }
+
+        public bool ValidateApiKey()
+        {
+            bool result = false;
+            try
+            {
+                if (ApiKey != string.Empty)
+                {
+                    APISendingBlue sendinBlue = new APISendingBlue(ApiKey);
+                    dynamic authentication = sendinBlue.get_account();
+                    if(authentication.code== "success")
+                    {
+                        result = true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                string exceptionMessage = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(exceptionMessage);
+            }
+            return result;
+        }
+
+        [System.Obsolete("Este método ya no esta en uso favor de usar CreateCampaign(SendinBlueCampaignRequest request)")]
+        public void CreateCampaignTest()
+        {
+            if (ApiKey != string.Empty)
+            {
+                APISendingBlue sendinBlue = new APISendingBlue(ApiKey);
+                Dictionary<string, Object> data = new Dictionary<string, Object>();
+                List<int> listid = new List<int>();
+                listid.Add(2);
+                data.Add("category", "My category");
+                data.Add("from_name", "[DEFAULT_FROM_NAME]");
+                data.Add("name", "My Campaign 1");
+                data.Add("bat", "");
+                data.Add("html_content", "<html><body><pre> Corramos con el peje este 4 de julio a festejar a su depa </pre></body></html>");
+                data.Add("html_url", "");
+                data.Add("listid", listid);
+                data.Add("scheduled_date", "2018-05-16 16:05:01");
+                data.Add("subject", "My Subject");
+                data.Add("from_email", "angel.alvarado@blockbliss.com");
+                data.Add("reply_to", "[DEFAULT_REPLY_TO]");
+                data.Add("to_field", "[PRENOM] [NOM]");
+                data.Add("exclude_list", new List<int>());
+                data.Add("attachment_url", "");
+                data.Add("inline_image", 1);
+                data.Add("mirror_active", 0);
+                data.Add("send_now", 0);
+                data.Add("utm_campaign", "My UTM Value1");
+
+                Object createCampaign = sendinBlue.create_campaign(data);
+                Console.WriteLine(createCampaign);
+            }
+        }
+
+        public SendinBlueCampaignRequest FillSendinBlueRequest(ICollection<ProductSettingsEntity> settings)
+        {
+            SendinBlueCampaignRequest request = new SendinBlueCampaignRequest();
+            
+            foreach (var item in settings)
+            {
+
+                switch (item.SettingName)
+                {
+                    case "sendinBlueApiKey":
+                        {
+                            request.ApiKey= item.SettingName.Equals("sendinBlueApiKey") ? item.SettingValue : string.Empty;
+                        }
+                        break;
+                    case "sendinBlueCategory":
+                        {
+                            request.Category= item.SettingName.Equals("sendinBlueCategory") ? item.SettingValue : string.Empty;
+                        }
+                        break;
+                    case "sendinBlueFromEmail":
+                        {
+                            SendinBlueManager manager = new SendinBlueManager(request.ApiKey);
+                            request.FromEmail = manager.GetAccountEmail();
+                        }
+                        break;
+                    case "sendinBlueListId":
+                        {
+                            string listId= item.SettingName.Equals("sendinBlueListId") ? item.SettingValue : string.Empty;
+                            request.ListIds=new List<int> { Convert.ToInt32(listId) };
+                        }break;                   
+                }
+            }
+            return request;
+        }
+
+
+        public  string ValidateCampaign(string IdCampaig, string IdUser)
+        {
+            string Id = string.Empty;
+            CampaignManager campaignManager = new CampaignManager();
+            NotificationManager notificationManager = new NotificationManager();
+
+            //Obtenemos los datos
+            CampaignEntity campaign = CampaignRepository.FindById(new Guid(IdCampaig));
+            ProductEntity product = ProductRepository.FindById(campaign.PRODUCT_IdProduct);
+
+            //Creamos el objecto de peticion
+            SendinBlueCampaignRequest request = FillSendinBlueRequest(product.ProductSettingsEntitys);
+            request.Subject = campaign.Name;
+            request.HtmlContent = campaign.AdText;
+            request.Schedule = campaign.StartDate == null ? DateTime.Now: CheckStartDate((DateTime)campaign.StartDate);
+            request.Name = campaign.Name;
+
+            //Creamos la campaña
+            Id = CreateCampaign(request, campaign, IdUser);
+            campaign.IdCampaign3rdParty = Id;
+
+            return Id;
+        }
+
+        public DateTime CheckStartDate(DateTime startDate)
+        {
+            DateTime now = DateTime.Now;
+
+            int yearNow = now.Year;
+            int monthNow = now.Month;
+            int dayNow = now.Day;
+            int hourNow = now.Hour;
+            int minutesNow = now.Minute;
+
+            int yearStartDate = startDate.Year;
+            int monthStartDate = startDate.Month;
+            int dayStartDate = startDate.Day;
+            int hourStartNow = startDate.Hour;
+            int minuteStartNow = startDate.Minute;
+
+            int difYear = yearStartDate - yearNow;
+            int difMonth = monthStartDate - monthNow;
+            int difDay = dayStartDate - dayNow;
+            int difHour = hourStartNow - hourNow;
+            int difMinutes = minuteStartNow-minutesNow;
+
+            if( difYear==0 && difMonth==0 && difDay==0 && difHour<0 )
+            {
+                now=now.AddMinutes(5);
+                return now;
+            }
+            else if(difYear<0 || difMonth<0 || difDay<0 || difDay<0 )
+            {
+                return startDate;
+            }
+            else
+            {
+                return startDate;
+            }
+        }
+
+        public string CreateCampaign(SendinBlueCampaignRequest request,CampaignEntity campaign,string IdUser)
+        {
+            string IdCampaign = string.Empty;
+            try
+            {
+                ApiKey = request.ApiKey;
+
+                if (ApiKey != string.Empty)
+                {
+                    APISendingBlue sendinBlue = new APISendingBlue(ApiKey);
+                    var data = request.GetSendinBlueCampaignRequestObject();
+                    dynamic createCampaignResponse = sendinBlue.create_campaign(data);
+                    if (createCampaignResponse.code == "success")
+                    {
+                        IdCampaign = createCampaignResponse.data.id;
+                    }
+                    else
+                    {
+                        SendinBlueResponse wrong = new SendinBlueResponse();
+                        wrong = createCampaignResponse;
+                        string error = wrong.message;
+
+                        string messageError = string.Format("Something goes wrong, detail:{0}", error);
+                        notificationManager.EnqueueMailNotification(campaign.Name, messageError, IdUser);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                string exceptionMessage = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(exceptionMessage);
+            }           
+            return IdCampaign;
         }
 
     }

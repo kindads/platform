@@ -468,7 +468,7 @@ namespace captivate_express_webapp.Services
 
     public TableCampaignViewModel GetTableCampaignPending(int idUserRole, string idUser, int page = 1, string sort = "RegisterDate", string sortdir = "DESC")
     {
-      List<int> status = new List<int>() { (int)CatCampaignStatusEnum.In_Review, (int)CatCampaignStatusEnum.Waiting_For_Response };
+      List<int> status = new List<int>() { (int)CatCampaignStatusEnum.In_Review, (int)CatCampaignStatusEnum.Waiting_For_Response, (int)Captivate.Comun.Enums.CatCampaignStatusEnum.Verify_Proccess };
       TableCampaignViewModel m = new TableCampaignViewModel();
       m.PageSize = PAGE_SIZE;
 

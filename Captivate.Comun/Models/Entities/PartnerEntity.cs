@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Models.Entities
 {
-    [Table("PARTNER")]
+
     public class PartnerEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

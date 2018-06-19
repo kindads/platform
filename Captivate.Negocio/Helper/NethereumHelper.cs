@@ -11,11 +11,15 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Configuration;
 using System.Reflection;
+using Captivate.Azure;
+using Captivate.Common.Interfaces;
+using Captivate.Business;
 
 namespace Captivate.Negocio.Helper
 {
     public class NethereumHelper
-    {
+    { 
+
         //public static string GetUserWalletPassphrase(string usrwallet)
         //{
         //    Services.AccessService _service = new Services.AccessService();
@@ -41,20 +45,31 @@ namespace Captivate.Negocio.Helper
         //    Task task = System.Threading.Tasks.Task.Run(async () => await (DoTransaction(FromAddress_Buyer, ToAddress_Owner, Amount)));
         //}
 
-        //public async Task<CreateWalletModel> CreateUserWallet()
-        //{
-        //    //Generate RandomPassword
-        //    string _passphrase = Guid.NewGuid().ToString().Replace("-", "") + AzureStorageHelper.GetRandomNumber(1842).ToString();
+        public async static Task<CreateWalletModel> CreateUserWallet()
+        {
+            ITrace telemetria = new Trace();
+            CreateWalletModel _walletModel = new CreateWalletModel();
+            try
+            {
+                //Generate RandomPassword
+                string _passphrase = Guid.NewGuid().ToString().Replace("-", "") + GetRandomNumber(1842).ToString();
 
-        //    string _blobname = AzureStorageHelper.CreateUsrWalletBlobFile(_passphrase);
+                string _blobname = BlobManager.CreateUsrWalletBlobFile(_passphrase, ConfigurationManager.AppSettings["AzureStorageConnection"]);
 
-        //    var web3 = new Nethereum.Web3.Web3(AppSettings.BlockchainURL);
-        //    var _walletAddress = await web3.Personal.NewAccount.SendRequestAsync(_passphrase);
+                var web3 = new Nethereum.Web3.Web3(ConfigurationManager.AppSettings["BlockchainURL"]);
+                var _walletAddress = await web3.Personal.NewAccount.SendRequestAsync(_passphrase);
 
-        //    Models.Wallet.CreateWalletModel _walletModel = new Models.Wallet.CreateWalletModel() { blobname = _blobname, walletaddress = _walletAddress };
+                _walletModel = new CreateWalletModel() { blobname = _blobname, walletaddress = _walletAddress };
 
-        //    return _walletModel;
-        //}
+            }
+            catch (Exception e)
+            {
+                var messageException = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                telemetria.Critical(messageException);
+            }
+            
+            return _walletModel;
+        }
 
         public async static Task<CreateTransactionModel> DoTransaction(string IdUser,string FromAddress_Buyer, string ToAddress_Owner, string Amount)
         {

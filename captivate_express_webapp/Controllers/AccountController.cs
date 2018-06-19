@@ -415,7 +415,9 @@ namespace captivate_express_webapp.Controllers
             return View();
         }
 
-        protected override void Dispose(bool disposing)
+    
+
+    protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

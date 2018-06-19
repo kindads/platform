@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Captivate.Comun</RootNamespace>
     <AssemblyName>Captivate.Comun</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -30,12 +30,53 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEV;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Qa|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>QA;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>STAGING;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.1.3\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DapperExtensions, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -45,6 +86,9 @@
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.9.1.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
@@ -62,6 +106,24 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,6 +139,7 @@
     <Compile Include="Interfaces\ICategorySiteRepository.cs" />
     <Compile Include="Interfaces\IEmailProviders.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
+    <Compile Include="Interfaces\IDapperGenericRepository.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IIContactCampaign.cs" />
     <Compile Include="Interfaces\IIContactRequest.cs" />
@@ -93,12 +156,18 @@
     <Compile Include="Interfaces\ITransactionCaptRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IValidateProvider.cs" />
-    <Compile Include="Models\AGenericRepository.cs" />
+    <Compile Include="Models\ApplicationData.cs" />
+    <Compile Include="Models\DGenericRepository.cs" />
+    <Compile Include="Models\AzureADSiteValidation.cs" />
+    <Compile Include="Models\CreateSite.cs" />
     <Compile Include="Models\Entities\AspNetRoleEntity.cs" />
     <Compile Include="Models\Entities\AspNetUserClaimEntity.cs" />
     <Compile Include="Models\Entities\AspNetUserEntity.cs" />
+    <Compile Include="Models\Entities\AspNetUserEntityLegacy.cs" />
     <Compile Include="Models\Entities\AspNetUserLoginEntity.cs" />
+    <Compile Include="Models\Entities\AzureSupcriptionsEntity.cs" />
     <Compile Include="Models\Entities\CampaignChatEntity.cs" />
+    <Compile Include="Models\Entities\Campaigns1.cs" />
     <Compile Include="Models\Entities\CampaignEntity.cs" />
     <Compile Include="Models\Entities\CampaignSettingsEntity.cs" />
     <Compile Include="Models\Entities\CatalogoCampaignStatusEntity.cs" />
@@ -111,20 +180,36 @@
     <Compile Include="Models\Entities\ProductSettingsEntity.cs" />
     <Compile Include="Models\Entities\ProductTypeEntity.cs" />
     <Compile Include="Models\Entities\SiteEntity.cs" />
+    <Compile Include="Models\Entities\TagEntity2.cs" />
     <Compile Include="Models\Entities\TagEntity.cs" />
     <Compile Include="Models\Entities\TransactionsCaptEntity.cs" />
     <Compile Include="Models\Entities\TransactionTypeEntity.cs" />
     <Compile Include="Models\Entities\TransactionsExternalEntity.cs" />
     <Compile Include="Models\EnumeratorProviders.cs" />
     <Compile Include="Models\ErrorEntity.cs" />
+    <Compile Include="Models\GoogleTagManagerValidation.cs" />
     <Compile Include="Models\MailMessage.cs" />
     <Compile Include="Models\MailNotification.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\NotificationLabels.cs" />
+    <Compile Include="Models\PropertieSiteAD.cs" />
     <Compile Include="Models\RequestSettings.cs" />
+    <Compile Include="Models\SiteAD.cs" />
+    <Compile Include="Models\SitesAD.cs" />
+    <Compile Include="Models\SiteToken.cs" />
+    <Compile Include="Models\SiteValidationToken.cs" />
+    <Compile Include="Models\TwilioKeys.cs" />
+    <Compile Include="Models\TxtSiteValidation.cs" />
     <Compile Include="Models\ValidateProvider.cs" />
+    <Compile Include="Models\ViewModel\ProductListEntityViewModel.cs" />
     <Compile Include="Models\ViewModel\ProductViewModel.cs" />
+    <Compile Include="Models\ViewModel\ShowSitesViewModel.cs" />
+    <Compile Include="Models\ViewModel\SiteViewModel.cs" />
     <Compile Include="Models\WalletModel.cs" />
+    <Compile Include="Partners\Mail\SendinBlue\SendinBlueCampaignRequest.cs" />
+    <Compile Include="Partners\Mail\SendinBlue\SendinBlueFolderResponse.cs" />
+    <Compile Include="Partners\Mail\SendinBlue\SendinBlueResponse.cs" />
+    <Compile Include="Partners\Mail\SendinBlue\SendingBlueCampaignResponse.cs" />
     <Compile Include="Partners\Push\IContact\IContactGetCampaignResponse.cs" />
     <Compile Include="Partners\Push\IContact\IContactGetListResponse.cs" />
     <Compile Include="Partners\Push\IContact\IContactGetListsResponse.cs" />
@@ -171,11 +256,11 @@
     <Compile Include="Utils\Partners\Mail\Aweber\OAuth\Request.cs" />
     <Compile Include="Utils\Partners\Mail\Aweber\OAuth\Settings.cs" />
     <Compile Include="Utils\Partners\Mail\GetResponse\ApiResult.cs" />
+    <Compile Include="Utils\Security.cs" />
     <Compile Include="Utils\TypeSwitch.cs" />
     <Compile Include="Structures\SRoutes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Partners\Mail\" />
     <Folder Include="Utils\Partners\Push\" />
   </ItemGroup>
   <ItemGroup>

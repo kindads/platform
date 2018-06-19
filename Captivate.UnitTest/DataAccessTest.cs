@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
 using Captivate.Comun.Models.Entities;
 using Captivate.DataAccess;
+using Dapper;
+using DapperExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Captivate.UnitTest
@@ -65,13 +68,61 @@ namespace Captivate.UnitTest
         [TestMethod]
         public void GetCampaignsTest()
         {
-            KindadsContext context = new KindadsContext();
-            CampaignRepository repositoty = new CampaignRepository() { Context=context};
+
+            CampaignRepository repositoty = new CampaignRepository();
             var categories = repositoty.GetAll().ToList();
 
             Assert.AreEqual(true, true);
         }
 
+
+
+   
+        [TestMethod]
+        public void BuscarXId()
+        {
+            var tgr = new TagDapperRepository();
+            var result = tgr.FindById<int>(1);
+        
+            tgr.Edit(new TagEntity2
+            {
+                IdTag = 1,
+                Description = result.Description + " update descripcion 3"
+            });
+
+        }
+
+        [TestMethod]
+        public void insertTagTest()
+        {
+            var tgr = new TagDapperRepository();
+            tgr.Add(new TagEntity2
+            {
+                Description = "nueva descripcion2"
+            });
+        }
+
+        [TestMethod]
+        public void ActualizarTagTest()
+        {
+            var tgr = new TagDapperRepository();
+            tgr.Edit(new TagEntity2
+            {
+                IdTag=3,
+                Description = "update descripcion 3"
+            });
+        }
+
+        [TestMethod]
+        public void EliminarTagTest()
+        {
+            var tgr = new TagDapperRepository();
+            tgr.Delete(new TagEntity2
+            {
+                IdTag = 2,
+                Description = ""
+            });
+        }
 
         //        CategoryRepository categoryRepository = new CategoryRepository() { Context = context };
         //        List<CategoryEntity> categories = categoryRepository.GetAll().ToList();
@@ -127,13 +178,47 @@ namespace Captivate.UnitTest
         {
             var idCampaign = new Guid("3F987790-4D7C-4B33-AA7E-54BA69E52A0F");
             //idCampaign = idCampaign.ToLower();
-            KindadsContext context = new KindadsContext();
-            CampaignRepository campaignRepository = new CampaignRepository() { Context = context };
-            var campaign = (from c in campaignRepository.Context.Campaigns where c.IdCampaign.ToString().ToLower() == idCampaign.ToString().ToLower() select c).FirstOrDefault();
+     
+            //CampaignRepository campaignRepository = new CampaignRepository() { Context = context };
+            //var campaign = (from c in campaignRepository.Context.Campaigns where c.IdCampaign.ToString().ToLower() == idCampaign.ToString().ToLower() select c).FirstOrDefault();
+            
             //CampaignEntity campaign = campaignRepository.GetById(new Guid(idCampaign.ToLower()));
             //var categorys = (from r in campaignRepository.Context.CategorySites join c in campaignRepository.Context.Categories on r.CATEGORY_IdCategory equals c.IdCategory where r.SITEs_IdSite.Equals(campaign.PRODUCT.SITE.IdSite) select c).ToList();
             //var product = campaign.PRODUCT;
         }
+
+        [TestMethod]
+        public void AzureSubscriptionGetAllTest()
+        {
+            //KindadsContext context = new KindadsContext();
+            AzureSubscriptionRepository repository = new AzureSubscriptionRepository() ;
+            List<AzureSupcriptionEntity> ase = repository.GetAll().ToList();
+
+            Assert.AreEqual(true, true);
+        }
+
+
+        [TestMethod]
+        public void AzureSubscriptionAddTest()
+        {
+            //KindadsContext context = new KindadsContext();
+            AzureSubscriptionRepository repository = new AzureSubscriptionRepository();
+
+            AzureSupcriptionEntity entity = new AzureSupcriptionEntity()
+            {
+                IdSite = new Guid("F5EFFBC7-7024-40CB-A879-0D0D861BCAC6"),
+                ClientAppId = "ClientAppId",
+                SubscriptionId = "SubscriptionId",
+                TenantId = "TenantId",
+                AppKey = "AppKey"
+            };
+
+            repository.Add(entity);
+            //repository.Save();
+
+            Assert.AreEqual(true, true);
+        }
+
     }
 
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Interfaces
 {
-    public interface IAspNetUserRepository : IGenericRepository<AspNetUserEntity>
+    public interface IAspNetUserRepository : IDapperGenericRepository<AspNetUserEntity>
     {
         AspNetUserEntity GetByEmail(string email);
     }

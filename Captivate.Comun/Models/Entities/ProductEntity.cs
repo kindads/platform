@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Captivate.Comun.Models.Entities
 {
 
-    [Table("PRODUCT")]
+
     public partial class ProductEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -65,4 +65,6 @@ namespace Captivate.Comun.Models.Entities
 
         #endregion
     }
+
+
 }

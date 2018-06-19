@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Captivate.Comun.Models.Entities
 {
-    [Table("AspNetUser")]
+
     public class AspNetUserEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +19,7 @@ namespace Captivate.Comun.Models.Entities
             this.CAMPAIGN_CHAT = new HashSet<CampaignChatEntity>();
         }
 
-    
+
         public string Id { get; set; }
         public string Hometown { get; set; }
         public string Email { get; set; }
@@ -49,5 +47,4 @@ namespace Captivate.Comun.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CampaignChatEntity> CAMPAIGN_CHAT { get; set; }
     }
-
 }

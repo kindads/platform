@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Interfaces
 {
-    public interface ICategoryRepository : IGenericRepository<CategoryEntity>
+    public interface ICategoryRepository : IDapperGenericRepository<CategoryEntity>
     {
-        CategoryEntity GetSingle(short IdSite);
+ 
         List<CategoryEntity> GetByIdSite(Guid idCampaign);
     }
 }

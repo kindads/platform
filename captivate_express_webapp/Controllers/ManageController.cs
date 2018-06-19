@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -145,9 +145,22 @@ namespace captivate_express_webapp.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
-        // POST: /Manage/DisableTwoFactorAuthentication
-        [HttpPost]
+    //Nuevo post
+    [HttpPost]
+    public async Task<ActionResult> EnableTFA()
+    {
+      await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
+      var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+      if (user != null)
+      {
+        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+      }
+      return RedirectToAction("Index", "Manage");
+    }
+
+    //
+    // POST: /Manage/DisableTwoFactorAuthentication
+    [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisableTwoFactorAuthentication()
         {

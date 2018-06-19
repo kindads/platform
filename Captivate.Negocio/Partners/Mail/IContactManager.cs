@@ -19,10 +19,10 @@ namespace Captivate.Negocio.Partners.Mail
         public ProductRepository ProductRepository { set; get; }
         public IContactManager()
         {
-            KindadsContext context = new KindadsContext();            
+           
             telemetria = new Trace();
-            CampaignRepository = new CampaignRepository { Context = context };
-            ProductRepository = new ProductRepository { Context = context };
+            CampaignRepository = new CampaignRepository ();
+            ProductRepository = new ProductRepository ();
         }
 
         public string ValidateCampaign(string IdCampaig,string IdUser)
@@ -33,8 +33,9 @@ namespace Captivate.Negocio.Partners.Mail
 
             //Obtenemos los datos 
 
-            CampaignEntity campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(IdCampaig)).FirstOrDefault();
-            ProductEntity product = ProductRepository.FindBy(p => p.IdProduct == campaign.PRODUCT_IdProduct).FirstOrDefault();
+            CampaignEntity campaign = CampaignRepository.FindById(new Guid(IdCampaig));
+            ProductEntity product = ProductRepository.FindById(campaign.PRODUCT_IdProduct);
+            
             //Todo
             //// Create models
             IContacLogic<ICampaign, IContactPostSendsResponse> contactServiceSends = new IContacLogic<ICampaign, IContactPostSendsResponse>();
@@ -67,20 +68,11 @@ namespace Captivate.Negocio.Partners.Mail
                 includeListIds = requestFrm.ListId
             };
 
-
             // Invocamos
             IContactPostSendsResponse responseSends = (IContactPostSendsResponse)contactServiceSends.CreateSends(requestSends, requestFrm);
             campaign.IdCampaign3rdParty = responseSends.sends[0].sendId;
 
-            //result = String.IsNullOrEmpty(responseSends.sends[0].sendId) ? false : campaignManager.AutorizeCampaign(campaign);
             result = String.IsNullOrEmpty(responseSends.sends[0].sendId);
-
-            //Validacion para enviar correo
-            //if (result == true)
-            //{
-            //    string message = string.Format("Campaign '{0}' modify successfully", campaign.Name);
-            //    notificationManager.EnqueueMailNotification(campaign.Name, message, IdUser);
-            //}
             return responseSends.sends[0].sendId;
         }
     }

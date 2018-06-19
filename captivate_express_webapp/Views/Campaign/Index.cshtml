@@ -112,11 +112,13 @@
   </div>
 </div>
 
+@Html.Partial("_LoadingCampaignModal", Model)
 @Scripts.Render("~/bundles/customjs")
 <script type="text/javascript">
   $('#formCampaign').submit(function (e) {
     e.preventDefault();
     if ($("#formCampaign").valid() && validateImage() && validateMessageTestHtml()) {
+      $('#loadingCampaignModal').modal('show');
       $.ajax({
         url: this.action,
         type: this.method,
@@ -126,15 +128,18 @@
         processData: false,
         success: function (response) {
           if (response.success) {
+            $('#loadingCampaignModal').modal('hide');
             $('#lblBody').append(response.message);
             $('#myModal').modal('show')
           } else {
+            $('#loadingCampaignModal').modal('hide');
             $('#lblBody').append(response.error);
             $('#myModal').modal('show')
           }
 
         },
         error: function (xhr, error, status) {
+          $('#loadingCampaignModal').modal('hide');
           $('#lblBody').append('Error');
           $('#myModal').modal('show')
         }
@@ -153,7 +158,13 @@
     var isChannelActiveCampaign = "@ViewBag.IsChannelActiveCampaign".toLowerCase() == "true";
     var isChannelGetResponse = "@ViewBag.IsChannelGetResponse".toLowerCase() == "true";
 
-    if (isChannelMailChimp || isChannelCampaignMonitor || isChannelAweber || isChannelSendGrid || isChannelActiveCampaign || isChannelGetResponse){
+    var isChannelIContact = "@ViewBag.IsChannelIContact".toLowerCase() == "true";
+    var isChannelSendinBlue = "@ViewBag.IsChannelSendinBlue".toLowerCase() == "true";
+    var isChannelOneSignal = "@ViewBag.IsChannelOneSignal".toLowerCase() == "true";
+    var isChannelMailJet= "@ViewBag.IsChannelMailJet".toLowerCase() == "true";
+
+    if (isChannelMailChimp || isChannelCampaignMonitor || isChannelAweber || isChannelSendGrid || isChannelActiveCampaign ||
+      isChannelGetResponse || isChannelIContact || isChannelSendinBlue || isChannelOneSignal || isChannelMailJet) {
       return true;
     }
     if ($("#fileup").val().length > 0) {
@@ -237,7 +248,12 @@
     var isChannelActiveCampaign = "@ViewBag.IsChannelActiveCampaign".toLowerCase() == "true";
     var isChannelGetResponse = "@ViewBag.IsChannelGetResponse".toLowerCase() == "true";
 
-    if (isChannelMailChimp || isChannelCampaignMonitor || isChannelAweber || isChannelSendGrid || isChannelActiveCampaign || isChannelGetResponse) {
+    var isChannelIContact = "@ViewBag.IsChannelIContact".toLowerCase() == "true";
+    var isChannelSendinBlue = "@ViewBag.IsChannelSendinBlue".toLowerCase() == "true";
+    var isChannelMailJet= "@ViewBag.IsChannelMailJet".toLowerCase() == "true";
+
+    if (isChannelMailChimp || isChannelCampaignMonitor || isChannelAweber || isChannelSendGrid ||
+      isChannelActiveCampaign || isChannelGetResponse || isChannelIContact || isChannelSendinBlue || isChannelMailJet) {
       $("#lblMessageTextHtml").hide();
       //tinyMCE.triggerSave();
       //var textHtml = tinyMCE.get('MessageTextHtml').getContent();

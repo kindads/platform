@@ -1,6 +1,6 @@
 @model captivate_express_webapp.Models.Advertiser.CreateCampaingModel
 @{
-  var displayFileUp = ViewBag.IsChannelMailChimp ? false : ViewBag.IsChannelSuscribers ? ViewBag.IsChannelSuscribers : ViewBag.IsChannelPushCrew ? ViewBag.IsChannelPushCrew : false;
+  var displayFileUp = ViewBag.IsChannelSuscribers || ViewBag.IsChannelPushCrew || ViewBag.IsChannelPushEngage;
   DateTime startDate = (Model != null && Model.StartDate != null) ? Model.StartDate : DateTime.Now;
   DateTime endDate = (Model != null && Model.EndDate != null) ? Model.EndDate : DateTime.Now;
 }
@@ -72,4 +72,28 @@ else if (ViewBag.IsChannelGetResponse)
   <div class="pnlCampaignDataAweber">
     @Html.Partial("_GetResponseData", Model)
   </div>
+}
+else if (ViewBag.IsChannelIContact)
+{
+  <div class="pnlCampaignDataAweber">
+    @Html.Partial("_IContactData", Model)
+  </div>
+}
+else if (ViewBag.IsChannelSendinBlue)
+{
+  <div class="pnlCampaignDataAweber">
+    @Html.Partial("_SendinBlueData", Model)
+  </div>
+}
+else if (ViewBag.IsChannelPushEngage)
+{
+  @Html.Partial("_PushEngageData", Model)
+}
+else if (ViewBag.IsChannelOneSignal)
+{
+  @Html.Partial("_OneSignalData", Model)
+}
+else if (ViewBag.IsChannelMailJet)
+{
+  @Html.Partial("_MailJetData", Model)
 }

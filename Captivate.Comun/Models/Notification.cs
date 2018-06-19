@@ -18,12 +18,15 @@ namespace Captivate.Comun.Models
 
         public string IdCampaignExternal { set; get; }
 
+        public string MailContent { set; get; }
+
         public Notification()
         {
             Label = string.Empty;
             Title = string.Empty;
             Message = string.Empty;
             IdCampaignExternal = string.Empty;
+            MailContent = string.Empty;
         }
     }
 }

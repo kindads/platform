@@ -24,10 +24,10 @@ namespace Captivate.Negocio.Partners.Mail
 
         public GetResponseManager()
         {
-            KindadsContext context = new KindadsContext();
+
             telemetria = new Trace();
-            CampaignRepository = new CampaignRepository { Context = context };
-            ProductRepository = new ProductRepository { Context = context };
+            CampaignRepository = new CampaignRepository ();
+            ProductRepository = new ProductRepository ();
         }
 
         public string ValidateCampaign(string idCampaign)
@@ -46,8 +46,8 @@ namespace Captivate.Negocio.Partners.Mail
                 string idFromField = null;
                 string subject = null;
 
-                CampaignEntity _campaign = CampaignRepository.FindBy(c => c.IdCampaign == new Guid(idCampaign)).FirstOrDefault();
-                ProductEntity _product = ProductRepository.FindBy(p => p.IdProduct == _campaign.PRODUCT_IdProduct).FirstOrDefault();
+                CampaignEntity _campaign = CampaignRepository.FindById(new Guid(idCampaign));
+                ProductEntity _product = ProductRepository.FindById(_campaign.PRODUCT_IdProduct);
 
                 if (_product.ProductSettingsEntitys != null && _product.ProductSettingsEntitys.Any())
                 {

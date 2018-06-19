@@ -106,5 +106,29 @@ namespace Captivate.Azure
             HashAlgorithm algorithm = MD5.Create();  //or use SHA256.Create();
             return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
         }
+
+        public static string CreateUsrWalletBlobFile(string _passphrase, string connection)
+        {
+            //(returns the blobfilename to save it in user's entity
+
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connection);
+
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("docskindads");
+            container.CreateIfNotExists();
+
+            string sblobfile = "bbcw" + Guid.NewGuid() + GetRandomNumber(100);
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(sblobfile);
+
+            //_passphrase = CryptoHelper.EncryptAES(_passphrase);
+            blockBlob.UploadText(_passphrase);
+            return sblobfile;
+        }
+
+        public static string GetRandomNumber(int maxnumber)
+        {
+            Random rnd = new Random();
+            return rnd.Next(1, maxnumber).ToString();
+        }
     }
 }

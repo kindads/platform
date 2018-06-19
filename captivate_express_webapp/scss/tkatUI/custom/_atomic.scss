@@ -8,6 +8,12 @@
     margin-top: 40px !important;
   }
 }
+.top-space {
+  margin-top: 20px;
+  &.s2x {
+    margin-top: 40px !important;
+  }
+}
 
 ul {
   list-style: none;
@@ -70,7 +76,7 @@ span.legend {
 // MOLECLES ====================================
 // Title
 .main-bar {
-  margin: 8px 0;
+  margin: 0;
 
   p {
     font-size: 24px;
@@ -78,14 +84,20 @@ span.legend {
   }
 }
 
+// CTA Bar
+.cta-bar {
+  margin-top: 16px;
+}
+
 // Form
 .form {
   width: 100%;
-  padding: 16px 0 64px;
+  padding: 8px 0 64px;
   position: relative;
 
   h1 {
     font-size: 1.5em;
+    border-bottom: solid 1px $charcoal-grey;
   }
 
   &.form-extended {
@@ -95,9 +107,12 @@ span.legend {
   @include breakpoint($tablet) {
     //background: rgba($white, .3);
     width: calc(100% - 240px);
-    padding: 30px 40px;
-    margin-left: 280px;
+    padding: 16px 24px;
+    margin-left: 240px;
     //padding-bottom: 48px;
+    h1 {
+      border-color: transparent;
+    }
     &.form-extended {
       width: 100%;
       margin-left: 0;
@@ -224,9 +239,9 @@ i.arrow {
 // COMPONENTS ==================================
 // Container
 .white-block {
-  padding: 12px;
-  background: rgba($white, .88);
-  border: solid 1px lighten($dim-grey, 0);
+  padding: 2px;
+  background: rgba($white, .28);
+  border: solid 1px transparent;
 
   .heading {
     border-bottom: solid 1px $dim-grey;
@@ -237,7 +252,6 @@ i.arrow {
       float: left;
       margin: 8px 8px 0 0;
       display: block;
-      border: solid 1px $dim-grey;
     }
 
     h2 {
@@ -256,7 +270,7 @@ i.arrow {
   }
 
   .body-content {
-    padding: 16px 0;
+    padding: 0;
 
     h3 {
       font-size: 1.125em;
@@ -266,8 +280,9 @@ i.arrow {
 
   &.shadow-block {
     box-shadow: $box-shadow;
+    background: $white;
     border-radius: 8px;
-
+    padding: 20px;
     .body-content {
       h3, p {
         margin-bottom: 20px;
@@ -280,9 +295,13 @@ i.arrow {
   }
 
   @include breakpoint($tablet) {
-    padding: 24px;
-    border: solid 1px $soft-grey;
+    padding: 16px  24px;
+    background: rgba($white, .88);
+    border: solid 1px lighten($dim-grey, 25);
     //min-height: 70vh;
+    &.shadow-block {
+
+    }
   }
 }
 
@@ -395,27 +414,35 @@ i.arrow {
   transition: padding .85s ease-in;
   box-shadow: 1px 0 6px 0 rgba($black, .2);
 
+  .navbar-brand {
+    display: none;
+  }
+
   ul {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin: 0;
     position: relative;
-    height: 46px;
+    height: 48px;
     background-color: $soft-grey;
 
     li {
-      width: 25%;
-
+      width: 22%;
+      &.bal-left {
+        margin-left: 4%;
+      }
+      &.bal-right {
+        margin-right: 4%;
+      }
       a {
         display: block;
-        padding: 12px 8px;
+        padding: 34px 0 0 0;
         text-align: center;
         position: relative;
-        text-indent: -9999px;
         min-height: 48px;
         font-size: 12px;
-
+        color: $dim-grey;
         &:before {
           content: '';
           font-family: "kindads" !important;
@@ -432,7 +459,7 @@ i.arrow {
           height: 24px;
           display: block;
           left: 40%;
-          top: 30%;
+          top: 6px;
           text-indent: 0px;
         }
 
@@ -475,12 +502,6 @@ i.arrow {
         &.active,
         &:active {
           color: $bright-green;
-          padding: 30px 0 0 0;
-          text-indent: 0px;
-
-          &:before {
-            top: 8px;
-          }
         }
 
         &.active,
@@ -508,8 +529,8 @@ i.arrow {
 
   .link-balance {
     position: absolute;
-    bottom: 6px;
-    left: calc(50% - 26px);
+    bottom: 4px;
+    left: calc(50% - 30px);
 
     h3 {
       display: none;
@@ -520,11 +541,10 @@ i.arrow {
         color: $vivid-violet;
         background: $white;
         border: solid 4px $soft-grey;
-        width: 52px;
-        height: 52px;
-        border-radius: 26px;
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
         display: block;
-        margin: 0 auto;
         text-align: center;
         font-size: 10px;
         font-family: $openSansLight;
@@ -532,18 +552,31 @@ i.arrow {
         strong {
           font-size: 24px;
           display: block;
+          width: 56px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 2px;
         }
       }
     }
   }
 
   @include breakpoint($tablet) {
-    position: fixed;
-    top: 70px;
-    padding-top: 100px;
+    padding-top: 0px;
     margin: 0;
-    width: 280px;
+    width: 240px;
     min-height: 100%;
+    z-index: 3000;
+
+    .navbar-brand {
+      display: block;
+      float: none;
+      max-width: 160px;
+      padding: 0;
+      display: block;
+      margin: 15px 0 45px 15px;
+    }
 
     ul {
       flex-direction: column;
@@ -554,7 +587,10 @@ i.arrow {
       li {
         width: 100%;
         margin-bottom: 24px;
-
+        &.bal-left, &bal-right {
+          margin-left: 0;
+          margin-right: 0;
+        }
         a {
           min-height: 56px;
           padding: 16px 0px 16px 56px;
@@ -562,6 +598,7 @@ i.arrow {
           text-align: left;
           font-family: $openSansLight;
           line-height: 24px;
+          color: $charcoal-grey;
           font-size: 16px;
           margin: 0;
           text-indent: 0;
@@ -608,7 +645,7 @@ i.arrow {
     .link-balance {
       width: 100%;
       margin-bottom: 50px;
-      bottom: 70px;
+      bottom: 0;
       left: 0;
 
       h3 {
@@ -625,18 +662,18 @@ i.arrow {
           border: solid 2px $vivid-violet;
           width: 80%;
           height: auto;
-
+          margin: 0 auto;
+          font-size: 14px;
+          padding: 4px;
           strong {
             display: inline-block;
+            width: 120px;
+            margin: 0;
+            line-height: 100%;
           }
         }
       }
     }
-  }
-
-  @include breakpoint($desktop-l) {
-    box-shadow: none;
-    border-right: solid 1px $soft-grey;
   }
 }
 
@@ -702,6 +739,7 @@ i.arrow {
     }
   }
 }
+
 
 // Data
 .card {
@@ -860,6 +898,7 @@ i.arrow {
 .panel {
   &.panel-info {
     margin-top: 20px;
+    padding: 12px;
     background-color: lighten($soft-grey, 5);
     border: solid 1px $dim-grey;
     box-shadow: 0 0 8px 2px rgba($dim-grey, 0.33);
@@ -869,13 +908,31 @@ i.arrow {
     }
 
     h3 {
-      color: $main-blue;
+      &.title {
+        border-bottom: solid 1px $dim-grey;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+      }
+      &.accent {
+        color: $main-blue;
+      }
       small {
         display: block;
         color: inherit;
       }
     }
 
+    .body-content {
+      p {
+        margin-bottom: 24px;
+      }
+      .info {
+        margin: 12px 0;
+        .image-logo {
+          max-width: 90px;
+        }
+      }
+    }
     .circle {
       width: 100px;
       height: 100px;

@@ -16,7 +16,7 @@
 =================================================== */
   html, body {
     height:100%;
-    background: $off-white;
+    background: lighten($off-white, 1.5);
   }
   body {
     font-family: $openSansRegular;
@@ -46,15 +46,15 @@
   .main-content {
     position: relative;
     height: calc(100vh - 0px);
-    background-color: $off-white;
+    background: lighten($off-white, 3);
     &.admin {
-      height: calc(100vh - 76px);
+      height: calc(100vh - 74px);
     }
     @include breakpoint($tablet) {
+      background-color: darken($off-white, 2);
       min-height: 100%;
       &.admin {
         height: calc(100vh - 70px);
-        margin-top: 70px;
       }
     }
     @include breakpoint($desktop-l) {

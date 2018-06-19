@@ -8,4 +8,6 @@ namespace Captivate.Comun.Models
 {
    
     public enum EnumMailProviders { IContact=1}
+
+    public enum EnumTypeSiteValidation { AzureAD=1, Txt=3, Gtm=2 }
 }

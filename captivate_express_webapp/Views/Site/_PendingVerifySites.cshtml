@@ -1,4 +1,4 @@
-@model captivate_express_webapp.Models.Publisher.ShowSitesViewModel
+@model Captivate.Comun.Models.ViewModel.ShowSitesViewModel
 
 @{
   var grid = new WebGrid(rowsPerPage: Model.PageSize);
@@ -12,5 +12,5 @@ grid.Column(columnName: "URL", header: "Site", canSort: true),
 grid.Column(columnName: "RegistrationDate", header: "Date creation",
 format: (model) => model.RegistrationDate != null ? model.RegistrationDate.ToString("d") == DateTime.Today.ToString("d") ? "Today" : model.RegistrationDate.ToString("d") == DateTime.Today.AddDays(-1).ToString("d") ? "Yesterday" : string.Format("{0:MMM dd, yy}", model.RegistrationDate) : "", canSort: true),
 grid.Column(header: "Status", format: (item) => Html.ActionLink("Validate", "ValidateSite", "Site", new { idSite = item.IdSite.ToString() }, new { @class = "validate" })),
-grid.Column(header: "Delete", format: @<div id="@item.IdSite" onclick="deleteSiteRow('@item.IdSite', '@item.URL', false)" style="cursor:pointer">Delete</div>)
+grid.Column(header: "Delete", format: @<div id="@item.IdSite" onclick="siteModule.deleteSiteRow('@item.IdSite', '@item.URL', false)" style="cursor:pointer">Delete</div>)
     ))

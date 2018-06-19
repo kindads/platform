@@ -9,6 +9,7 @@
 }
 <script type="text/javascript">
   var IsChannelIContact = false;
+  var IsChannelMailJet = false;
 </script>
 
 <h2>Create Product</h2>
@@ -49,7 +50,7 @@
                           @Html.Label("Sites", htmlAttributes: new { @class = "control-label col-md-3" })
                           <div class="col-md-9 form-inline">
                             @Html.DropDownList("Sites", ViewData["sites"] as List<SelectListItem>, "Please select",
-                          new { @class = "form-control", @required = "true", @data_msg_required = "Site is required", @onchange = "onSeleccionarSite()" })
+                          new { @class = "form-control", @required = "true", @data_msg_required = "Site is required", @onchange = "onSeleccionarSite();" })
                             @Html.ValidationMessage("Sites")
                           </div>
                         </div>
@@ -165,6 +166,15 @@
                           </div>
                         </div>
 
+                        <div id="pnlAuthMailJet" style="display:none;">
+                          <div class="form-group">
+                            @Html.LabelFor(model => model.SecretKeyMJ, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9 form-inline">
+                              @Html.TextBoxFor(model => model.SecretKeyMJ, new { @class = "form-control", @required = "true", @data_msg_required = "Secret Key" })
+                              @Html.ValidationMessageFor(model => model.SecretKeyMJ)
+                            </div>
+                          </div>
+                        </div>
 
 
                         <div id="pnlActionValidateToken">
@@ -273,6 +283,40 @@
                             </div>
                           </div>
 
+                          <!--Formulario de Sendinblue-->
+                          <div id="pnlChannelSendinBlue" style="display:none">
+                            <!--Folders-->
+                            <div class="form-group">
+                              @Html.Label("Folders", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsSB", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsSB")
+                              </div>
+                            </div>
+
+                            <!-- Lists-->
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsSBL", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsSBL")
+                              </div>
+                            </div>
+
+
+
+                            <!--Category-->
+                            <div class="form-group">
+                              @Html.LabelFor(model => model.SendinBlue.Category, htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.TextBoxFor(model => model.SendinBlue.Category, new { @class = "form-control", @required = "true", @data_msg_required = "Category is required", id = "SendinBlueCategory" })
+                                @Html.ValidationMessageFor(model => model.SendinBlue.Category)
+                              </div>
+                            </div>
+
+                          </div>
+
+
                           <div id="pnlChannelActiveCampaign" style="display:none">
                             <div class="form-group">
                               @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
@@ -300,7 +344,7 @@
                             </div>
                           </div>
 
-                          <div id="pnlChannelIContactList">
+                          <div id="pnlChannelIContactList" style="display:none">
                             <!-- Seleccionar la lista-->
                             <div class="form-group">
                               @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
@@ -310,6 +354,32 @@
                               </div>
                             </div>
                           </div>
+                          <div id="pnlChannelOneSignal" style="display:none">
+                            <div class="form-group">
+                              @Html.Label("Apps", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsAppsOS", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Apps is required" })
+                                @Html.ValidationMessage("ListsAppsOS")
+                              </div>
+                            </div>
+                          </div>
+                          <div id="pnlChannelMailJet" style="display:none">
+                            <div class="form-group">
+                              @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("ListsMJ", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("ListsMJ")
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              @Html.Label("Segment", htmlAttributes: new { @class = "control-label col-md-3" })
+                              <div class="col-md-9 form-inline">
+                                @Html.DropDownList("SegmentMJ", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+                                @Html.ValidationMessage("SegmentMJ")
+                              </div>
+                            </div>
+                          </div>
+
                         </div>
                       </div>
                     </div>
@@ -359,7 +429,7 @@
       } else {
         var api_token = $("#Token").val();
         var id_site = $("#Sites").val();
-        var wildCard = $("#UrlActiveCampaign").val();
+        var wildCard = IsChannelMailJet ? $("#SecretKeyMJ").val() : $("#UrlActiveCampaign").val();
         validateApiToken(api_token, id_site, wildCard);
       }     
     }
@@ -417,7 +487,13 @@
                 invokeChannelSendGrid();
               } else if (result.IsActiveCampaign) {
                 invokeChannelActiveCampaign();
-              } 
+              } else if (result.IsSendinBlue) {
+                invokeChannelSendinBlue();
+              } else if (result.IsOneSignal) {
+                invokeChannelOneSignal();
+              } else if (result.IsMailJet) {
+                invokeChannelMailJet();
+              }
 
             } else {
               showElementsError();
@@ -664,6 +740,100 @@
           });
    }
 
+
+  function invokeChannelSendinBlue() {
+     $("#ListsSB").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListFoldersSendinBlue")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsSB").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    console.log("Value:" + state.Value);
+                    console.log("Text:" + state.Text);
+                    $("#ListsSB").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsSB").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from active campaign.' + ex);
+              }
+          });
+  }
+
+  function invokeChannelOneSignal() {
+    $("#ListsAppsOS").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListAppsOneSignal")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsAppsOS").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    console.log("Value:" + state.Value);
+                    console.log("Text:" + state.Text);
+                    $("#ListsAppsOS").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsAppsOS").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list apps from one signal.' + ex);
+              }
+          });
+  }
+
+  function invokeChannelMailJet() {
+    $("#ListsMJ").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListsMailJet")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#ListsMJ").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    console.log("Value:" + state.Value);
+                    console.log("Text:" + state.Text);
+                    $("#ListsMJ").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#ListsMJ").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list apps from mailjet.' + ex);
+              }
+          });
+    $("#SegmentMJ").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetSegmentMailJet")',
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#SegmentMJ").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    console.log("Value:" + state.Value);
+                    console.log("Text:" + state.Text);
+                    $("#SegmentMJ").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#SegmentMJ").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                alert('Failed to retrieve list apps from mailjet.' + ex);
+              }
+          });
+  }
+
 function showElementsSuccess(result) {
     //Deshabilitar los selectores de name y channel
     $('#Products option:not(:selected)').attr('disabled', true);
@@ -699,6 +869,9 @@ function showElementsSuccess(result) {
       $("#pnlChannelActiveCampaign").hide();
       $("#pnlChannelGetResponse").hide();
       $("#pnlChannelIContact").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
     } else if (result.isMailChimp) {
       $("#pnlChannelPushNotification").hide();
       $("#pnlChannelMailChimp").show();
@@ -708,6 +881,9 @@ function showElementsSuccess(result) {
       $("#pnlChannelActiveCampaign").hide();
       $("#pnlChannelGetResponse").hide();
       $("#pnlChannelIContact").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
     } else if (result.isCampaignMonitor) {
       $("#pnlChannelPushNotification").hide();
       $("#pnlChannelMailChimp").hide();
@@ -717,6 +893,9 @@ function showElementsSuccess(result) {
       $("#pnlChannelActiveCampaign").hide();
       $("#pnlChannelGetResponse").hide();
       $("#pnlChannelIContact").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
     } else if (result.isAweber) {
       $("#pnlChannelPushNotification").hide();
       $("#pnlChannelMailChimp").hide();
@@ -726,6 +905,9 @@ function showElementsSuccess(result) {
       $("#pnlChannelActiveCampaign").hide();
       $("#pnlChannelGetResponse").hide();
       $("#pnlChannelIContact").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
     } else if (result.isSendGrid) {
       $("#pnlChannelPushNotification").hide();
       $("#pnlChannelMailChimp").hide();
@@ -735,6 +917,9 @@ function showElementsSuccess(result) {
       $("#pnlChannelActiveCampaign").hide();
       $("#pnlChannelGetResponse").hide();
       $("#pnlChannelIContact").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
     } else if (result.IsActiveCampaign) {
       $("#pnlChannelPushNotification").hide();
       $("#pnlChannelMailChimp").hide();
@@ -743,6 +928,10 @@ function showElementsSuccess(result) {
       $("#pnlChannelSendGrid").hide();
       $("#pnlChannelActiveCampaign").show();
       $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelIContact").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
     } else if (result.isGetResponse) {
       $("#pnlChannelPushNotification").hide();
       $("#pnlChannelMailChimp").hide();
@@ -752,6 +941,9 @@ function showElementsSuccess(result) {
       $("#pnlChannelActiveCampaign").hide();
       $("#pnlChannelGetResponse").show();
       $("#pnlChannelIContact").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
     }
     else if (result.IsActiveIContact) {
       $("#pnlChannelPushNotification").hide();
@@ -762,6 +954,48 @@ function showElementsSuccess(result) {
       $("#pnlChannelActiveCampaign").hide();
       $("#pnlChannelGetResponse").hide();
       $("#pnlChannelIContactList").show();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
+    }
+    else if (result.IsSendinBlue) {     
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContactList").hide();
+      $("#pnlChannelSendinBlue").show();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").hide();
+    }
+    else if (result.IsOneSignal) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContactList").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").show();
+      $("#pnlChannelMailJet").hide();
+    }
+    else if (result.IsMailJet) {
+      $("#pnlChannelPushNotification").hide();
+      $("#pnlChannelMailChimp").hide();
+      $("#pnlChannelCampaignMonitor").hide();
+      $("#pnlChannelAWeber").hide();
+      $("#pnlChannelSendGrid").hide();
+      $("#pnlChannelActiveCampaign").hide();
+      $("#pnlChannelGetResponse").hide();
+      $("#pnlChannelIContactList").hide();
+      $("#pnlChannelSendinBlue").hide();
+      $("#pnlChannelOneSignal").hide();
+      $("#pnlChannelMailJet").show();
     }
   }
 
@@ -798,6 +1032,32 @@ function showElementsSuccess(result) {
                 },
                 error: function (ex) {
                     alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+      })
+
+    //Cuando se cambie los folders
+    $("#ListsSB").change(function () {
+      var valorLista = $("#ListsSB").val();
+      console.log("Folder:" + valorLista);
+      $("#ListsSBL").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ObtenerListsFromFolder")',
+                dataType: 'json',
+                data: { ids: valorLista },
+                success: function (lists) {
+                  if (lists != null && lists != '') {
+
+                    $("#ListsSBL").append('<option value="">' + 'Please select' + '</option>');
+                    $.each(lists, function (i, state) {
+                      $("#ListsSBL").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                  } 
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve lists from folder.' + ex);
                 }
             });
             return false;
@@ -909,8 +1169,11 @@ function showElementsSuccess(result) {
                 data: { id: $("#Partners").val() },
               success: function (result) {
                   //Siempre ocultamos IContact
+                  IsChannelIContact = false;
+                  IsChannelMailJet = false;
                    $("#pnlChannelIContact").hide();
-                   $("#pnlApiToken").show(); 
+                   $("#pnlApiToken").show();
+                   $("#pnlAuthMailJet").hide();
 
                   if (result.success && result.isProviderAWeber) {
                     $("#linkAweber").attr("href", result.linkAWeber);
@@ -928,6 +1191,11 @@ function showElementsSuccess(result) {
                     IsChannelIContact = true;
                     $("#pnlApiToken").hide(); //Escondemos el del token
                     $("#pnlChannelIContact").show(); //Mostramos el formulario para autenticarse
+                  }
+
+                if (result.success && result.isProviderMailJet) {
+                    IsChannelMailJet = true;
+                    $('#pnlAuthMailJet').show();
                   }
                 },
                 error: function (ex) {
@@ -1147,26 +1415,107 @@ function showElementsSuccess(result) {
         })
     });
 </script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    //var IsChannelIContact = false;
+    $("#ListsSBL").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListsSBSelecc")',
+              data: { id: $("#ListsSBL").val() }
+            });
+            return false;
+        })
+    });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#ListsAppsOS").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListsAppsOSSelecc")',
+              data: { id: $("#ListsAppsOS").val() }
+            });
+            return false;
+        })
+    });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#ListsMJ").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListsMJSelecc")',
+              data: { id: $("#ListsMJ").val() }
+            });
+            return false;
+        })
+    });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#SegmentMJ").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SegmentMJSelecc")',
+              data: { id: $("#SegmentMJ").val() }
+            });
+            return false;
+        })
+    });
+</script>
 
 
 <script>
   function onSeleccionarSite() {
 
-    //Habilitar los selectores de name y channel
-    $('#Products option:not(:selected)').attr('disabled', false);
-    $('#Partners option:not(:selected)').attr('disabled', false);
+    // Limpiamos los valores
+    $("#Name").val("");
+    $("#Token").val("");
+
+    // Ponemos en default el combo
+    $("#Products").val('');
+    $("#Partners").val('');
+
+    console.log("onSeleccionarSite()");
+
+    // Propiedad disabled
+    $("#Products").attr("disabled", false);
+    $("#Partners").attr("disabled", false);
     $("#Products").prop("disabled", false);
     $("#Partners").prop("disabled", false);
 
-    //Ocultar segunda parte del formulario
+    // Disable panels
     $("#pnlTokenValidate").hide();
     $("#pnlActionCreateProduct").hide();
+    $("#pnlAuthMailJet").hide();
+    $("#spanTokenNotValid").hide();
+
+    // Enable token input
     $("#pnlActionValidateToken").show();
-    $("#iconApiToken").addClass().addClass("fa fa-check-circle").css("color", "green").css("font-size", "20px");
-    $("#pnlApiToken").removeClass("has-success");
-    //$("#spanTokenNotValid").show();
-    $("#Token").prop("disabled", false);
-    $("#Token").val("");
-    //showElementsByChannel(result);
+    $("#pnlApiToken").show();
+
+    //Remove class
+    $("#iconApiToken").removeClass("fa fa-check-circle").css("color", "green").css("font-size", "20px");
+    $("#pnlApiToken").removeClass("has-success");   
+    $("#Token").prop("disabled", false);   
+
+    // providers section
+    $("#pnlChannelPushNotification").hide();
+    $("#pnlChannelMailChimp").hide();
+    $("#pnlChannelCampaignMonitor").hide();
+    $("#pnlChannelAWeber").hide();
+    $("#pnlChannelSendGrid").hide();
+    $("#pnlChannelActiveCampaign").hide();
+    $("#pnlChannelGetResponse").hide();
+    $("#pnlChannelIContact").hide();
+    $("#pnlChannelSendinBlue").hide();
+    $("#pnlChannelOneSignal").hide();
+    $("#pnlChannelMailJet").hide();
+
+    console.log("end onSeleccionarSite()");
   }
 </script>

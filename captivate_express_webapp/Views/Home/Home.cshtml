@@ -4,12 +4,19 @@
   Layout = "~/Views/Shared/_LandingLayout.cshtml";
 }
 
+<div id="cookiesPanel" class="cookies">
+  <span>
+    This website uses cookies to provide best experience.
+  </span>
+  <a onclick="hideCookies()" class="btn">Got it</a>
+</div>
+
 <div class="flexbox hero">
   <section class="flexbox-item spaced info">
     <div class="header">
       <nav>
         <a>
-          <img class="pull-left img-responsive" data-no-retina="true" src="../Img/UI/logo.png" />
+          <img class="pull-left img-responsive" data-no-retina="true" src="~/Img/UI/logo.png" />
         </a>
         <ul class="pull-right">
           <li>
@@ -70,21 +77,21 @@
       <ul class="block-items clearfix">
         <li>
           <div class="img">
-            <img src="../Img/Home/features-less-spam.svg" data-no-retina="true" alt="Kind Ads Less Spam"/>
+            <img src="~/Img/Home/features-less-spam.svg" data-no-retina="true" alt="Kind Ads Less Spam"/>
           </div>
           <h3>Less spam</h3>
           <p>By removing the ad network, publishers can now control what's on their website.</p>
         </li>
         <li>
           <div class="img">
-            <img src="../Img/Home/features-friendly-experience.svg" data-no-retina="true" alt="Kind Ads Friendly User Experience"/>
+            <img src="~/Img/Home/features-friendly-experience.svg" data-no-retina="true" alt="Kind Ads Friendly User Experience"/>
           </div>
           <h3>Friendly user experience</h3>
           <p>By leveraging technologies like push notifications and email, advertisers no longer have to irritate users.</p>
         </li>
         <li>
           <div class="img">
-            <img src="../Img/Home/features-paid-fast.svg" data-no-retina="true" alt="Kind Ads Paid Instanly"/>
+            <img src="~/Img/Home/features-paid-fast.svg" data-no-retina="true" alt="Kind Ads Paid Instanly"/>
           </div>
           <h3>Get paid instantly</h3>
           <p>Publishers don't have to wait months before they get paid now.</p>
@@ -120,7 +127,7 @@
             </a>*@
         </div>
         <div class="col-sm-5">
-          <img class="img-responsive" src="../Img/Home/advantages-customers.png" alt="Internet Users" />
+          <img class="img-responsive" src="~/Img/Home/advantages-customers.png" alt="Internet Users" />
         </div>
       </article>
       <article class="row">
@@ -136,7 +143,7 @@
       </a>*@
         </div>
         <div class="col-sm-5">
-          <img class="img-responsive" src="../Img/Home/advantages-publishers.png" alt="Advertisers" />
+          <img class="img-responsive" src="~/Img/Home/advantages-publishers.png" alt="Advertisers" />
         </div>
       </article>
       <article class="row">
@@ -152,7 +159,7 @@
             </a>*@
         </div>
         <div class="col-sm-5">
-          <img class="img-responsive" src="../Img/Home/advantages-advertisers.png" alt="Publishers" />
+          <img class="img-responsive" src="~/Img/Home/advantages-advertisers.png" alt="Publishers" />
         </div>
       </article>
     </div>
@@ -169,19 +176,19 @@
     </div>
     <div class="col-sm-12 flexbox partners"> 
       <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="../Img/Home/subscribers-partner@2x.png" alt="Subscribers Logo" />
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/subscribers-partner@2x.png" alt="Subscribers Logo" />
       </div>
       <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="../Img/Home/pushcrew-partner@2x.png" alt="Push Crew Logo" />
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/pushcrew-partner@2x.png" alt="Push Crew Logo" />
       </div>
       <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="../Img/Home/mailchimp-partner@2x.png" alt="Mailchimp Logo" />
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/mailchimp-partner@2x.png" alt="Mailchimp Logo" />
       </div>
       <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="../Img/Home/campaignmonitor-partner@2x.png" alt="Campaign Monitor Logo" />
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/campaignmonitor-partner@2x.png" alt="Campaign Monitor Logo" />
       </div>
       <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="../Img/Home/aweber-partner@2x.png" alt="AWeber Logo" />
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/aweber-partner@2x.png" alt="AWeber Logo" />
       </div>
     </div>
   </div>
@@ -203,3 +210,10 @@
 
   </div>
 </div>
+
+<script>
+  function hideCookies() {
+    //document.getElementById("cookiesPanel").style.display = "none";
+    document.getElementById("cookiesPanel").classList.add('fadeIn');
+  }
+</script>

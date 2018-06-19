@@ -13,6 +13,11 @@ using Microsoft.Owin.Security;
 using captivate_express_webapp.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using Captivate.DataAccess;
+using Captivate.Comun.Models;
+using Twilio;
+using Twilio.Types;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace captivate_express_webapp
 {
@@ -43,7 +48,21 @@ namespace captivate_express_webapp
   {
     public Task SendAsync(IdentityMessage message)
     {
-      // Plug in your SMS service here to send a text message.
+      //TwilioManager smsManager = new TwilioManager();
+      //TwilioKeys Keys = smsManager.GetKeys();
+
+      //string accountSid = Keys.SMSAccountIdentification;
+      //string authToken = Keys.SMSAccountPassword;
+
+      //TwilioClient.Init(accountSid, authToken);
+
+      //var to = new PhoneNumber(message.Destination);
+      //var SMSMessage = MessageResource.Create(
+      //    to,
+      //    from: new PhoneNumber(Keys.SMSAccountFrom),
+      //    body: message.Body );
+
+
       return Task.FromResult(0);
     }
   }
@@ -94,6 +113,7 @@ namespace captivate_express_webapp
       });
       manager.EmailService = new EmailService();
       manager.SmsService = new SmsService();
+
       var dataProtectionProvider = options.DataProtectionProvider;
       if (dataProtectionProvider != null)
       {

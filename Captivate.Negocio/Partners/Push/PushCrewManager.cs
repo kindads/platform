@@ -14,17 +14,22 @@ namespace Captivate.Negocio.Partners.Push
         public ITrace telemetria { set; get; }
         public CampaignRepository CampaignRepository { set; get; }
         public ProductRepository ProductRepository { set; get; }
+        public ProductSettingsRepository ProductSettingsRepository { set; get; }
+
         public PushCrewManager()
         {
-            KindadsContext context = new KindadsContext();
+            
             telemetria = new Trace();
-            CampaignRepository = new CampaignRepository { Context = context };
-            ProductRepository = new ProductRepository { Context = context };
+            CampaignRepository = new CampaignRepository ();
+            ProductRepository = new ProductRepository ();
+            ProductSettingsRepository = new ProductSettingsRepository();
         }
         public string ValidateCampaign(string idCampaign)
         {
-            var _campaign = CampaignRepository.GetById(new Guid(idCampaign));
-            var product = ProductRepository.FindById(new Guid(idCampaign));
+            var _campaign = CampaignRepository.FindById(new Guid(idCampaign));
+            _campaign.PRODUCT = ProductRepository.FindById(_campaign.PRODUCT_IdProduct);
+            _campaign.PRODUCT.ProductSettingsEntitys = ProductSettingsRepository.GetProductSettingsByIdProduct(_campaign.PRODUCT_IdProduct);
+
             if (_campaign != null)
             {
                 var _apikey = (from d in _campaign.PRODUCT.ProductSettingsEntitys where d.SettingName.Equals("pushApiToken") where d.PRODUCT_IdProduct.Equals(_campaign.PRODUCT.IdProduct) select d).FirstOrDefault();

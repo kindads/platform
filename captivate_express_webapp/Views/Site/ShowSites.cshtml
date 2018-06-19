@@ -56,78 +56,8 @@
 </div>
 
 @Scripts.Render("~/bundles/customjs")
+<script src="~/Modules/siteModule.js"></script>
 <script type="text/javascript">
-  $(function () {
-    $('.link-dashboard').addClass('active');
-    $('.datagrid thead th:contains("Delete")').addClass('icon-delete');
-  });
-
-  $(function () {
-    $("#pnlGridPending").on("click", "thead th a, tfoot a", function (e) {
-      e.preventDefault();
-      var param = $(this).attr('href').split('?')[1];
-      var url = '@Url.Action("ShowSitesPending", "Site")' + '?' + param;
-      $.ajax({
-        url: url,
-        type: 'GET',
-        data: '',
-        dataType: 'html',
-        success: function (data) {
-          $('#pnlGridPending').html(data);
-        },
-        error: function () {
-          alert('Error!');
-        }
-      });
-    });
-  });
-
-  $(function () {
-    $("#pnlGridVerify").on("click", "thead th a, tfoot a", function (e) {
-      e.preventDefault();
-      var param = $(this).attr('href').split('?')[1];
-      var url = '@Url.Action("ShowSitesVerify", "Site")' + '?' + param;
-      $.ajax({
-        url: url,
-        type: 'GET',
-        data: '',
-        dataType: 'html',
-        success: function (data) {
-          $('#pnlGridVerify').html(data);
-        },
-        error: function () {
-          alert('Error!');
-        }
-      });
-    });
-  });
-
-  function deleteSiteRow(idSite, url, isSiteVerified) {
-    var r = confirm("The site " + url + " will be deleted. Are you sure?");
-    if (r == true) {
-      var urlCall = '@Url.Action("DeleteSite", "Site")';
-      $.ajax({
-        url: urlCall,
-        data: { IdSite: idSite },
-        success: function (data) {
-          if (!data.isDeleted) {
-            alert('The site was not deleted because it has associated products.');
-          }
-          else {
-            alert('Site deleted successfully')
-            if (isSiteVerified)
-              $("#pnlGridVerifyAjax").submit();
-            else
-              $("#pnlGridPendingAjax").submit();
-          }
-        },
-        error: function (data) {
-          if (!data.isDeleted)
-            alert('The site was not deleted because it has associated products.');
-          else
-            alert('Error!');
-        }
-      });
-    }
-  }
+  siteModule.readyShowSites();
+  siteModule.bindingOnClickShowSites(); 
 </script>

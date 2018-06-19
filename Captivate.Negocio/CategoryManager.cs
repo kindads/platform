@@ -16,9 +16,9 @@ namespace Captivate.Negocio
         public ITrace telemetria { set; get; }
         public CategoryManager()
         {
-            KindadsContext context = new KindadsContext();
+     
             telemetria = new Trace();
-            repository = new CategoryRepository { Context = context };
+            repository = new CategoryRepository();
         }
 
         public List<CategoryEntity> GetByIdSite(Guid idSite)

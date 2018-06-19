@@ -11,6 +11,7 @@ namespace Captivate.Comun.Enums
         advertiser,
         publisher,
         createAccount,
-        recoverPassword
+        recoverPassword,
+        accountCreated
     }
 }

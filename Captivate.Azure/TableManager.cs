@@ -14,24 +14,31 @@ namespace Captivate.Azure
     {
         public static void InsertMessage(string tableName, string message)
         {
-            CloudStorageAccount storageAccount = CreateConexion();
-            CloudTableClient cloudTableClient = storageAccount.CreateCloudTableClient();
+            try
+            {
+                CloudStorageAccount storageAccount = CreateConexion();
+                CloudTableClient cloudTableClient = storageAccount.CreateCloudTableClient();
 
-            // Retrieve a reference to the table.
-            CloudTable table = cloudTableClient.GetTableReference(tableName);
+                // Retrieve a reference to the table.
+                CloudTable table = cloudTableClient.GetTableReference(tableName);
 
-            // Create the table if it doesn't exist.
-            table.CreateIfNotExists();
+                // Create the table if it doesn't exist.
+                table.CreateIfNotExists();
 
-            // Create a new customer entity.
-            ErrorEntity error = new ErrorEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
-            error.Excepcion = message;
+                // Create a new customer entity.
+                ErrorEntity error = new ErrorEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+                error.Excepcion = message;
 
-            // Create the TableOperation object that inserts the customer entity.
-            TableOperation insertOperation = TableOperation.Insert(error);
+                // Create the TableOperation object that inserts the customer entity.
+                TableOperation insertOperation = TableOperation.Insert(error);
 
-            // Execute the insert operation.
-            table.Execute(insertOperation);
+                // Execute the insert operation.
+                table.Execute(insertOperation);
+            }
+            catch (Exception e)
+            {
+                //Todo
+            }            
         }
 
         public static CloudStorageAccount CreateConexion()

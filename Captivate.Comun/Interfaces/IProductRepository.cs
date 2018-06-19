@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Interfaces
 {   
-    public interface IProductRepository : IGenericRepository<ProductEntity>
+    public interface IProductRepository : IDapperGenericRepository<ProductEntity>
     {
 
-        ProductEntity GetSingle(Guid fooId);
+        List<ProductEntity> GetActiveProducts();
     }
 }

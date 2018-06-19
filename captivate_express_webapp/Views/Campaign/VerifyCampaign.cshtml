@@ -116,6 +116,8 @@
   $('#formValidateCampaign').submit(function (e) {
     e.preventDefault();
     var idCampaign = @Html.Raw(Json.Encode(Model.IdCampaign));
+    console.log(idCampaign);
+
     $('#loadingCampaignValidateModal').modal('show');
     $.ajax({
       type: 'Post',

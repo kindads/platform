@@ -14,6 +14,8 @@ using captivate_express_webapp.Utils.Enums;
 using System.Xml;
 using Captivate.Negocio.Email;
 using Captivate.Comun.Enums;
+using Captivate.Comun.Models;
+using Captivate.Negocio;
 
 namespace captivate_express_webapp.Controllers
 {
@@ -117,30 +119,50 @@ namespace captivate_express_webapp.Controllers
       if (ModelState.IsValid)
       {
         if (m.AgreeTerms)
-        {
-          Models.Wallet.CreateWalletModel _wallet = await new Helpers.NethereumHelper().CreateUserWallet();
-
-          var user = new ApplicationUser { UserName = m.Email, Email = m.Email, Hometown = "", TokenAddress = _wallet.blobname, WalletAddress = _wallet.walletaddress };
+        {          
+          var user = new ApplicationUser { UserName = m.Email, Email = m.Email, Hometown = string.Empty, TokenAddress = string.Empty, WalletAddress = string.Empty };
           var result = await UserManager.CreateAsync(user, m.Password);
           if (result.Succeeded)
           {
+           
+
             var userRegister = UserManager.FindByEmail(user.Email);
             UserManager.AddToRole(userRegister.Id, m.Role);
-            //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+
             var callbackUrl = Url.Action(
                  "AccountVerified", "Access",
                  new { userId = user.Id, code = code },
                  protocol: Request.Url.Scheme);
             string mailContent = String.Format(new MailManager().GetMailContent(EMailType.createAccount), user.UserName, callbackUrl);
-            await UserManager.SendEmailAsync(user.Id,
-                 "Confirm your email",
-                 //"Hi, thank you for join us!<br><br>Please click the following link to verify your email address. <a href=\"" + callbackUrl + "\">link</a><br><br><br> Kind Ads"
-                 //String.Format(GetMailBodyFromXML("createAccount"), callbackUrl)
-                 mailContent
-                 );
+            
+            //Enqueue
+            // Creamos el objeto de notificacion
+            Notification notification = new Notification();
+            NotificationManager notificationManager = new NotificationManager();
+
+            // Enviamos la notificacion para la validacion
+            notification.IdUser = new Guid(user.Id);
+            notification.MailContent = mailContent;
+
+            // Encolamos la notificacion para que el webjob la procese
+            notificationManager.EnqueueNewAccessUser(notification);
+
+            //Enviamos el mail
+            MailManager emailManager = new MailManager();
+            MailMessage message = new MailMessage();
+            string messageContent = String.Format(new MailManager().GetMailContent(EMailType.accountCreated), user.UserName, callbackUrl);
+
+            //Config
+            message.Body = messageContent;
+            message.Destination = userRegister.Email;
+            message.Subject = "Thanks for signing up.";
+
+
+            await emailManager.SendAsync(message);
+
             return View("CheckEmailActivation");
-            //return RedirectToAction("Index", "Home");
           }
           AddErrors(result);
         }
@@ -153,6 +175,52 @@ namespace captivate_express_webapp.Controllers
 
       return View(m);
     }
+
+
+    //[HttpPost]
+    //[AllowAnonymous]
+    //[ValidateAntiForgeryToken]
+    //public async Task<ActionResult> CreateAccount(Models.Access.CreateAccountViewModel m)
+    //{
+    //  if (ModelState.IsValid)
+    //  {
+    //    if (m.AgreeTerms)
+    //    {
+    //      Models.Wallet.CreateWalletModel _wallet = await new Helpers.NethereumHelper().CreateUserWallet();
+
+    //      var user = new ApplicationUser { UserName = m.Email, Email = m.Email, Hometown = "", TokenAddress = _wallet.blobname, WalletAddress = _wallet.walletaddress };
+    //      var result = await UserManager.CreateAsync(user, m.Password);
+    //      if (result.Succeeded)
+    //      {
+    //        var userRegister = UserManager.FindByEmail(user.Email);
+    //        UserManager.AddToRole(userRegister.Id, m.Role);
+    //        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+    //        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+    //        var callbackUrl = Url.Action(
+    //             "AccountVerified", "Access",
+    //             new { userId = user.Id, code = code },
+    //             protocol: Request.Url.Scheme);
+    //        string mailContent = String.Format(new MailManager().GetMailContent(EMailType.createAccount), user.UserName, callbackUrl);
+    //        await UserManager.SendEmailAsync(user.Id,
+    //             "Confirm your email",
+    //             //"Hi, thank you for join us!<br><br>Please click the following link to verify your email address. <a href=\"" + callbackUrl + "\">link</a><br><br><br> Kind Ads"
+    //             //String.Format(GetMailBodyFromXML("createAccount"), callbackUrl)
+    //             mailContent
+    //             );
+    //        return View("CheckEmailActivation");
+    //        //return RedirectToAction("Index", "Home");
+    //      }
+    //      AddErrors(result);
+    //    }
+    //    else
+    //    {
+    //      ModelState.AddModelError("", "You must accept terms and policy");
+    //    }
+
+    //  }
+
+    //  return View(m);
+    //}
 
     private void FillRoles()
     {

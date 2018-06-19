@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Models.Entities
 {
-    [Table("PRODUCT_SETTINGS")]
+ 
     public class ProductSettingsEntity
     {
         [Key]

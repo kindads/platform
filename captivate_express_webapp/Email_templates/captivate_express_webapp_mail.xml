@@ -4,5 +4,6 @@
   <publisher>\Email_templates\welcomePublisher.html</publisher>
   <createAccount>\Email_templates\confirmEmail.html</createAccount>
   <recoverPassword>\Email_templates\resetPassword.html</recoverPassword>
+  <accountCreated>\Email_templates\accountCreated.html</accountCreated>
   <footer></footer>
 </correo>

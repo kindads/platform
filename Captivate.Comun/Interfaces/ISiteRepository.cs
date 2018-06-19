@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Interfaces
 {
-    public interface ISiteRepository : IGenericRepository<SiteEntity>
+    public interface ISiteRepository : IDapperGenericRepository<SiteEntity>
     {
         SiteEntity GetSingle(Guid IdSite);
     }

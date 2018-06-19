@@ -14,7 +14,7 @@ namespace Captivate.Comun.Models
         public MailMessage()
         {
             Destination = string.Empty;
-            Subject = string.Empty;
+            Subject = "[SUBJECT]";
             Body = string.Empty;
         }
              

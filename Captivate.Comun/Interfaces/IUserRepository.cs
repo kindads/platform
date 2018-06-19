@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Interfaces
 {
-    public interface IUserRepository : IGenericRepository<AspNetUserEntity>
+    public interface IUserRepository : IDapperGenericRepository<AspNetUserEntity>
     {
     }
 }

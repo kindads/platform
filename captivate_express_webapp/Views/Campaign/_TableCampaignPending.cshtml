@@ -1,10 +1,10 @@
 @model captivate_express_webapp.Models.Campaign.TableCampaignViewModel
 @{
-    var grid = new WebGrid(rowsPerPage: Model.PageSize);
-    grid.Bind(Model.ListCampaigns, autoSortAndPage: false, rowCount: Model.TotalRecord);
+  var grid = new WebGrid(rowsPerPage: Model.PageSize);
+  grid.Bind(Model.ListCampaigns, autoSortAndPage: false, rowCount: Model.TotalRecord);
 
-    var _service = new captivate_express_webapp.Services.AccessService();
-    var idUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
+  var _service = new captivate_express_webapp.Services.AccessService();
+  var idUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
 }
 
 @if (_service.ContainRoleUser(idUser, (int)captivate_express_webapp.Utils.Enums.Roles.Advertiser))
@@ -19,7 +19,11 @@
     format: (model) => model.RegisterDate != null ? model.RegisterDate.ToString("d") == DateTime.Today.ToString("d") ? "Today" : model.RegisterDate.ToString("d") == DateTime.Today.AddDays(-1).ToString("d") ? "Yesterday" : string.Format("{0:MMM dd, yy}", model.RegisterDate) : "", canSort: true),
     grid.Column(header: "View message / Status", format: (item) =>
         new HtmlString(
-          Html.Raw("<a href='" + @Url.Action("ModifyCampaign", "Campaign", new { idCampaign = item.IdCampaign, toValidate = false }) + "' ><span class='fa fa-file-o' style='color:#8C88FF;'>&nbsp;Details</span></a>") + "&nbsp;|&nbsp;" +
+          ((int)item.CAT_CAMPAIGN_STATUS_IdStatus == 6 ?
+            Html.Raw("<a href='" + @Url.Action("VerifyCampaign", "Campaign", new { idCampaign = item.IdCampaign, toValidate = false }) + "' ><span class='fa fa-file-o' style='color:#8C88FF;'>&nbsp;Details</span></a>") :
+            Html.Raw("<a href='" + @Url.Action("ModifyCampaign", "Campaign", new { idCampaign = item.IdCampaign, toValidate = false }) + "' ><span class='fa fa-file-o' style='color:#8C88FF;'>&nbsp;Modify</span></a>")
+          )
+           + "&nbsp;|&nbsp;" +
               (Html.Raw("<span class='text-danger'>" + item.CAT_CAMPAIGN_STATUS.Descripcion + "</span>")).ToHtmlString()
             )
           )
@@ -37,7 +41,7 @@ format: (model) => model.RegisterDate != null ? model.RegisterDate.ToString("d")
 grid.Column(header: "View message / Status", format: (item) =>
     new HtmlString(
       Html.Raw("<a href='" + @Url.Action("VerifyCampaign", "Campaign", new { idCampaign = item.IdCampaign, toValidate = false }) + "' ><span class='fa fa-file-o' style='color:#8C88FF;'>&nbsp;Details</span></a>") + "&nbsp;|&nbsp;" +
-          Html.ActionLink("Verify", "VerifyCampaign", "Campaign", new { idCampaign = item.IdCampaign, toValidate = true }, new { @class = "text-danger" }).ToHtmlString()
+      ((int)item.CAT_CAMPAIGN_STATUS_IdStatus == 6 ? ("<a href ='#'>Verifying...</a>") : Html.ActionLink("Verify", "VerifyCampaign", "Campaign", new { idCampaign = item.IdCampaign, toValidate = true }, new { @class = "text-danger" }).ToHtmlString())
         )
       )
     ));

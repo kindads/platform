@@ -33,7 +33,7 @@ namespace captivate_express_webapp.Controllers
     private GetResponseService _getResponseService;
     private AccessService _accessService;
     List<Models.CAMPAIGN_CHAT> listCampaignChats;
-    KindadsContext context;
+
     public ITrace telemetria { set; get; }
 
 
@@ -45,7 +45,7 @@ namespace captivate_express_webapp.Controllers
       _sendGridService = new SendGridService();
       _activeCampaignService = new ActiveCampaignService();
       _getResponseService = new GetResponseService();
-      context = new KindadsContext();
+
       telemetria = new Trace();
     }
 
@@ -97,6 +97,22 @@ namespace captivate_express_webapp.Controllers
           else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_ICONTACT)))
           {
             GetProviderIContact();
+          }
+          else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_PUSH_ENGAGE)))
+          {
+            GetProviderPushEngage();
+          }
+          else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_SENDINBLUE)))
+          {
+            GetProviderSendinBlue();
+          }
+          else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_ONE_SIGNAL)))
+          {
+            GetProviderOneSignal();
+          }
+          else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_MAILJET)))
+          {
+            GetProviderMailJet();
           }
           ViewBag.ProductPrice = product.Price;
           ViewBag.Site = product.SITE.Name;
@@ -199,9 +215,40 @@ namespace captivate_express_webapp.Controllers
             model.Campaign.AdText = model.MessageTextHtml;
             operationResult = _service.RegisterCampaign(model.Campaign, GenerateIContactSettings(model), GetFileUpload());
           }
+          else if(Utils.Constants.PROVIDER_SENDINBLUE.Equals(TempData["TypeChannel"].ToString()))
+          {
+            GetProviderSendinBlue();
+            model.Campaign.AdText = model.MessageTextHtml;
+            operationResult = _service.RegisterCampaign(model.Campaign, GenerateGetResponseSettings(model), GetFileUpload());
+          }
+          else if (Utils.Constants.PROVIDER_PUSH_ENGAGE.Equals(TempData["TypeChannel"].ToString()))
+          {
+            GetProviderPushEngage();
+            model.Campaign.AdURL = model.UrlText;
+            model.Campaign.AdText = model.MessageText;
+            model.Campaign.StartDate = DateTime.Now;
+            model.Campaign.EndDate = null;
+            operationResult = _service.RegisterCampaign(model.Campaign, GeneratePushEngageSettings(model), GetFileUpload());
+          }
+          else if (Utils.Constants.PROVIDER_ONE_SIGNAL.Equals(TempData["TypeChannel"].ToString()))
+          {
+            GetProviderOneSignal();
+            model.Campaign.AdURL = model.UrlText;
+            model.Campaign.AdText = model.MessageText;
+            model.Campaign.StartDate = DateTime.Now;
+            model.Campaign.EndDate = null;
+            operationResult = _service.RegisterCampaign(model.Campaign, GenerateOneSignalSettings(model), GetFileUpload());
+          }
+          else if (Utils.Constants.PROVIDER_MAILJET.Equals(TempData["TypeChannel"].ToString()))
+          {
+            GetProviderMailJet();
+            model.Campaign.AdText = model.MessageTextHtml;
+            operationResult = _service.RegisterCampaign(model.Campaign, GenerateMailJetSettings(model), GetFileUpload());
+          }
 
           if (operationResult == true)
           {
+            //Mecanismo de notificaciones
             string message = string.Format("The campaign '{0}' was created", model.Campaign.Name);
             EnqueueMailNotification(model.Campaign.Name, message);
           }
@@ -403,6 +450,27 @@ namespace captivate_express_webapp.Controllers
       return listCampaignSettings;
     }
 
+    private List<Models.CAMPAIGN_SETTINGS> GenerateMailJetSettings(CreateCampaingModel model)
+    {
+      List<Models.CAMPAIGN_SETTINGS> listCampaignSettings = new List<Models.CAMPAIGN_SETTINGS>();
+
+      Models.CAMPAIGN_SETTINGS campaignSettings = new Models.CAMPAIGN_SETTINGS()
+      {
+        SettingName = "mailJetBodyHtml",
+        SettingValue = model.MessageTextHtml
+      };
+      listCampaignSettings.Add(campaignSettings);
+
+      campaignSettings = new Models.CAMPAIGN_SETTINGS()
+      {
+        SettingName = "mailJetSubject",
+        SettingValue = model.Subject
+      };
+      listCampaignSettings.Add(campaignSettings);
+
+      return listCampaignSettings;
+    }
+
     private List<Models.CAMPAIGN_SETTINGS> GeneratePushNotifSettings(CreateCampaingModel model)
     {
       List<Models.CAMPAIGN_SETTINGS> listCampaignSettings = new List<Models.CAMPAIGN_SETTINGS>();
@@ -439,6 +507,62 @@ namespace captivate_express_webapp.Controllers
       {
         SettingName = "pushNotifUtmSource",
         SettingValue = String.IsNullOrEmpty(model.UTM_Source) ? "" : model.UTM_Source
+      };
+      listCampaignSettings.Add(campaignSettings);
+
+      campaignSettings = new Models.CAMPAIGN_SETTINGS()
+      {
+        SettingName = "pushNotifImage",
+        SettingValue = "",
+      };
+      listCampaignSettings.Add(campaignSettings);
+
+      return listCampaignSettings;
+    }
+
+    private List<Models.CAMPAIGN_SETTINGS> GeneratePushEngageSettings(CreateCampaingModel model)
+    {
+      List<Models.CAMPAIGN_SETTINGS> listCampaignSettings = new List<Models.CAMPAIGN_SETTINGS>();
+
+      Models.CAMPAIGN_SETTINGS campaignSettings = new Models.CAMPAIGN_SETTINGS()
+      {
+        SettingName = "pushNotifMessageText",
+        SettingValue = model.MessageText
+      };
+      listCampaignSettings.Add(campaignSettings);
+
+      campaignSettings = new Models.CAMPAIGN_SETTINGS()
+      {
+        SettingName = "pushNotifUrl",
+        SettingValue = model.UrlText
+      };
+      listCampaignSettings.Add(campaignSettings);
+
+      campaignSettings = new Models.CAMPAIGN_SETTINGS()
+      {
+        SettingName = "pushNotifImage",
+        SettingValue = "",
+      };
+      listCampaignSettings.Add(campaignSettings);
+
+      return listCampaignSettings;
+    }
+
+    private List<Models.CAMPAIGN_SETTINGS> GenerateOneSignalSettings(CreateCampaingModel model)
+    {
+      List<Models.CAMPAIGN_SETTINGS> listCampaignSettings = new List<Models.CAMPAIGN_SETTINGS>();
+
+      Models.CAMPAIGN_SETTINGS campaignSettings = new Models.CAMPAIGN_SETTINGS()
+      {
+        SettingName = "pushNotifMessageText",
+        SettingValue = model.MessageText
+      };
+      listCampaignSettings.Add(campaignSettings);
+
+      campaignSettings = new Models.CAMPAIGN_SETTINGS()
+      {
+        SettingName = "pushNotifUrl",
+        SettingValue = model.UrlText
       };
       listCampaignSettings.Add(campaignSettings);
 
@@ -511,6 +635,21 @@ namespace captivate_express_webapp.Controllers
       {
         GetProviderIContact();
         FillIContactSettings(model, campaign);
+      }
+      else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_PUSH_ENGAGE)))
+      {
+        GetProviderPushEngage();
+        FillPushNotifSettings(model, campaign);
+      }
+      else if(product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_ONE_SIGNAL)))
+      {
+        GetProviderOneSignal();
+        FillPushNotifSettings(model, campaign);
+      }
+      else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_MAILJET)))
+      {
+        GetProviderMailJet();
+        FillMailJetSettings(model, campaign);
       }
 
       ViewBag.ProductPrice = product.Price;
@@ -603,6 +742,27 @@ namespace captivate_express_webapp.Controllers
           GetIContactSettings(model, campaign.CAMPAIGN_SETTINGS);
           operationResult = _service.ModifyCampaign(model.Campaign, campaign.CAMPAIGN_SETTINGS, GetFileUpload());
         }
+        else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_PUSH_ENGAGE)))
+        {
+          GetProviderPushEngage();
+          model.UrlText = String.IsNullOrEmpty(model.UrlText) ? "-" : (String.IsNullOrEmpty(protocolSelecc) ? "https://" : protocolSelecc) + model.UrlText;
+          GetPushEngageSettings(model, campaign.CAMPAIGN_SETTINGS);
+          operationResult = _service.ModifyCampaign(model.Campaign, campaign.CAMPAIGN_SETTINGS, GetFileUpload());
+        }
+        else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_ONE_SIGNAL)))
+        {
+          GetProviderOneSignal();
+          model.UrlText = String.IsNullOrEmpty(model.UrlText) ? "-" : (String.IsNullOrEmpty(protocolSelecc) ? "https://" : protocolSelecc) + model.UrlText;
+          GetOneSignalSettings(model, campaign.CAMPAIGN_SETTINGS);
+          operationResult = _service.ModifyCampaign(model.Campaign, campaign.CAMPAIGN_SETTINGS, GetFileUpload());
+        }
+        else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_MAILJET)))
+        {
+          GetProviderMailJet();
+          model.Campaign.AdText = model.MessageTextHtml;
+          GetMailJetSettings(model, campaign.CAMPAIGN_SETTINGS);
+          operationResult = _service.ModifyCampaign(model.Campaign, campaign.CAMPAIGN_SETTINGS, GetFileUpload());
+        }
 
         return operationResult ? Json(new { success = true, message = "Campaign modify successfully" }) : Json(new { error = "Error modify campaign" });
       }
@@ -615,8 +775,8 @@ namespace captivate_express_webapp.Controllers
     public void EnqueueMailNotification(string CampaignName, string message)
     {
       string IdUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
-      AspNetUserRepository aspNetUserRepository = new AspNetUserRepository { Context = context };
-      AspNetUserEntity userData = aspNetUserRepository.FindBy(u => u.Id == IdUser).FirstOrDefault();
+      AspNetUserRepository aspNetUserRepository = new AspNetUserRepository ();
+      AspNetUserEntity userData = aspNetUserRepository.FindById(IdUser);
       //Enviamos la notificacion
 
       MailNotification mailNotification = new MailNotification();
@@ -643,8 +803,8 @@ namespace captivate_express_webapp.Controllers
 
     public void EnqueueMailNotification(string CampaignName, string message, string IdUser)
     {
-      AspNetUserRepository aspNetUserRepository = new AspNetUserRepository { Context = context };
-      AspNetUserEntity userData = aspNetUserRepository.FindBy(u => u.Id == IdUser).FirstOrDefault();
+      AspNetUserRepository aspNetUserRepository = new AspNetUserRepository ();
+      AspNetUserEntity userData = aspNetUserRepository.FindById(IdUser);
       //Enviamos la notificacion
 
       MailNotification mailNotification = new MailNotification();
@@ -793,6 +953,18 @@ namespace captivate_express_webapp.Controllers
       }
     }
 
+    private void FillMailJetSettings(CreateCampaingModel model, Models.CAMPAIGN campaign)
+    {
+      if (campaign.CAMPAIGN_SETTINGS != null && campaign.CAMPAIGN_SETTINGS.Any())
+      {
+        foreach (var setting in campaign.CAMPAIGN_SETTINGS)
+        {
+          model.MessageTextHtml = setting.SettingName.Equals("mailJetBodyHtml") ? setting.SettingValue : model.MessageTextHtml;
+          model.Subject = setting.SettingName.Equals("mailJetSubject") ? setting.SettingValue : model.Subject;
+        }
+      }
+    }
+
     private void GetMailChimpSettings(CreateCampaingModel model, ICollection<Models.CAMPAIGN_SETTINGS> listCampaignSettings)
     {
       if (listCampaignSettings != null && listCampaignSettings.Any())
@@ -908,6 +1080,42 @@ namespace captivate_express_webapp.Controllers
           //setting.SettingValue = setting.SettingName.Equals("pushNotifUtmSource") ? model.UTM_Source : setting.SettingValue;
           //setting.SettingValue = setting.SettingName.Equals("pushNotifUtmMedium") ? model.UTM_Medium : setting.SettingValue;
           //setting.SettingValue = setting.SettingName.Equals("pushNotifUtmCampaign") ? model.UTM_Campaign : setting.SettingValue;
+        }
+      }
+    }
+
+    private void GetPushEngageSettings(CreateCampaingModel model, ICollection<Models.CAMPAIGN_SETTINGS> listCampaignSettings)
+    {
+      if (listCampaignSettings != null && listCampaignSettings.Any())
+      {
+        foreach (var setting in listCampaignSettings)
+        {
+          setting.SettingValue = setting.SettingName.Equals("pushNotifUrl") ? model.UrlText : setting.SettingValue;
+          setting.SettingValue = setting.SettingName.Equals("pushNotifMessageText") ? model.MessageText : setting.SettingValue;
+        }
+      }
+    }
+
+    private void GetOneSignalSettings(CreateCampaingModel model, ICollection<Models.CAMPAIGN_SETTINGS> listCampaignSettings)
+    {
+      if (listCampaignSettings != null && listCampaignSettings.Any())
+      {
+        foreach (var setting in listCampaignSettings)
+        {
+          setting.SettingValue = setting.SettingName.Equals("pushNotifUrl") ? model.UrlText : setting.SettingValue;
+          setting.SettingValue = setting.SettingName.Equals("pushNotifMessageText") ? model.MessageText : setting.SettingValue;
+        }
+      }
+    }
+
+    private void GetMailJetSettings(CreateCampaingModel model, ICollection<Models.CAMPAIGN_SETTINGS> listCampaignSettings)
+    {
+      if (listCampaignSettings != null && listCampaignSettings.Any())
+      {
+        foreach (var setting in listCampaignSettings)
+        {
+          setting.SettingValue = setting.SettingName.Equals("mailJetBodyHtml") ? model.MessageTextHtml : setting.SettingValue;
+          setting.SettingValue = setting.SettingName.Equals("mailJetSubject") ? model.Subject : setting.SettingValue;
         }
       }
     }
@@ -1052,6 +1260,26 @@ namespace captivate_express_webapp.Controllers
         GetProviderIContact();
         FillIContactSettings(model, campaign);
       }
+      else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_SENDINBLUE)))
+      {
+        GetProviderSendinBlue();
+        FillIContactSettings(model, campaign);
+      }
+      else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_PUSH_ENGAGE)))
+      {
+        GetProviderPushEngage();
+        FillPushNotifSettings(model, campaign);
+      }
+      else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_ONE_SIGNAL)))
+      {
+        GetProviderOneSignal();
+        FillPushNotifSettings(model, campaign);
+      }
+      else if (product.PARTNER.IdPartner.Equals(new Guid(Utils.Constants.PROVIDER_MAILJET)))
+      {
+        GetProviderMailJet();
+        FillMailJetSettings(model, campaign);
+      }
 
       ViewBag.ProductPrice = product.Price;
       ViewBag.Site = product.SITE.Name;
@@ -1093,7 +1321,8 @@ namespace captivate_express_webapp.Controllers
           notificationManager.EnqueueCampaignValidator(notification);
 
           //Regresamos el mensaje de procesando
-          return Json(new { success = true, message = "Processing campaign" });
+          campaign.CAT_CAMPAIGN_STATUS_IdStatus = (int)Captivate.Comun.Enums.CatCampaignStatusEnum.Verify_Proccess;
+          return Json(new { success = _service.ModifyCampaign(campaign,null,null), message = "Processing campaign" });
         }
       }
       catch (Exception ex)
@@ -1110,11 +1339,11 @@ namespace captivate_express_webapp.Controllers
     public string GetIdProductOwner(string IdCampaign)
     {
       string IdOwner = string.Empty;
-      CampaignRepository repositorio = new CampaignRepository { Context = context };
-      CampaignEntity campaign = repositorio.FindBy(c => c.IdCampaign.Equals(new Guid(IdCampaign))).FirstOrDefault();
+      CampaignRepository repositorio = new CampaignRepository();
+      CampaignEntity campaign = repositorio.FindById(new Guid(IdCampaign));
       Guid productId = campaign.PRODUCT_IdProduct;
-      ProductRepository productRepository = new ProductRepository { Context = context };
-      ProductEntity product = productRepository.FindBy(p => p.IdProduct.Equals(productId)).FirstOrDefault();
+      ProductRepository productRepository = new ProductRepository ();
+      ProductEntity product = productRepository.FindById(productId);
       IdOwner = product.AspNetUsers_Id;
       return IdOwner;
     }
@@ -1136,8 +1365,8 @@ namespace captivate_express_webapp.Controllers
           listCampaignChats = _service.GetCampaignChatByIdCampaign(idCampaign);
 
 
-          CampaignRepository repositorio = new CampaignRepository { Context = context };
-          CampaignEntity campaign = repositorio.FindBy(c => c.IdCampaign.Equals(new Guid(idCampaign))).FirstOrDefault();
+          CampaignRepository repositorio = new CampaignRepository ();
+          CampaignEntity campaign = repositorio.FindById(new Guid(idCampaign));
           string IdProductOwner = GetIdProductOwner(idCampaign);
           string messageN = string.Format("The campaign '{0}' added message observation", campaign.Name);
 
@@ -1151,7 +1380,7 @@ namespace captivate_express_webapp.Controllers
         }
         return PartialView("_CampaignChat", null);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
         return PartialView("_CampaignChat", null);
       }
@@ -1199,6 +1428,10 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelGetResponse = false;
       ViewBag.NeedsUTM = true;
       ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
     }
 
     private void GetProviderViewPushCrew()
@@ -1214,6 +1447,10 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelGetResponse = false;
       ViewBag.NeedsUTM = false;
       ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
     }
 
     private void GetProviderViewMailChimp()
@@ -1229,6 +1466,10 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelGetResponse = false;
       ViewBag.NeedsUTM = false;
       ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
     }
 
     private void GetProviderViewCampaignMonitor()
@@ -1244,6 +1485,10 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelGetResponse = false;
       ViewBag.NeedsUTM = false;
       ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
     }
 
     private void GetProviderViewAweber()
@@ -1259,6 +1504,10 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelGetResponse = false;
       ViewBag.NeedsUTM = false;
       ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
     }
 
     private void GetProviderSendGrid()
@@ -1274,6 +1523,10 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelGetResponse = false;
       ViewBag.NeedsUTM = false;
       ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
     }
 
     private void GetProviderActiveCampaign()
@@ -1288,6 +1541,10 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelActiveCampaign = true;
       ViewBag.IsChannelGetResponse = false;
       ViewBag.NeedsUTM = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
     }
 
     private void GetProviderGetResponse()
@@ -1303,6 +1560,10 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelGetResponse = true;
       ViewBag.NeedsUTM = false;
       ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
     }
 
     private void GetProviderIContact()
@@ -1314,10 +1575,90 @@ namespace captivate_express_webapp.Controllers
       ViewBag.IsChannelCampaignMonitor = false;
       ViewBag.IsChannelAweber = false;
       ViewBag.IsChannelSendGrid = false;
-      ViewBag.IsChannelActiveCampaign = true;
+      ViewBag.IsChannelActiveCampaign = false;
       ViewBag.NeedsUTM = false;
       ViewBag.IsChannelIContact = true;
       ViewBag.IsChannelGetResponse = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
+    }
+
+    private void GetProviderSendinBlue()
+    {
+      TempData["TypeChannel"] = Utils.Constants.PROVIDER_SENDINBLUE;
+      ViewBag.IsChannelSuscribers = false;
+      ViewBag.IsChannelPushCrew = false;
+      ViewBag.IsChannelMailChimp = false;
+      ViewBag.IsChannelCampaignMonitor = false;
+      ViewBag.IsChannelAweber = false;
+      ViewBag.IsChannelSendGrid = false;
+      ViewBag.IsChannelActiveCampaign = false;
+      ViewBag.NeedsUTM = false;
+      ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelGetResponse = false;
+      ViewBag.IsChannelSendinBlue = true;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
+    }
+
+    private void GetProviderPushEngage()
+    {
+      TempData["TypeChannel"] = Utils.Constants.PROVIDER_PUSH_ENGAGE;
+      ViewBag.IsChannelSuscribers = false;
+      ViewBag.IsChannelPushCrew = false;
+      ViewBag.IsChannelMailChimp = false;
+      ViewBag.IsChannelCampaignMonitor = false;
+      ViewBag.IsChannelAweber = false;
+      ViewBag.IsChannelSendGrid = false;
+      ViewBag.IsChannelActiveCampaign = false;
+      ViewBag.NeedsUTM = false;
+      ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelGetResponse = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelPushEngage = true;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = false;
+    }
+
+    private void GetProviderOneSignal()
+    {
+      TempData["TypeChannel"] = Utils.Constants.PROVIDER_ONE_SIGNAL;
+      ViewBag.IsChannelSuscribers = false;
+      ViewBag.IsChannelPushCrew = false;
+      ViewBag.IsChannelMailChimp = false;
+      ViewBag.IsChannelCampaignMonitor = false;
+      ViewBag.IsChannelAweber = false;
+      ViewBag.IsChannelSendGrid = false;
+      ViewBag.IsChannelActiveCampaign = false;
+      ViewBag.NeedsUTM = false;
+      ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelGetResponse = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelOneSignal = true;
+      ViewBag.IsChannelMailJet = false;
+    }
+
+    private void GetProviderMailJet()
+    {
+      TempData["TypeChannel"] = Utils.Constants.PROVIDER_MAILJET;
+      ViewBag.IsChannelSuscribers = false;
+      ViewBag.IsChannelPushCrew = false;
+      ViewBag.IsChannelMailChimp = false;
+      ViewBag.IsChannelCampaignMonitor = false;
+      ViewBag.IsChannelAweber = false;
+      ViewBag.IsChannelSendGrid = false;
+      ViewBag.IsChannelActiveCampaign = false;
+      ViewBag.NeedsUTM = false;
+      ViewBag.IsChannelIContact = false;
+      ViewBag.IsChannelGetResponse = false;
+      ViewBag.IsChannelSendinBlue = false;
+      ViewBag.IsChannelPushEngage = false;
+      ViewBag.IsChannelOneSignal = false;
+      ViewBag.IsChannelMailJet = true;
     }
 
   }

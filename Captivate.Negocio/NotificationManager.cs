@@ -17,19 +17,19 @@ namespace Captivate.Negocio
     {
         public ServiceBusManager sbmanager { set; get; }
         public MailManager mailManager { set; get; }
-        public KindadsContext context { set; get; }
+        private readonly AspNetUserRepository aspNetUserRepository;
 
         public NotificationManager()
         {
             sbmanager = new ServiceBusManager();
             mailManager = new MailManager();
-            context = new KindadsContext();
+            aspNetUserRepository = new AspNetUserRepository();
         }
 
         public void EnqueueMailNotification(string CampaignName, string message, string IdUser)
         {
-            AspNetUserRepository aspNetUserRepository = new AspNetUserRepository { Context = context };
-            AspNetUserEntity userData = aspNetUserRepository.FindBy(u => u.Id == IdUser).FirstOrDefault();
+            
+            AspNetUserEntity userData = aspNetUserRepository.FindById(IdUser);
             //Enviamos la notificacion
 
             MailNotification mailNotification = new MailNotification();
@@ -71,6 +71,17 @@ namespace Captivate.Negocio
             bool result = false;
             string notification = JsonConvert.SerializeObject(campaignNotification);
             string queueName = ConfigurationManager.AppSettings["campaignQueue"];
+            QueueManager.InsertMessage(notification, queueName);
+            result = true;
+            return result;
+        }
+
+        public bool EnqueueNewAccessUser(Notification accessData)
+        {
+            //campaignqueue
+            bool result = false;
+            string notification = JsonConvert.SerializeObject(accessData);
+            string queueName = ConfigurationManager.AppSettings["accessDataQueue"];
             QueueManager.InsertMessage(notification, queueName);
             result = true;
             return result;

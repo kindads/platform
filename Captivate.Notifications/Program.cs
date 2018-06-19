@@ -18,10 +18,19 @@ namespace Captivate.WebJob.Notifications
             var config = new JobHostConfiguration();
             config.Queues.MaxDequeueCount = 1;
             config.Queues.MaxPollingInterval = TimeSpan.FromSeconds(2);
+            config.NameResolver = new QueueMailNotificationNameResolver();
 
             var host = new JobHost(config);
-            // The following code ensures that the WebJob will be running continuously
             host.RunAndBlock();
         }
     }
+
+    public class QueueMailNotificationNameResolver : INameResolver
+    {
+        public string Resolve(string name)
+        {
+            return ConfigurationManager.AppSettings["mailNotificationQueue"].ToString();
+        }
+    }
+
 }

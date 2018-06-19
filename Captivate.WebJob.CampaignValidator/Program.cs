@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,20 @@ namespace Captivate.WebJob.CampaignValidator
         {
             var config = new JobHostConfiguration();
             config.Queues.MaxPollingInterval = TimeSpan.FromSeconds(2);
+            config.NameResolver = new QueueCampaignNameResolver();
             var host = new JobHost(config);
-            // The following code ensures that the WebJob will be running continuously
             host.RunAndBlock();
+        }
+
+        //campaignQueue
+    }
+
+    public class QueueCampaignNameResolver : INameResolver
+    {
+        public string Resolve(string name)
+        {
+            string QueueName= ConfigurationManager. AppSettings["campaignQueue"].ToString();
+            return QueueName;
         }
     }
 }

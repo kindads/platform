@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,18 +27,14 @@ namespace Captivate.Notifications
 
         // This function will get triggered/executed when a new message is written 
         // on an Azure Queue called queue.
-        public  void ProcessMailQueueMessage([QueueTrigger("mail-notifications")] string message, TextWriter log)
+        public  void ProcessMailQueueMessage([QueueTrigger("%mailNotificationQueue%")] string message, TextWriter log)
         {
             notificationManager = new NotificationManager();
             notificationManager.ProcessMailNotification(message, UserPriority);
             notificationManager.Close();
         }
 
-        public  void  ProcessNotificationQueueMessage([QueueTrigger("notifications")] string message, TextWriter log)
-        {
-            notificationManager = new NotificationManager();
-            notificationManager.ProcessNotification(message, UserPriority);
-            notificationManager.Close();
-        }
     }
+
+   
 }

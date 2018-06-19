@@ -9,7 +9,7 @@ namespace Captivate.Comun.Models.ViewModel
 {
     public class ProductViewModel
     {
-        public List<ProductEntity> ListProducts { get; set; }
+        public List<ProductListEntityViewModel> ListProducts { get; set; }
 
         public int PageSize { get; set; }
         public int TotalRecord { get; set; }

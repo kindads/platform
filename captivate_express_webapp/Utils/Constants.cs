@@ -16,7 +16,10 @@ namespace captivate_express_webapp.Utils
     public const string PROVIDER_SEND_GRID = "0b4562b7-ddff-42e5-895d-b94606358285";
     public const string PROVIDER_ACTIVE_CAMPAIGN = "70dd43a5-80d7-4b7a-83dd-a2aed0d1a544";
     public const string PROVIDER_ICONTACT = "2d45c5e3-11c9-46f3-a931-45d397718001";
-                                             
+    public const string PROVIDER_SENDINBLUE = "88bee210-5bdb-44a6-8e58-1a5106b9e0cc";
+    public const string PROVIDER_PUSH_ENGAGE = "ff8ddb95-ddbd-488b-bd75-01c3c04d1847";
+    public const string PROVIDER_ONE_SIGNAL = "cbea6db4-0a09-40fe-831d-da001ac1351b";
+    public const string PROVIDER_MAILJET = "757dd20e-b548-4aba-a618-bb577221dc4d";
   }
 
   public enum MailingProviders
@@ -29,7 +32,8 @@ namespace captivate_express_webapp.Utils
     GetResponse,
     SendGrid,
     ActiveCampaign,
-    IContact
+    IContact,
+    SendinBlue
   }
 
   public enum IContactRequest

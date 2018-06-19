@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Captivate.Comun.Models.Entities
 {
-    [Table("CATEGORY")]
+
     public class CategoryEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -18,7 +18,6 @@ namespace Captivate.Comun.Models.Entities
             //this.SITE = new HashSet<SiteEntity>();
         }
 
-        [Key]
         public short IdCategory { get; set; }
         public string Description { get; set; }
 
