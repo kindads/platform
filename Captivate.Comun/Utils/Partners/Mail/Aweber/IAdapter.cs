@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber
+namespace Captivate.Common.Utils.Partners.Mail.Aweber
 {
   public interface IAdapter
   {

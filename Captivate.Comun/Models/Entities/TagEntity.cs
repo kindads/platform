@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
-    [Table("TAG")]
+
     public class TagEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -17,7 +17,6 @@ namespace Captivate.Comun.Models.Entities
             this.CATEGORies = new HashSet<CategoryEntity>();
         }
 
-        [Key]
         public short IdTag { get; set; }
         public string Description { get; set; }
 

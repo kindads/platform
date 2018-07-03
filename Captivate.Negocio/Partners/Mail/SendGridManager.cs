@@ -9,9 +9,10 @@ using Captivate.DataAccess;
 using SendGrid;
 using Newtonsoft.Json;
 using System.Net;
-using Captivate.Comun.Models.Entities;
+using Captivate.Common.Models.Entities;
+using Captivate.Azure;
 
-namespace Captivate.Negocio.Partners.Mail
+namespace Captivate.Business.Partners.Mail
 {
     public class SendGridManager
     {

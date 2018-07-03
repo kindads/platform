@@ -1,11 +1,11 @@
-using Captivate.Comun.Interfaces;
+using Captivate.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Captivate.Negocio.Partners.IContact
+namespace Captivate.Common.Partners.IContact
 {
   public class IContactRequest : IIContactRequest
   {

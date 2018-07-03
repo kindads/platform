@@ -1,13 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Captivate.Negocio;
-using Captivate.Comun.Models;
 using Newtonsoft.Json;
 using Captivate.Azure;
 using System.IO;
 using Microsoft.ServiceBus.Messaging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Captivate.Common.Models;
+using Captivate.Business;
 
 namespace Captivate.UnitTest
 {

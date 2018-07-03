@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Captivate.Business;
 using Captivate.Common.Interfaces;
+using Captivate.Common.Models.Entities;
 using Captivate.Comun.Models.Entities;
 using Captivate.DataAccess;
 

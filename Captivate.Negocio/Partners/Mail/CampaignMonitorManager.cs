@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Captivate.Common.Interfaces;
-using Captivate.Comun.Models.Entities;
+using Captivate.Common.Models.Entities;
 using Captivate.Business;
 using Captivate.DataAccess;
 using createsend_dotnet;
 using Captivate.Azure;
 using System.Net;
 
-namespace Captivate.Negocio.Partners.Mail
+namespace Captivate.Business.Partners.Mail
 {
     public class CampaignMonitorManager
     {

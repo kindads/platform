@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
-    [Table("CAMPAIGN_CHAT")]
+
     public class CampaignChatEntity
     {
-        [Key]
+
         public System.Guid IdCampaignMessage { get; set; }
-        [ForeignKey("CAMPAIGN")]
+
         public System.Guid CAMPAIGN_IdCampaign { get; set; }
-        [ForeignKey("AspNetUser")]
+
         public string AspNetUser_IdCreator { get; set; }
         public string CampaignChatMessage { get; set; }
         public System.DateTime RegisterDate { get; set; }

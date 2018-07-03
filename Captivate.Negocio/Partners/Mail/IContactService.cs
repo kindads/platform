@@ -1,11 +1,11 @@
 ﻿using Captivate.Business;
 using Captivate.Common.Interfaces;
-using Captivate.Comun.Interfaces;
-using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
-using Captivate.Negocio.Communication;
-using Captivate.Negocio.Helper;
-using Captivate.Negocio.Partners.IContact;
+
+using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
+using Captivate.Business.Communication;
+using Captivate.Business.Helper;
+
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using Captivate.Common.Partners.IContact;
+using Captivate.Negocio.Communication;
+using Captivate.Azure;
 
 namespace Captivate.Negocio.Partners.Mail
 {
@@ -38,7 +41,7 @@ namespace Captivate.Negocio.Partners.Mail
             //campaignService = new CampaignService();
             requestManager = new RequestManager<IIContactRequest>();
             responseManager = new ResponseManager<TR>();
-            config = new Captivate.Comun.Models.RequestSettings<IIContactRequest>();
+            config = new Captivate.Common.Models.RequestSettings<IIContactRequest>();
             mailingProvider = new IContactRequest(ProviderEnvironment.Production);
             config.mailingProvider = mailingProvider;
         }
@@ -53,7 +56,7 @@ namespace Captivate.Negocio.Partners.Mail
                 config.mailingProvider = requestFrm;
                 IContactPostCampaignRequest[] requestArrayBody = new IContactPostCampaignRequest[] { requestBody };
                 config.data = new JavaScriptSerializer().Serialize(requestArrayBody);
-                HttpWebRequest request = GetRequest(Captivate.Comun.Utils.IContactRequest.AddCampaign, config, requestFrm);
+                HttpWebRequest request = GetRequest(Captivate.Common.Utils.IContactRequest.AddCampaign, config, requestFrm);
                 response = GetResponse(request);
             }
             catch (Exception e)
@@ -187,7 +190,7 @@ namespace Captivate.Negocio.Partners.Mail
                 }
 
                 //Realiza la peticion
-                HttpWebRequest request = GetRequest(Captivate.Comun.Utils.IContactRequest.AddSends, config, requestFrm);
+                HttpWebRequest request = GetRequest(Captivate.Common.Utils.IContactRequest.AddSends, config, requestFrm);
                 response = GetResponse(request);
             }
             catch (Exception e)
@@ -207,7 +210,7 @@ namespace Captivate.Negocio.Partners.Mail
             {
                 IContactPostMessageRequest[] requestArrayBody = new IContactPostMessageRequest[] { requestBody };
                 config.data = new JavaScriptSerializer().Serialize(requestArrayBody);
-                HttpWebRequest request = GetRequest(Captivate.Comun.Utils.IContactRequest.AddMessage, config, requestFrm);
+                HttpWebRequest request = GetRequest(Captivate.Common.Utils.IContactRequest.AddMessage, config, requestFrm);
                 response = GetResponse(request);
             }
             catch (Exception e)
@@ -246,8 +249,8 @@ namespace Captivate.Negocio.Partners.Mail
                 IContactPostMessageRequest[] requestArrayBody = new IContactPostMessageRequest[] { requestBody };
                 config.data = new JavaScriptSerializer().Serialize(requestArrayBody);
                 Dictionary<string, string> messageDictionary = CreateMessageDictionary(requestBody);
-                string uri = requestManager.GetUriRequest(Captivate.Comun.Utils.IContactRequest.AddMessage, config, requestFrm);
-                HttpClient client = requestManager.GetHttpClient(config, Captivate.Comun.Utils.IContactRequest.AddMessage);
+                string uri = requestManager.GetUriRequest(Common.Utils.IContactRequest.AddMessage, config, requestFrm);
+                HttpClient client = requestManager.GetHttpClient(config, Common.Utils.IContactRequest.AddMessage);
                 response = GetResponseHttpClient(client, requestArrayBody, messageDictionary, uri);
             }
             catch (Exception e)
@@ -290,7 +293,7 @@ namespace Captivate.Negocio.Partners.Mail
             IResponse response = new IContactGetListsResponse();
             try
             {
-                HttpWebRequest request = GetRequest(Captivate.Comun.Utils.IContactRequest.GetLists, config, requestFrm);
+                HttpWebRequest request = GetRequest(Common.Utils.IContactRequest.GetLists, config, requestFrm);
                 response = GetResponse(request);
             }
             catch (Exception e)
@@ -305,7 +308,7 @@ namespace Captivate.Negocio.Partners.Mail
         {
             config.mailingProvider = requestFrm;
             IResponse response = new IContactGetListResponse();
-            HttpWebRequest request = GetRequest(Captivate.Comun.Utils.IContactRequest.GetLists, config, requestFrm);
+            HttpWebRequest request = GetRequest(Captivate.Common.Utils.IContactRequest.GetLists, config, requestFrm);
             return response;
         }
 
@@ -324,7 +327,7 @@ namespace Captivate.Negocio.Partners.Mail
             {
                 config.mailingProvider = requestFrm;
                 IResponse response = new IContactGetListsResponse();
-                HttpWebRequest request = GetRequest(Captivate.Comun.Utils.IContactRequest.GetLists, config, requestFrm);
+                HttpWebRequest request = GetRequest(Captivate.Common.Utils.IContactRequest.GetLists, config, requestFrm);
                 response = GetResponse(request);
                 resultado = response.StatusCode == 0 ? true : false;
                 validateProvider.Validate(response.StatusCode == 0 ? true : false, response.StatusCode);
@@ -338,7 +341,7 @@ namespace Captivate.Negocio.Partners.Mail
             return validateProvider;
         }
 
-        public HttpWebRequest GetRequest(Captivate.Comun.Utils.IContactRequest type, IRequestSettings<IIContactRequest> config, IContactRequest requestFrm)
+        public HttpWebRequest GetRequest(Captivate.Common.Utils.IContactRequest type, IRequestSettings<IIContactRequest> config, IContactRequest requestFrm)
         {
             HttpWebRequest request = requestManager.GetWebRequest(type, config, requestFrm);
             return request;

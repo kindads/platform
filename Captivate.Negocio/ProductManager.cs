@@ -1,8 +1,9 @@
-﻿using Captivate.Business;
+﻿using Captivate.Azure;
+using Captivate.Business;
 using Captivate.Common.Interfaces;
-using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Models.ViewModel;
+using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Models.ViewModel;
 using Captivate.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Negocio
+namespace Captivate.Business
 {
     public  class ProductManager : ITelemetria
     {

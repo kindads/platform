@@ -9,11 +9,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Captivate.Business.Partners.Mail;
+using System.Configuration;
 
 namespace captivate_express_webapp.Controllers
 {
-  [AuthorizeRoles(Roles.Publisher, Roles.Advertiser)]
-  public class HomeController : Controller
+  
+  public class HomeController : BaseController
   {
     private AccessService _accessService;
     private PublisherService _publisherService;
@@ -24,6 +26,8 @@ namespace captivate_express_webapp.Controllers
       _accessService = new AccessService();
       _publisherService = new PublisherService();
     }
+
+    [AuthorizeRoles(Roles.Publisher, Roles.Advertiser)]
     public async Task<ActionResult> Index()
     {
       var userRegister = await UserManager.FindByNameAsync(User.Identity.Name);
@@ -45,6 +49,35 @@ namespace captivate_express_webapp.Controllers
 
       }
       return View();
+    }
+
+    //[Route("")]//Se usa para que la página de inicio nunca muestre el controller en la ruta
+    public ActionResult Home()
+    {
+      return View();
+    }
+
+    [Route("Faq")]
+    [AllowAnonymous]
+    public ActionResult Faq()
+    {
+      return View();
+    }
+
+    [Route("Team")]
+    [AllowAnonymous]
+    public ActionResult Team()
+    {
+      return View();
+    }
+
+    public JsonResult Subscribe(string email)
+    {
+      string apiKey = ConfigurationManager.AppSettings["appSubscribeMailChimpApiKey"];
+      string idList = ConfigurationManager.AppSettings["appSubscribeMailChimpIdList"];
+      MailChimpManager mailChimpManager = new MailChimpManager();
+      
+      return Json(new { success = mailChimpManager.addUserToList(apiKey, idList, email) });
     }
 
     public ApplicationUserManager UserManager

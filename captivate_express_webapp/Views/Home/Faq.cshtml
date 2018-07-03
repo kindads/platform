@@ -1,37 +1,160 @@
-
 @{
   ViewBag.Title = "FAQ";
-  Layout = "~/Views/Shared/_LandingLayout.cshtml";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
 }
 
-<div class="new-header row">
-  <div class="col-sm-10 col-sm-offset-1">
-    <div class="header clearfix">
-      <nav>
-        <a href="@Url.Action("Home", "Access")">
-          <img class="pull-left img-responsive" data-no-retina="true" src="~/Img/UI/logo.png" />
-        </a>
-          <ul class="pull-right">
-
-            <li>
-              <a href="/Access/Login">Sign In</a>
-            </li>
-            <li>
-              <a href="/Access/CreateAccount">Sign Up</a>
-            </li>
-          </ul>
-      </nav>
+<div class="faq">
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-sm-12">
+          <h1>
+            @Resource.Language.Home.Faq.Resources.MainTitle
+          </h1>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="questions">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <article class="accordion">
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1" aria-expanded="true">
+                      @Resource.Language.Home.Faq.Resources.Question_01
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    @Resource.Language.Home.Faq.Resources.Answer_01_Start
+                    <br />
+                    @Resource.Language.Home.Faq.Resources.Answer_01_End
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                      @Resource.Language.Home.Faq.Resources.Question_02
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    @Resource.Language.Home.Faq.Resources.Answer_02_Start
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                      @Resource.Language.Home.Faq.Resources.Question_03
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    @Resource.Language.Home.Faq.Resources.Answer_03_Start
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                      @Resource.Language.Home.Faq.Resources.Question_04
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    @Resource.Language.Home.Faq.Resources.Answer_04_Start
+                    <br />
+                    @Resource.Language.Home.Faq.Resources.Answer_04_Middle
+                    <br />
+                    @Resource.Language.Home.Faq.Resources.Answer_04_End
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                      @Resource.Language.Home.Faq.Resources.Question_05
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse5" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    @Resource.Language.Home.Faq.Resources.Answer_05_Start
+                    <br />
+                    @Resource.Language.Home.Faq.Resources.Answer_05_End
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                      @Resource.Language.Home.Faq.Resources.Question_06
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse6" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    @Resource.Language.Home.Faq.Resources.Answer_06_Start
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+                      @Resource.Language.Home.Faq.Resources.Question_07
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse7" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    @Resource.Language.Home.Faq.Resources.Answer_07_Start
+                    <br />
+                    @Resource.Language.Home.Faq.Resources.Answer_07_Middle
+                    <br />
+                    @Resource.Language.Home.Faq.Resources.Answer_07_End
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
-<section class="static">
+
+<section class="static" style="display: none;">
   <h2 class="title">Frequently Asked Questions</h2>
   <a style="display:none;" href="#basics" class="btn btn-default">Basic questions</a>
 
   <div id="basics" class="row accordion">
     <div class="col-sm-8 col-sm-offset-2">
       <h3 style="display:none;" class="subtitle">The Basics</h3>
+
       <article class="faq">
         <div class="row">
           <div class="col-sm-12 questions">
@@ -39,7 +162,7 @@
               <div class="panel panel-default">
                 <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapse1" aria-expanded="true">
                   <h4 class="panel-title">
-                    <a >
+                    <a>
                       Why does Kind Ads need to use the blockchain to accomplish its goals?
                     </a>
                   </h4>
@@ -56,7 +179,7 @@
               <div class="panel panel-default">
                 <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
                   <h4 class="panel-title">
-                    <a >
+                    <a>
                       Why did Kind Ads choose Ethereum over any other blockchain?
                     </a>
                   </h4>
@@ -161,3 +284,6 @@
     </div>
   </div>
 </section>
+
+@section Scripts {
+}

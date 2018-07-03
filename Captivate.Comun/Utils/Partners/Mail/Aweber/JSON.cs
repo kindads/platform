@@ -16,7 +16,7 @@ using System.Runtime.Serialization.Json;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber
+namespace Captivate.Common.Utils.Partners.Mail.Aweber
 {
 
     /// <summary>

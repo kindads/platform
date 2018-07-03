@@ -1,0 +1,64 @@
+@model Captivate.Negocio.MoneyAdsManager
+@using (Html.BeginForm("DownloadFile", "MoneyAds", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formSite" }))
+{
+  @Html.AntiForgeryToken()
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 main-bar">
+        <h1 class="title">Telemetry script</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white-block">
+
+          <div class="heading">
+            <h2> Download script by site</h2>
+          </div>
+
+          <div class="body-content">
+            <div class="form-data form-horizontal">
+              <form>
+                <fieldset>
+                  <br />
+                  <br />
+                  <div class="row">
+                    <div class="col-md-12">
+
+
+                      <!--Seleccion Sites-->
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.viewModel.defaultAd.IdSite, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9 form-inline">
+                          <div class="input-group">
+                            <div class="input-group-btn">
+                              @Html.DropDownListFor(model => model.viewModel.defaultAd.IdSite, Model.Sites(), new { @id = "comboTypeAds", @class = "form-control dropdown", @required = "true", @data_msg_required = "Site is required" })
+                            </div>
+                          </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.viewModel.defaultAd.IdSite, "", new { @class = "text-danger" })
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-9 col-md-offset-3 cta-bar clearfix">
+                      <div class="form-group col-sm-12">
+                        <input type="submit" value="Download" class="btn btn-primary btn-lg" />
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+
+

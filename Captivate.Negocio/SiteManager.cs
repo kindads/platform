@@ -1,8 +1,9 @@
-﻿using Captivate.Business;
+﻿using Captivate.Azure;
+using Captivate.Business;
 using Captivate.Common.Interfaces;
-using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Utils;
+using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Utils;
 using Captivate.DataAccess;
 using Newtonsoft.Json;
 using System;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Negocio
+namespace Captivate.Business
 {
     public class SiteManager : ITelemetria
     {
@@ -48,9 +49,10 @@ namespace Captivate.Negocio
                 string siteTokenRow = JsonConvert.SerializeObject(siteToken);
                 string token = Security.GetSha256(siteTokenRow);
 
-
+                string siteclean = site.URL.Replace("https://", "").Replace("http://", "");
+                string siteToVerifiedClean= siteToVerified.SiteUrl.Replace("https://", "").Replace("http://", "");
                 // Realizamos la validacion de la url del sitio y del token
-                if ( site.URL.Replace("https://","").Replace("http://","") == siteToVerified.SiteUrl )
+                if (siteclean == siteToVerifiedClean)
                 {
                     site.Verified = true;
                     result = true;

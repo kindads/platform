@@ -31,16 +31,6 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -153,9 +143,6 @@
     <None Include="Web.Dev.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
-    <None Include="Web.Debug.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
     <None Include="Web.Qa.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
@@ -174,6 +161,10 @@
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Captivate.Azure\Captivate.Azure.csproj">
+      <Project>{BF273911-E765-4409-A128-D1CF938C38FE}</Project>
+      <Name>Captivate.Azure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Captivate.Comun\Captivate.Common.csproj">
       <Project>{E6C505C4-87E8-45E5-BD9E-D826A4A6F4AF}</Project>
       <Name>Captivate.Common</Name>

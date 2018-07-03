@@ -17,7 +17,7 @@ using System.Security.Cryptography;
 using System.Web;
 using System.Net;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber.OAuth
+namespace Captivate.Common.Utils.Partners.Mail.Aweber.OAuth
 {
     public class Base
     {

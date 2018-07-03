@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Interfaces
+namespace Captivate.Common.Interfaces
 {
     public interface IDapperGenericRepository<T> where T : class
     {

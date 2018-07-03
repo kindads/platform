@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Captivate.Negocio.Helper
+namespace Captivate.Business.Helper
 {
   public static class AsyncHelpers
   {

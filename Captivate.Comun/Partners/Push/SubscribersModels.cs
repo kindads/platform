@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Captivate.Comun.Partners.Push
+namespace Captivate.Common.Partners.Push
 {
   public class SubscribersModels
   {

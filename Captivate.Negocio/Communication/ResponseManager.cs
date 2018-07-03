@@ -1,7 +1,7 @@
+using Captivate.Azure;
 using Captivate.Business;
 using Captivate.Common.Interfaces;
-using Captivate.Comun.Interfaces;
-using Captivate.Negocio.Partners.IContact;
+using Captivate.Common.Partners.IContact;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 
-namespace Captivate.Negocio.Communication
+namespace Captivate.Business.Communication
 {
     public class ResponseManager<T> : ITelemetria where T : IResponse,   new()
   {

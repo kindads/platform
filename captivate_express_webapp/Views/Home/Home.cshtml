@@ -1,202 +1,436 @@
-
+@model captivate_express_webapp.Models.Home.HomeViewModel
 @{
   ViewBag.Title = "Home";
-  Layout = "~/Views/Shared/_LandingLayout.cshtml";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
 }
 
-<div id="cookiesPanel" class="cookies">
-  <span>
-    This website uses cookies to provide best experience.
-  </span>
-  <a onclick="hideCookies()" class="btn">Got it</a>
-</div>
+<div class="home">
+  <div id="cookiesPanel" class="cookies">
+    @*Model.Heading.ToString()*@
+    <span>
+      This website uses cookies to provide the best experience.
+    </span>
+    <a onclick="hideCookies()" class="btn">Got it</a>
+  </div>
 
-<div class="flexbox hero">
-  <section class="flexbox-item spaced info">
-    <div class="header">
-      <nav>
-        <a>
-          <img class="pull-left img-responsive" data-no-retina="true" src="~/Img/UI/logo.png" />
-        </a>
-        <ul class="pull-right">
-          <li>
-            <a href="~/Access/Login">Sign In</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-
-    <div class="content">
-      <h1>Advertising Without the Irritating Ads</h1>
-      <p>
-        Kind Ads is an advertising platform that serves user-friendly ads without taking any middleman fees.
-      </p>
-      <p>
-        With Kind Ads, not only do advertisers save money, but publishers keep more of it.
-      </p>
-      <a href="~/Access/CreateAccount" class="btn">Sign Up Now</a>
-      @*<a class="link more disabled">
-        <span>
-          Read more
-        </span>
-        <i class="fa fa-caret-right"></i>
-      </a>*@
-    </div>
-
-    <div class="social">
-      <ul>
-        <li>
-          <a href="https://twitter.com/KindAdsNetwork" target="_blank" alt="Kind Ads Twitter">
-            <i class="fa fa-twitter"></i>
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-md-6">
+          <h1>
+            @Resource.Language.Home.Home.Resources.MainTitleStart
+            <span>@Resource.Language.Home.Home.Resources.MainTitleBold</span>
+            <br />
+            @Resource.Language.Home.Home.Resources.MainTitleEnd
+          </h1>
+          <p>
+            @Resource.Language.Home.Home.Resources.HeroTextStart_01<br />
+            @Resource.Language.Home.Home.Resources.HeroTextStart_02
+          </p>
+          <p>
+            @Resource.Language.Home.Home.Resources.HeroTextEnd_01<br />
+            @Resource.Language.Home.Home.Resources.HeroTextEnd_02
+          </p>
+        </div>
+        <div class="col-md-6 col-lg-5 col-lg-offset-1">
+          <a href="#" class="video" data-toggle="modal" data-target="#videoModal" title="Watch Kind Ads explanation">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/kind-ads-network-on-vimeo.jpg" alt="Kind Ads Network" />
           </a>
+        </div>
+        <div class="col-sm-12 text-center">
+          @Html.ActionLink("Sign Up for Kind Ads today", "CreateAccount", "Access", null, new { @class = "btn btn-default btn-lg" })
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>@Resource.Language.Home.Home.Resources.FeaturesTitle</h2>
+        </div>
+      </div>
+      <div class="row relative">
+        <div class="col-lg-10 col-lg-offset-1 data-list flexbox">
+          <article class="flexbox-item">
+            <h3>@Resource.Language.Home.Home.Resources.AdIndustryHeading</h3>
+            <ul>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_01
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_02
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_03
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_04
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_05
+              </li>
+            </ul>
+          </article>
+
+          <article class="flexbox-item">
+            <h3>@Resource.Language.Home.Home.Resources.KindAdsHeading</h3>
+            <ul>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_01
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_02
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_03
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_04
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_05
+              </li>
+            </ul>
+            <div class="cta-block">
+              @Html.ActionLink("Sign Up for Kind Ads Today", "CreateAccount", "Access", null, new { @class = "btn btn-default" })
+            </div>
+          </article>
+        </div>
+        <div class="vs">
+          VS.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="register">
+    <form id="subscribeFormUp" method="get" action="">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-offset-1 col-sm-10">
+            <h2>@Resource.Language.Home.Home.Resources.RegisterTitle</h2>
+            <div id="pnlSubscribeInfoUp">
+              <div class="row">
+                <div class="form-group col-sm-9">
+                  <input id="emailSubscribeUp" type="email" class="form-control" placeholder="Enter your Email Address" required />
+                </div>
+                <div class="form-group col-sm-3">
+                  <input id="btnSubscribeUp" type="submit" class="btn btn-default" value="Subscribe">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 form-group checkbox">
+                  <label id="eula">
+                    <span>I consent to occasionally receive email communcation from Kind Ads and its partners</span>
+                    <input data-val-required="You must accept terms and policy" id="AgreeTermsUp" name="AgreeTermsUp" type="checkbox">
+                    <div class="control_indicator"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div id="pnlSubscribeSuccessUp" class="panel panel-default" style="display:none;">
+              <h2>Thanks for subscribing</h2>
+              <p>
+                We've sent a message.
+                <br />
+                Check your email and click Activate Account.
+              </p>
+            </div>
+          </div>
+      </div>
+    </form>
+  </section>
+
+  <section class="roadmap">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>@Resource.Language.Home.Home.Resources.RoadmapTitle</h2>
+        </div>
+      </div>
+    </div>
+    <div class="timeline">
+      <ul class="container-fluid timeline-range clearfix">
+        <li class="item item-add color-01">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_01
+            </span>
+          </div>
         </li>
-        <li>
-          <a href="https://t.me/kindads" target="_blank" alt="Kind Ads Telegram">
-            <i class="fa fa-telegram"></i>
-          </a>
+        <li class="item color-02">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_02
+            </span>
+          </div>
+        </li>
+        <li class="item item-add item-short color-03">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_03
+            </span>
+          </div>
+        </li>
+        <li class="item item-short color-04">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_04
+            </span>
+          </div>
+        </li>
+        <li class="item item-add color-05">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_05
+            </span>
+          </div>
+        </li>
+        <li class="item color-06">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_06
+            </span>
+          </div>
+        </li>
+        <li class="item item-add item-short color-07">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_07
+            </span>
+          </div>
+        </li>
+        <li class="item item-short color-08">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_08
+            </span>
+          </div>
+        </li>
+        <li class="item item-add color-09">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_09
+            </span>
+          </div>
         </li>
       </ul>
     </div>
   </section>
 
-  <section class="flexbox-item aside">
-    <a href="#" class="video" data-toggle="modal" data-target="#videoModal" title="Watch Kind Ads explanation">
-      <i class="fa fa-play" aria-hidden="true"></i>
-    </a>
-    <div class="col-sm-10 col-sm-offset-1">
+  <section class="integrations">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-offset-1 col-sm-10">
+          <h2>@Resource.Language.Home.Home.Resources.IntegrationsTitle</h2>
+          <p>
+            @Resource.Language.Home.Home.Resources.IntegrationsText
+          </p>
+        </div>
+      </div>
 
+      <div id="showIntegrations" class="row">
+        <div class="col-sm-12 flexbox partners">
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/subscribers.png" alt="Subscribers Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/pushcrew.png" alt="Push Crew Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/mailchimp.png" alt="Mailchimp Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/campaignmonitor.png" alt="Campaign Monitor Logo" />
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <a class="btn btn-primary">
+            View all integrations
+          </a>
+        </div>
+      </div>
+
+      <div id="moreIntegrations" class="row collapse">
+        <div class="col-sm-12 flexbox partners">
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/subscribers.png" alt="Subscribers Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/pushcrew.png" alt="Push Crew Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/mailchimp.png" alt="Mailchimp Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/campaignmonitor.png" alt="Campaign Monitor Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/aweber.png" alt="AWeber Logo" />
+          </div>
+
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/sendgrid.png" alt="SendGrid Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/activecampaign.png" alt="Active Campaign Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/getresponse.png" alt="Get Response Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/icontact.png" alt="icontact Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/sendinblue.png" alt="SendinBlue Logo" />
+          </div>
+
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/onesignal.png" alt="OneSignal Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/pushengage.png" alt="PushEngage Logo" />
+          </div>
+          <div class="image flexbox-item" style="display: none;">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/mailjet.png" alt="MailJet Logo" />
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <section class="articles">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>@Resource.Language.Home.Home.Resources.ArticlesTitle</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="carousel slide" id="carousel-home" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner" role="listbox">
+              <ul class="item active clearfix">
+                <li>
+                  <a href="https://www.investopedia.com/news/blockchain-unlocking-advertisers-profit-potential/" rel="noopener" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/investopedia.jpg" alt="Investopedia">
+                    <div class="content">
+                      <h3>Investopedia</h3>
+                      <p>Blockchain Unlocking Advertisers' Profit Potential</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.financemagnates.com/thought-leadership/thought-leadershipthought-leadershipusing-blockchain-to-build-a-better-brand/" rel="noopener" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/finance-magnate.jpg" alt="Finance Magnate">
+                    <div class="content">
+                      <h3>Finance Magnate</h3>
+                      <p>Online Advertising is a Mess - But Blockchain Could Make It Better for Everyone</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://coincentral.com/neil-patel-kindads-interview/" rel="noopener" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/coin-central.jpg" alt="Coin Central">
+                    <div class="content">
+                      <h3>Coin Central</h3>
+                      <p>Neil Patel on KindAds, Crypto Advertising, Entrepreneurship, and Regulations</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+
+              <div class="item">
+                <ul class="row">
+                  <li class="col-sm-4">
+                    Hola 1
+                  </li>
+                  <li class="col-sm-4">
+                    Hola 2
+                  </li>
+                  <li class="col-sm-4">
+                    Hola 3
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <a class="left carousel-control" href="#carousel-home" data-slide="prev" style="display:none;">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-home" data-slide="next" style="display:none;">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <span class="sr-only">Next</span>
+            </a>
+            <ol class="carousel-indicators" style="display:none;">
+              <li class="active" data-target="#carousel-home" data-slide-to="0"></li>
+              <li data-target="#carousel-home" data-slide-to="1"></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="register register-bottom">
+    <form id="subscribeFormDown" method="get" action="">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-offset-1 col-sm-10">
+            <h2>@Resource.Language.Home.Home.Resources.RegisterTitle</h2>
+            <div id="pnlSubscribeInfoDown">
+              <div class="row">
+                <div class="form-group col-sm-9">
+                  <input id="emailSubscribeDown" type="email" class="form-control" placeholder="Enter your Email Address" required />
+                </div>
+
+                <div class="form-group col-sm-3">
+                  <input id="btnSubscribeDown" type="submit" class="btn btn-default" value="Subscribe">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 form-group checkbox">
+                  <label id="eulaDown">
+                    <span>I consent to occasionally receive email communcation from Kind Ads and its partners</span>
+                    <input data-val-required="You must accept terms and policy" id="AgreeTermsDown" name="AgreeTermsDown" type="checkbox">
+                    <div class="control_indicator"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div id="pnlSubscribeSuccessDown" class="panel panel-default" style="display:none;">
+              <h2>Thanks for subscribing</h2>
+              <p>
+                We've sent a message.
+                <br />
+                Check your email and click Activate Account.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </section>
 </div>
 
-<section class="features">
-  <h2>Meet a new era of marketing</h2>
-  <p>Here's how Kind Ads is going to make the Internet kind again.</p>
-  <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
-      <ul class="block-items clearfix">
-        <li>
-          <div class="img">
-            <img src="~/Img/Home/features-less-spam.svg" data-no-retina="true" alt="Kind Ads Less Spam"/>
-          </div>
-          <h3>Less spam</h3>
-          <p>By removing the ad network, publishers can now control what's on their website.</p>
-        </li>
-        <li>
-          <div class="img">
-            <img src="~/Img/Home/features-friendly-experience.svg" data-no-retina="true" alt="Kind Ads Friendly User Experience"/>
-          </div>
-          <h3>Friendly user experience</h3>
-          <p>By leveraging technologies like push notifications and email, advertisers no longer have to irritate users.</p>
-        </li>
-        <li>
-          <div class="img">
-            <img src="~/Img/Home/features-paid-fast.svg" data-no-retina="true" alt="Kind Ads Paid Instanly"/>
-          </div>
-          <h3>Get paid instantly</h3>
-          <p>Publishers don't have to wait months before they get paid now.</p>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
 
-<section class="register">
-  <div class="row">
-    <div class="col-sm-offset-1 col-sm-10">
-      <h2>Get Started Today</h2>
-      <p>Give Kind Ads a test run today. You have everything to gain!</p>
-      <a href="~/Access/CreateAccount" class="btn">Sign Up Now</a>
-    </div>
-  </div>
-</section>
-
-<section class="advantages">
-  <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
-      <article class="row">
-        <div class="col-sm-7">
-          <h4>INTERNET USERS</h4>
-          <h3>Advertising without the irritating ads</h3>
-          <p>Kind Ads will show you more relevant ads through channels like email marketing and push notifications so you can browse the web without being bombarded by irrelevant ads.</p>
-          @*<a class="link more disabled">
-              <span>
-                Read more
-              </span>
-              <i class="fa fa-caret-right"></i>
-            </a>*@
-        </div>
-        <div class="col-sm-5">
-          <img class="img-responsive" src="~/Img/Home/advantages-customers.png" alt="Internet Users" />
-        </div>
-      </article>
-      <article class="row">
-        <div class="col-sm-7 pull-right">
-          <h4>PUBLISHERS</h4>
-          <h3>Display ads that help your website visitors</h3>
-          <p>Are banner ads ruining your website's experience? Now you can start showing users relevant ads through push notifications and emails that don't irritate users. Plus you'll get paid instantly.</p>
-          @*<a class="link more disabled">
-        <span>
-          Read more
-        </span>
-        <i class="fa fa-caret-right"></i>
-      </a>*@
-        </div>
-        <div class="col-sm-5">
-          <img class="img-responsive" src="~/Img/Home/advantages-publishers.png" alt="Advertisers" />
-        </div>
-      </article>
-      <article class="row">
-        <div class="col-sm-7">
-          <h4>ADVERTISERS</h4>
-          <h3>Create ads that convert while saving money</h3>
-          <p>Are you tired of rising ad costs? A large portion of your ad dollars is going to a middleman. You can now save money by cutting out the middleman.</p>
-          @*<a class="link more disabled">
-              <span>
-                Read more
-              </span>
-              <i class="fa fa-caret-right"></i>
-            </a>*@
-        </div>
-        <div class="col-sm-5">
-          <img class="img-responsive" src="~/Img/Home/advantages-advertisers.png" alt="Publishers" />
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="integrations">
-  <div class="row">
-    <div class="col-sm-offset-1 col-sm-10">
-      <h2>Integrations</h2>
-      <p>
-        Focus on your <span>campaigns</span>, let us take care of your <span>integrations</span> with top publishers.
-      </p>
-    </div>
-    <div class="col-sm-12 flexbox partners"> 
-      <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/subscribers-partner@2x.png" alt="Subscribers Logo" />
-      </div>
-      <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/pushcrew-partner@2x.png" alt="Push Crew Logo" />
-      </div>
-      <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/mailchimp-partner@2x.png" alt="Mailchimp Logo" />
-      </div>
-      <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/campaignmonitor-partner@2x.png" alt="Campaign Monitor Logo" />
-      </div>
-      <div class="image flexbox-item">
-        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/aweber-partner@2x.png" alt="AWeber Logo" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<div id="videoModal" class="modal fade" role="dialog">
+<div id="videoModal" class="video-modal modal fade" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -204,16 +438,108 @@
         <h4 class="modal-title">Kind Ads</h4>
       </div>
       <div class="modal-body">
-        <iframe src="https://player.vimeo.com/video/257040441" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <div class="embed-container">
+          <iframe src="https://player.vimeo.com/video/257040441" frameborder="0" width="320" height="auto" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+        </div>
+        <!--
+          <iframe src="https://player.vimeo.com/video/257040441" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        -->
       </div>
     </div>
-
   </div>
 </div>
 
+@section Scripts {
+<!-- Webiste Cookies -->
 <script>
   function hideCookies() {
     //document.getElementById("cookiesPanel").style.display = "none";
     document.getElementById("cookiesPanel").classList.add('fadeIn');
   }
 </script>
+<!-- Integrations -->
+<script>
+  $(document).ready(function () {
+    $("#showIntegrations .btn-primary").click(function () {
+      $("#showIntegrations").hide();
+      $("#moreIntegrations").show();
+    });
+  });
+</script>
+<!-- Subscribe Section -->
+<script>
+  $(document).ready(function () {
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid"
+    });
+
+    $("#subscribeFormUp").validate({
+      rules: {
+        AgreeTermsUp: {
+          required: true
+        }
+      }
+    });
+
+    $("#subscribeFormDown").validate({
+      rules: {
+        AgreeTermsDown: {
+          required: true
+        }
+      }
+    });
+  });
+
+  $("#btnSubscribeUp").click(function (event) {
+    if ($("#subscribeFormUp").valid()) {
+      var emailSubscribe = $("#emailSubscribeUp").val();
+      $.ajax({
+        type: 'POST',
+        url: '@Url.Action("Subscribe")',
+        dataType: 'json',
+        data: { email: emailSubscribe },
+        success: function (result) {
+          if (result.success) {
+            $("#pnlSubscribeInfoUp").hide();
+            $("#pnlSubscribeSuccessUp").show();
+          } else {
+            alert('Error when subscribing.');
+          }
+        },
+        error: function (ex) {
+          alert('Error when subscribing.');
+        }
+      });
+    } else {
+      $("#pnlSubscribeSuccessUp").hide();
+    }
+  });
+
+  $("#btnSubscribeDown").click(function (event) {
+    if ($("#subscribeFormDown").valid()) {
+      var emailSubscribe = $("#emailSubscribeDown").val();
+      $.ajax({
+        type: 'POST',
+        url: '@Url.Action("Subscribe")',
+        dataType: 'json',
+        data: { email: emailSubscribe },
+        success: function (result) {
+          if (result.success) {
+            $("#pnlSubscribeInfoDown").hide();
+            $("#pnlSubscribeSuccessDown").show();
+          } else {
+            alert('Error when subscribing.');
+          }
+        },
+        error: function (ex) {
+          alert('Error when subscribing.');
+        }
+      });
+    } else {
+      $("#pnlSubscribeSuccessDown").hide();
+    }
+  });
+</script>
+}
+

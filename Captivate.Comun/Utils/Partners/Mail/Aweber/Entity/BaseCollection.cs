@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber.Entity
+namespace Captivate.Common.Utils.Partners.Mail.Aweber.Entity
 {
     public class BaseCollection<T>
     {

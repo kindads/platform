@@ -112,7 +112,8 @@ namespace captivate_express_webapp.Controllers
     private async Task<List<ProductPurchasedViewModel>> FillProductPurchasedAsync()
     {
       var listProducts = await _service.GetAllProductsPurchasedAsync();
-      ViewBag.NoRecords = (listProducts != null && listProducts.Any()) ? listProducts.Count.ToString() : "0";
+      ViewBag.NoRecords = (listProducts != null && listProducts.Any()) ? (from r in listProducts where r.Product.IsPremium == false select r).Count().ToString() : "0";
+      ViewBag.NoRecordsPremium = (listProducts != null && listProducts.Any()) ? (from r in listProducts where r.Product.IsPremium == true select r).Count().ToString() : "0";
       return listProducts;
     }
 

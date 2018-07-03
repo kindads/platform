@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber.OAuth
+namespace Captivate.Common.Utils.Partners.Mail.Aweber.OAuth
 {
     /// <summary>
     /// Provides the parameters required to pass to the AWeber API.

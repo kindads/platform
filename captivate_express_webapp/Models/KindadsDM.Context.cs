@@ -45,5 +45,6 @@ namespace captivate_express_webapp.Models
         public virtual DbSet<PRODUCT_SETTINGS> PRODUCT_SETTINGS { get; set; }
         public virtual DbSet<CAMPAIGN_SETTINGS> CAMPAIGN_SETTINGS { get; set; }
         public virtual DbSet<CAMPAIGN_CHAT> CAMPAIGN_CHAT { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
     }
 }

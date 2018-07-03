@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Captivate.API.Controllers;
-using Captivate.Comun.Models;
+using Captivate.Common.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Captivate.UnitTest

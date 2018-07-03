@@ -12,14 +12,17 @@ using Microsoft.Owin.Security;
 using captivate_express_webapp.Services;
 using captivate_express_webapp.Utils.Enums;
 using System.Xml;
-using Captivate.Negocio.Email;
+using Captivate.Business.Email;
 using Captivate.Comun.Enums;
-using Captivate.Comun.Models;
-using Captivate.Negocio;
+using System.Resources;
+using System.Collections;
+using System.Globalization;
+using Captivate.Common.Models;
+using Captivate.Business;
 
 namespace captivate_express_webapp.Controllers
 {
-  public class AccessController : Controller
+  public class AccessController : BaseController
   {
 
     private ApplicationSignInManager _signInManager;
@@ -119,16 +122,15 @@ namespace captivate_express_webapp.Controllers
       if (ModelState.IsValid)
       {
         if (m.AgreeTerms)
-        {          
+        {
           var user = new ApplicationUser { UserName = m.Email, Email = m.Email, Hometown = string.Empty, TokenAddress = string.Empty, WalletAddress = string.Empty };
           var result = await UserManager.CreateAsync(user, m.Password);
           if (result.Succeeded)
           {
-           
-
+            UserDetail userDetail = new UserDetail(){ Name = m.Name ,UserId = user.Id ,IsPremium = false};
             var userRegister = UserManager.FindByEmail(user.Email);
             UserManager.AddToRole(userRegister.Id, m.Role);
-
+            _accessService.InsertUserDetail(userDetail);
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
             var callbackUrl = Url.Action(
@@ -136,7 +138,7 @@ namespace captivate_express_webapp.Controllers
                  new { userId = user.Id, code = code },
                  protocol: Request.Url.Scheme);
             string mailContent = String.Format(new MailManager().GetMailContent(EMailType.createAccount), user.UserName, callbackUrl);
-            
+
             //Enqueue
             // Creamos el objeto de notificacion
             Notification notification = new Notification();
@@ -175,7 +177,6 @@ namespace captivate_express_webapp.Controllers
 
       return View(m);
     }
-
 
     //[HttpPost]
     //[AllowAnonymous]
@@ -343,9 +344,8 @@ namespace captivate_express_webapp.Controllers
     [HttpPost]
     public ActionResult LogOff()
     {
-
       AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-      return RedirectToAction("Index", "Home");
+      return View("~/Views/Home/Home.cshtml");
     }
 
     // GET: /Access/ConfirmEmail
@@ -467,25 +467,7 @@ namespace captivate_express_webapp.Controllers
     {
       return Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
     }
-    public ActionResult Home()
-    {
-      return RedirectToAction("HomeAux");//Redirecciona a acción auxiliar
-    }
-    [Route("")]//Se usa para que la página de inicio nunca muestre el controller en la ruta
-    public ActionResult HomeAux()
-    {
-      return View("~/Views/Home/Home.cshtml");
-    }
-    [Route("Team")]
-    public ActionResult Team()
-    {
-      return View("~/Views/Home/Team.cshtml");
-    }
-    [Route("Faq")]
-    public ActionResult Faq()
-    {
-      return View("~/Views/Home/Faq.cshtml");
-    }
+
     private String GetMailBodyFromXML(string selector)//Obtiene el cuerpo de un correo dado en el xml del proyecto
     {
       //Obtiene la ruta del bin
@@ -502,5 +484,6 @@ namespace captivate_express_webapp.Controllers
       String completeMessage = messageNode.InnerText;// + footerNode.InnerText;
       return completeMessage;
     }
+
   }
 }

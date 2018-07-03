@@ -1,0 +1,63 @@
+<div class="container-fluid">
+
+  <div class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-12 main-bar clearfix">
+        <h1 class="pull-left title">Types of ads</h1>
+        <div class="pull-right">
+          @Html.ActionLink("Create an Ads", "CreateAds", "MoneyAds", null, new { @class = "btn btn-primary" })
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white-block">
+          <ul class="nav nav-tabs flexbox">
+            <li class="active">
+              <a href="#pnlGridDeafultAds" data-toggle="tab">Default Ads</a>
+            </li>
+            <li>
+              <a href="#pnlGridStickyAds" data-toggle="tab">Header sticky Ads</a>
+            </li>
+          </ul>
+          <div class="tab-content clearfix">
+            @using (Ajax.BeginForm("GetDefaultAds", "MoneyAds", null, new AjaxOptions
+            {
+              HttpMethod = "POST",
+              OnSuccess = "",
+              OnFailure = "",
+              UpdateTargetId = "pnlGridDeafultAds"
+            }, new { id = "pnlGridDeafultAdsAjax" })) { }
+            <div id="pnlGridDeafultAds" class="tab-pane active">
+              @{Html.RenderAction("GetDefaultAds", "MoneyAds");}
+            </div>
+            @using (Ajax.BeginForm("GetStickyAds", "MoneyAds", null, new AjaxOptions
+            {
+              HttpMethod = "POST",
+              OnSuccess = "",
+              OnFailure = "",
+              UpdateTargetId = "pnlGridStickyAds"
+            }, new { id = "pnlGridVerifyAjax" })) { }
+            <div id="pnlGridStickyAds" class="tab-pane">
+              @{Html.RenderAction("GetStickyAds", "MoneyAds");}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+@Scripts.Render("~/bundles/customjs")
+<script src="~/Modules/siteModule.js"></script>
+<script type="text/javascript">
+  siteModule.readyShowSites();
+  siteModule.bindingOnClickShowSites();
+</script>

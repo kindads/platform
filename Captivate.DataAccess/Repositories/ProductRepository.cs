@@ -1,7 +1,7 @@
-﻿using Captivate.Comun.Interfaces;
-using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Models.ViewModel;
+﻿using Captivate.Common.Interfaces;
+using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Models.ViewModel;
 using Captivate.DataAccess.Mappers;
 using Dapper;
 using System;
@@ -25,8 +25,7 @@ namespace Captivate.DataAccess
         public override void Delete(ProductEntity product)
         {
             product.IsActive = false;
-            Edit(product);
-            
+            Edit(product);            
         }
 
         public bool DeleteById(Guid Id)

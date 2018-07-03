@@ -14,7 +14,7 @@ using captivate_express_webapp.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Captivate.DataAccess;
-using Captivate.Comun.Models;
+using Captivate.Common.Models;
 using Twilio;
 using Twilio.Types;
 using Twilio.Rest.Api.V2010.Account;

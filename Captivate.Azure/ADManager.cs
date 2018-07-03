@@ -1,5 +1,5 @@
 ﻿using Captivate.Common.Interfaces;
-using Captivate.Comun.Models;
+using Captivate.Common.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Newtonsoft.Json;
 using System;

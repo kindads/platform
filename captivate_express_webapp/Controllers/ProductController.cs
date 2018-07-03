@@ -15,14 +15,16 @@ using captivate_express_webapp.Models.Core;
 using System.Net;
 using captivate_express_webapp.Services;
 using captivate_express_webapp.Models.Publisher;
-using Captivate.Comun.Models;
-using Captivate.Comun.Interfaces;
+using Captivate.Common.Models;
+using Captivate.Common.Interfaces;
 using Captivate.Negocio;
-using Captivate.Comun.Models.ViewModel;
-using Captivate.Negocio.Partners.IContact;
+using Captivate.Common.Models.ViewModel;
+using Captivate.Common.Partners.IContact;
 using Captivate.Negocio.Partners.Mail;
-using Captivate.Comun.Partners.Mail.SendinBlue;
-using Captivate.Negocio.Partners.Push;
+using Captivate.Common.Partners.Mail.SendinBlue;
+using Captivate.Business.Partners.Push;
+using Captivate.Business;
+using Captivate.Business.Partners.Mail;
 
 namespace captivate_express_webapp.Controllers
 {
@@ -36,6 +38,7 @@ namespace captivate_express_webapp.Controllers
     private Services.SendGridService _sendGridService;
     private Services.ActiveCampaignService _activeCampaignService;
     private Services.GetResponseService _getResponseService;
+    private Services.AccessService _accessService;
 
 
     public ProductController()
@@ -47,6 +50,7 @@ namespace captivate_express_webapp.Controllers
       _sendGridService = new Services.SendGridService();
       _activeCampaignService = new Services.ActiveCampaignService();
       _getResponseService = new Services.GetResponseService();
+      _accessService = new Services.AccessService();
     }
 
     public ActionResult Index()
@@ -78,7 +82,7 @@ namespace captivate_express_webapp.Controllers
         var price = Session["ProceSelecc"] == null ? _createProduct.PriceSelecc : Convert.ToDouble(Session["PriceSelecc"].ToString());
         var site = new Guid(Session["SiteSelecc"].ToString());
         var userId = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
-
+        var userDetail = _accessService.GetUserDetailByIdUser(new Guid(userId).ToString());
 
         if (partner.Equals(new Guid(Utils.Constants.PROVIDER_MAIL_CHIMP)))
         {
@@ -160,6 +164,7 @@ namespace captivate_express_webapp.Controllers
         _createProduct.ProductTypeSelect = productType;
         _createProduct.ParterTypeSelect = partner;
         _createProduct.SiteTypeSelecc = site;
+        _createProduct.IsPremium = userDetail != null ? userDetail.IsPremium : false;
 
         if (_productService.SaveProduct(_createProduct, userId, GetFileUpload(fileup)))
         {

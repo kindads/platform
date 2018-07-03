@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber.Entity
+namespace Captivate.Common.Utils.Partners.Mail.Aweber.Entity
 {
     /// <summary>
     /// A single campaign for a given list.

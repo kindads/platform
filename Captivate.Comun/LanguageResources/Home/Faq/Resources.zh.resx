@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Answer_01_End" xml:space="preserve">
+    <value>除了切断中间商之外，区块链技术还允许Kind Ads保护其用户的隐私和数据。 没有人或公司能够访问您的数据，或者无法将其用于自己的个人利益。</value>
+  </data>
+  <data name="Answer_01_Start" xml:space="preserve">
+    <value>由于区块链技术，Kind Ads能够将广告商直接连接到发布商。 通过削减中间商，广告商可以省钱，发行商可以赚更多。</value>
+  </data>
+  <data name="Answer_02_End" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Answer_02_Start" xml:space="preserve">
+    <value>以太坊网络是最健壮和最灵活的区块链平台之一。 它拥有最大的开发社区，以太坊基金会致力于不断改进它。</value>
+  </data>
+  <data name="Answer_03_End" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Answer_03_Start" xml:space="preserve">
+    <value>Kind令牌的总供应量为61,000,000。 61,000,000之外的更多的令牌不能被释放，并且令牌不能被开采。</value>
+  </data>
+  <data name="Answer_04_End" xml:space="preserve">
+    <value>随着Kind Ads获得更多的推动力，它将扩展到Google和Facebook也提供的原生广告。 但通过首先追踪不同的渠道，它可以让Kind Ads建立一个强有力的，有保障的地位。</value>
+  </data>
+  <data name="Answer_04_Middle" xml:space="preserve">
+    <value>Kind Ads采取了不同的方法，首先追踪谷歌和Facebook未利用的推送通知和电子邮件等渠道。 通过这种方式，广告商和发布商不会将其视为竞争平台，而是一种除谷歌和Facebook之外可以使用的平台。</value>
+  </data>
+  <data name="Answer_04_Start" xml:space="preserve">
+    <value>像谷歌这样的传统数字广告公司的市场容量大于整个加密市场。 我们说我们可以在一夜之间击败他们是愚蠢的，因为这是不现实的。</value>
+  </data>
+  <data name="Answer_05_End" xml:space="preserve">
+    <value>除了通过利用用户友好型广告使互联网更加亲切的Kind Ads目标外，Kind Ads团队还具有广告背景。 创始团队和顾问拥有超过31年的广告代理经验。 这使他们能够将广告商和发行商带到平台上，而竞争对手则很难在这方面获得如此多的吸引力。</value>
+  </data>
+  <data name="Answer_05_Start" xml:space="preserve">
+    <value>最大的区别在于Kind Ads专注于不会破坏用户体验的广告渠道。 例如，作为互联网用户，如果您订阅营养网站的电子邮件时事通讯，并且该网站的所有者通过电子邮件向您发送有关他们尝试，测试并相信的营养产品的信息将真正使您受益，则该广告不会 与在互联网上看横幅一样糟糕。</value>
+  </data>
+  <data name="Answer_06_End" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Answer_06_Start" xml:space="preserve">
+    <value>作为用户，如果您选择分享数据以便更好地定位目标，则您会看到Kind Ads在整个网络中投放的广告。</value>
+  </data>
+  <data name="Answer_07_End" xml:space="preserve">
+    <value>最后，我们的团队和网络在营销空间中每月有超过200万名博客读者（其中51％花在数字广告上，43％有发布网站）。</value>
+  </data>
+  <data name="Answer_07_Middle" xml:space="preserve">
+    <value>至于发布商，Kind Ads将利用WordPress和Kajabi这样的平台，这将使我们能够访问数百万潜在的发布商。</value>
+  </data>
+  <data name="Answer_07_Start" xml:space="preserve">
+    <value>我们的团队拥有管理广告代理的背景，同时我们也了解其他广告代理的创始人。 这使我们可以访问广告商。</value>
+  </data>
+  <data name="MainTitle" xml:space="preserve">
+    <value>经常问的问题</value>
+  </data>
+  <data name="Question_01" xml:space="preserve">
+    <value>为什么Kind Ads需要使用区块链来实现其目标？</value>
+  </data>
+  <data name="Question_02" xml:space="preserve">
+    <value>为什么Kind Ads选择Ethereum而不是其他区块链？</value>
+  </data>
+  <data name="Question_03" xml:space="preserve">
+    <value>种类代币的总供应量是多少？ 你会问更多吗？</value>
+  </data>
+  <data name="Question_04" xml:space="preserve">
+    <value>Kind Ads如何与Google和Facebook等传统广告网络进行竞争？</value>
+  </data>
+  <data name="Question_05" xml:space="preserve">
+    <value>是什么让Kind Ads与其他基于广告的区块链项目不同？</value>
+  </data>
+  <data name="Question_06" xml:space="preserve">
+    <value>浏览互联网的人可以从Kind Ads中受益吗？</value>
+  </data>
+  <data name="Question_07" xml:space="preserve">
+    <value>Kind Ads将如何同时吸引发布商和广告商？</value>
+  </data>
+</root>

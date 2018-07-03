@@ -6,9 +6,10 @@
 
 <div class="title">
   <div class="logo-mobile">
-    <a href="@Url.Action("Home", "Access")"><img src="../Img/UI/Logo-White.png"></a>
+    <a href="@Url.Action("Home", "Home")"><img src="~/Img/UI/Logo-White.png"></a>
   </div>
   <h1>Create an Account</h1>
+
 </div>
 
 @using (Html.BeginForm("Login", "Access", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "formLogin" }))
@@ -19,6 +20,8 @@
   <article class="form-data container-fluid">
     <form>
       <fieldset>
+        @*Html.LabelFor(model => model.TestLanguage, new { @class = "control-label col-md-2" })*@
+       
         <div class="row">
           <div class="col-sm-12 form-group simple clearfix">
             <i class="kas kas-icon-email"></i>
@@ -47,28 +50,33 @@
   </article>
 }
 
-  <div class="col-sm-12">
-    <ul class="last clearfix">
-      <li>
-        @Html.ActionLink(Resources.FORGOT_PASSWORD, "RecoverPassword", "Access")
-      </li>
-      <li>
-        @Html.ActionLink(Resources.SIGN_UP, "CreateAccount", "Access")
-      </li>
-    </ul>
-  </div>
+<div class="col-sm-12">
+  <ul class="last clearfix">
+    <li>
+      @Html.ActionLink(Resources.FORGOT_PASSWORD, "RecoverPassword", "Access")
+    </li>
+    <li>
+      @Html.ActionLink(Resources.SIGN_UP, "CreateAccount", "Access")
+    </li>
+  </ul>
+</div>
 
 
-    @Scripts.Render("~/bundles/customjs")
-    <script type="text/javascript">
-      $('#formLogin').submit(function (e) {
-        if (!$("#formLogin").valid()) {
-          e.preventDefault();
-        }
-      });
-    </script>
-    <script type="text/javascript">
-      $().ready(function () {
-        $("#formLogin").validate();
-      });
-    </script>
+@Scripts.Render("~/bundles/customjs")
+@*@Scripts.Render("~/Modules/languageModule.js")*@
+<script type="text/javascript">
+  $('#formLogin').submit(function (e) {
+    if (!$("#formLogin").valid()) {
+      e.preventDefault();
+    }
+  });
+</script>
+<script type="text/javascript">
+  $().ready(function () {
+    $("#formLogin").validate();
+  });
+</script>
+
+
+
+

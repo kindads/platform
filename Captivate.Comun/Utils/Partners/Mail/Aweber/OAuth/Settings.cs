@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber.OAuth
+namespace Captivate.Common.Utils.Partners.Mail.Aweber.OAuth
 {
 
   /// <summary>

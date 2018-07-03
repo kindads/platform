@@ -1,7 +1,7 @@
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Partners.Mail.SendinBlue;
-using Captivate.Comun.Utils;
-using Captivate.Negocio.Partners.IContact;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Partners.Mail.SendinBlue;
+using Captivate.Common.Utils;
+using Captivate.Common.Partners.IContact;
 using captivate_express_webapp.Models.Core;
 using captivate_express_webapp.Models.Partner;
 using captivate_express_webapp.Utils.Enums;
@@ -80,7 +80,7 @@ namespace captivate_express_webapp.Models.Publisher
     public string ListGRSelecc { set; get; }
     public string FromFieldGRSelecc { set; get; }
 
-    public Captivate.Negocio.Partners.IContact.IContactRequest IContact { set; get; }
+    public Captivate.Common.Partners.IContact.IContactRequest IContact { set; get; }
 
     public SendinBlueCampaignRequest SendinBlue { set; get; }
 
@@ -98,9 +98,11 @@ namespace captivate_express_webapp.Models.Publisher
     public string SegmentMJSelecc { set; get; }
     public string SecretKeySelecc { set; get; }
 
+    public bool IsPremium { get; set; }
+
     public CreateProductModel()
     {
-      IContact = new Captivate.Negocio.Partners.IContact.IContactRequest(ProviderEnvironment.Production);
+      IContact = new Captivate.Common.Partners.IContact.IContactRequest(ProviderEnvironment.Production);
       SendinBlue = new SendinBlueCampaignRequest();
     }
 

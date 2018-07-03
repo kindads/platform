@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
 
 
@@ -19,25 +19,27 @@ namespace Captivate.Comun.Models.Entities
             //this.ProductSettingsEntitys = new HashSet<ProductSettingsEntity>();
         }
 
-        [Key]
+
         public System.Guid IdProduct { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
 
         public bool IsActive { set; get; }
 
+        public bool IsPremium { get; set; }
+
 
         #region FK
-        [ForeignKey("AspNetUser")]
+
         public string AspNetUsers_Id { get; set; }
 
-        [ForeignKey("SITE")]
+ 
         public Guid SITE_IdSite { set; get; }
 
-        [ForeignKey("PARTNER")]
+  
         public Guid PARTNER_IdPartner { set; get; }
 
-        [ForeignKey("PRODUCT_TYPE")]
+
         public Guid PRODUCT_TYPE_IdProductType { set; get; }
         #endregion
 

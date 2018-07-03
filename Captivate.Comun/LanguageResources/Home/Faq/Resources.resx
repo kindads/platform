@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Answer_01_End" xml:space="preserve">
+    <value>In addition to cutting out the middleman, blockchain technology allows Kind Ads to protect its user's privacy and data. No one person or company will have access to your data or be able to use it for their own self-interest.</value>
+  </data>
+  <data name="Answer_01_Start" xml:space="preserve">
+    <value>Because of blockchain technology, Kind Ads is able to directly connect advertisers to publishers. By cutting out the middleman, advertisers save money and publishers are able to make more.</value>
+  </data>
+  <data name="Answer_02_End" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Answer_02_Start" xml:space="preserve">
+    <value>The Ethereum network is one of the most robust and flexible blockchain platforms. It has the largest development community and the Ethereum foundation is dedicated to continually improving it.</value>
+  </data>
+  <data name="Answer_03_End" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Answer_03_Start" xml:space="preserve">
+    <value>The total supply of Kind tokens is 61,000,000. More tokens outside of the 61,000,000 cannot be released, and the token cannot be mined.</value>
+  </data>
+  <data name="Answer_04_End" xml:space="preserve">
+    <value>As Kind Ads gains more traction, it will expand into native ads, which both Google and Facebook also offer. But by first going after different channels, it allows Kind Ads to build a strong, defensible position.</value>
+  </data>
+  <data name="Answer_04_Middle" xml:space="preserve">
+    <value>Kind Ads is taking a different approach by first going after channels like push notifications and emails that Google and Facebook are not leveraging. This way advertisers and publishers won't see it as a competing platform, but instead a platform that they can use in addition to Google and Facebook.</value>
+  </data>
+  <data name="Answer_04_Start" xml:space="preserve">
+    <value>Traditional digital ad companies like Google have a larger market cap than the whole crypto market. We would be foolish to say we can beat them overnight, as that isn't realistic.</value>
+  </data>
+  <data name="Answer_05_End" xml:space="preserve">
+    <value>In addition to the Kind Ads goal of making the Internet more kind by leveraging user-friendly ads, the Kind Ads team has a background in advertising. The founding team and advisors have over 31 years of ad agency experience. This allows them to bring advertisers and publishers to the platform while the competitors will struggle to gain as much traction in this respect.</value>
+  </data>
+  <data name="Answer_05_Start" xml:space="preserve">
+    <value>The big differentiator is that Kind Ads is focusing on ad channels that don't ruin the user experience. For example, as an Internet user, if you subscribe to a nutrition website's email newsletter and the owner of that site emails you information about a nutritional product that they have tried, tested, and believe will truly benefit you, then the ad isn't as bad as seeing banners all over the Internet.</value>
+  </data>
+  <data name="Answer_06_End" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Answer_06_Start" xml:space="preserve">
+    <value>As a user, if you choose to share your data so you can be better targeted, you will receive Kind tokens as you see ads served by Kind Ads throughout the web.</value>
+  </data>
+  <data name="Answer_07_End" xml:space="preserve">
+    <value>Lastly, our team and network have access to over 2 million monthly blog readers in the marketing space (in which 51% spend money on digital ads and 43% have publishing sites).</value>
+  </data>
+  <data name="Answer_07_Middle" xml:space="preserve">
+    <value>As for publishers, Kind Ads will be leveraging platforms like WordPress and Kajabi which will get us access to millions of potential publishers.</value>
+  </data>
+  <data name="Answer_07_Start" xml:space="preserve">
+    <value>Our team has a background in running ad agencies, and we also know the founders of other ad agencies. This gives us access to advertisers.</value>
+  </data>
+  <data name="MainTitle" xml:space="preserve">
+    <value>Frequently Asked Questions</value>
+  </data>
+  <data name="Question_01" xml:space="preserve">
+    <value>Why does Kind Ads need to use the blockchain to accomplish its goals?</value>
+  </data>
+  <data name="Question_02" xml:space="preserve">
+    <value>Why did Kind Ads choose Ethereum over any other blockchain?</value>
+  </data>
+  <data name="Question_03" xml:space="preserve">
+    <value>What is the total supply of Kind tokens? Will you ever issue more?</value>
+  </data>
+  <data name="Question_04" xml:space="preserve">
+    <value>How will Kind Ads compete against traditional ad networks like Google and Facebook?</value>
+  </data>
+  <data name="Question_05" xml:space="preserve">
+    <value>What makes Kind Ads different than other ad-based blockchain projects?</value>
+  </data>
+  <data name="Question_06" xml:space="preserve">
+    <value>Can people who browse the Internet benefit from Kind Ads?</value>
+  </data>
+  <data name="Question_07" xml:space="preserve">
+    <value>How will Kind Ads attract both publishers and advertisers at the same time?</value>
+  </data>
+</root>

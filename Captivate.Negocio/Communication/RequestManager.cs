@@ -1,6 +1,5 @@
-using Captivate.Comun.Utils;
-using Captivate.Comun.Interfaces;
-using Captivate.Negocio.Partners.IContact;
+using Captivate.Common.Utils;
+using Captivate.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +13,11 @@ namespace Captivate.Negocio.Communication
 {
   public class RequestManager<T>  where T: IRequest
   {
-        Partners.IContact.IContactRequest requestFrm { set; get; }
+        Common.Partners.IContact.IContactRequest requestFrm { set; get; }
 
     public RequestManager() { }
 
-    public HttpWebRequest GetWebRequest(Comun.Utils.IContactRequest typeRequest, IRequestSettings<T> config, Partners.IContact.IContactRequest requestFrmOuter)
+    public HttpWebRequest GetWebRequest(Common.Utils.IContactRequest typeRequest, IRequestSettings<T> config, Common.Partners.IContact.IContactRequest requestFrmOuter)
     {
       requestFrm = requestFrmOuter;
       ValidateRequestSettings(config, typeRequest);
@@ -28,14 +27,14 @@ namespace Captivate.Negocio.Communication
       return request;
     }
 
-    public string GetUriRequest(Comun.Utils.IContactRequest typeRequest, IRequestSettings<T> config, Partners.IContact.IContactRequest requestFrmOuter)
+    public string GetUriRequest(Common.Utils.IContactRequest typeRequest, IRequestSettings<T> config, Common.Partners.IContact.IContactRequest requestFrmOuter)
     {
       requestFrm = requestFrmOuter;
       string uri = CreatetUriRequest(config.mailingProvider, typeRequest);
       return uri;
     }
 
-    private string CreatetUriRequest(T mailingProvider, Comun.Utils.IContactRequest typeRequest)
+    private string CreatetUriRequest(T mailingProvider, Common.Utils.IContactRequest typeRequest)
     {
       string uri = string.Empty;
 
@@ -47,7 +46,7 @@ namespace Captivate.Negocio.Communication
       return uri;
     }
 
-    private void ValidateRequestSettings(IRequestSettings<T> config, Comun.Utils.IContactRequest typeRequest)
+    private void ValidateRequestSettings(IRequestSettings<T> config, Common.Utils.IContactRequest typeRequest)
     {
 
       TypeSwitch.Do(
@@ -72,7 +71,7 @@ namespace Captivate.Negocio.Communication
 
     #region IContact methods
 
-    public HttpClient GetHttpClient(IRequestSettings<T> config, Comun.Utils.IContactRequest typeRequest)
+    public HttpClient GetHttpClient(IRequestSettings<T> config, Common.Utils.IContactRequest typeRequest)
     {
       HttpClient client = new HttpClient();
 
@@ -104,7 +103,7 @@ namespace Captivate.Negocio.Communication
       return client;
     }
     
-    private void IContactValidateRequestSettings(IRequestSettings<T> config, Comun.Utils.IContactRequest typeRequest)
+    private void IContactValidateRequestSettings(IRequestSettings<T> config, Common.Utils.IContactRequest typeRequest)
     {
       //Tem var
       string username = requestFrm.ApiUserName == string.Empty ? throw new ArgumentException("[Username] not found in settings, this key es required.") : requestFrm.ApiUserName;
@@ -126,8 +125,8 @@ namespace Captivate.Negocio.Communication
 
 
       if (
-          typeRequest == Comun.Utils.IContactRequest.AddMessage  ||
-          typeRequest == Comun.Utils.IContactRequest.AddSends )
+          typeRequest == Common.Utils.IContactRequest.AddMessage  ||
+          typeRequest == Common.Utils.IContactRequest.AddSends )
       {
         if (config.data == string.Empty)
         {
@@ -136,7 +135,7 @@ namespace Captivate.Negocio.Communication
 
         config.method = "POST";
       }
-      else if (typeRequest == Comun.Utils.IContactRequest.AddCampaign )
+      else if (typeRequest == Common.Utils.IContactRequest.AddCampaign )
       {
         config.method = "POST";
       }
@@ -221,35 +220,35 @@ namespace Captivate.Negocio.Communication
       }
     }
 
-    private string IContactCreatetUriRequest(T providerSettings, Comun.Utils.IContactRequest typeRequest)
+    private string IContactCreatetUriRequest(T providerSettings, Common.Utils.IContactRequest typeRequest)
     {
       switch (typeRequest)
       {
-        case Comun.Utils.IContactRequest.AddCampaign:
+        case Common.Utils.IContactRequest.AddCampaign:
           {
             return CreateIContactPostCampaignRequest(providerSettings);
           }
-        case Comun.Utils.IContactRequest.AddMessage:
+        case Common.Utils.IContactRequest.AddMessage:
           {
             return CreateIContactPostMessageRequest(providerSettings);
           }
-        case Comun.Utils.IContactRequest.AddSends:
+        case Common.Utils.IContactRequest.AddSends:
           {
             return CreateIContactPostSendsRequest(providerSettings);
           }
-        case Comun.Utils.IContactRequest.GetCamapign:
+        case Common.Utils.IContactRequest.GetCamapign:
           {
             return CreateIContactGetCampaignRequest(providerSettings);
           }
-        case Comun.Utils.IContactRequest.GetLists:
+        case Common.Utils.IContactRequest.GetLists:
           {
             return CreateIContactGetListsRequest(providerSettings);
           }
-        case Comun.Utils.IContactRequest.GetMessage:
+        case Common.Utils.IContactRequest.GetMessage:
           {
             return CreateIContactGetMessageRequest(providerSettings);
           }
-        case Comun.Utils.IContactRequest.GetSends:
+        case Common.Utils.IContactRequest.GetSends:
           {
             return CreateIContactGetSendsRequest(providerSettings);
           }

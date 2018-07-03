@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Captivate.Comun.Utils;
+
+using Captivate.Common.Utils;
 using Microsoft.Azure.WebJobs;
-using Captivate.Negocio.Partners.Push;
-using Captivate.Negocio.Partners.Mail;
-using Captivate.Comun.Interfaces;
-using Captivate.Negocio.Partners.IContact;
-using Captivate.Negocio;
-using Captivate.Comun.Models;
+using Captivate.Business.Partners.Push;
+using Captivate.Business.Partners.Mail;
 using Captivate.Common.Interfaces;
+
 using Captivate.Business;
-using Captivate.Comun.Models.Entities;
+using Captivate.Common.Models;
+
+using Captivate.Common.Models.Entities;
 using Newtonsoft.Json;
+using Captivate.Azure;
 
 namespace Captivate.WebJob.CampaignValidator
 {

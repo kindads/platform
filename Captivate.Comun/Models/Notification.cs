@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models
+namespace Captivate.Common.Models
 {
     public class Notification
     {
@@ -26,7 +26,6 @@ namespace Captivate.Comun.Models
             Title = string.Empty;
             Message = string.Empty;
             IdCampaignExternal = string.Empty;
-            MailContent = string.Empty;
         }
     }
 }

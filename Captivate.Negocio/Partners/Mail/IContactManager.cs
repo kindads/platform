@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Captivate.Common.Interfaces;
 using Captivate.Business;
 using Captivate.DataAccess;
-using Captivate.Comun.Interfaces;
-using Captivate.Negocio.Partners.IContact;
-using Captivate.Comun.Models.Entities;
 
-namespace Captivate.Negocio.Partners.Mail
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Partners.IContact;
+using Captivate.Negocio.Partners.Mail;
+using Captivate.Azure;
+
+namespace Captivate.Business.Partners.Mail
 {
     public class IContactManager : IEmailProviders
     {

@@ -5,7 +5,7 @@ using System.Xml;
 using System.Reflection;
 using System.Globalization;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber.Factory
+namespace Captivate.Common.Utils.Partners.Mail.Aweber.Factory
 {
     /// <summary>
     /// Generic Factory for a singular entity

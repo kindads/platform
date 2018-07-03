@@ -1,6 +1,109 @@
 /* Header
 ================================================== */
 // Base
+.navbar-public {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 48px;
+  background-color: rgba(0, 0, 0, 0.4);
+  .navbar-header {
+    .navbar-brand {
+      float: none;
+      padding: 12px 0;
+      height: auto;
+      display: block;
+      img {
+        max-height: 24px;
+      }
+    }
+    .navbar-toggle {
+      float: right;
+      margin-right: 0;
+      padding: 8px 0;
+      .icon-bar {
+        background-color: $off-white;
+        width: 24px;
+        &.last {
+          width: 12px;
+          margin-left: 12px;
+        }
+      }
+    }
+  }
+  .navbar-collapse {
+    background: rgba($white,  0.99);
+    margin: 0 -15px;
+    padding: 15px 8px;
+    border: none;
+    box-shadow: 0 4px 4px rgba(0,0,0,.1);
+    .nav {
+      flex-direction: column;
+      margin: 0;
+      > li {
+        margin: 8px;
+        a {
+          font-family: $gorditaBold;
+          border-bottom: dotted 1px rgba($main-blue, .3);
+        }
+      }
+    }
+  }
+  @include breakpoint($tablet) {
+    height: 88px;
+    .navbar-header {
+      .navbar-brand {
+        padding: 32px 0;
+      }
+    }
+    .navbar-collapse {
+      background: none;
+      float: right;
+      margin: 20px 0;
+      padding: 0;
+      box-shadow: none;
+      .nav {
+        flex-direction: row;
+        > li {
+          margin: 0;
+          a {
+            border-radius: 6px;
+            padding: 15px 24px;
+            color: $white;
+            border-bottom: none;
+            &:focus, &:hover {
+              color: $off-white;
+              background: lighten($vivid-blue, 0);
+            }
+            &.primary {
+              margin-left: 12px;
+              color: $rich-black;
+              background: $white;
+              padding: 15px 30px;
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+              &:focus, &:hover {
+                background: lighten($main-violet, 21);
+                border-color: $dim-grey;
+                color: $vivid-violet !important;
+              }
+            }
+          }
+          &.language {
+            margin: 8px 10px;
+          }
+        }
+      }
+    }
+  }
+  @include breakpoint($ext-desktop) {
+    .container-fluid {
+      margin: 0 auto;
+      width: 1280px;
+    }
+  }
+}
+
+
 .navbar-custom {
   z-index: 120;
   position: relative;
@@ -240,7 +343,7 @@
 
 /* Footer
 ================================================== */
-// Base
+// Admin
 .site-footer {
   display: none;
 

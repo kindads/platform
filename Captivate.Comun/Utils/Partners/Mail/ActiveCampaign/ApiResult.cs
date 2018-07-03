@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Captivate.Comun.Utils.Partners.Mail.ActiveCampaign
+namespace Captivate.Common.Utils.Partners.Mail.ActiveCampaign
 {
   public class ApiResult
   {

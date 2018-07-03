@@ -1,5 +1,6 @@
-﻿using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
+
 using Captivate.DataAccess.Mappers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Captivate.DataAccess
 {
-    public class CampaignRepository : DGenericRepository<CampaignEntity>
+    public class CampaignRepository : Common.Models.DGenericRepository<CampaignEntity>
     {
         public CampaignRepository(string connectionStringName = "KindAdsDefaultConnection") : base(connectionStringName)
         {

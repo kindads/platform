@@ -1,6 +1,6 @@
 ﻿using System;
-using Captivate.Comun.Models;
-using Captivate.Negocio.Email;
+using Captivate.Common.Models;
+using Captivate.Business.Email;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Captivate.UnitTest

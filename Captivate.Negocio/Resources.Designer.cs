@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Captivate.Negocio {
+namespace Captivate.Business {
     using System;
     
     

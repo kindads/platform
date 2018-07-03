@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace captivate_express_webapp.Controllers
 {
-  public class TestController : Controller
+  public class TestController : BaseController
   {
 
  
@@ -210,6 +210,11 @@ namespace captivate_express_webapp.Controllers
       _context.Dispose();
 
       return Json("{ok}", JsonRequestBehavior.AllowGet);
+    }
+
+    public ActionResult TestLanguage()
+    {
+      return View();
     }
 
   }

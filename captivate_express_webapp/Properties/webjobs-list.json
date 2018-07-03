@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
   "WebJobs": [
     {
@@ -9,9 +9,6 @@
     },
     {
       "filePath": "../Captivate.WebJob.SiteValidator/Captivate.WebJob.SiteValidator.csproj"
-    },
-    {
-      "filePath": "../Captivate.WebJob.UserWallet/Captivate.WebJob.UserWallet.csproj"
     }
   ]
 }

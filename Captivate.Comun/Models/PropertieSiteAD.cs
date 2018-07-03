@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models
+namespace Captivate.Common.Models
 {
     public class PropertieSiteAD
     {

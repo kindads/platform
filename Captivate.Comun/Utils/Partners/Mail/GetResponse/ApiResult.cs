@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 
-namespace Captivate.Comun.Utils.Partners.Mail.GetResponse
+namespace Captivate.Common.Utils.Partners.Mail.GetResponse
 {
   public class ApiResult
   {

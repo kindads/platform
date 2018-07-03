@@ -1,5 +1,5 @@
-﻿using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
 using Captivate.DataAccess.Mappers;
 using DapperExtensions;
 using System;
@@ -12,15 +12,15 @@ using Dapper;
 
 namespace Captivate.DataAccess
 {
-    public class TagDapperRepository : DGenericRepository<TagEntity2>
+    public class TagRepository : DGenericRepository<TagEntity>
     {
-        public TagDapperRepository(string connectionStringName = "KindAdsDefaultConnection") : base(connectionStringName)
+        public TagRepository(string connectionStringName = "KindAdsDefaultConnection") : base(connectionStringName)
         {
             LoadProfileMapper(typeof(TagPlainProfileMapper));
 
         }
 
-        public override void Add(TagEntity2 entity)
+        public override void Add(TagEntity entity)
         {
             using (var con = DBConnection)
             {

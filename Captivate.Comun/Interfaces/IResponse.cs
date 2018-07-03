@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Interfaces
+namespace Captivate.Common.Interfaces
 {
   public interface IResponse
   {

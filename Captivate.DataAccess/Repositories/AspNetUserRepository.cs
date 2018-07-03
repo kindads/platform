@@ -1,6 +1,6 @@
-﻿using Captivate.Comun.Interfaces;
-using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Interfaces;
+using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

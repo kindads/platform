@@ -12,10 +12,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
-using Captivate.Comun.Utils.Partners.Mail.Aweber.OAuth;
+using Captivate.Common.Utils.Partners.Mail.Aweber.OAuth;
 using System.IO;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber.Entity
+namespace Captivate.Common.Utils.Partners.Mail.Aweber.Entity
 {
     /// <summary>
     /// A single subscriber to a given list.

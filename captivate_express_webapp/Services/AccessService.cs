@@ -40,6 +40,18 @@ namespace captivate_express_webapp.Services
     {
       return (from u in _context.AspNetUsers where u.Id.Equals(idUser) select u).FirstOrDefault();
     }
+
+    public bool InsertUserDetail(UserDetail userDetail)
+    {
+      userDetail.RegistrationDate = DateTime.Now;
+      _context.UserDetails.Add(userDetail);
+      return  _context.SaveChanges() > 0;
+    }
+
+    public UserDetail GetUserDetailByIdUser(string idUser)
+    {
+      return (from r in _context.UserDetails where r.UserId.Equals(idUser) select r).FirstOrDefault();
+    }
   }
 
 

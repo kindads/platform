@@ -132,15 +132,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\AdsMonetizationMetrics.cs" />
     <Compile Include="Enums\CatEstatusCampaignEnum.cs" />
     <Compile Include="Enums\EMailType.cs" />
     <Compile Include="Interfaces\IAspNetUserRepository.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />
     <Compile Include="Interfaces\ICategorySiteRepository.cs" />
     <Compile Include="Interfaces\IEmailProviders.cs" />
+    <Compile Include="Interfaces\IEtlManager.cs" />
     <Compile Include="Interfaces\IFileReader.cs" />
     <Compile Include="Interfaces\IDapperGenericRepository.cs" />
-    <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IIContactCampaign.cs" />
     <Compile Include="Interfaces\IIContactRequest.cs" />
     <Compile Include="Interfaces\IIContactService.cs" />
@@ -156,14 +157,104 @@
     <Compile Include="Interfaces\ITransactionCaptRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IValidateProvider.cs" />
-    <Compile Include="Models\ApplicationData.cs" />
+    <Compile Include="LanguageResources\Access\Login\Resources.zh.Designer.cs">
+      <DependentUpon>Resources.zh.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="LanguageResources\Access\Login\Resources.ko.Designer.cs">
+      <DependentUpon>Resources.ko.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Faq\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Faq\Resources.ja.Designer.cs">
+      <DependentUpon>Resources.ja.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Faq\Resources.ko.Designer.cs">
+      <DependentUpon>Resources.ko.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Faq\Resources.zh.Designer.cs">
+      <DependentUpon>Resources.zh.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Home\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Home\Resources.ja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Home\Resources.ko.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ko.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Home\Resources.zh.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.zh.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Team\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Team\Resources.ja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageResources\Home\Team\Resources.ko.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ko.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdsMonetization\InfoEntities\BrowserInfo.cs" />
+    <Compile Include="Models\AdsMonetization\InfoEntities\DefaultClicInfo.cs" />
+    <Compile Include="Models\AdsMonetization\GeolocalizationCharts\EtlGeoInfo.cs" />
+    <Compile Include="Models\AdsMonetization\GeolocalizationCharts\GeoDataChart.cs" />
+    <Compile Include="Models\AdsMonetization\Kpis.cs" />
+    <Compile Include="Models\CosmosDocuments\CosmosDbDocument.cs" />
+    <Compile Include="Models\CosmosDocuments\DeviceMetricDocument.cs" />
+    <Compile Include="Models\CosmosDocuments\GeoLocationMetricDocument.cs" />
+    <Compile Include="Models\CosmosDocuments\TimeMetricDocument.cs" />
+    <Compile Include="Models\AdsMonetization\DefaultAds.cs" />
+    <Compile Include="LanguageResources\Access\Login\Resources.ja.Designer.cs">
+      <DependentUpon>Resources.ja.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="LanguageResources\Access\Login\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageResources\LanguagesResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LanguagesResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdsMonetization\ConfigEntities\DefaultConfig.cs" />
     <Compile Include="Models\DGenericRepository.cs" />
     <Compile Include="Models\AzureADSiteValidation.cs" />
     <Compile Include="Models\CreateSite.cs" />
+    <Compile Include="Models\Entities\AdsTypeEntity.cs" />
     <Compile Include="Models\Entities\AspNetRoleEntity.cs" />
     <Compile Include="Models\Entities\AspNetUserClaimEntity.cs" />
     <Compile Include="Models\Entities\AspNetUserEntity.cs" />
-    <Compile Include="Models\Entities\AspNetUserEntityLegacy.cs" />
     <Compile Include="Models\Entities\AspNetUserLoginEntity.cs" />
     <Compile Include="Models\Entities\AzureSupcriptionsEntity.cs" />
     <Compile Include="Models\Entities\CampaignChatEntity.cs" />
@@ -173,23 +264,30 @@
     <Compile Include="Models\Entities\CatalogoCampaignStatusEntity.cs" />
     <Compile Include="Models\Entities\CategoryEntity.cs" />
     <Compile Include="Models\Entities\CategorySiteEntity.cs" />
+    <Compile Include="Models\Entities\MoneyAdsEntity.cs" />
+    <Compile Include="Models\Entities\MoneyAdsSettingsEntity.cs" />
     <Compile Include="Models\Entities\PartnerEntity.cs" />
     <Compile Include="Models\Entities\PartnerProductSettingsEntity.cs" />
     <Compile Include="Models\Entities\PartnerSettingsEntity.cs" />
     <Compile Include="Models\Entities\ProductEntity.cs" />
     <Compile Include="Models\Entities\ProductSettingsEntity.cs" />
     <Compile Include="Models\Entities\ProductTypeEntity.cs" />
+    <Compile Include="Models\Entities\PublisherAdsEntity.cs" />
     <Compile Include="Models\Entities\SiteEntity.cs" />
-    <Compile Include="Models\Entities\TagEntity2.cs" />
     <Compile Include="Models\Entities\TagEntity.cs" />
     <Compile Include="Models\Entities\TransactionsCaptEntity.cs" />
     <Compile Include="Models\Entities\TransactionTypeEntity.cs" />
     <Compile Include="Models\Entities\TransactionsExternalEntity.cs" />
     <Compile Include="Models\EnumeratorProviders.cs" />
     <Compile Include="Models\ErrorEntity.cs" />
+    <Compile Include="Models\AdsMonetization\InfoEntities\GeoInfo.cs" />
+    <Compile Include="Models\AdsMonetization\GeolocalizationCharts\GeoDataIpChart.cs" />
     <Compile Include="Models\GoogleTagManagerValidation.cs" />
+    <Compile Include="Models\AdsMonetization\ConfigEntities\InyectConfig.cs" />
     <Compile Include="Models\MailMessage.cs" />
     <Compile Include="Models\MailNotification.cs" />
+    <Compile Include="Models\AdsMonetization\InfoEntities\MobileInfo.cs" />
+    <Compile Include="Models\AdsMonetization\ConfigEntities\MoneyAdsConfig.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\NotificationLabels.cs" />
     <Compile Include="Models\PropertieSiteAD.cs" />
@@ -198,9 +296,14 @@
     <Compile Include="Models\SitesAD.cs" />
     <Compile Include="Models\SiteToken.cs" />
     <Compile Include="Models\SiteValidationToken.cs" />
+    <Compile Include="Models\AdsMonetization\ConfigEntities\StickyConfig.cs" />
+    <Compile Include="Models\AdsMonetization\StickyHtmlEntity.cs" />
+    <Compile Include="Models\AdsMonetization\InfoEntities\StickyImpressionInfo.cs" />
+    <Compile Include="Models\AdsMonetization\InfoEntities\StickyClicInfo.cs" />
     <Compile Include="Models\TwilioKeys.cs" />
     <Compile Include="Models\TxtSiteValidation.cs" />
     <Compile Include="Models\ValidateProvider.cs" />
+    <Compile Include="Models\ViewModel\MoneyAddsViewModel.cs" />
     <Compile Include="Models\ViewModel\ProductListEntityViewModel.cs" />
     <Compile Include="Models\ViewModel\ProductViewModel.cs" />
     <Compile Include="Models\ViewModel\ShowSitesViewModel.cs" />
@@ -269,6 +372,79 @@
     <Resource Include="Resources\abi.json" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LanguageResources\Access\Login\Resources.zh.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.zh.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resource.Language.Access.Login</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Access\Login\Resources.ko.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ko.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resource.Language.Access.Login</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Access\Login\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resource.Language.Access.Login</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Access\Login\Resources.ja.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ja.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resource.Language.Access.Login</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Faq\Resources.ja.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ja.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Faq\Resources.ko.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ko.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Faq\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resource.Language.Home.Faq</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Faq\Resources.zh.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.zh.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Home\Resources.ja.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ja.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Home\Resources.ko.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ko.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Home\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resource.Language.Home.Home</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Home\Resources.zh.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.zh.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Team\Resources.ja.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ja.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Team\Resources.ko.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ko.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Team\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resource.Language.Home.Team</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Home\Team\Resources.zh.resx" />
+    <EmbeddedResource Include="LanguageResources\LanguagesResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LanguagesResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

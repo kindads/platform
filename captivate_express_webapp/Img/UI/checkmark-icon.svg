@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="9px" viewBox="0 0 12 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Checkmark Icon</title>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1" transform="translate(-785.000000, -927.000000)" fill="#5D4282" fill-rule="nonzero">
+            <g id="comparison-chart" transform="translate(265.000000, 691.000000)">
+                <g id="Group-8" transform="translate(467.000000, 104.000000)">
+                    <g id="Group-4" transform="translate(53.000000, 126.000000)">
+                        <g id="Group-10">
+                            <g id="if_done-01_186405-(5)" transform="translate(0.000000, 6.000000)">
+                                <path d="M11.7153756,0.616547518 L11.3693497,0.278907326 C10.9886406,-0.0929691087 10.365552,-0.0929691087 9.98484288,0.278907326 L4.10240296,6.01879058 L2.01535876,3.98271791 C1.63505293,3.611235 1.01156108,3.611235 0.631255251,3.98311143 L0.285229373,4.3203581 C-0.0950764577,4.69184102 -0.0950764577,5.29982947 0.285229373,5.67131239 L3.40833473,8.72109267 C3.78904386,9.09296911 4.41213241,9.09296911 4.79284154,8.72109267 L11.7153756,1.9675018 C12.0948748,1.59601889 12.0948748,0.988030432 11.7153756,0.616547518 Z" id="Shape"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

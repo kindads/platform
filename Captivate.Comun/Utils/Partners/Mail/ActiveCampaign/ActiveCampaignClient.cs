@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Utils.Partners.Mail.ActiveCampaign
+namespace Captivate.Common.Utils.Partners.Mail.ActiveCampaign
 {
   public class ActiveCampaignClient
   {

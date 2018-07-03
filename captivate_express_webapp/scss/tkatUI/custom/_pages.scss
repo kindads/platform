@@ -1,7 +1,254 @@
  /* Pages
  ================================================== */
+  // Faq
+  .faq {
+    .hero {
+      .info {
+        color: $white;
+        h1 {
+          letter-spacing: -0.7px;
+           padding-top: 12px;
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+
+    }
+
+    .accordion {
+      padding: 15px;
+      .panel-group {
+        background: linear-gradient(100deg, #0494c9, #5d4282) no-repeat;
+        background-size: 100% 15px;
+        background-color: $white;
+        border-style: solid;
+        border-width: 2px;
+        border-image-source: linear-gradient(142deg, #0494c9, #5d4282);
+        border-image-slice: 1;
+        border-image-width: 2;
+        border-image-outset: 0;
+        padding-top: 15px;
+        .panel-default :last-child {
+          .panel-heading a {
+            border-bottom-color: transparent;
+          }
+        }
+      }
+      .panel-default {
+        border: none;
+        border-radius: 0;
+        margin: 0;
+        & > .panel-heading {
+          border-radius: 0;
+          color: inherit;
+          padding: 0;
+          background-color: lighten($dim-grey, 38);
+          border-color: transparent;
+          a {
+            color: $dark-violet;
+            text-decoration: none;
+            display: block;
+            padding: 32px 56px 32px 32px;
+            border-bottom: solid 1px $dim-grey;
+            background-color: $white;
+            &[aria-expanded='true'] {
+              border: none;
+              color: $vivid-violet;
+              background-color: lighten($main-violet, 20);
+              background-color: lighten($dim-grey, 37);
+              span {
+                background: url(#{$images-path}/icons/minus-plus.png) no-repeat center center;
+              }
+            }
+          }
+
+          span {
+            width: 20px;
+            height: 20px;
+            display: block;
+            float: right;
+            top: 10px;
+            right: 20px;
+            position: absolute;
+            background: url(#{$images-path}/icons/add-plus.png) no-repeat center center;
+          }
+
+          &:hover {
+            background-color: lighten($main-violet, 20);
+            cursor: pointer;
+          }
+        }
+        .panel-title {
+          font-size: 1.714em;
+        }
+        .panel-collapse.in {
+          .panel-body {
+            background-color: lighten($dim-grey, 37);
+            border-bottom: solid 2px $vivid-violet;
+          }
+        }
+
+        .panel-body {
+          background-color: $white;
+          border-top: solid 1px $soft-grey;
+          border-top: none;
+          padding: 0 32px 32px;
+          br {
+            display: block;
+            line-height: 1em;
+            height: 12px;
+            content: " ";
+          }
+        }
+      }
+    }
+
+    @include breakpoint($tablet) {
+      .hero {
+        .info {
+          h1 {
+            font-size: 3.143em;
+            padding-top: 24px;
+          }
+        }
+      }
+
+      .accordion {
+        background-color: #f7f9fa;
+      }
+    }
+  }
+
+  .team {
+    .hero {
+      .info {
+        color: $white;
+        h1 {
+          letter-spacing: -0.7px;
+           padding-top: 12px;
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .subtitle {
+      font-size: 1.714em;
+      margin: 24px 0 36px;
+    }
+
+    .card-items {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      .card-item {
+        width: 100%;
+        margin-bottom: 40px;
+        position: relative;
+        .img {
+          display: block;
+          margin: 0;
+          text-align: center;
+          background: $white;
+          overflow: hidden;
+          img {
+            object-fit: cover;
+            width: 140px;
+            height: auto;
+          }
+        }
+
+        .content {
+          display: block;
+          background: #f7f9fa;
+          margin: -20px 0 0 0;
+          padding: 12px 12px 12px 12px;
+          color: $rich-black;
+          h3 {
+            font-size: 1.714em;
+          }
+          h5 {
+            font-size: .875em;
+            text-transform: uppercase;
+            position: relative;
+            &:before {
+              content: '';
+              border-bottom: solid 2px #5d4282;
+              position: absolute;
+              display: block;
+              width: 100%;
+              height: 3px;
+              bottom: -8px;
+              left: 0;
+            }
+          }
+          p {
+            margin-top: 24px;
+          }
+        }
+      }
+    }
+    @include breakpoint($tablet) {
+      .hero {
+        .info {
+          h1 {
+            font-size: 3.143em;
+            padding-top: 24px;
+          }
+        }
+      }
+
+      .subtitle {
+        margin: 48px 0 72px;
+      }
+
+      .card-items {
+        .card-item {
+          float: left;
+          width: calc(50% - 20px);
+          &.add {
+            margin-right: 20px;
+          }
+          &.even {
+            margin-left: 20px;
+          }
+          .img {
+            left: 0;
+            position: absolute;
+            img {
+              width: 168px;
+              height: 224px;
+            }
+          }
+          .content {
+            width: calc(100% - 80px);
+            margin: 20px 0 0 80px;
+            padding: 28px 28px 28px 112px;
+            h3 {
+              margin-bottom: 16px;
+            }
+            h5 {
+              font-size: .875em;
+              text-transform: uppercase;
+              position: relative;
+              &:before {
+                content: '';
+                width: 68px;
+              }
+            }
+            p {
+              margin-top: 48px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // Landing
-  .home {
+  .home1 {
     flex-direction: column;
     background-color: $white;
 
@@ -374,7 +621,7 @@
 
         span {
           color: $vivid-blue;
-          font-family: $openSansSemibold;
+          font-family: $gorditaBold;
         }
       }
 
@@ -419,7 +666,7 @@
         width: 95%;
         padding: 8px 2px;
         font-size: 1.125em;
-        font-family: $openSansLight;
+        font-family: $gorditaRegular;
       }
 
       ul {
@@ -427,7 +674,7 @@
 
         li {
           a {
-            font-family: $openSansLight;
+            font-family: $gorditaRegular;
             color: $off-white;
             font-size: 1em;
             padding: 12px 8px;
@@ -472,7 +719,7 @@
       .btn {
         background-color: $vivid-green;
         color: $off-white;
-        font-family: $openSansSemibold;
+        font-family: $gorditaBold;
         padding: 8px 32px;
         font-size: 16px;
       }
@@ -558,7 +805,7 @@
 
           a {
             font-size: 1em;
-            font-family: $openSansSemibold;
+            font-family: $gorditaBold;
             line-height: 2.22;
             color: $dark-violet;
             text-decoration: none;
@@ -610,7 +857,7 @@
         }
       }
     }
-
+    
     @include breakpoint($tablet) {
       .cookies {
         text-align: left;
@@ -831,7 +1078,7 @@
     }
     @include breakpoint($desktop-l) {
       .cookies {
-        width: 1440px;
+        margin: 0 auto;
       }
     }
   }
@@ -847,7 +1094,7 @@
       background: $soft-grey;
       display: none;
       width: 50%;
-
+      margin: 0;
       .content {
         justify-content: center;
       }
@@ -1019,6 +1266,11 @@
         }
       }
     }
+    @include breakpoint($desktop) {
+      .container-fluid {
+        width: auto;
+      }                                  
+    }
   }
 
   .carousel.slide {
@@ -1060,7 +1312,7 @@
         h3 {
           color: $rich-black;
           font-size: 20px;
-          font-family: $openSansSemibold;
+          font-family: $gorditaBold;
         }
       }
     }

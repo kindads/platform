@@ -1,4 +1,4 @@
-using Captivate.Comun.Interfaces;
+using Captivate.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

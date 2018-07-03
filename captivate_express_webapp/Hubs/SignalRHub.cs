@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +9,7 @@ using Microsoft.ServiceBus.Messaging;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
-using Captivate.Comun.Models;
+using Captivate.Common.Models;
 using System.Reactive.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Subjects;
@@ -22,7 +22,7 @@ namespace NotificationSignalR
 
   public class PoolItem
   {
-    public Captivate.Comun.Models.Notification not { set; get; }
+    public Captivate.Common.Models.Notification not { set; get; }
     public long SequenceNumber { set; get; }
   }
 
@@ -32,7 +32,7 @@ namespace NotificationSignalR
     public ServiceBusManager serviceBusManager { set; get; }
     public ConcurrentBag<PoolItem> notificationPool { set; get; }
 
-    public Captivate.Comun.Models.Notification notification { set; get; }
+    public Captivate.Common.Models.Notification notification { set; get; }
 
     public int startCommunication { set; get; }
 
@@ -59,7 +59,7 @@ namespace NotificationSignalR
             if (brokerMessage.SessionId==(IdUser))
             {
               var message = brokerMessage.GetBody<Stream>();
-              serviceBusManager.Message = JsonConvert.DeserializeObject<Captivate.Comun.Models.Notification>(new StreamReader(message, true).ReadToEnd());
+              serviceBusManager.Message = JsonConvert.DeserializeObject<Captivate.Common.Models.Notification>(new StreamReader(message, true).ReadToEnd());
               notification = serviceBusManager.Message;
               await brokerMessage.CompleteAsync();
               serviceBusManager.Close();
@@ -114,7 +114,7 @@ namespace NotificationSignalR
                     if (x.SessionId == (IdUser))
                     {
                       var message = x.GetBody<Stream>();
-                      serviceBusManager.Message = JsonConvert.DeserializeObject<Captivate.Comun.Models.Notification>(new StreamReader(message, true).ReadToEnd());
+                      serviceBusManager.Message = JsonConvert.DeserializeObject<Captivate.Common.Models.Notification>(new StreamReader(message, true).ReadToEnd());
                       notification = serviceBusManager.Message;
                       
 
@@ -147,7 +147,7 @@ namespace NotificationSignalR
                  if (x.SessionId == (IdUser))
                  {
                    var message = x.GetBody<Stream>();
-                   serviceBusManager.Message = JsonConvert.DeserializeObject<Captivate.Comun.Models.Notification>(new StreamReader(message, true).ReadToEnd());
+                   serviceBusManager.Message = JsonConvert.DeserializeObject<Captivate.Common.Models.Notification>(new StreamReader(message, true).ReadToEnd());
                    notification = serviceBusManager.Message;
 
 

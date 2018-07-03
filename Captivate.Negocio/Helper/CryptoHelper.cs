@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace Captivate.Negocio.Helper
+namespace Captivate.Business.Helper
 {
   public class CryptoHelper
   {

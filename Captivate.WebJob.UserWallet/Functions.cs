@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Captivate.Business;
 using Captivate.Common.Interfaces;
 using Captivate.Negocio;
-using Captivate.Negocio.Helper;
-using Captivate.Negocio.Email;
+using Captivate.Business.Helper;
+using Captivate.Business.Email;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;
-
+using Captivate.Azure;
+using Captivate.Common;
+using Captivate.Common.Models;
 
 namespace Captivate.WebJob.UserWallet
 {
@@ -33,7 +35,7 @@ namespace Captivate.WebJob.UserWallet
             {
                 UserWalletManager userWalletManager = new UserWalletManager();
                 MailManager mailManager = new MailManager();
-                Comun.Models.Notification notification = userWalletManager.GetNotification(message);
+                Notification notification = userWalletManager.GetNotification(message);
 
                 var user = aspNetUserManager.GetById(notification.IdUser);
                 var wallet = Task.Run(() => NethereumHelper.CreateUserWallet()).Result;
@@ -43,7 +45,7 @@ namespace Captivate.WebJob.UserWallet
 
                 aspNetUserManager.Update(user);
 
-                Comun.Models.MailMessage mailMessage = new Comun.Models.MailMessage()
+                MailMessage mailMessage = new MailMessage()
                 {
                     Body = notification.MailContent,
                     Destination = user.Email,
@@ -56,7 +58,7 @@ namespace Captivate.WebJob.UserWallet
                 var messageException = telemetria.MakeMessageException(ex, System.Reflection.MethodBase.GetCurrentMethod().Name);
                 telemetria.Critical(messageException);
             }
-           
+
 
         }
     }

@@ -1,12 +1,12 @@
-﻿using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Interfaces
+namespace Captivate.Common.Interfaces
 {
     public interface ICategorySiteRepository : IDapperGenericRepository<CategorySiteEntity>
     {

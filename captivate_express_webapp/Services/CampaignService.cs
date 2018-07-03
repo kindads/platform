@@ -19,6 +19,7 @@ using Aweber.OAuth;
 using Newtonsoft.Json;
 using Captivate.Common.Interfaces;
 using Captivate.Business;
+using Captivate.Azure;
 //using captivate_express_webapp.Models;
 
 namespace captivate_express_webapp.Services

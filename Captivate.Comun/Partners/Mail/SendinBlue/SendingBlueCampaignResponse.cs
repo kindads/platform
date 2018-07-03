@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Partners.Mail.SendinBlue
+namespace Captivate.Common.Partners.Mail.SendinBlue
 {
     public class SendingBlueCampaignResponse
     {

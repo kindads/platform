@@ -1,8 +1,8 @@
-﻿using Captivate.Business;
+﻿using Captivate.Azure;
+using Captivate.Business;
 using Captivate.Common.Interfaces;
-using Captivate.Comun.Interfaces;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Partners.Mail.SendinBlue;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Partners.Mail.SendinBlue;
 using Captivate.DataAccess;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Captivate.Negocio.Partners.Mail
+namespace Captivate.Business.Partners.Mail
 {
     public class SendinBlueManager : ITelemetria, IEmailProviders
     {

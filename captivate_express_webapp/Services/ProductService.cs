@@ -9,7 +9,7 @@ using captivate_express_webapp.Models.Publisher;
 using System.Linq.Dynamic;
 using captivate_express_webapp.Utils.Enums;
 using System.IO;
-using Captivate.Comun.Models.Entities;
+using Captivate.Common.Models.Entities;
 using Captivate.Negocio;
 using Captivate.DataAccess;
 
@@ -73,7 +73,8 @@ namespace captivate_express_webapp.Services
         PRODUCT_TYPE_IdProductType = productType.IdProductType,
         PARTNER_IdPartner = partner.IdPartner,
         Image = string.Empty,
-        IsActive=true
+        IsActive=true,
+        IsPremium = _createModel.IsPremium
       };
 
       if (fileUpload != null)

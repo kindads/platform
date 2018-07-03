@@ -1,11 +1,11 @@
-﻿using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.ViewModel
+namespace Captivate.Common.Models.ViewModel
 {
     public class ProductViewModel
     {

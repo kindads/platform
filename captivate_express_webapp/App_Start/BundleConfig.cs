@@ -11,7 +11,6 @@ namespace captivate_express_webapp
     public static void RegisterBundles(BundleCollection bundles)
     {
       bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-          "~/Scripts/jquery-{version}.js",
           "~/Scripts/jquery-{version}.js"
       ));
 
@@ -60,13 +59,15 @@ namespace captivate_express_webapp
         "~/Scripts/jHtmlArea-0.8.min.js"
       ));
 
-      bundles.Add(new ScriptBundle("~/bundles/landingLayoutScripts").Include(
+      bundles.Add(new ScriptBundle("~/bundles/basejs").Include(
         //jquery
-        "~/Scripts/jquery-{version}.js",
-        "~/Scripts/jquery-{version}.js",
+        "~/Scripts/jquery-3.3.1.min.js",
+        "~/Scripts/jquery.unobtrusive-ajax.min.js",
+        "~/Scripts/jquery.validate.min.js",
         //bootstrap
         "~/Scripts/vendor/bootstrap/bootstrap.min.js",
-        "~/Scripts/respond.js",
+        "~/Scripts/respond.min.js",
+        //retina
         "~/Scripts/vendor/retina/retina.min.js"
         ));
     }

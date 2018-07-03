@@ -6,8 +6,10 @@ using Newtonsoft.Json;
 using Captivate.Common.Interfaces;
 using Captivate.Business;
 using Captivate.DataAccess;
+using Captivate.Common.Partners.Push;
+using Captivate.Azure;
 
-namespace Captivate.Negocio.Partners.Push
+namespace Captivate.Business.Partners.Push
 {
     public class PushCrewManager
     {

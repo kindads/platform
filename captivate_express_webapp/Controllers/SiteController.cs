@@ -9,12 +9,12 @@ using captivate_express_webapp.Utils.Security;
 using System.Linq;
 using System.Web.Helpers;
 using Captivate.DataAccess;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Models.ViewModel;
-using Captivate.Comun.Models;
-using Captivate.Negocio.ViewModels;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Models.ViewModel;
+using Captivate.Common.Models;
+using Captivate.Business.ViewModels;
 using captivate_express_webapp.Models.Publisher;
-using SitesVM = Captivate.Comun.Models.ViewModel.ShowSitesViewModel;
+using SitesVM = Captivate.Common.Models.ViewModel.ShowSitesViewModel;
 using System.Web.Http;
 
 namespace captivate_express_webapp.Controllers

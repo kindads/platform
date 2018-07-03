@@ -1,8 +1,8 @@
 ﻿using Captivate.Azure;
-using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
+using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
 using Captivate.DataAccess;
-using Captivate.Negocio.Email;
+using Captivate.Business.Email;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Negocio
+namespace Captivate.Business
 {
     public  class NotificationManager
     {
@@ -24,6 +24,17 @@ namespace Captivate.Negocio
             sbmanager = new ServiceBusManager();
             mailManager = new MailManager();
             aspNetUserRepository = new AspNetUserRepository();
+        }
+
+        public bool EnqueueNewAccessUser(Notification accessData)
+        {
+            //campaignqueue
+            bool result = false;
+            string notification = JsonConvert.SerializeObject(accessData);
+            string queueName = ConfigurationManager.AppSettings["accessDataQueue"];
+            QueueManager.InsertMessage(notification, queueName);
+            result = true;
+            return result;
         }
 
         public void EnqueueMailNotification(string CampaignName, string message, string IdUser)
@@ -71,17 +82,6 @@ namespace Captivate.Negocio
             bool result = false;
             string notification = JsonConvert.SerializeObject(campaignNotification);
             string queueName = ConfigurationManager.AppSettings["campaignQueue"];
-            QueueManager.InsertMessage(notification, queueName);
-            result = true;
-            return result;
-        }
-
-        public bool EnqueueNewAccessUser(Notification accessData)
-        {
-            //campaignqueue
-            bool result = false;
-            string notification = JsonConvert.SerializeObject(accessData);
-            string queueName = ConfigurationManager.AppSettings["accessDataQueue"];
             QueueManager.InsertMessage(notification, queueName);
             result = true;
             return result;

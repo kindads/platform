@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CaioBeleza_Bio" xml:space="preserve">
+    <value>Caio is a partner of NPBR International LTDA, an ad agency focused on the Latin America market. He is in charge of operations and making sure companies grow their revenue through digital marketing.</value>
+  </data>
+  <data name="EnriqueChavez_Bio" xml:space="preserve">
+    <value>Enrique is the CTO of Blockliss, a full stack and blockchain consulting company.  He is a full stack developer with over 15 years of experience including Solidity, JS, jQuery JSON, Python, MySQL.</value>
+  </data>
+  <data name="EricSiu_Bio" xml:space="preserve">
+    <value>Eric is the founder of Single Grain, a digital marketing agency that helps companies such as Uber, SalesForce, TurboTax, KitchenAid, Random House, Sony Pictures, and Nordstrom grow.</value>
+  </data>
+  <data name="JaimeSanchez_Bio" xml:space="preserve">
+    <value>Jaime is a full stack developer. He is an IT professional and entrepreneur with more than 20 years of experience. He worked at Microsoft for 12 years helping top companies in Latin America create scalable cloud architectures.</value>
+  </data>
+  <data name="JasonCaldwell_Bio" xml:space="preserve">
+    <value>Jason is a highly talented web designer whose work has been featured on sites like Mashable, The Atlantic, Fast Company, Business Insider, PCWorld, Forbes, ReadWriteWeb and many others.</value>
+  </data>
+  <data name="JayWesterdal_Bio" xml:space="preserve">
+    <value>Jay is the founder of Domain Tools (acquired by Trought Convergence, Inc). Jay is an active startup advisor and investor. He currently spends his time acquiring and growing companies.</value>
+  </data>
+  <data name="JeremyHood_Bio" xml:space="preserve">
+    <value>Jeremy received his formal education in accounting and real world education in marketing and management in the retail space. Since 2016 he has been focused on digital marketing with an emphasis on blockchain technologies.</value>
+  </data>
+  <data name="JonathanCronstedt_Bio" xml:space="preserve">
+    <value>Jonathan is the President of Kajabi, a leading publishing platform where people can create and monetize websites. Kajabi users have sold over $300M of digital products via their platform. Prior to Kajabi, Jonathan was the General Manager of Digital Learning at Success Magazine and he was the CEO of Digital Marketer.</value>
+  </data>
+  <data name="KeithLindner_Bio" xml:space="preserve">
+    <value>Keith has an extensive background in management, particularly with digital marketing products such as HelloBar.  He has the leadership skills and experience to bring the Kind Ads platform to life.</value>
+  </data>
+  <data name="KenRoberts_Bio" xml:space="preserve">
+    <value>Ken leads marketing teams for technology startups that have been acquired by Cisco, IGT, and Wired Investors. He has helped scale over a dozen online publishers and a six figure agency.</value>
+  </data>
+  <data name="LeuryPichardo_Bio" xml:space="preserve">
+    <value>Leury has over 10 years experience in digital marketing. He has in-depth expertise in developing and implementing various marketing strategies. He eats, sleeps and breathes digital marketing and crypto.</value>
+  </data>
+  <data name="MainTitle" xml:space="preserve">
+    <value>The Kind Ads Executive Team</value>
+  </data>
+  <data name="NadavDakner_Bio" xml:space="preserve">
+    <value>Nadav is a veteran online marketer and a serial entrepreneur. He is the founder and CEO of InboundJuction, an established digital marketing firm. As a digital influencer and a crypto expert, he also advises Blockchain startups and ICOs on marketing, operations, and business development.</value>
+  </data>
+  <data name="NeilPatel_Bio" xml:space="preserve">
+    <value>Neil Patel is the founder of Crazy Egg, Hello Bar, and KISSmetrics, and founder of QuickSprout. He helps companies like Amazon, NBC, GM, HP and Viacom grow their revenue.</value>
+  </data>
+  <data name="QuinnHuffman_Bio" xml:space="preserve">
+    <value>Quinn comes from a strong IT background and has worked for some of the largest companies in North America. He has worked as a database developer and IT specialist in the education, medical and banking sectors</value>
+  </data>
+  <data name="RafaelMayrink_Bio" xml:space="preserve">
+    <value>Rafael is the co-founder and Director of Operations at NPBR International LTDA. Rafael makes sure that the company has proper operational and administrative controls, and reporting structure.</value>
+  </data>
+  <data name="SaberAria_Bio" xml:space="preserve">
+    <value>Saber is the co-founder of Blockchain World Conferences, the co-founder of Blockchain World Conferences and a partner at Prime Block Capital.</value>
+  </data>
+  <data name="SauloMedeiros_Bio" xml:space="preserve">
+    <value>Saulo is the co-founder of NPBR International LTDA, an agency that helps large corporations with their digital marketing needs. Currently they help their clients spend over $100,000,000 dollars a year on marketing.</value>
+  </data>
+  <data name="TrevorKoverko_Bio" xml:space="preserve">
+    <value>Trevor is the founder and CEO of Polymath, a company bringing securities to the blockchain. He is a serial entrepreneur with two technology startup exits. He was also an original advisor/investor to the Ethereum project.</value>
+  </data>
+  <data name="VasilAzarov_Bio" xml:space="preserve">
+    <value>Vasil is the found of the ever so popular Growth Marketing Conference that has been in Forbes, Huffington Post and Inc. Vasil spends his time investing in the people behind startups by creating this best-practice-focused event.</value>
+  </data>
+</root>

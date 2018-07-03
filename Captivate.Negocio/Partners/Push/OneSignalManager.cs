@@ -5,13 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Captivate.Azure;
 using Captivate.Business;
 using Captivate.Common.Interfaces;
-using Captivate.Comun.Models.Entities;
+using Captivate.Common.Models.Entities;
 using Captivate.DataAccess;
 using Newtonsoft.Json;
 
-namespace Captivate.Negocio.Partners.Push
+namespace Captivate.Business.Partners.Push
 {
     public class OneSignalManager
     {

@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Captivate.Comun.Models;
+using Captivate.Common.Models;
 using Captivate.Negocio;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Captivate.Business;
 
 namespace Captivate.UnitTest
 {
@@ -35,7 +36,7 @@ namespace Captivate.UnitTest
             MailNotification mailNotification = new MailNotification();
             MailMessage mailMessage = new MailMessage();
             Notification notification = new Notification();
-          
+            
 
             notification.IdUser = Guid.NewGuid();
             notification.Label = NotificationLabels.EMail;

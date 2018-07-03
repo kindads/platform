@@ -1,4 +1,4 @@
-﻿using Captivate.Comun.Interfaces;
+﻿using Captivate.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,7 +11,8 @@ using DapperExtensions;
 using DapperExtensions.Sql;
 using System.Configuration;
 
-namespace Captivate.Comun.Models
+
+namespace Captivate.Common.Models
 {
     public abstract class DGenericRepository<T> :
     IDapperGenericRepository<T> where T : class , new()

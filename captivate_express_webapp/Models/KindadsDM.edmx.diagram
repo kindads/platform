@@ -47,6 +47,8 @@
         <EntityTypeShape EntityType="KindadsModel.CAMPAIGN_CHAT" Width="1.5" PointX="16.5" PointY="3" />
         <AssociationConnector Association="KindadsModel.FK_AspNetUserCAMPAIGN_CHAT" />
         <AssociationConnector Association="KindadsModel.FK_CAMPAIGN_IdCampaign" />
+        <EntityTypeShape EntityType="KindadsModel.UserDetail" Width="1.5" PointX="2.75" PointY="18.5" />
+        <AssociationConnector Association="KindadsModel.FK_UserDetails_AspNetUsers1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

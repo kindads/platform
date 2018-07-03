@@ -1,4 +1,4 @@
-using Captivate.Comun.Models;
+using Captivate.Common.Models;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using Nethereum.Hex.HexTypes;
@@ -11,14 +11,19 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Configuration;
 using System.Reflection;
-using Captivate.Azure;
-using Captivate.Common.Interfaces;
 using Captivate.Business;
+using Captivate.Common.Interfaces;
+using Captivate.Azure;
 
-namespace Captivate.Negocio.Helper
+namespace Captivate.Business.Helper
 {
     public class NethereumHelper
-    { 
+    {
+        public ITrace telemetria { set; get; }
+        public NethereumHelper()
+        {
+            telemetria = new Trace();
+        }
 
         //public static string GetUserWalletPassphrase(string usrwallet)
         //{
@@ -67,7 +72,7 @@ namespace Captivate.Negocio.Helper
                 var messageException = telemetria.MakeMessageException(e, System.Reflection.MethodBase.GetCurrentMethod().Name);
                 telemetria.Critical(messageException);
             }
-            
+
             return _walletModel;
         }
 
@@ -127,27 +132,28 @@ namespace Captivate.Negocio.Helper
             return _transaction;
         }
 
-        //public async static Task<string> GetBalance(string _wallet, Boolean fixdecimal)
-        //{
-        //    try
-        //    {
-        //        var approvedAddress = await GetContractFunction("balanceOf").CallAsync<Int64>(_wallet);
-        //        if (fixdecimal)
-        //        {
-        //            return ((Double)((Double)approvedAddress / (Double)100000000)).ToString();
-        //        }
-        //        else
-        //        {
-        //            return approvedAddress.ToString();
-        //        }
+        public static async Task<Double> GetBalance(string _wallet, Boolean fixdecimal)
+        {
+            try
+            {
+                var approvedAddress = await GetContractFunction("balanceOf").CallAsync<Int64>(_wallet);
+                if (fixdecimal)
+                {
+                    return ((Double)((Double)approvedAddress / (Double)100000000));
+                }
+                else
+                {
+                    return approvedAddress;
+                }
 
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        //Log Error
-        //    }
-        //    return "0";
-        //}
+            }
+            catch (Exception ex)
+            {
+                //var messageException = telemetria.MakeMessageException(ex, System.Reflection.MethodBase.GetCurrentMethod().Name);
+                //telemetria.Critical(messageException);
+            }
+            return 0;
+        }
 
         //[Function("transfer", "bool")]
         //public class TransferFunction : Nethereum.Contracts.CQS.ContractMessage

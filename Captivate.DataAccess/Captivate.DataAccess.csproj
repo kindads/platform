@@ -68,6 +68,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappers\AdsTypeMapper.cs" />
+    <Compile Include="Mappers\MoneyAdsMapper.cs" />
+    <Compile Include="Mappers\MoneyAdsSettingsMapper.cs" />
+    <Compile Include="Mappers\PublisherAdsMapper.cs" />
+    <Compile Include="Repositories\AdsTypeRepository.cs" />
     <Compile Include="Repositories\AspNetUserRepository.cs" />
     <Compile Include="Repositories\AzureSubscriptionRepository.cs" />
     <Compile Include="Repositories\CampaignSettingsRepository.cs" />
@@ -87,11 +92,14 @@
     <Compile Include="Mappers\SiteMapper.cs" />
     <Compile Include="Mappers\TagMapper.cs" />
     <Compile Include="Mappers\TransactionCaptMapper.cs" />
+    <Compile Include="Repositories\MoneyAdsRepository.cs" />
+    <Compile Include="Repositories\MoneyAdsSettingsRepository.cs" />
     <Compile Include="Repositories\PartnerRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductSettingsRepository.cs" />
     <Compile Include="Repositories\ProductTypeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\PublisherAdsRepository.cs" />
     <Compile Include="Repositories\SiteRepository.cs" />
     <Compile Include="Repositories\TagDapperRepository.cs" />
     <Compile Include="Repositories\TransactionCaptRepository.cs" />
@@ -102,6 +110,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Captivate.Azure\Captivate.Azure.csproj">
+      <Project>{BF273911-E765-4409-A128-D1CF938C38FE}</Project>
+      <Name>Captivate.Azure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Captivate.Comun\Captivate.Common.csproj">
       <Project>{E6C505C4-87E8-45E5-BD9E-D826A4A6F4AF}</Project>
       <Name>Captivate.Common</Name>

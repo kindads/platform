@@ -1,12 +1,12 @@
-using Captivate.Comun.Interfaces;
-using Captivate.Negocio.Partners.IContact;
+using Captivate.Common.Interfaces;
+using Captivate.Common.Partners.IContact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Interfaces
+namespace Captivate.Common.Interfaces
 {
   public interface IIContactService<TCampaign> : IMailingProvider<TCampaign>
   {

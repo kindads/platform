@@ -162,6 +162,8 @@
     <Compile Include="PopulateServiceBus.cs" />
     <Compile Include="NotificationSessionWorkflow.cs" />
     <Compile Include="SendinBlueManagerTest.cs" />
+    <Compile Include="PopulateCosmosDbUnitTest.cs" />
+    <Compile Include="EtlUnitTest.cs" />
     <Compile Include="WebApiTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -172,23 +174,23 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Captivate.API\Captivate.API.csproj">
-      <Project>{7AFD7F8E-4B88-4745-ADB2-C23A0B438841}</Project>
+      <Project>{7afd7f8e-4b88-4745-adb2-c23a0b438841}</Project>
       <Name>Captivate.API</Name>
     </ProjectReference>
     <ProjectReference Include="..\Captivate.Azure\Captivate.Azure.csproj">
-      <Project>{BF273911-E765-4409-A128-D1CF938C38FE}</Project>
+      <Project>{bf273911-e765-4409-a128-d1cf938c38fe}</Project>
       <Name>Captivate.Azure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Captivate.Comun\Captivate.Common.csproj">
-      <Project>{E6C505C4-87E8-45E5-BD9E-D826A4A6F4AF}</Project>
+      <Project>{e6c505c4-87e8-45e5-bd9e-d826a4a6f4af}</Project>
       <Name>Captivate.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Captivate.DataAccess\Captivate.DataAccess.csproj">
-      <Project>{E4FB3A23-542F-4230-AD1A-DE60A22E1201}</Project>
+      <Project>{e4fb3a23-542f-4230-ad1a-de60a22e1201}</Project>
       <Name>Captivate.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Captivate.Negocio\Captivate.Business.csproj">
-      <Project>{731A2EC5-228C-437B-956C-FCA0FD4F76C6}</Project>
+      <Project>{731a2ec5-228c-437b-956c-fca0fd4f76c6}</Project>
       <Name>Captivate.Business</Name>
     </ProjectReference>
   </ItemGroup>

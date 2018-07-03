@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
 
     public class PartnerEntity
@@ -20,7 +20,7 @@ namespace Captivate.Comun.Models.Entities
             this.PARTNER_SETTINGS = new HashSet<PartnerSettingsEntity>();
         }
 
-        [Key]
+
         public System.Guid IdPartner { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }

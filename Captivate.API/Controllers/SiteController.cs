@@ -1,7 +1,7 @@
 ﻿using Captivate.Azure;
 using Captivate.Business;
 using Captivate.Common.Interfaces;
-using Captivate.Comun.Models;
+using Captivate.Common.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

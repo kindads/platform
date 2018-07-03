@@ -1,4 +1,4 @@
-﻿using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models.Entities;
 using DapperExtensions.Mapper;
 using System;
 using System.Collections.Generic;
@@ -19,11 +19,7 @@ namespace Captivate.DataAccess.Mappers
             //Ignore this property entirely
             Map(x => x.IdSite).Key(KeyType.Identity);
 
-            //Map(x => x.PRODUCTS).Ignore();
-            //Map(x => x.SITES).Ignore();
-            //Map(x => x.CAMPAIGNs).Ignore();
-            //Map(x => x.AspNetRoles).Ignore();
-            //Map(x => x.CAMPAIGN_CHAT).Ignore();
+            
 
             //optional, map all other columns
             AutoMap();

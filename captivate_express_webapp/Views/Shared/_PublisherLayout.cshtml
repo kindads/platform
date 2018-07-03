@@ -1,6 +1,6 @@
 @using Microsoft.AspNet.Identity
 <!DOCTYPE html>
-<html lang="es">
+<html lang="@captivate_express_webapp.Helpers.CultureHelper.GetCurrentNeutralCulture()" dir="@(captivate_express_webapp.Helpers.CultureHelper.IsRighToLeft() ? "rtl" : "ltr")">
 <head>
   <!--PublisherLayout-->
   <meta charset="utf-8" />
@@ -36,7 +36,7 @@
     }
   </script>
 
-  
+
 
   <script src="~/Scripts/jquery-3.3.1.min.js"></script>
   <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
@@ -47,6 +47,7 @@
   @{ captivate_express_webapp.Services.PublisherService _service = new captivate_express_webapp.Services.PublisherService();
     var showCreateSite = _service.ShowCreateSite(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity));
     var redirectLogo = showCreateSite ? "/Publisher/Index" : "/Site/ShowSites";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
   }
   <audio id="soundNotification" controls="controls" style="visibility:collapse; display:none">
     <source src="~/Content/Sound/whatsapp-apple.mp3" type="audio/mpeg" />
@@ -63,12 +64,16 @@
                   <span class="sr-only">Menu</span>
                   <div class="pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar last"></span></div>
                 </button>
-                <a class="navbar-brand" href="@redirectLogo" title="Kind Ads"><img class="img-responsive" src="~/Img/UI/logo.png"></a>
+                <a class="navbar-brand" href="@Url.Action("ShowSites", "Site", new {Culture = captivate_express_webapp.Helpers.CultureHelper.GetCurrentNeutralCulture() })" title="Kind Ads"><img class="img-responsive" src="~/Img/UI/logo.png"></a>
               </div>
               <nav class="collapse navbar-collapse" role="navigation" aria-expanded="false" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left">
-                  <li><a class="active" href="#" role="button">Workspace</a></li>
-                  <li><a class="disabled" href="#" role="button">Revisions</a></li>
+                  <li>
+                    @Html.ActionLink("Workspace", "ShowProducts", "Product", new { IdUser = "" }, new { @id= "linkWorkspace", @role = "button" })
+                  </li>
+                  <li>
+                    @Html.ActionLink("Money ads", "Settings", "MoneyAds", new { IdUser = "" }, new { @id = "linkMoneyAds", @role = "button" })
+                  </li>
                 </ul>
               </nav>
               <ul class="nav navbar-nav navbar-right">
@@ -80,7 +85,7 @@
                   <ul class="dropdown-menu">
                     @Html.AntiForgeryToken()
                     <li>@Html.ActionLink("Profile", "ManageProfile", "Publisher")</li>
-                    <li><a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Sign out</a></li>
+                    <li><a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Sign out !!</a></li>
                   </ul>
                 </li>
               </ul>
@@ -93,7 +98,7 @@
       <div class="flexbox my-content">
         <section class="tab-nav">
           <div>
-            <a class="navbar-brand" href="@redirectLogo" title="Kind Ads"><img class="img-responsive" src="~/Img/UI/logo.png"></a>
+            <a class="navbar-brand" href="@Url.Action("ShowSites", "Site", new {Culture = captivate_express_webapp.Helpers.CultureHelper.GetCurrentNeutralCulture() })"  title="Kind Ads"><img class="img-responsive" src="~/Img/UI/logo.png"></a>
           </div>
           <ul class="flexbox">
             <li>
@@ -109,7 +114,7 @@
               @Html.ActionLink("Profile", "ManageProfile", "Publisher", null, new { @class = "link-profile" })
             </li>
           </ul>
-          <div class="link-balance partialContents" data-url="/Publisher/GetBalancePublisherAsync">
+          <div class="link-balance partialContents" data-url="/@culture/Publisher/GetBalancePublisherAsync">
             <div class="col-md-12">
               <img src="~/Img/Loader/loading.white.gif" /> Loading Balance...
             </div>
@@ -219,16 +224,44 @@
     ga('create', 'UA-114655123-1', 'auto');
     ga('send', 'pageview');
   </script>
-  <!-- site validation-->
-  <!-- Dev environment -->
-  <script src="https://kindadsscripts.blob.core.windows.net/site-validation-dev/KindAdsSites.js"></script>
-  <script type="text/javascript">
-    var url = 'https://captivateapi-dev.azurewebsites.net/api/site';
-    var apiToken = 'e6b227d5c327ed276de2ec7b4e3de5e8a36ba290866821bb4659506819957598'; // Ejemplo
-    var idSite = '09C23B4E-C8BE-4BE0-9DF3-8AEBDDC434D1'; //Ejemplo
-    kindAds.validateSite(url, apiToken, idSite);
+  <script>
+    $(document).ready(function (e) {
+      $("#linkWorkspace").click(function (event) {
+        $("#linkMoneyAds").removeClass("active");
+        $("#linkWorkspace").addClass("active");
+      });
+
+      $("#linkMoneyAds").click(function (event) {
+        $("#linkWorkspace").removeClass("active");
+        $("#linkMoneyAds").addClass("active");
+      });
+    });
   </script>
-  <!-- end site validation-->
+
+  <!-- (MONEY ADS LOCAL) Script Example -->
+  @*<script src="https://kindadsscripts.blob.core.windows.net/moneyads-dev/adsMonetization.js"></script>
+  <script type="text/javascript">
+
+    var configuration =
+      {
+        ApiUrl: 'http://localhost:52710/api/',
+        RequestUrl: 'http://localhost:52710/api/Configuration?IdUser=',
+        deviceMetric: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/deviceMetrics.js',
+        geoLocationMetric: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/geoLocationMetrics.js',
+        timeMetric: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/timeMetrics.js',
+        injectedAds: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/injectedAds.js',
+        mobileDetect: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/mobile-detect.js',
+        IdUser: '44f1e76b-24ae-4889-937b-5e1c45575ae8',
+        IdSite: 'B6DE5AB4-7DBF-427E-8F4D-38B9219B7C4C' // https://design.fundary.com
+      };
+
+    //Load configuration
+    moneyAdsMetrics.loadConfiguration(configuration);
+
+    console.log(moneyAdsMetrics);
+
+  </script>*@
+  <!--end (MONEY ADS)-->
 </body>
 </html>
 

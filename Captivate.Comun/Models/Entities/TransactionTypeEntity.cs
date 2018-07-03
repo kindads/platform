@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
-    [Table("TRANSACTION_TYPE")]
+
     public class TransactionTypeEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -18,7 +18,6 @@ namespace Captivate.Comun.Models.Entities
             this.TRANSACTIONS_EXTERNAL = new HashSet<TransactionsExternalEntity>();
         }
 
-        [Key]
         public short IdTransactionType { get; set; }
         public string Name { get; set; }
 

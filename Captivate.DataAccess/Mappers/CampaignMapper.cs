@@ -1,4 +1,4 @@
-﻿using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models.Entities;
 using DapperExtensions.Mapper;
 using System;
 using System.Collections.Generic;

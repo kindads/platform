@@ -81,6 +81,9 @@
     <Reference Include="MailChimp, Version=1.1.92.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MailChimp.NET.1.1.92\lib\net40\MailChimp.dll</HintPath>
     </Reference>
+    <Reference Include="MailChimp.Net, Version=3.2.0.0, Culture=neutral, PublicKeyToken=37d26d538413c581, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailChimp.Net.V3.3.2.0\lib\net451\MailChimp.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Mailjet.Client, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mailjet.Api.1.0.1\lib\net45\Mailjet.Client.dll</HintPath>
     </Reference>
@@ -200,10 +203,18 @@
     <Compile Include="Communication\RequestManager.cs" />
     <Compile Include="Communication\ResponseManager.cs" />
     <Compile Include="Email\MailManager.cs" />
+    <Compile Include="Etls\EtlBrowserManager.cs" />
+    <Compile Include="Etls\EtlDefaultManager.cs" />
+    <Compile Include="Etls\EtlGeoManager.cs" />
+    <Compile Include="Etls\EtlManagercs.cs" />
+    <Compile Include="Etls\EtlMobilManager.cs" />
+    <Compile Include="Etls\EtlStickyManager.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
     <Compile Include="Helper\CryptoHelper.cs" />
     <Compile Include="Helper\DateTimeHelper.cs" />
     <Compile Include="Helper\NethereumHelper.cs" />
+    <Compile Include="KindAdsTelemetryManager.cs" />
+    <Compile Include="MoneyAdsManager.cs" />
     <Compile Include="Partners\Mail\ActiveCampaignManager.cs" />
     <Compile Include="Partners\Mail\AWeberManager.cs" />
     <Compile Include="NotificationManager.cs" />

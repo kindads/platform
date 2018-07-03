@@ -6,26 +6,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
-    [Table("SITE")]
     public class SiteEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SiteEntity()
         {
-            //this.PRODUCT = new HashSet<ProductEntity>();
-            //this.CATEGORY = new HashSet<CategoryEntity>();
+        
         }
 
-        [Key]
+
         public System.Guid IdSite { get; set; }
         public string Name { get; set; }
         public string URL { get; set; }
 
         public string Token { set; get; }
 
-        [ForeignKey("AspNetUser")]
+    
         public string AspNetUsers_Id { get; set; }
         public Nullable<bool> Verified { get; set; }
         public string VerificationString { get; set; }

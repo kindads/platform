@@ -1,0 +1,220 @@
+
+@{
+  ViewBag.Title = "Home";
+  Layout = "~/Views/Shared/_LandingLayout.cshtml";
+}
+
+<div id="cookiesPanel" class="cookies">
+  <span>
+    This website uses cookies to provide best experience.
+  </span>
+  <a onclick="hideCookies()" class="btn">Got it</a>
+</div>
+
+<div class="flexbox hero">
+  <section class="flexbox-item spaced info">
+    <div class="header">
+      <nav>
+        <a>
+          <img class="pull-left img-responsive" data-no-retina="true" src="~/Img/UI/logo.png" />
+        </a>
+        <ul class="pull-right">
+          @*<li>
+              <a href="~/Access/Login">Sign In</a>
+            </li>*@
+          @Html.ActionLink("Sign In", "Login", "Access")
+        </ul>
+      </nav>
+    </div>
+
+    <div class="content">
+      <h1>Advertising Without the Irritating Ads</h1>
+      <p>
+        Kind Ads is an advertising platform that serves user-friendly ads without taking any middleman fees.
+      </p>
+      <p>
+        With Kind Ads, not only do advertisers save money, but publishers keep more of it.
+      </p>
+      <a href="~/Access/CreateAccount" class="btn">Sign Up Now</a>
+      @*<a class="link more disabled">
+          <span>
+            Read more
+          </span>
+          <i class="fa fa-caret-right"></i>
+        </a>*@
+    </div>
+
+    <div class="social">
+      <ul>
+        <li>
+          <a href="https://twitter.com/KindAdsNetwork" target="_blank" alt="Kind Ads Twitter">
+            <i class="fa fa-twitter"></i>
+          </a>
+        </li>
+        <li>
+          <a href="https://t.me/kindads" target="_blank" alt="Kind Ads Telegram">
+            <i class="fa fa-telegram"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="flexbox-item aside">
+    <a href="#" class="video" data-toggle="modal" data-target="#videoModal" title="Watch Kind Ads explanation">
+      <i class="fa fa-play" aria-hidden="true"></i>
+    </a>
+    <div class="col-sm-10 col-sm-offset-1">
+
+    </div>
+  </section>
+</div>
+
+<section class="features">
+  <h2>Meet a new era of marketing</h2>
+  <p>Here's how Kind Ads is going to make the Internet kind again.</p>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <ul class="block-items clearfix">
+        <li>
+          <div class="img">
+            <img src="~/Img/Home/features-less-spam.svg" data-no-retina="true" alt="Kind Ads Less Spam" />
+          </div>
+          <h3>Less spam</h3>
+          <p>By removing the ad network, publishers can now control what's on their website.</p>
+        </li>
+        <li>
+          <div class="img">
+            <img src="~/Img/Home/features-friendly-experience.svg" data-no-retina="true" alt="Kind Ads Friendly User Experience" />
+          </div>
+          <h3>Friendly user experience</h3>
+          <p>By leveraging technologies like push notifications and email, advertisers no longer have to irritate users.</p>
+        </li>
+        <li>
+          <div class="img">
+            <img src="~/Img/Home/features-paid-fast.svg" data-no-retina="true" alt="Kind Ads Paid Instanly" />
+          </div>
+          <h3>Get paid instantly</h3>
+          <p>Publishers don't have to wait months before they get paid now.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="register">
+  <div class="row">
+    <div class="col-sm-offset-1 col-sm-10">
+      <h2>Get Started Today</h2>
+      <p>Give Kind Ads a test run today. You have everything to gain!</p>
+      <a href="~/Access/CreateAccount" class="btn">Sign Up Now</a>
+    </div>
+  </div>
+</section>
+
+<section class="advantages">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <article class="row">
+        <div class="col-sm-7">
+          <h4>INTERNET USERS</h4>
+          <h3>Advertising without the irritating ads</h3>
+          <p>Kind Ads will show you more relevant ads through channels like email marketing and push notifications so you can browse the web without being bombarded by irrelevant ads.</p>
+          @*<a class="link more disabled">
+              <span>
+                Read more
+              </span>
+              <i class="fa fa-caret-right"></i>
+            </a>*@
+        </div>
+        <div class="col-sm-5">
+          <img class="img-responsive" src="~/Img/Home/advantages-customers.png" alt="Internet Users" />
+        </div>
+      </article>
+      <article class="row">
+        <div class="col-sm-7 pull-right">
+          <h4>PUBLISHERS</h4>
+          <h3>Display ads that help your website visitors</h3>
+          <p>Are banner ads ruining your website's experience? Now you can start showing users relevant ads through push notifications and emails that don't irritate users. Plus you'll get paid instantly.</p>
+          @*<a class="link more disabled">
+              <span>
+                Read more
+              </span>
+              <i class="fa fa-caret-right"></i>
+            </a>*@
+        </div>
+        <div class="col-sm-5">
+          <img class="img-responsive" src="~/Img/Home/advantages-publishers.png" alt="Advertisers" />
+        </div>
+      </article>
+      <article class="row">
+        <div class="col-sm-7">
+          <h4>ADVERTISERS</h4>
+          <h3>Create ads that convert while saving money</h3>
+          <p>Are you tired of rising ad costs? A large portion of your ad dollars is going to a middleman. You can now save money by cutting out the middleman.</p>
+          @*<a class="link more disabled">
+              <span>
+                Read more
+              </span>
+              <i class="fa fa-caret-right"></i>
+            </a>*@
+        </div>
+        <div class="col-sm-5">
+          <img class="img-responsive" src="~/Img/Home/advantages-advertisers.png" alt="Publishers" />
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="integrations">
+  <div class="row">
+    <div class="col-sm-offset-1 col-sm-10">
+      <h2>Integrations</h2>
+      <p>
+        Focus on your <span>campaigns</span>, let us take care of your <span>integrations</span> with top publishers.
+      </p>
+    </div>
+    <div class="col-sm-12 flexbox partners">
+      <div class="image flexbox-item">
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/subscribers-partner@2x.png" alt="Subscribers Logo" />
+      </div>
+      <div class="image flexbox-item">
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/pushcrew-partner@2x.png" alt="Push Crew Logo" />
+      </div>
+      <div class="image flexbox-item">
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/mailchimp-partner@2x.png" alt="Mailchimp Logo" />
+      </div>
+      <div class="image flexbox-item">
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/campaignmonitor-partner@2x.png" alt="Campaign Monitor Logo" />
+      </div>
+      <div class="image flexbox-item">
+        <img class="img-responsive" data-no-retina="true" src="~/Img/Home/aweber-partner@2x.png" alt="AWeber Logo" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="videoModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Kind Ads</h4>
+      </div>
+      <div class="modal-body">
+        <iframe src="https://player.vimeo.com/video/257040441" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function hideCookies() {
+    //document.getElementById("cookiesPanel").style.display = "none";
+    document.getElementById("cookiesPanel").classList.add('fadeIn');
+  }
+</script>

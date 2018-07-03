@@ -1,0 +1,16 @@
+@model Captivate.Comun.Models.ViewModel.MoneyAdsViewModel
+@{
+  var grid = new WebGrid(rowsPerPage: Model.PageSize);
+  grid.Bind(Model.defaultAds, autoSortAndPage: false, rowCount: Model.TotalRecord);
+}
+
+@grid.GetHtml(
+    tableStyle: "table datagrid",
+    columns: grid.Columns(
+grid.Column(columnName: "Name", header: "Name", canSort: true),
+grid.Column(columnName: "Site", header: "Site", canSort: true),
+grid.Column(columnName: "JSId", header: "Js Id", canSort: true),
+grid.Column(columnName: "Status", header: "Status", canSort:true),
+grid.Column(columnName: "", header: "Activate", format: (item) => Html.ActionLink("Activate", "Activate", "MoneyAds", new { Id = item.Id }, null)),
+grid.Column(columnName: "", header: "Delete", format: (item) => Html.ActionLink("Delete", "Delete", "MoneyAds", new { Id = item.Id }, null))
+        ))

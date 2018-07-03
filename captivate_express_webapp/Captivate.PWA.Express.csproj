@@ -1,0 +1,1194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{678CE5ED-67EF-4E18-8F98-2CF49F006503}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>captivate_express_webapp</RootNamespace>
+    <AssemblyName>captivate_express_webapp</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dev|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEV;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.1.3\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="CloudrailSI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.Api.1.0.3\lib\CloudrailSI.dll</HintPath>
+    </Reference>
+    <Reference Include="createsend-dotnet, Version=4.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\campaignmonitor-api.4.2.2\lib\net40\createsend-dotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DapperExtensions, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MailChimp, Version=1.1.92.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailChimp.NET.1.1.92\lib\net40\MailChimp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.ServiceBus, Version=2.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.ServiceBus.2.2.3\lib\net45\Microsoft.AspNet.SignalR.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=1.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.1.1.2\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.1.2\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.ServiceBus.2.7.6\lib\net40-full\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.1.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Nethereum.Portable, Version=1.0.6559.21110, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nethereum.Portable.2.2.2\lib\portable45-net45+win8+wpa81\Nethereum.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGrid, Version=9.8.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.9.9.0\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.2\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Reactive.Core, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Core.3.1.1\lib\net46\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Interfaces.3.1.1\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Linq.3.1.1\lib\net46\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.PlatformServices.3.1.1\lib\net46\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Twilio, Version=5.13.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.5.13.2\lib\net451\Twilio.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AccessController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdvertiserController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CampaignController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\EthereumController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MeController.cs" />
+    <Compile Include="Controllers\MoneyAdsController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\PublisherController.cs" />
+    <Compile Include="Controllers\ReleaseNotesController.cs" />
+    <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\webhookController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\AsyncHelper.cs" />
+    <Compile Include="Helpers\AzureStorageHelper.cs" />
+    <Compile Include="Helpers\CryptoHelper.cs" />
+    <Compile Include="Helpers\CultureHelper.cs" />
+    <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\GetResponseHelper.cs" />
+    <Compile Include="Helpers\NethereumHelper.cs" />
+    <Compile Include="Helpers\PushcrewHelper.cs" />
+    <Compile Include="Helpers\SubscribersHelper.cs" />
+    <Compile Include="Models\Advertiser\AdvertiserViewModels.cs" />
+    <Compile Include="Models\Access\LoginViewModels.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaim.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CAMPAIGN.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Campaign\CampaignVieModels.cs" />
+    <Compile Include="Models\CAMPAIGN_CHAT.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CAMPAIGN_SETTINGS.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CATEGORY.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CAT_CAMPAIGN_STATUS.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Core\FileUpload.cs" />
+    <Compile Include="Models\Core\ProviderAWeberApiResult.cs" />
+    <Compile Include="Models\Core\TableViewModel.cs" />
+    <Compile Include="Models\GenericElement.cs" />
+    <Compile Include="Models\Home\HomeViewModel.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\KindadsDM.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KindadsDM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KindadsDM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KindadsDM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KindadsDM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message\MessgeViewModels.cs" />
+    <Compile Include="Models\MeViewModels.cs" />
+    <Compile Include="Models\PARTNER.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Partner\PushcrewModel.cs" />
+    <Compile Include="Models\Partner\SubscribersModels.cs" />
+    <Compile Include="Models\PARTNER_PRODUCT_SETTINGS.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PARTNER_SETTINGS.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PRODUCT.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PRODUCT_SETTINGS.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PRODUCT_TYPE.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Publisher\PublisherViewModel.cs" />
+    <Compile Include="Models\RequestSettings.cs" />
+    <Compile Include="Models\SITE.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TAG.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRANSACTIONS_CAPT.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRANSACTIONS_EXTERNAL.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRANSACTION_TYPE.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserDetail.cs">
+      <DependentUpon>KindadsDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Wallet\WalletModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AccessService.cs" />
+    <Compile Include="Services\ActiveCampaignService.cs" />
+    <Compile Include="Services\AdvertiseService.cs" />
+    <Compile Include="Services\CatalogService.cs" />
+    <Compile Include="Services\IContactService.cs" />
+    <Compile Include="Services\GetResponseService.cs" />
+    <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\PublisherService.cs" />
+    <Compile Include="Services\CampaignService.cs" />
+    <Compile Include="Services\SendGridService.cs" />
+    <Compile Include="Services\SiteService.cs" />
+    <Compile Include="Hubs\SignalRHub.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Utils\ActiveCampaign\ActiveCampaignClient.cs" />
+    <Compile Include="Utils\ActiveCampaign\ApiResult.cs" />
+    <Compile Include="Utils\Aweber\Adapter.cs" />
+    <Compile Include="Utils\Aweber\API.cs" />
+    <Compile Include="Utils\Aweber\Broadcast.cs" />
+    <Compile Include="Utils\Aweber\Entity\Account.cs" />
+    <Compile Include="Utils\Aweber\Entity\Base.cs" />
+    <Compile Include="Utils\Aweber\Entity\BaseCollection.cs" />
+    <Compile Include="Utils\Aweber\Entity\Campaign.cs" />
+    <Compile Include="Utils\Aweber\Entity\List.cs" />
+    <Compile Include="Utils\Aweber\Entity\Subscriber.cs" />
+    <Compile Include="Utils\Aweber\Factory\Base.cs" />
+    <Compile Include="Utils\Aweber\Factory\BaseCollection.cs" />
+    <Compile Include="Utils\Aweber\IAdapter.cs" />
+    <Compile Include="Utils\Aweber\JSON.cs" />
+    <Compile Include="Utils\Aweber\OAuth\Base.cs" />
+    <Compile Include="Utils\Aweber\OAuth\Request.cs" />
+    <Compile Include="Utils\Aweber\OAuth\Settings.cs" />
+    <Compile Include="Utils\Configuration\AppSettings.cs" />
+    <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Utils\Enums\AccessEnums.cs" />
+    <Compile Include="Utils\Enums\CatEstatusCampaignEnum.cs" />
+    <Compile Include="Utils\Enums\TypeChannelEnum.cs" />
+    <Compile Include="Utils\GetResponse\ApiResult.cs" />
+    <Compile Include="Utils\Security\AuthorizeRoles.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="CaptivateDB.edmx.sql" />
+    <Content Include="Content\jHtmlArea\jHtmlArea.ColorPickerMenu.css" />
+    <Content Include="Content\jHtmlArea\jHtmlArea.css" />
+    <Content Include="Content\jHtmlArea\jHtmlArea.Editor.css" />
+    <Content Include="Content\jHtmlArea\jHtmlArea.png" />
+    <Content Include="Content\jHtmlArea\jHtmlArea_Toolbar_Group_BG.png" />
+    <Content Include="Content\jHtmlArea\jHtmlArea_Toolbar_Group__Btn_Select_BG.png" />
+    <Content Include="Content\Sound\whatsapp-apple.mp3" />
+    <Content Include="Email_templates\accountCreated.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Email_templates\captivate_express_webapp_mail.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\tkatUI.css" />
+    <Content Include="Content\vendor\bootstrap.min.css" />
+    <Content Include="Email_templates\confirmEmail.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Email_templates\resetPassword.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Email_templates\welcomeAdvertiser.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Email_templates\welcomePublisher.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\Gordita\gorditabold-webfont.svg" />
+    <Content Include="fonts\Gordita\gorditamedium-webfont.svg" />
+    <Content Include="fonts\Gordita\gorditaregular-webfont.svg" />
+    <Content Include="fonts\kindads.svg" />
+    <Content Include="fonts\OpenSans\opensans-italic-webfont.svg" />
+    <Content Include="fonts\OpenSans\opensans-light-webfont.svg" />
+    <Content Include="fonts\OpenSans\opensans-regular-webfont.svg" />
+    <Content Include="fonts\OpenSans\opensans-semibold-webfont.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="gulpfile.js" />
+    <Content Include="Img\Email\email-address-icon.png" />
+    <Content Include="Img\Email\hor-bg.png" />
+    <Content Include="Img\Email\kind-ads-slogan.png" />
+    <Content Include="Img\Email\logo.png" />
+    <Content Include="Img\Email\telegram-icon.png" />
+    <Content Include="Img\Email\twitter-icon.png" />
+    <Content Include="Img\Email\ver-bg.png" />
+    <Content Include="Img\favicon\android-icon-144x144.png" />
+    <Content Include="Img\favicon\apple-icon-144x144.png" />
+    <Content Include="Img\favicon\apple-icon-precomposed.png" />
+    <Content Include="Img\favicon\favicon-16x16.png" />
+    <Content Include="Img\favicon\ms-icon-144x144.png" />
+    <Content Include="Img\Home\Articles\coin-central.jpg" />
+    <Content Include="Img\Home\Articles\finance-magnate.jpg" />
+    <Content Include="Img\Home\Articles\investopedia.jpg" />
+    <Content Include="Img\Home\Integrations\activecampaign.png" />
+    <Content Include="Img\Home\Integrations\aweber.png" />
+    <Content Include="Img\Home\Integrations\campaignmonitor.png" />
+    <Content Include="Img\Home\Integrations\getresponse.png" />
+    <Content Include="Img\Home\Integrations\icontact.png" />
+    <Content Include="Img\Home\Integrations\mailchimp.png" />
+    <Content Include="Img\Home\Integrations\mailjet.png" />
+    <Content Include="Img\Home\Integrations\onesignal.png" />
+    <Content Include="Img\Home\Integrations\pushcrew.png" />
+    <Content Include="Img\Home\Integrations\pushengage.png" />
+    <Content Include="Img\Home\Integrations\sendgrid.png" />
+    <Content Include="Img\Home\Integrations\sendinblue.png" />
+    <Content Include="Img\Home\Integrations\subscribers.png" />
+    <Content Include="Img\Home\kind-ads-network-on-vimeo.jpg" />
+    <Content Include="Img\Loader\loading.gif" />
+    <Content Include="Img\Loader\loading.white.gif" />
+    <Content Include="Img\product\Photo.png" />
+    <Content Include="Img\product\product.PNG" />
+    <Content Include="Img\Stock\bg-mask.png" />
+    <Content Include="Img\Stock\carousel--pic-01.png" />
+    <Content Include="Img\Stock\fg.png" />
+    <Content Include="Img\Stock\sign-fg.jpg" />
+    <Content Include="Img\Team\caio-beleza%402x.jpg" />
+    <Content Include="Img\Team\caio-beleza%403x.jpg" />
+    <Content Include="Img\Team\caio-beleza.jpg" />
+    <Content Include="Img\Team\enrique-chavez%402x.jpg" />
+    <Content Include="Img\Team\enrique-chavez%403x.jpg" />
+    <Content Include="Img\Team\enrique-chavez.jpg" />
+    <Content Include="Img\Team\eric-siu%402x.jpg" />
+    <Content Include="Img\Team\eric-siu%403x.jpg" />
+    <Content Include="Img\Team\eric-siu.jpg" />
+    <Content Include="Img\Team\jaime-sanchez%402x.jpg" />
+    <Content Include="Img\Team\jaime-sanchez%403x.jpg" />
+    <Content Include="Img\Team\jaime-sanchez.jpg" />
+    <Content Include="Img\Team\jason-caldwell%402x.jpg" />
+    <Content Include="Img\Team\jason-caldwell%403x.jpg" />
+    <Content Include="Img\Team\jason-caldwell.jpg" />
+    <Content Include="Img\Team\jay-westerdal%402x.jpg" />
+    <Content Include="Img\Team\jay-westerdal%403x.jpg" />
+    <Content Include="Img\Team\jay-westerdal.jpg" />
+    <Content Include="Img\Team\jeremy-hood%402x.jpg" />
+    <Content Include="Img\Team\jeremy-hood%403x.jpg" />
+    <Content Include="Img\Team\jeremy-hood.jpg" />
+    <Content Include="Img\Team\jonathan-cronstedt%402x.jpg" />
+    <Content Include="Img\Team\jonathan-cronstedt%403x.jpg" />
+    <Content Include="Img\Team\jonathan-cronstedt.jpg" />
+    <Content Include="Img\Team\keith-linder%402x.jpg" />
+    <Content Include="Img\Team\keith-linder%403x.jpg" />
+    <Content Include="Img\Team\keith-linder.jpg" />
+    <Content Include="Img\Team\ken-robets%402x.jpg" />
+    <Content Include="Img\Team\ken-robets%403x.jpg" />
+    <Content Include="Img\Team\ken-robets.jpg" />
+    <Content Include="Img\Team\leury-pichardo%402x.jpg" />
+    <Content Include="Img\Team\leury-pichardo%403x.jpg" />
+    <Content Include="Img\Team\leury-pichardo.jpg" />
+    <Content Include="Img\Team\nadav-dakner%402x.jpg" />
+    <Content Include="Img\Team\nadav-dakner%403x.jpg" />
+    <Content Include="Img\Team\nadav-dakner.jpg" />
+    <Content Include="Img\Team\neil-patel%402x.jpg" />
+    <Content Include="Img\Team\neil-patel%403x.jpg" />
+    <Content Include="Img\Team\neil-patel.jpg" />
+    <Content Include="Img\Team\quinn-huffman%402x.jpg" />
+    <Content Include="Img\Team\quinn-huffman%403x.jpg" />
+    <Content Include="Img\Team\quinn-huffman.jpg" />
+    <Content Include="Img\Team\rafael-mayrink%402x.jpg" />
+    <Content Include="Img\Team\rafael-mayrink%403x.jpg" />
+    <Content Include="Img\Team\rafael-mayrink.jpg" />
+    <Content Include="Img\Team\saber-aria%402x.jpg" />
+    <Content Include="Img\Team\saber-aria%403x.jpg" />
+    <Content Include="Img\Team\saber-aria.jpg" />
+    <Content Include="Img\Team\saulo-madeiros%402x.jpg" />
+    <Content Include="Img\Team\saulo-madeiros%403x.jpg" />
+    <Content Include="Img\Team\saulo-madeiros.jpg" />
+    <Content Include="Img\Team\trevor-koverko%402x.jpg" />
+    <Content Include="Img\Team\trevor-koverko%403x.jpg" />
+    <Content Include="Img\Team\trevor-koverko.jpg" />
+    <Content Include="Img\Team\vasil-azarov%402x.jpg" />
+    <Content Include="Img\Team\vasil-azarov%403x.jpg" />
+    <Content Include="Img\Team\vasil-azarov.jpg" />
+    <Content Include="Img\UI\approved-arrow.png" />
+    <Content Include="Img\UI\arrow-icon.svg" />
+    <Content Include="Img\UI\bg-footer.jpg" />
+    <Content Include="Img\UI\bg-pattern.jpg" />
+    <Content Include="Img\UI\bg-register.jpg" />
+    <Content Include="Img\UI\chat-draft.jpg" />
+    <Content Include="Img\UI\checkmark-icon.svg" />
+    <Content Include="Img\UI\crosscheck-icon.svg" />
+    <Content Include="Img\UI\kads_in.png" />
+    <Content Include="Img\UI\kads_out.png" />
+    <Content Include="Img\UI\logo-full-white.png" />
+    <Content Include="Img\UI\logo-white.png" />
+    <Content Include="Img\UI\logo.png" />
+    <Content Include="Img\UI\logo-init.png" />
+    <Content Include="Img\UI\notify-icon.png" />
+    <Content Include="Models\KindadsDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KindadsDM.edmx</DependentUpon>
+      <LastGenOutput>KindadsDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\KindadsDM.edmx.sql" />
+    <Content Include="Models\KindadsDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KindadsDM.edmx</DependentUpon>
+      <LastGenOutput>KindadsDM.cs</LastGenOutput>
+    </Content>
+    <Content Include="Modules\metamaskModule.js" />
+    <Content Include="Modules\moneyAddsModule.js" />
+    <Content Include="Modules\languageModule.js" />
+    <Content Include="Modules\siteModule.js" />
+    <Content Include="Scripts\app\_run.js" />
+    <Content Include="Scripts\app\app.datamodel.js" />
+    <Content Include="Scripts\app\app.viewmodel.js" />
+    <Content Include="Scripts\app\common.js" />
+    <Content Include="Scripts\app\home.viewmodel.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\OpenSans\opensans-italic-webfont.eot" />
+    <Content Include="fonts\OpenSans\opensans-italic-webfont.ttf" />
+    <Content Include="fonts\OpenSans\opensans-italic-webfont.woff" />
+    <Content Include="fonts\OpenSans\opensans-light-webfont.eot" />
+    <Content Include="fonts\OpenSans\opensans-light-webfont.ttf" />
+    <Content Include="fonts\OpenSans\opensans-light-webfont.woff" />
+    <Content Include="fonts\OpenSans\opensans-regular-webfont.eot" />
+    <Content Include="fonts\OpenSans\opensans-regular-webfont.ttf" />
+    <Content Include="fonts\OpenSans\opensans-regular-webfont.woff" />
+    <Content Include="fonts\OpenSans\opensans-semibold-webfont.eot" />
+    <Content Include="fonts\OpenSans\opensans-semibold-webfont.ttf" />
+    <Content Include="fonts\OpenSans\opensans-semibold-webfont.woff" />
+    <Content Include=".editorconfig" />
+    <Content Include="package.json" />
+    <Content Include="Scripts\culture-language.js" />
+    <Content Include="Views\ReleaseNotes\Kind_Sprint9.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="fonts\Gordita\gorditaregular-webfont.eot" />
+    <Content Include="fonts\Gordita\gorditaregular-webfont.ttf" />
+    <Content Include="fonts\Gordita\gorditaregular-webfont.woff" />
+    <Content Include="fonts\Gordita\gorditabold-webfont.eot" />
+    <Content Include="fonts\Gordita\gorditabold-webfont.ttf" />
+    <Content Include="fonts\Gordita\gorditabold-webfont.woff" />
+    <Content Include="fonts\Gordita\gorditamedium-webfont.eot" />
+    <Content Include="fonts\Gordita\gorditamedium-webfont.ttf" />
+    <Content Include="fonts\Gordita\gorditamedium-webfont.woff" />
+    <None Include="Properties\PublishProfiles\kindads - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\kindads-dev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\kindads-qa - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\kindads-staging - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\kindadsportalqa - Web Deploy.pubxml" />
+    <Content Include="Properties\webjobs-list.json" />
+    <Content Include="Views\Campaign\_IContactData.cshtml" />
+    <Content Include="Views\Campaign\_SendinBlueData.cshtml" />
+    <Content Include="Views\Campaign\_PushEngageData.cshtml" />
+    <Content Include="Views\Campaign\_OneSignalData.cshtml" />
+    <Content Include="Views\Campaign\_MailJetData.cshtml" />
+    <Content Include="Views\MoneyAds\Settings.cshtml" />
+    <Content Include="Views\MoneyAds\CreateAds.cshtml" />
+    <Content Include="Views\MoneyAds\ListOfAds.cshtml" />
+    <Content Include="Views\MoneyAds\ShowDefaultAds.cshtml" />
+    <Content Include="Views\MoneyAds\ShowStickyAds.cshtml" />
+    <Content Include="Views\Shared\_LanguageSelectPartial.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\InternalServer.cshtml" />
+    <Content Include="Views\Shared\_PublicLayout.cshtml" />
+    <Content Include="scss\tkatUI\custom\_home.scss" />
+    <Content Include="Views\MoneyAds\DownloadScriptView.cshtml" />
+    <Content Include="Views\MoneyAds\PanelDownloadScript.cshtml" />
+    <None Include="Properties\PublishProfiles\kindadsstagejp - Web Deploy.pubxml" />
+    <Content Include="Views\Ethereum\Test.cshtml" />
+    <Content Include="Views\ReleaseNotes\Kind_Sprint8.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Dev.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Qa.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Staging.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Prod.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <EntityDeploy Include="Models\KindadsDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KindadsDM.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Entities</CustomToolNamespace>
+    </EntityDeploy>
+    <Content Include="Models\KindadsDM.edmx.diagram">
+      <DependentUpon>KindadsDM.edmx</DependentUpon>
+    </Content>
+    <Content Include="fonts\kindads.eot" />
+    <Content Include="fonts\kindads.ttf" />
+    <Content Include="fonts\kindads.woff" />
+    <Content Include="Content\kind-ads-whitepaper.pdf" />
+    <Content Include="Content\Notification.min.css" />
+    <None Include="Properties\PublishProfiles\KindAdsPortalDev - Web Deploy.pubxml" />
+    <None Include="Resources\abi.json" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jHtmlArea-0.8.js" />
+    <Content Include="Scripts\jHtmlArea-0.8.min.js" />
+    <Content Include="Scripts\jHtmlArea.ColorPickerMenu-0.8.js" />
+    <Content Include="Scripts\jHtmlArea.ColorPickerMenu-0.8.min.js" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.3.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.3.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\knockout-2.3.0.debug.js" />
+    <Content Include="Scripts\knockout-2.3.0.js" />
+    <Content Include="Scripts\knockout.validation.debug.js" />
+    <Content Include="Scripts\knockout.validation.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sammy-0.7.4.js" />
+    <Content Include="Scripts\sammy-0.7.4.min.js" />
+    <Content Include="Scripts\signalr\hubs.js" />
+    <Content Include="Scripts\signalr\signalRProducts.js" />
+    <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
+    <Content Include="Scripts\tinymce\license.txt" />
+    <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\anchor\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autolink\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autoresize\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autosave\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\bbcode\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\charmap\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\codesample\css\prism.css" />
+    <Content Include="Scripts\tinymce\plugins\codesample\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\codesample\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\code\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\colorpicker\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\css\dialog.css" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\buttons.png" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\icons.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\items.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\menu_arrow.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\menu_check.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\progress.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\img\tabs.gif" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\tiny_mce_popup.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\utils\editable_selects.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\utils\form_utils.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\utils\mctabs.js" />
+    <Content Include="Scripts\tinymce\plugins\compat3x\utils\validate.js" />
+    <Content Include="Scripts\tinymce\plugins\contextmenu\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\directionality\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\fullpage\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\fullscreen\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\help\img\logo.png" />
+    <Content Include="Scripts\tinymce\plugins\help\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\help\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\hr\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\imagetools\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\image\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\importcss\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\link\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\lists\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\media\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\nonbreaking\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\noneditable\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\pagebreak\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\paste\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\preview\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\print\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\save\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\searchreplace\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\spellchecker\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\tabfocus\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\table\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\template\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\textcolor\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\textpattern\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\toc\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\toc\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\visualchars\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\wordcount\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Scripts\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\content.mobile.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.mobile.min.css" />
+    <Content Include="Scripts\tinymce\themes\inlite\theme.js" />
+    <Content Include="Scripts\tinymce\themes\inlite\theme.min.js" />
+    <Content Include="Scripts\tinymce\themes\mobile\theme.js" />
+    <Content Include="Scripts\tinymce\themes\mobile\theme.min.js" />
+    <Content Include="Scripts\tinymce\themes\modern\theme.js" />
+    <Content Include="Scripts\tinymce\themes\modern\theme.min.js" />
+    <Content Include="Scripts\tinymce\tinymce.js" />
+    <Content Include="Scripts\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\vendor\bootstrap-select\bootstrap-select.js" />
+    <Content Include="Scripts\vendor\bootstrap-select\bootstrap-select.min.js" />
+    <Content Include="Scripts\vendor\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\vendor\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\vendor\jquery\jquery.js" />
+    <Content Include="Scripts\vendor\jquery\jquery.min.js" />
+    <Content Include="Scripts\vendor\retina\retina.js" />
+    <Content Include="Scripts\vendor\retina\retina.min.js" />
+    <Content Include="Views\Home\Team.cshtml" />
+    <Content Include="Views\Product\_TableProducts.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Access\Login.cshtml" />
+    <Content Include="Views\Access\CreateAccount.cshtml" />
+    <Content Include="Views\Access\VerifyAccount.cshtml" />
+    <Content Include="Views\Access\NewPassword.cshtml" />
+    <Content Include="Views\Access\RecoverPassword.cshtml" />
+    <Content Include="scss\tkatUI.scss" />
+    <Content Include="scss\tkatUI\base\_fonts.scss" />
+    <Content Include="scss\tkatUI\base\_reset.scss" />
+    <Content Include="scss\tkatUI\base\_variables.scss" />
+    <Content Include="scss\tkatUI\components\_buttons.scss" />
+    <Content Include="scss\tkatUI\components\_forms.scss" />
+    <Content Include="scss\tkatUI\components\_typography.scss" />
+    <Content Include="scss\tkatUI\custom\_atomic.scss" />
+    <Content Include="scss\tkatUI\custom\_header.scss" />
+    <Content Include="scss\tkatUI\custom\_pages.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\double\_default-pair.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\double\_default.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\double\_double-string.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\resolution\_resolution.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\single\_default.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\triple\_default.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\_double.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\_query.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\_resolution.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\_single.scss" />
+    <Content Include="scss\vendor\breakpoint\parsers\_triple.scss" />
+    <Content Include="scss\vendor\breakpoint\_context.scss" />
+    <Content Include="scss\vendor\breakpoint\_helpers.scss" />
+    <Content Include="scss\vendor\breakpoint\_legacy-settings.scss" />
+    <Content Include="scss\vendor\breakpoint\_no-query.scss" />
+    <Content Include="scss\vendor\breakpoint\_parsers.scss" />
+    <Content Include="scss\vendor\breakpoint\_respond-to.scss" />
+    <Content Include="scss\vendor\breakpoint\_settings.scss" />
+    <Content Include="scss\vendor\_breakpoint.scss" />
+    <Content Include="Views\Access\AccountVerified.cshtml" />
+    <Content Include="Views\Access\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Access\CheckEmailActivation.cshtml" />
+    <Content Include="Views\Shared\_CustomLayout.cshtml" />
+    <Content Include="Views\Advertiser\Home.cshtml" />
+    <Content Include="Views\Advertiser\SearchProducts.cshtml" />
+    <Content Include="Views\Advertiser\CreateCampaign.cshtml" />
+    <Content Include="Views\Shared\Loading.cshtml" />
+    <Content Include="Views\Publisher\Home.cshtml" />
+    <Content Include="Views\Campaign\Index.cshtml" />
+    <Content Include="Views\Shared\_PublisherLayout.cshtml" />
+    <Content Include="Views\Campaign\SortCampaigns.cshtml" />
+    <Content Include="Views\Access\_PartialAccess.cshtml" />
+    <Content Include="Views\Shared\_AdvertiserLayout.cshtml" />
+    <Content Include="Views\Access\CheckEmailResetPassword.cshtml" />
+    <Content Include="Views\Publisher\Index.cshtml" />
+    <Content Include="Scripts\vendor\bootstrap-select\bootstrap-select.js.map" />
+    <Content Include="scss\tkatUI\components\_fonts-icons.scss" />
+    <Content Include="Views\Advertiser\ManageProfile.cshtml" />
+    <Content Include="Views\Publisher\ManageProfile.cshtml" />
+    <Content Include="Views\Campaign\_DetailCampaign.cshtml" />
+    <Content Include="Views\Access\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Access\TermsOfService.cshtml" />
+    <Content Include="Views\Publisher\_DetailSite.cshtml" />
+    <Content Include="Views\Site\CreateSite.cshtml" />
+    <Content Include="Views\Product\CreateProduct.cshtml" />
+    <Content Include="Views\Site\ShowSites.cshtml" />
+    <Content Include="Views\Product\ShowProducts.cshtml" />
+    <Content Include="Views\Site\ValidateSite.cshtml" />
+    <Content Include="Views\Site\_PendingVerifySites.cshtml" />
+    <Content Include="Views\Site\_VerifiedSites.cshtml" />
+    <Content Include="Views\Publisher\_BalancePublisher.cshtml" />
+    <Content Include="Views\Campaign\_TableCampaignPending.cshtml" />
+    <Content Include="Views\Campaign\VerifyCampaign.cshtml" />
+    <Content Include="Views\Campaign\_TableCampaignVerify.cshtml" />
+    <Content Include="Views\Shared\_LandingLayout.cshtml" />
+    <Content Include="Views\Campaign\ModifyCampaign.cshtml" />
+    <Content Include="Views\Campaign\_CampaignData.cshtml" />
+    <Content Include="Views\Campaign\_AuthorizeCampaignModal.cshtml" />
+    <Content Include="Views\Campaign\_CampaignShowData.cshtml" />
+    <Content Include="Views\Campaign\_CampaignRevision.cshtml" />
+    <Content Include="Views\Campaign\_CampaignChat.cshtml" />
+    <Content Include="Views\Campaign\_MailChimpData.cshtml" />
+    <Content Include="Views\Campaign\_PushNotificationData.cshtml" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-mobile.woff" />
+    <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Views\Campaign\_PushCrewData.cshtml" />
+    <Content Include="Views\Campaign\_FileUp.cshtml" />
+    <Content Include="Views\Campaign\_CampaignMonitorData.cshtml" />
+    <Content Include="Views\Campaign\_AweberData.cshtml" />
+    <Content Include="Views\Campaign\_SendGridData.cshtml" />
+    <Content Include="Views\Campaign\_ActiveCampaignData.cshtml" />
+    <Content Include="Views\Product\PartialViews\IContactForm.cshtml" />
+    <Content Include="Views\Campaign\_GetResponseData.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Home\Faq.cshtml" />
+    <Content Include="Views\Campaign\_CampaignHtmlText.cshtml" />
+    <Content Include="Views\Product\PartialViews\PartnerValidation.cshtml" />
+    <Content Include="Views\Product\PartialViews\DeleteValidation.cshtml" />
+    <Content Include="Views\Campaign\_LoadingCampaignModal.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Language\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Captivate.Azure\Captivate.Azure.csproj">
+      <Project>{bf273911-e765-4409-a128-d1cf938c38fe}</Project>
+      <Name>Captivate.Azure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Captivate.Comun\Captivate.Common.csproj">
+      <Project>{E6C505C4-87E8-45E5-BD9E-D826A4A6F4AF}</Project>
+      <Name>Captivate.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Captivate.DataAccess\Captivate.DataAccess.csproj">
+      <Project>{e4fb3a23-542f-4230-ad1a-de60a22e1201}</Project>
+      <Name>Captivate.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Captivate.Negocio\Captivate.Business.csproj">
+      <Project>{731A2EC5-228C-437B-956C-FCA0FD4F76C6}</Project>
+      <Name>Captivate.Business</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Qa|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>QA;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>STAGING;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>PROD;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>11575</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:11575/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.1.0\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.1.0\tools\webjobs.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

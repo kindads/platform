@@ -8,13 +8,13 @@ using System.Web;
 using System.Threading.Tasks;
 using System.Linq.Dynamic;
 using Captivate.DataAccess;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Models;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Models;
 using System.Text;
 using Newtonsoft.Json;
 using System.Configuration;
-using Captivate.Comun.Utils;
-using Captivate.Comun.Models.ViewModel;
+using Captivate.Common.Utils;
+using Captivate.Common.Models.ViewModel;
 using Captivate.Azure;
 
 namespace captivate_express_webapp.Services

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber
+namespace Captivate.Common.Utils.Partners.Mail.Aweber
 {
   /// <summary>
   /// Communicates with the Aweber API

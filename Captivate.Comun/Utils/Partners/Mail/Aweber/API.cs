@@ -13,10 +13,10 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Net;
-using Captivate.Comun.Utils.Partners.Mail.Aweber.OAuth;
+using Captivate.Common.Utils.Partners.Mail.Aweber.OAuth;
 using System.IO;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber
+namespace Captivate.Common.Utils.Partners.Mail.Aweber
 {
 
     /// <summary>

@@ -8,9 +8,10 @@ using MailChimp;
 using Captivate.Common.Interfaces;
 using Captivate.Business;
 using Captivate.DataAccess;
-using Captivate.Comun.Models.Entities;
+using Captivate.Common.Models.Entities;
+using Captivate.Azure;
 
-namespace Captivate.Negocio.Partners.Mail
+namespace Captivate.Business.Partners.Mail
 {
     public class MailChimpManager
     {
@@ -101,6 +102,22 @@ namespace Captivate.Negocio.Partners.Mail
                 telemetria.Critical(messageException);
             }
             return null;
+        }
+
+        public bool addUserToList(string apiKey, string idList, string email)
+        {
+            MailChimp.Net.Models.Member member = new MailChimp.Net.Models.Member()
+            {
+                EmailAddress = email,
+                Status = MailChimp.Net.Models.Status.Subscribed
+            };
+
+            MailChimp.Net.Interfaces.IMailChimpManager mailChimpManager = new MailChimp.Net.MailChimpManager(apiKey);
+            var result =  Task.Run(() =>mailChimpManager.Members.AddOrUpdateAsync(idList, member)).Result;
+            
+            return result.Id != null;
+
+
         }
     }
 }

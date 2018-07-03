@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Captivate.Comun.Utils
+namespace Captivate.Common.Utils
 {
     public static class Constants
     {

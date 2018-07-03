@@ -6,9 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
-    [Table("PARTNER_PRODUCT_SETTINGS")]
     public class PartnerProductSettingsEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -17,7 +16,6 @@ namespace Captivate.Comun.Models.Entities
             this.PARTNERS = new HashSet<PartnerEntity>();
         }
 
-        [Key]
         public System.Guid IdSetting { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }

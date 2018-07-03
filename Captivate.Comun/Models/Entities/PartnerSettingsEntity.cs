@@ -6,12 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
-    [Table("PARTNER_SETTINGS")]
     public class PartnerSettingsEntity
     {
-        [Key]
         public System.Guid IdPartnerSetting { get; set; }
         public string SettingName { get; set; }
         public string SettingValue { get; set; }

@@ -22,6 +22,7 @@ namespace captivate_express_webapp.Models
             this.CAMPAIGNs = new HashSet<CAMPAIGN>();
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.CAMPAIGN_CHAT = new HashSet<CAMPAIGN_CHAT>();
+            this.UserDetails = new HashSet<UserDetail>();
         }
     
         public string Id { get; set; }
@@ -50,5 +51,7 @@ namespace captivate_express_webapp.Models
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CAMPAIGN_CHAT> CAMPAIGN_CHAT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserDetail> UserDetails { get; set; }
     }
 }

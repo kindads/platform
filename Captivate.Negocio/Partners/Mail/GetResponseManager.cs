@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 using Captivate.Common.Interfaces;
 using Captivate.Business;
 using Captivate.DataAccess;
-using Captivate.Comun.Utils.Partners.Mail.GetResponse;
-using Captivate.Comun.Models.Entities;
+using Captivate.Common.Utils.Partners.Mail.GetResponse;
+using Captivate.Common.Models.Entities;
+using Captivate.Azure;
 
-namespace Captivate.Negocio.Partners.Mail
+namespace Captivate.Business.Partners.Mail
 {
     public class GetResponseManager
     {

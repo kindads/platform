@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
+using Captivate.Common.Models.Entities;
 using Captivate.Comun.Models.Entities;
 using Captivate.DataAccess;
-using Dapper;
-using DapperExtensions;
+using Captivate.DataAccess.Repositories;
+//using Dapper;
+//using DapperExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Captivate.UnitTest
@@ -14,56 +16,54 @@ namespace Captivate.UnitTest
     [TestClass]
     public class DataAccessTest
     {
-        //    [TestMethod]
-        //    public void GetProductsTest()
-        //    {
-        //        KindadsContext context = new KindadsContext();
-        //        ProductRepository productRepository = new ProductRepository { Context=context};
-        //        List<ProductEntity> products= productRepository.GetAll().ToList();
-        //        List<CampaignEntity> campaigns = products[0].CampaignEntitys.ToList();
+        [TestMethod]
+        public void GetProductsTest()
+        {
 
-        //        Assert.AreEqual(products.Count()>0, true);
-        //    }
+            ProductRepository productRepository = new ProductRepository ();
+            List<ProductEntity> products = productRepository.GetAll().ToList();
+            List<CampaignEntity> campaigns = products[0].CampaignEntitys.ToList();
 
-
-        //    [TestMethod]
-        //    public void GetSitesTest()
-        //    {
-        //        KindadsContext context = new KindadsContext();
-        //        SiteRepository siteRepository = new SiteRepository { Context= context };
-        //        List<SiteEntity> sites = siteRepository.GetAll().ToList();
-
-        //        Assert.AreEqual(true, true);
-        //    }
-
-        //    [TestMethod]
-        //    public void AddSiteTest()
-        //    {
-        //        KindadsContext context = new KindadsContext();
-        //        SiteRepository siteRepository = new SiteRepository { Context = context };
-        //        AspNetUserRepository userRepository = new AspNetUserRepository { Context = context };
-
-        //        List<AspNetUserEntity> users = userRepository.GetAll().ToList();
-
-        //        SiteEntity site = new SiteEntity();
-        //        site.IdSite = Guid.NewGuid();
-        //        site.AspNetUser = users[0];
-        //        site.Name = "Prueba de sitio";
-        //        site.URL = "http://Test.com";
-        //        site.IsActive = true;
-
-        //        siteRepository.Add(site);
-        //        siteRepository.Save();
+            Assert.AreEqual(products.Count() > 0, true);
+        }
 
 
-        //        Assert.AreEqual(true, true);
-        //    }
-        //    [TestMethod]
-        //    public void GetCategoriesTest()
-        //    {
-        //        CategoryRepository categoryRepository = new CategoryRepository();
-        //        List<CategoryEntity> categories = categoryRepository.GetAll().ToList();
-        //    }
+        [TestMethod]
+        public void GetSitesTest()
+        {
+
+            SiteRepository siteRepository = new SiteRepository ();
+            List<SiteEntity> sites = siteRepository.GetAll().ToList();
+
+            Assert.AreEqual(true, true);
+        }
+
+        [TestMethod]
+        public void AddSiteTest()
+        {
+            
+            SiteRepository siteRepository = new SiteRepository ();
+            AspNetUserRepository userRepository = new AspNetUserRepository ();
+
+            List<AspNetUserEntity> users = userRepository.GetAll().ToList();
+
+            SiteEntity site = new SiteEntity();
+            site.IdSite = Guid.NewGuid();
+            site.AspNetUser = users[0];
+            site.Name = "Prueba de sitio";
+            site.URL = "http://Test.com";
+            site.IsActive = true;
+
+            siteRepository.Add(site);
+
+            Assert.AreEqual(true, true);
+        }
+        [TestMethod]
+        public void GetCategoriesTest()
+        {
+            CategoryRepository categoryRepository = new CategoryRepository();
+            List<CategoryEntity> categories = categoryRepository.GetAll().ToList();
+        }
 
         [TestMethod]
         public void GetCampaignsTest()
@@ -81,10 +81,10 @@ namespace Captivate.UnitTest
         [TestMethod]
         public void BuscarXId()
         {
-            var tgr = new TagDapperRepository();
+            var tgr = new TagRepository();
             var result = tgr.FindById<int>(1);
         
-            tgr.Edit(new TagEntity2
+            tgr.Edit(new TagEntity
             {
                 IdTag = 1,
                 Description = result.Description + " update descripcion 3"
@@ -95,8 +95,8 @@ namespace Captivate.UnitTest
         [TestMethod]
         public void insertTagTest()
         {
-            var tgr = new TagDapperRepository();
-            tgr.Add(new TagEntity2
+            var tgr = new TagRepository();
+            tgr.Add(new TagEntity
             {
                 Description = "nueva descripcion2"
             });
@@ -105,8 +105,8 @@ namespace Captivate.UnitTest
         [TestMethod]
         public void ActualizarTagTest()
         {
-            var tgr = new TagDapperRepository();
-            tgr.Edit(new TagEntity2
+            var tgr = new TagRepository();
+            tgr.Edit(new TagEntity
             {
                 IdTag=3,
                 Description = "update descripcion 3"
@@ -116,8 +116,8 @@ namespace Captivate.UnitTest
         [TestMethod]
         public void EliminarTagTest()
         {
-            var tgr = new TagDapperRepository();
-            tgr.Delete(new TagEntity2
+            var tgr = new TagRepository();
+            tgr.Delete(new TagEntity
             {
                 IdTag = 2,
                 Description = ""
@@ -219,6 +219,99 @@ namespace Captivate.UnitTest
             Assert.AreEqual(true, true);
         }
 
+        #region Money Ads
+
+        [TestMethod]
+        public void AddAdsTypeTest()
+        {
+            AdsTypeRepository repository = new AdsTypeRepository();
+            AdsTypeEntity type = new AdsTypeEntity() { AdsDescription = "Sticky Ads" };
+
+            repository.Add(type);
+            Assert.AreEqual(true, true);
+        }
+
+        [TestMethod]
+        public void GetAllAdsTypesTest()
+        {
+            AdsTypeRepository repository = new AdsTypeRepository();
+            List<AdsTypeEntity> adsTypes = repository.GetAll().ToList();
+
+            Assert.AreEqual(true, adsTypes.Count() > 0);
+        }
+
+        [TestMethod]
+        public void AddMoneyAdsSettingsTest()
+        {
+            MoneyAdsSettingsRepository repository = new MoneyAdsSettingsRepository();
+
+            MoneyAdsSettingsEntity adsSettings = new MoneyAdsSettingsEntity()
+            {
+                Name="My First Sticky ads",
+                JavascriptId="",
+                AdsText="Campaña del peje sticky",
+                UrlImage=""
+            };
+
+            repository.Add(adsSettings);
+            Assert.AreEqual(true, true);
+        }
+
+        [TestMethod]
+        public void GetAllMoneyAdsSettingsTest()
+        {
+            MoneyAdsSettingsRepository repository = new MoneyAdsSettingsRepository();
+            List<MoneyAdsSettingsEntity> settings = repository.GetAll().ToList();
+            Assert.AreEqual(true, settings.Count > 0);
+        }
+
+        [TestMethod]
+        public void AddMoneyAdsTest()
+        {
+            MoneyAdsRepository repository = new MoneyAdsRepository();
+            MoneyAdsEntity moneyAds = new MoneyAdsEntity()
+            {
+                AdsTypeId=2,
+                AdsSettingId=2
+            };
+
+            repository.Add(moneyAds);
+            Assert.AreEqual(true, true);
+        }
+
+        [TestMethod]
+        public void GetAllMoneyAdsTest()
+        {
+            MoneyAdsRepository repository = new MoneyAdsRepository();
+            List<MoneyAdsEntity> moneyAds = repository.GetAll().ToList();
+
+            Assert.AreEqual(true, moneyAds.Count() > 0);
+        }
+
+        [TestMethod]
+        public void AddPublisherAdsTest()
+        {
+            PublisherAdsRepository repository = new PublisherAdsRepository();
+            PublisherAdsEntity entidad = new PublisherAdsEntity()
+            {
+                MoneyAdsId = 2,
+                IsActive = true,
+                IdUser=new Guid("44f1e76b-24ae-4889-937b-5e1c45575ae8")
+            };
+
+            repository.Add(entidad);
+            Assert.AreEqual(true, true);
+        }
+
+        [TestMethod]
+        public void GetAllPublisherAdsTest()
+        {
+            PublisherAdsRepository repository = new PublisherAdsRepository();
+            List<PublisherAdsEntity> ads = repository.GetAll().ToList();
+            Assert.AreEqual(true, ads.Count() > 0);
+        }
+
+        #endregion
     }
 
 

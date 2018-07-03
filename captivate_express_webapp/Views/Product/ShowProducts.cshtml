@@ -1,4 +1,4 @@
-﻿@model Captivate.Comun.Models.ViewModel.ProductViewModel
+@model Captivate.Common.Models.ViewModel.ProductViewModel
 @{
   ViewBag.Title = "ShowProducts";
   Layout = "~/Views/Shared/_PublisherLayout.cshtml";
@@ -48,6 +48,8 @@
 
 <script>
   $(function () {
+    $("#linkMoneyAds").removeClass("active");
+    $("#linkWorkspace").addClass("active");
     $('.link-site').addClass('active');
     $('.datagrid thead th:contains("Delete")').addClass('icon-delete');
   });

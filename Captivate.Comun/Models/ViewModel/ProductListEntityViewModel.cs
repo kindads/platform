@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.ViewModel
+namespace Captivate.Common.Models.ViewModel
 {
     public class ProductListEntityViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ProductListEntityViewModel()
         {
-            //this.CampaignEntitys = new HashSet<CampaignEntity>();
-            //this.ProductSettingsEntitys = new HashSet<ProductSettingsEntity>();
         }
 
  

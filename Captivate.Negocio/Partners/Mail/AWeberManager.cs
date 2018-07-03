@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using Captivate.Common.Interfaces;
 using Captivate.Business;
 using Captivate.DataAccess;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Utils.Partners.Mail.Aweber;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Utils.Partners.Mail.Aweber;
 using System.Web;
-using Captivate.Comun.Utils.Partners.Mail.Aweber.OAuth;
+using Captivate.Common.Utils.Partners.Mail.Aweber.OAuth;
 using System.Net;
 using Newtonsoft.Json;
 using Captivate.Comun;
+using Captivate.Azure;
 
-namespace Captivate.Negocio.Partners.Mail
+namespace Captivate.Business.Partners.Mail
 {
     public class AWeberManager
     {
@@ -94,7 +95,7 @@ namespace Captivate.Negocio.Partners.Mail
             try
             {
                 API api = GetDataApiKeyAweber(key, secret, oAuth, oAuthSecret, oAuthVerifier);
-                Captivate.Comun.Utils.Partners.Mail.Aweber.Entity.Account account = api.getAccount();
+                Captivate.Common.Utils.Partners.Mail.Aweber.Entity.Account account = api.getAccount();
                 int idAccount = account.id;
                 string endpoint = string.Format(Settings.scheduleBroadcast, idAccount, list, idBroadcast);
                 Request request = new Request
@@ -167,7 +168,7 @@ namespace Captivate.Negocio.Partners.Mail
             try
             {
                 API api = GetDataApiKeyAweber(key, secret, oAuth, oAuthSecret, oAuthVerifier);
-                Comun.Utils.Partners.Mail.Aweber.Entity.Account account = api.getAccount();
+                Common.Utils.Partners.Mail.Aweber.Entity.Account account = api.getAccount();
                 string endpoint = string.Format(Settings.createBroadcast, account.id, list);
                 Request request = new Request
                 {
@@ -208,7 +209,7 @@ namespace Captivate.Negocio.Partners.Mail
             try
             {
                 API api = GetDataApiKeyAweber(key, secret, oAuth, oAuthSecret, oAuthVerifier);
-                Captivate.Comun.Utils.Partners.Mail.Aweber.Entity.Account account = api.getAccount();
+                Captivate.Common.Utils.Partners.Mail.Aweber.Entity.Account account = api.getAccount();
                 string endpoint = string.Format(Settings.getBroadcast, account.id, list, idBroadcast);
                 Request request = new Request
                 {

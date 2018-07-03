@@ -30,6 +30,8 @@ namespace captivate_express_webapp.Models
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
         public Nullable<System.DateTime> RegistrationDate { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public bool IsPremium { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual SITE SITE { get; set; }

@@ -3,7 +3,6 @@
   @import 'vendor/breakpoint';
 
 
-
 /* Base UI
 ================================================== */
   //helpers
@@ -16,15 +15,15 @@
 =================================================== */
   html, body {
     height:100%;
-    background: lighten($off-white, 1.5);
+    background: $white;
   }
   body {
-    font-family: $openSansRegular;
+    font-family: $gorditaRegular;
     color: $charcoal-grey;
+    font-size: .875em;
+    line-height: 1.6em;
   }
   .wrapper {
-    font-size: 1em;
-    line-height: 1.25;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -46,20 +45,32 @@
   .main-content {
     position: relative;
     height: calc(100vh - 0px);
-    background: lighten($off-white, 3);
     &.admin {
       height: calc(100vh - 74px);
+      @include breakpoint($ext-desktop) {
+        .container-fluid {
+          width: auto;
+        }
+      }
     }
     @include breakpoint($tablet) {
-      background-color: darken($off-white, 2);
       min-height: 100%;
       &.admin {
+        background-color: darken($off-white, 2);
         height: calc(100vh - 70px);
       }
     }
+    @include breakpoint($ext-desktop) {
+      .container-fluid {
+        margin: 0 auto;
+        width: 1280px;
+      }
+    }
     @include breakpoint($desktop-l) {
-      margin: 0 auto;
-      width: 1440px;
+      &.admin {
+        margin: 0 auto;
+        width: 1440px;
+      }
       > .flexbox {
         //border-right: solid 1px $soft-grey;
         //border-left: solid 1px $soft-grey;
@@ -93,4 +104,5 @@
 ================================================== */
   @import 'tkatUI/custom/_atomic';                   // Atomic
   @import 'tkatUI/custom/_header';                   // Head
+  @import 'tkatUI/custom/_home';                     // Home
   @import 'tkatUI/custom/_pages';                    // Pages

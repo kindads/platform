@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
-    [Table("CAMPAIGN")]
+
     public class CampaignEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +19,7 @@ namespace Captivate.Comun.Models.Entities
             this.CAMPAIGN_CHAT = new HashSet<CampaignChatEntity>();
         }
 
-        [Key]
+ 
         public System.Guid IdCampaign { get; set; }
         public string Name { get; set; }
         public System.DateTime RegisterDate { get; set; }

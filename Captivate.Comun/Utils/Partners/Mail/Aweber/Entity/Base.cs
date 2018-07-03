@@ -17,7 +17,7 @@ using System.Net;
 using System.IO;
 using System.Reflection;
 
-namespace Captivate.Comun.Utils.Partners.Mail.Aweber.Entity
+namespace Captivate.Common.Utils.Partners.Mail.Aweber.Entity
 {
     /// <summary>
     /// The base entity that all entities are inherited from

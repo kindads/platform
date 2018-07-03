@@ -1,4 +1,4 @@
-﻿using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using DapperExtensions.Mapper;
 
 namespace Captivate.DataAccess.Mappers
 {
-    public class TagPlainProfileMapper : ClassMapper<TagEntity2>
+    public class TagPlainProfileMapper : ClassMapper<TagEntity>
     {
         public TagPlainProfileMapper()
         {

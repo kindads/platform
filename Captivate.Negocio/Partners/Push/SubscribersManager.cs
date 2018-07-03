@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Captivate.DataAccess;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Partners.Push;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Partners.Push;
 using System.Net;
 using System.IO;
 using Captivate.Common.Interfaces;
 using Captivate.Business;
+using Captivate.Azure;
 
-namespace Captivate.Negocio.Partners.Push
+namespace Captivate.Business.Partners.Push
 {
     public class SubscribersManager
     {

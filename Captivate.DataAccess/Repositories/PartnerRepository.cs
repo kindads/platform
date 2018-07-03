@@ -1,5 +1,5 @@
-﻿using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
 using Captivate.DataAccess.Mappers;
 using System;
 using System.Collections.Generic;

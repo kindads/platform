@@ -49,6 +49,9 @@ namespace captivate_express_webapp.Models.Access
     [MaxLength(12, ErrorMessage = "Maximum length is {1} characters")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+
+    [Display(Name = "TestLanguage", ResourceType = typeof(Resource.Language.Access.Login.Resources))]
+    public string TestLanguage { get; set; }
   }
 
   public class NewPasswordViewModel

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Partners.Mail.SendinBlue;
-using Captivate.Negocio.Partners.Mail;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Partners.Mail.SendinBlue;
+using Captivate.Business.Partners.Mail;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Captivate.UnitTest

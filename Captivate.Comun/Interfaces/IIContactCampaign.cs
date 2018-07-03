@@ -1,12 +1,12 @@
-using Captivate.Comun.Interfaces;
-using Captivate.Comun.Utils.Partners.Mail.Aweber.Entity;
+using Captivate.Common.Interfaces;
+using Captivate.Common.Utils.Partners.Mail.Aweber.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Interfaces
+namespace Captivate.Common.Interfaces
 {
     public interface IIContactCampaign
     {

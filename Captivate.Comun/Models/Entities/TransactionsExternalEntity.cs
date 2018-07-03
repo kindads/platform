@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models.Entities
+namespace Captivate.Common.Models.Entities
 {
-    [Table("TRANSACTIONS_EXTERNAL")]
+
     public class TransactionsExternalEntity
     {
-        [Key]
+
         public System.Guid IdTransactionext { get; set; }
         public string HashFrom { get; set; }
         public string HashTo { get; set; }
@@ -20,7 +20,7 @@ namespace Captivate.Comun.Models.Entities
         public string HashTransaction { get; set; }
         public string Gas { get; set; }
 
-        [ForeignKey("TRANSACTION_TYPE")]
+
         public short TRANSACTION_TYPE_IdTransactionType { get; set; }
 
         public virtual TransactionTypeEntity TRANSACTION_TYPE { get; set; }

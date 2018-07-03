@@ -1,4 +1,4 @@
-using Captivate.Comun.Interfaces;
+using Captivate.Common.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Script.Serialization;
 
-namespace Captivate.Negocio.Partners.IContact
+namespace Captivate.Common.Partners.IContact
 {
   public class IContactPostSendsRequest : IRequest
   {

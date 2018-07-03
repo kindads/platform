@@ -6,11 +6,11 @@
 
 <div class="title">
   <div class="logo-mobile">
-    <a href="@Url.Action("Home", "Access")">
-      <img src="../Img/UI/Logo-White.png">
+    <a href="@Url.Action("Home", "Home")">
+      <img src="~/Img/UI/Logo-White.png">
     </a>
   </div>
-  <h1>Wallet creation in progress</h1>
+  <h1>Check Email For Account Activation</h1>
 </div>
 
 @using (Html.BeginForm("Login", "Access", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
@@ -22,9 +22,9 @@
         <div class="row">
           <div class="col-xs-9 col-xs-offset-2 form-group">
             <p>
-              Your wallet is being created at this time.
+              Please check your email address.
               <br /><br />
-              When this work is finished I receive an email to confirm your account.
+              You will receive a link to create a new password.
             </p>
           </div>
         </div>

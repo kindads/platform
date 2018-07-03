@@ -9,30 +9,32 @@
 
 namespace captivate_express_webapp.Models
 {
-  using System;
-  using System.Collections.Generic;
-
-  public partial class SITE
-  {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public SITE()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class SITE
     {
-      this.PRODUCTs = new HashSet<PRODUCT>();
-      this.CATEGORY = new HashSet<CATEGORY>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SITE()
+        {
+            this.PRODUCTs = new HashSet<PRODUCT>();
+            this.CATEGORY = new HashSet<CATEGORY>();
+        }
+    
+        public System.Guid IdSite { get; set; }
+        public string Name { get; set; }
+        public string URL { get; set; }
+        public string AspNetUsers_Id { get; set; }
+        public Nullable<bool> Verified { get; set; }
+        public string VerificationString { get; set; }
+        public Nullable<System.DateTime> RegistrationDate { get; set; }
+        public bool isActive { get; set; }
+        public string Token { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUCT> PRODUCTs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CATEGORY> CATEGORY { get; set; }
     }
-
-    public System.Guid IdSite { get; set; }
-    public string Name { get; set; }
-    public string URL { get; set; }
-    public string AspNetUsers_Id { get; set; }
-    public Nullable<bool> Verified { get; set; }
-    public string VerificationString { get; set; }
-    public Nullable<System.DateTime> RegistrationDate { get; set; }
- 
-    public virtual AspNetUser AspNetUser { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<PRODUCT> PRODUCTs { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<CATEGORY> CATEGORY { get; set; }
-  }
 }

@@ -1,8 +1,8 @@
 ﻿using Captivate.Azure;
-using Captivate.Comun.Models;
-using Captivate.Comun.Models.Entities;
-using Captivate.Comun.Models.ViewModel;
-using Captivate.Comun.Utils;
+using Captivate.Common.Models;
+using Captivate.Common.Models.Entities;
+using Captivate.Common.Models.ViewModel;
+using Captivate.Common.Utils;
 using Captivate.DataAccess;
 using Newtonsoft.Json;
 using System;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 
 
-namespace Captivate.Negocio.ViewModels
+namespace Captivate.Business.ViewModels
 {
     public  class SiteViewModelManager
     {
@@ -389,7 +389,7 @@ namespace Captivate.Negocio.ViewModels
                                 {
                                     //Verify Site
                                     _site.Verified = true;
-                                    
+                                    siteRepository.Edit(_site);
                                     result = true;
                                 }
                             }

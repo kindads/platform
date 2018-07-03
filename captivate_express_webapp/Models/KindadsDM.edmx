@@ -13,7 +13,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'kindads-dev.dbo.AspNetUserClaims' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AspNetUserClaims">
           <Key>
             <PropertyRef Name="Id" />
@@ -190,6 +190,8 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
           <Property Name="PARTNER_IdPartner" Type="uniqueidentifier" Nullable="false" />
           <Property Name="PRODUCT_TYPE_IdProductType" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsPremium" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PRODUCTSPARTNERS">
           <Key>
@@ -210,6 +212,8 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
           <Property Name="Verified" Type="bit" />
           <Property Name="VerificationString" Type="varchar" MaxLength="50" />
           <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="TAGCATEGORY">
           <Key>
@@ -260,6 +264,16 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
           <Property Name="HashTransaction" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Gas" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TRANSACTION_TYPE_IdTransactionType" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+          <Property Name="IsPremium" Type="bit" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <Association Name="FK_AspNetUserCAMPAIGN">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -589,6 +603,18 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserDetails_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="KindadsModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -614,6 +640,7 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
           <EntitySet Name="TRANSACTION_TYPE" EntityType="Self.TRANSACTION_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONS_CAPT" EntityType="Self.TRANSACTIONS_CAPT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONS_EXTERNAL" EntityType="Self.TRANSACTIONS_EXTERNAL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AspNetUserClaims].[Id] AS [Id], 
@@ -730,6 +757,10 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
             <End Role="TRANSACTION_TYPE" EntitySet="TRANSACTION_TYPE" />
             <End Role="TRANSACTIONS_EXTERNAL" EntitySet="TRANSACTIONS_EXTERNAL" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_AspNetUsers1" Association="Self.FK_UserDetails_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -759,6 +790,7 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
           <Property Name="WalletAddress" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="AspNetRoles" Relationship="KindadsModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
           <NavigationProperty Name="CAMPAIGN_CHAT" Relationship="KindadsModel.FK_AspNetUserCAMPAIGN_CHAT" FromRole="AspNetUser" ToRole="CAMPAIGN_CHAT" />
+          <NavigationProperty Name="UserDetails" Relationship="KindadsModel.FK_UserDetails_AspNetUsers1" FromRole="AspNetUser" ToRole="UserDetail" />
         </EntityType>
         <EntityType Name="CATEGORY">
           <Key>
@@ -820,6 +852,8 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
           <NavigationProperty Name="PRODUCT_TYPE" Relationship="KindadsModel.PRODUCT_TYPEPRODUCT" FromRole="PRODUCT" ToRole="PRODUCT_TYPE" />
           <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PRODUCT_SETTINGS" Relationship="KindadsModel.FK_PRODUCTPRODUCT_SETTINGS" FromRole="PRODUCT" ToRole="PRODUCT_SETTINGS" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsPremium" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="SITE">
           <Key>
@@ -835,6 +869,8 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
           <Property Name="Verified" Type="Boolean" />
           <Property Name="VerificationString" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="Token" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TAG">
           <Key>
@@ -1021,6 +1057,11 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
           <AssociationSet Name="FK_CAMPAIGN_IdCampaign" Association="KindadsModel.FK_CAMPAIGN_IdCampaign">
             <End Role="CAMPAIGN" EntitySet="CAMPAIGNs1" />
             <End Role="CAMPAIGN_CHAT" EntitySet="CAMPAIGN_CHAT" />
+          </AssociationSet>
+          <EntitySet Name="UserDetails" EntityType="KindadsModel.UserDetail" />
+          <AssociationSet Name="FK_UserDetails_AspNetUsers1" Association="KindadsModel.FK_UserDetails_AspNetUsers1">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="UserDetail" EntitySet="UserDetails" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="SITEPRODUCT">
@@ -1264,6 +1305,29 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsPremium" Type="Boolean" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="KindadsModel.FK_UserDetails_AspNetUsers1" FromRole="UserDetail" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_UserDetails_AspNetUsers1">
+          <End Type="KindadsModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="KindadsModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1328,7 +1392,9 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
     <EntitySetMapping Name="PRODUCTS">
       <EntityTypeMapping TypeName="IsTypeOf(KindadsModel.PRODUCT)">
         <MappingFragment StoreEntitySet="PRODUCTS">
-          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="IsPremium" ColumnName="IsPremium" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
           <ScalarProperty Name="EndTime" ColumnName="EndTime" />
@@ -1343,7 +1409,9 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
     <EntitySetMapping Name="SITES">
       <EntityTypeMapping TypeName="IsTypeOf(KindadsModel.SITE)">
         <MappingFragment StoreEntitySet="SITES">
-          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
                 <ScalarProperty Name="VerificationString" ColumnName="VerificationString" />
                 <ScalarProperty Name="Verified" ColumnName="Verified" />
                 <ScalarProperty Name="IdSite" ColumnName="IdSite" />
@@ -1587,6 +1655,17 @@ warning 6002: The table/view 'testkadsjp.dbo.AspNetUserClaims' does not have a p
                 <ScalarProperty Name="AspNetUser_IdCreator" ColumnName="AspNetUser_IdCreator" />
                 <ScalarProperty Name="CAMPAIGN_IdCampaign" ColumnName="CAMPAIGN_IdCampaign" />
                 <ScalarProperty Name="IdCampaignMessage" ColumnName="IdCampaignMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="KindadsModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IsPremium" ColumnName="IsPremium" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

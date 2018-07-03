@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Captivate.Azure;
-using Captivate.Comun.Models;
+using Captivate.Common.Models;
 using Captivate.Negocio;
-using Captivate.Negocio.Email;
+using Captivate.Business.Email;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;
+using Captivate.Business;
 
 namespace Captivate.Notifications
 {

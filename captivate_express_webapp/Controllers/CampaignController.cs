@@ -13,14 +13,14 @@ using System.IO;
 using Microsoft.AspNet.Identity;
 using MailChimp.Campaigns;
 using MailChimp;
-using Captivate.Comun.Interfaces;
-using Captivate.Negocio;
-using Captivate.Comun.Models;
-using Captivate.DataAccess;
-using Captivate.Comun.Models.Entities;
-using Captivate.Negocio.Partners.IContact;
 using Captivate.Common.Interfaces;
+
+using Captivate.Common.Models;
+using Captivate.DataAccess;
+using Captivate.Common.Models.Entities;
+
 using Captivate.Business;
+using Captivate.Azure;
 
 namespace captivate_express_webapp.Controllers
 {
@@ -1282,6 +1282,8 @@ namespace captivate_express_webapp.Controllers
       }
 
       ViewBag.ProductPrice = product.Price;
+      model.Product = new Models.PRODUCT();
+      model.Product.Price = product.Price;
       ViewBag.Site = product.SITE.Name;
       ViewBag.CampaignStatus = campaign.CAT_CAMPAIGN_STATUS_IdStatus.HasValue ? campaign.CAT_CAMPAIGN_STATUS_IdStatus.Value : 0;
       return View(model);

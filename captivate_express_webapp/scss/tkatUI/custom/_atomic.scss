@@ -15,6 +15,10 @@
   }
 }
 
+.relative {
+  position: relative;
+}
+
 ul {
   list-style: none;
 }
@@ -74,6 +78,23 @@ span.legend {
 
 
 // MOLECLES ====================================
+// Video
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+  iframe, object, embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 // Title
 .main-bar {
   margin: 0;
@@ -112,6 +133,8 @@ span.legend {
     //padding-bottom: 48px;
     h1 {
       border-color: transparent;
+      line-height: 2;
+      margin: 10px;
     }
     &.form-extended {
       width: 100%;
@@ -153,7 +176,7 @@ span.legend {
     h4 {
       color: $main-blue;
       margin-bottom: 20px;
-      font-family: $openSansSemibold;
+      font-family: $gorditaBold;
     }
 
     .link {
@@ -274,7 +297,7 @@ i.arrow {
 
     h3 {
       font-size: 1.125em;
-      font-family: $openSansSemibold;
+      font-family: $gorditaBold;
     }
   }
 
@@ -547,7 +570,6 @@ i.arrow {
         display: block;
         text-align: center;
         font-size: 10px;
-        font-family: $openSansLight;
 
         strong {
           font-size: 24px;
@@ -596,7 +618,7 @@ i.arrow {
           padding: 16px 0px 16px 56px;
           border-left: solid 6px transparent;
           text-align: left;
-          font-family: $openSansLight;
+          font-family: $gorditaRegular;
           line-height: 24px;
           color: $charcoal-grey;
           font-size: 16px;
@@ -785,7 +807,7 @@ i.arrow {
     .price {
       color: $vivid-violet;
       font-size: 16px;
-      font-family: $openSansSemibold;
+      font-family: $gorditaBold;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -860,7 +882,6 @@ i.arrow {
 
 .table.datagrid {
   margin: 20px 0;
-  font-family: $openSansRegular;
   font-size: .915em;
 
   > thead > tr > th {
@@ -868,7 +889,6 @@ i.arrow {
     font-size: .875em;
     padding: 8px 4px;
     color: $rich-black;
-    font-family: $openSansRegular;
 
     &.icon-delete {
       color: $black;
@@ -979,7 +999,7 @@ i.arrow {
   padding-bottom: 10px;
   margin-bottom: 10px;
   h4 {
-    font-family: $openSansLight;
+
   }
   .ad-person,
   .pub-person {

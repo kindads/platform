@@ -11,13 +11,12 @@
 }
 
 @mixin btn-core {
-  font-family: $openSansRegular;
   outline: 0;
-  word-spacing: .06em;
+  word-spacing: .08em;
 }
 
 @mixin btn-style ($bgcolor, $bdrcolor, $txtcolor) {
-  background-color: $bgcolor;
+  background: $bgcolor;
   border: solid 1px $bdrcolor;
   color: $txtcolor !important;
 }
@@ -26,29 +25,20 @@
 // Styles
 @mixin btn {
   @include btn-core;
-  @include transitionButton();
 }
 
 @mixin btn-default {
-  @include btn-core;
-  @include btn-style($white, darken($soft-grey, 10), darken($dark-color, 10));
+  @include btn-style($white, transparent, #5d4282);
   border-width: 1px;
   min-width: 160px;
   display: block;
-  width: 80%;
   margin: 0 auto;
-
+  font-family: $gorditaBold;
+  @include transitionButton();
   &:active, &:focus, &:hover {
-    background-color: $white;
+    background: lighten($main-violet, 21);
     border-color: $dim-grey;
-    color: $rich-black !important;
-  }
-
-  &:active {
-    &:hover {
-      background-color: $off-white;
-      border-color: lighten($dim-grey, 24);
-    }
+    color: $vivid-violet !important;
   }
 
   @include breakpoint($tablet) {
@@ -60,25 +50,17 @@
 }
 
 @mixin btn-primary {
-  @include btn-core;
-  @include btn-style($main-blue, $dark-blue, $white);
-  padding: 8px 48px;
+  @include btn-style(#0494c9, transparent, $white);
+  border-width: 1px;
   min-width: 160px;
   display: block;
-  width: 80%;
   margin: 0 auto;
-
+  font-family: $gorditaMedium;
   &:active, &:focus, &:hover {
-    background-color: lighten($main-blue, 12);
+    background: lighten($vivid-blue, 0);
     border-color: $dark-blue;
     color: $white;
-  }
-
-  &:active {
-    &:hover {
-      background-color: darken($main-blue, 12);
-      border-color: lighten($dark-blue, 24);
-    }
+    text-decoration: none;
   }
 
   @include breakpoint($tablet) {
@@ -100,13 +82,6 @@
     border-color: $vivid-violet;
     color: $white;
   }
-
-  &:active {
-    &:hover {
-      background-color: darken($main-violet, 12);
-      border-color: lighten($vivid-violet, 24);
-    }
-  }
 }
 
 .btn, button, input[type='submit'], input[type='button'], input[type='reset'] {
@@ -115,9 +90,6 @@
 
 .btn-default {
   @include btn-default;
-  background: linear-gradient(to bottom, $white 0%, darken($off-white, 2) 120%);
-  border-radius: 5px;
-
   &.disabled,
   &[disabled] {
     @include btn-disabled;
@@ -126,8 +98,7 @@
 
 .btn-primary {
   @include btn-primary;
-  background: linear-gradient(to bottom, $main-blue 0%, darken($main-blue, 10) 120%);
-  border-radius: 5px;
+  //background: linear-gradient(to bottom, $main-blue 0%, darken($main-blue, 10) 120%);
 
   &.disabled,
   &[disabled] {
@@ -155,12 +126,10 @@
   border-radius: 3px;
 }
 
-.btn-lg {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  box-shadow: 0 8px 6px -6px rgba($dim-grey, .9);
-}
-
 .btn-rounded {
   border-radius: 24px;
+}
+
+.btn-lg {
+  font-size: 1.15em;
 }

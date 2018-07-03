@@ -1,4 +1,4 @@
-﻿using Captivate.Comun.Models.Entities;
+﻿using Captivate.Common.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Models
+namespace Captivate.Common.Models
 {
     public class CreateSite
     {

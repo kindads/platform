@@ -17,6 +17,11 @@
   }
 }
 
+
+@Html.HiddenFor(m => m.Product.Price, new { id = "ProductPrice" });
+
+
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12 main-bar">
@@ -112,6 +117,7 @@
   });
 </script>
 
+<script src="~/Modules/metamaskModule.js"></script>
 <script type="text/javascript">
   $('#formValidateCampaign').submit(function (e) {
     e.preventDefault();
@@ -119,21 +125,41 @@
     console.log(idCampaign);
 
     $('#loadingCampaignValidateModal').modal('show');
-    $.ajax({
+
+    // Nueva funcionalidad -------------------------------------------
+    var ApiUrl = 'http://localhost:57265/api/';
+    metaMask.init(ApiUrl);
+
+    var price = $("#ProductPrice").val();
+    console.log(">>> Price:" + price);
+
+    var result = metaMask.currentBalanceEnough( price, idCampaign);
+    if (result === 1) {
+      metaMask.log(">> Is enough");
+      metaMask.payCampaign(metaMask.sendCampaign(function () {
+        $('#loadingCampaignValidateModal').modal('hide');
+        $("#pnlCampaignModalSuccesMsg").hide();
+        $("#pnlCampaignModalErrorMsg").hide();
+        $("#pnlActionsDetail").show();
+        $("#pnlActionsValidate").hide();
+      }));
+    }
+
+    @*$.ajax({
       type: 'Post',
       data: jQuery.param({ idCampaign: idCampaign }),
       url: '@Url.Action("ValidateCampaign")',
       dataType: 'json',
       success: function (response) {
         if (response.success) {
-          setTimeout(function () {           
+          setTimeout(function () {
             $('#loadingCampaignValidateModal').modal('hide');
             $("#pnlCampaignModalSuccesMsg").hide();
             $("#pnlCampaignModalErrorMsg").hide();
             $("#pnlActionsDetail").show();
             $("#pnlActionsValidate").hide();
-          }, 3000); 
-         
+          }, 3000);
+
         } else {
           setTimeout(function () {
             $("#pnlCampaignModalSuccesMsg").hide();
@@ -142,13 +168,13 @@
             $("#pnlActionsValidate").hide();
             $('#loadingCampaignModal').modal('hide');
           }, 3000);
-         
+
         }
       },
       error: function (ex) {
         alert('Failed to approved campaign.');
       }
-    });
+    });*@
   });
 </script>
 <script type="text/javascript">

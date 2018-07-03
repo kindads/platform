@@ -6,7 +6,7 @@
 
 
   // Static Grid Breakpoint Variables (Media Queries)
-  $ext-desktop:           1200px;
+  $ext-desktop:           1280px;
   $desktop:               992px;
   $tablet:                768px;
   $ext-mobile:            360px;
@@ -19,10 +19,14 @@
 
   //Assets location
   $fonts-path:            '../Fonts' !default;
-  $images-path:           '../Img/';
+  $images-path:           '../Img';
 
 
   // Font Variables
+  $gorditaRegular:        'gorditaregular';
+  $gorditaMedium:         'gorditamedium';
+  $gorditaBold:           'gorditabold';
+
   $openSansRegular:       'open_sansregular';
   $openSansItalic:        'open_sansitalic';
   $openSansLight:         'open_sanslight';
@@ -70,8 +74,7 @@
   $main-orange:           #e59d27;
 
   $dark-color:            #38435D;
-
-
+  
 
   // Secondary Palette
   $green:                 #abc111;
@@ -119,7 +122,7 @@
   @mixin transitionButton() {
     //-ms-transition: $transition-property $transition-time $method;
     //transition: $transition-property $transition-time $method;
-    transition: color .25s linear, background-color .5s ease-in-out, border-color .25s ease-in;
+    transition: all .35s ease-in;
   }
   @mixin transitionHeader() {
     transition: position .85s ease-in, background .75s ease-in-out, padding 1.15s linear;

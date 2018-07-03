@@ -1,8 +1,8 @@
 ﻿using Captivate.Comun.Enums;
-using Captivate.Comun.Interfaces;
-using Captivate.Comun.Models;
-using Captivate.Comun.Structures;
-using Captivate.Negocio.Utilerias;
+using Captivate.Common.Interfaces;
+using Captivate.Common.Models;
+using Captivate.Common.Structures;
+using Captivate.Business.Utilerias;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Negocio.Email
+namespace Captivate.Business.Email
 {
     public class MailManager 
     {

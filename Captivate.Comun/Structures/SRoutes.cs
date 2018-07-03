@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Captivate.Comun.Structures
+namespace Captivate.Common.Structures
 {
     public struct SRoutes
     {

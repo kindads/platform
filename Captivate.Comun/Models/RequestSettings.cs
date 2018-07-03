@@ -1,10 +1,10 @@
-using Captivate.Comun.Interfaces;
+using Captivate.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Captivate.Comun.Models
+namespace Captivate.Common.Models
 {
   public class RequestSettings<T> : IRequestSettings<T> where T: IRequest
   {

@@ -1,4 +1,5 @@
-﻿using Captivate.Comun.Models;
+﻿using Captivate.Common.Models;
+using Captivate.Comun.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

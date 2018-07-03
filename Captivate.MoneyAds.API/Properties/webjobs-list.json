@@ -1,0 +1,11 @@
+﻿{
+  "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
+  "WebJobs": [
+    {
+      "filePath": "../Captivate.WebJob.GeoTelemetry/Captivate.WebJob.GeoTelemetry.csproj"
+    },
+    {
+      "filePath": "../Captivate.WebJob.BrowserTelemetry/Captivate.WebJob.BrowserTelemetry.csproj"
+    }
+  ]
+}
