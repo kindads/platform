@@ -1,0 +1,138 @@
+@model IEnumerable<KindAds.Models.Advertiser.ProductPurchasedViewModel>
+@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+    var CountRecords = (Model != null && Model.Any()) ? Model.Count() : 0;
+}
+@if (Model != null && Model.Any())
+{
+  <div class="row">
+    <div class="col-sm-6">
+      <button id="btnFilter" class="btn-filter" data-toggle="collapse" data-target="#results-filter1" style="display:none;">Filter</button>
+      <p class="title">Premium Publishers (<label id="lblResultNoRecords">@ViewBag.NoRecordsPremium</label>)</p>
+    </div>
+  </div>
+
+  <div class="row">
+    @foreach (var d in Model)
+    {
+      if (d.Product.IsPremium)
+      {
+        bool isFirst = true;
+        string tags = "";
+        if (@d.ListCategory != null && d.ListCategory.Any())
+        {
+          foreach (var tag in d.ListCategory)
+          {
+            if (isFirst) { tags = tags + tag.Description; } else { tags = tags + ", " + tag.Description; }
+          }
+        }
+
+        <div class="col-sm-4 .col-md-4">
+          <div class="card">
+            <h3 class="card-title">@d.Product.ShortDescription</h3>
+            <div class="card-img">
+              <img class="img-responsive" src=@d.Product.Image />
+            </div>
+
+            <div class="card-body">
+              <div class="tags">
+                @tags
+              </div>
+
+              <div class="row">
+
+                <div class="col-sm-6">
+                  @*<a style="background-color:lightgray;" href="#" class="btn btn-secondary.disabled">Order Now</a>*@
+                  @*<a id="@d.Product.IdProduct.ToString()" href="@Url.Action("Index", "Campaign", new { idProduct = d.Product.IdProduct.ToString() })" class="btn btn-secondary" onclick="GetElementID(event,this.id,'@culture');">Order Now</a>*@
+                  @*<a id="@d.Product.IdProduct.ToString()" href="#" class="btn btn-secondary" onclick="GetElementID(event,this.id,'@culture');">Order Now</a>*@
+                  @*<button id="btnOrderNowPremium" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#productComingSoon">
+                    Order Now
+                  </button>*@
+
+                  <button id="@d.Product.IdProduct.ToString()" type="button" class="btn btn-secondary" onclick="migrateMetamask.ValidateMetamaskWalletAdvertiser(event,this.id,'@culture');">
+                    Order Now
+                  </button>
+
+                  <!--<a class="card-link" href="@Url.Action("Index", "Campaign", new { idProduct = d.Product.IdProduct.ToString() })" class="btn btn-secondary btn-lg">View details</a>-->
+                </div>
+                <div class="col-sm-6">
+                  <span class="price">@d.Product.Price.ToString("##0.00")</span>
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <button id="btnFilter" class="btn-filter" data-toggle="collapse" data-target="#results-filter1" style="display:none;">Filter</button>
+      <p class="title">Search results (<label id="lblResultNoRecords">@ViewBag.NoRecords</label>)</p>
+    </div>
+  </div>
+  <div class="row">
+    @foreach (var d in Model)
+    {
+      if (!d.Product.IsPremium)
+      {
+        bool isFirst = true;
+        string tags = "";
+        if (@d.ListCategory != null && d.ListCategory.Any())
+        {
+          foreach (var tag in d.ListCategory)
+          {
+            if (isFirst) { tags = tags + tag.Description; } else { tags = tags + ", " + tag.Description; }
+          }
+        }
+
+        <div class="col-sm-4 .col-md-4">
+          <div class="card">
+            <h3 class="card-title">@d.Product.ShortDescription</h3>
+            <div class="card-img">
+              <img class="img-responsive" src=@d.Product.Image />
+            </div>
+
+            <div class="card-body">
+              <div class="tags">
+                @tags
+              </div>
+
+              <div class="row">
+
+                <div class="col-sm-6">
+                  @*<a style="background-color:lightgray;" href="#" class="btn btn-secondary.disabled">Order Now</a>*@
+                  @*<a href="@Url.Action("Index", "Campaign", new { idProduct = d.Product.IdProduct.ToString() })" class="btn btn-secondary">Order Now</a>*@
+                  @*<button id="btnOrderNow" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#productComingSoon">
+                    Order Now
+                  </button>*@
+
+                  <button id="@d.Product.IdProduct.ToString()" type="button" class="btn btn-secondary" onclick="migrateMetamask.ValidateMetamaskWalletAdvertiser(event,this.id,'@culture');">
+                    Order Now
+                  </button>
+
+                  <!--<a class="card-link" href="@Url.Action("Index", "Campaign", new { idProduct = d.Product.IdProduct.ToString() })" class="btn btn-secondary btn-lg">View details</a>-->
+                </div>
+                <div class="col-sm-6">
+                  <span class="price">@d.Product.Price.ToString("##0.00")</span>
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      }
+    }
+  </div>
+}
+<input id="lblNoRecords" name="lblNoRecords" type="hidden" value="@CountRecords">
+
+@Html.Partial("_ProductComingSoon")

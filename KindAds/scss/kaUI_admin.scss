@@ -1,0 +1,65 @@
+/* Vendor
+================================================== */
+  @import 'vendor/breakpoint';
+
+  
+/* Base UI
+================================================== */
+  //helpers
+  @import 'tkatUI/base/_variables';                  // Variables
+  @import 'tkatUI/base/_reset';                      // Reset
+  @import 'tkatUI/base/_fonts';                      // Fonts
+
+  
+/* Global
+=================================================== */
+  html, body {
+    height:100%;
+    background: $white;
+  }
+  body {
+    font-family: $openSansRegular;
+    color: $dark-grey;
+    font-size: .875em;
+    line-height: 1.6em;
+  }
+  .wrapper {
+    min-height: 100%;
+  }
+  .main-content {
+    position: relative;
+    @include breakpoint($ext-desktop) {
+      .container-fluid {
+        margin: 0 auto;
+        width: 1250px;
+      }
+    }
+  }
+
+  .flexbox,
+  .flexbox-item {
+    display: flex;
+  }
+  .flexbox-item {
+    flex-grow: 1;
+    flex-direction: column;
+  }
+
+
+
+/* UI General
+================================================== */
+  //components
+
+  @import 'tkatUI/components/_typography';           // Typography
+  //@import "tkatUI/components/_fonts-icons";          // Fonts
+  @import 'tkatUI/components/_buttons';              // Buttons
+  @import 'tkatUI/components/_forms';                // Forms
+
+
+  /* UI Modules
+================================================== */
+  @import 'tkatUI/custom/_atomic';                   // Atomic
+  @import 'tkatUI/custom/_header';                   // Head
+  @import 'tkatUI/custom/_admin';                    // Pages
+

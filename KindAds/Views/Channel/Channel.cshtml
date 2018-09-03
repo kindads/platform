@@ -1,0 +1,194 @@
+@using KindAds.Comun.Structures
+@using System
+
+@{
+  ViewBag.Title = "View Channel";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+
+  string siteName = ViewBag.site;
+  string channelType = ViewBag.channelTypeId;
+  siteName = siteName.ToLower().Replace("https://", "").Replace("http://", "").Replace("www", "");
+}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li>@Html.ActionLink("Audiences", "MyAudiences", "Audience", null, new { @class = "link" })</li>
+        <li class="active">Channel</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <ul class="nav-tabs flexbox tab-group" role="tablist">
+        <li role="presentation" class="flexbox-item active">
+          <a href="#home" class="btn" aria-controls="home" role="tab" data-toggle="tab">View Channel</a>
+        </li>
+        <li role="presentation" class="flexbox-item">
+          <a href="#profile" class="btn" aria-controls="profile" role="tab" data-toggle="tab">Invite Advertisers</a>
+        </li>
+        <li role="presentation" class="flexbox-item">
+          <a href="#messages" id="btnMessage" class="btn" aria-controls="messages" role="tab" data-toggle="tab">Review Proposals (@ViewBag.NoProposals)</a>
+        </li>
+        <li role="presentation" class="flexbox-item">
+          <a href="#settings" class="btn" aria-controls="settings" role="tab" data-toggle="tab">Campaigns ()</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-9 content-section">
+        <div class="panel tab-content">
+          <div role="tabpanel" class="tab-panel active" id="home">
+            <section class="body-content">
+              <div class="card-horizontal clearfix">
+                <div class="card-img">
+                  <img src="@ViewBag.audienceImage" alt="Jaime S&aacute;nchez" />
+                </div>
+                <div class="card-details">
+                  <ul>
+                    <li class="site">@ViewBag.audienceName</li>
+                    <li>@ViewBag.site</li>
+                  </ul>
+                </div>
+              </div>
+              <hr />
+              <article>
+                <h1>Channel details</h1>
+                @*<p>Provide advertisers with more details about they can advertise to your <strong>@siteName</strong> audience.</p>*@
+                <a id="editChannel" class="btn btn-default" href="#">Edit channel</a>
+              </article>
+            </section>
+
+          <section class="form-data">
+            <div id="channelSection" class="clearfix">
+              @{ Html.RenderAction("GetAudienceChannelEditForm", new { audienceChannelId = ViewBag.audienceChannelId }); }
+            </div>
+          </section>
+        </div>
+
+        <div role="tabpanel" class="tab-panel" id="profile">
+          Lorem Ipsum 2
+        </div>
+
+        <div role="tabpanel" class="tab-panel" id="messages">
+            
+        </div>
+
+        <div role="tabpanel" class="tab-panel" id="settings">
+          Lorem Ipsum 4.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3 aside-section">
+      <div class="panel panel-detail">
+        <div class="body-content">
+          Der
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@Html.Partial("~/Views/Channel/_MessageChannel.cshtml")
+@Html.Partial("~/Views/Shared/_Processing.cshtml")
+@Html.Partial("_PreviewImageModal")
+@Html.Partial("_PreviewTextModal")
+
+
+@section Scripts {
+  <script type="text/javascript">
+    var channel = "";
+    var audienceChannelId = '@ViewBag.audienceChannelId';
+    var channelType = '@ViewBag.channelType';
+
+    function getAudienceId() {
+      let searchParams = new URLSearchParams(window.location.search);
+      let param = searchParams.get('audienceId');
+      return param;
+    }
+
+    $(document).ready(function () {
+      $("#formEditChannel").validate();
+
+      // Edit Channel    
+      $('#editChannel').on("click", function (e) {
+        e.preventDefault();
+        $(".form-data .form-control").removeAttr("disabled");
+        $(".radio-check input").removeAttr("disabled");
+        $(".form-container").removeClass("read-only");
+        $(this).hide();
+      });
+
+      // Cancel Channel    
+      $('#cancelChannel').on("click", function (e) {
+        e.preventDefault();
+        location.reload(); 
+      });
+
+      $('#formEditChannel').submit(function (e) {
+        var validImg = true;
+        if ($('#ImageDisplayCustom').is(':checked')) {
+          validImg = validateImgFile(480, 360, "#fileupImg", "#lblfileupImg");
+        }
+
+        if ($("#formEditChannel").valid() && validImg) {
+          var _data = new FormData(this);
+          e.preventDefault();
+          $('#processingModal').modal('show');
+          $.ajax({
+            url: "Channel",
+            type: "Post",
+            data: _data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              if (response.success) {
+                $('#processingModal').modal('hide');
+                $('#MessageChannelLabel').append(response.message);
+                $('#MessageChannelModal').modal('show');
+              } else {
+                $('#processingModal').modal('hide');
+                $('#MessageChannelLabel').append(response.message);
+                $('#MessageChannelModal').modal('show');
+              }
+
+            },
+            error: function (xhr, error, status) {
+              $('#processingModal').modal('hide');
+              $('#MessageChannelLabel').append('Error');
+              $('#MessageChannelModal').modal('show');
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+
+      $('#btnMessage').on("click", function (e) {
+        $('#processingModal').modal('show');
+        e.preventDefault();
+        $.get('@Url.Action("ReviewChannelProposal")',
+          {
+            audienceChannelId : '@ViewBag.audienceChannelId'
+          })
+          .done(function (data) {
+            $("#messages").html(data);
+            $('#processingModal').modal('hide');
+          })
+          .fail(function () {
+            $('#processingModal').modal('hide');
+            console.log("Error");
+            alert("Unknow error");
+          });
+      });
+    });
+    
+  </script>
+}

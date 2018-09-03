@@ -1,0 +1,142 @@
+/* Variables
+================================================== */
+  // Column Variables
+  $column:                60px;
+  $gutter:                20px;
+
+
+  // Static Grid Breakpoint Variables (Media Queries)
+  $ext-desktop:           1280px;
+  $desktop:               992px;
+  $tablet:                768px;
+  $ext-mobile:            360px;
+  $mobile:                320px;
+
+  $desktop-l:             1440px;
+  $tablet-p:              640px (orientation portrait);
+  $tablet-l:              800px (orientation landscape);
+
+
+  //Assets location
+  $fonts-path:            '../Fonts' !default;
+  $images-path:           '../Img';
+
+
+  // Font Variables
+  $gorditaRegular:        'gorditaregular';
+  $gorditaMedium:         'gorditamedium';
+  $gorditaBold:           'gorditabold';
+
+  $openSansRegular:       'open_sansregular';
+  $openSansItalic:        'open_sansitalic';
+  $openSansLight:         'open_sanslight';
+  $openSansSemibold:      'open_sanssemibold';
+  $arial:                 'Arial', 'Helvetica', sans-serif;
+  $kas-prefix:            'kas-icon-';
+
+
+  // New Greyscale
+  $black:                     #000000;    //  Hero, H1
+  $dark-grey:                 #474747;    //  General Text Color
+  $charcoal-grey:             #888888;    
+  $dim-grey:                  #B6B6B6;     
+  $grey:                      #E5E5E5;    //  Neutral
+  $soft-grey:                 #F2F2F2;    //  Foregroung
+  $off-white:                 #F4F7F7;    //  Background
+  $white:                     #ffffff;
+
+  // Color Variables
+  $main-blue:                 #0494C9;
+  $vivid-blue:                #1E7CB4;
+  $dark-blue:                 #2F6DA7;
+
+  $main-green:                #2CC288;
+  $vivid-green:               #34BC99;
+  $bright-green:              #74CE2F;
+
+  $main-violet:               #9668D0;
+  $vivid-violet:              #5D4282;
+  $dark-violet:               #4B4097;
+
+
+  // Colors
+  $primary-color:             $main-blue;    //  Accent
+  $secondary-color:           $dark-violet;    //  Btn-Border
+
+  // Greyscale
+
+
+  $rich-black:            #191919;    //  Heading, H2, H3, H4, Label
+
+
+
+
+  //$soft-grey:             #E8EEF1;    //  Input Border
+
+
+
+  // Forms
+  $input-focus:           #23AFDE;
+  $input-bg:              #FDF9C9;
+
+
+
+  $main-orange:           #FF5B65;
+  $vivid-orange:          #F5345C;
+  $vivid-pink:            #FF0561;
+  $main-orange:           #e59d27;
+
+  $dark-color:            #38435D;
+  
+
+  // Secondary Palette
+  $green:                 #abc111;
+  $pastel-green:          #c4d358;
+  $soft-green:            #dde6A0;
+  $light-green:           #f2f6dc;
+
+  $orange:                #e59d27;
+  $pastel-orange:         #edba67;
+  $soft-orange:           #f5d8a9;
+  $light-orange:          #fbf0df;
+
+  $violet:                #9e3667;
+  $pastel-violet:         #bb7294;
+  $soft-violet:           #d8afc2;
+  $light-violet:          #f1e1e8;
+
+  $blue:                  #1bb3bc;
+  $pastel-blue:           #5fcad0;
+  $soft-blue:             #a4e1e4;
+  $light-blue:            #ddf4f5;
+
+
+  // Alerts & Error
+  $info-green:            #62a642;
+  $info-blue:             #0080ff;
+  $info-red:              #ff0000;
+  $info-orange:           #fff2de;
+  $info-tangerine:        #F7931E;
+  $info-brown:            #A67C52;
+
+
+
+  // Shadows
+  $text-shadow:           2px 2px 4px rgba($black, .8);
+  $box-shadow:            0px 3px 4px rgba($black, .15);
+  $box-shadow-error:      inset -0px 2px 4px rgba($soft-grey, 1);
+  $box-shadow-focus:      0 0 5px rgba($input-focus, 1);
+
+
+  // Transitions
+  $transition-property: all;
+  $transition-time: .3s;
+  $method: ease-in-out;
+  @mixin transitionButton() {
+    //-ms-transition: $transition-property $transition-time $method;
+    //transition: $transition-property $transition-time $method;
+    transition: all .35s ease-in;
+  }
+  @mixin transitionHeader() {
+    transition: position .85s ease-in, background .75s ease-in-out, padding 1.15s linear;
+  }

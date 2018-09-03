@@ -1,0 +1,9 @@
+{
+  "name": "kind-ads.web-job.minado",
+  "version": "0.0.0",
+  "description": "KindAds.WebJob.Minado",
+  "main": "server.js",
+  "author": {
+    "name": "aalal"
+  }
+}

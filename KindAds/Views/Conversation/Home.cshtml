@@ -1,0 +1,248 @@
+@model  KindAds.Negocio.ViewModels.KindAdsV2.ConversationViewModel
+@{
+  ViewBag.Title = "Conversations";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+  var email = System.Web.HttpContext.Current.User.Identity.Name;
+  var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+
+@section Head {
+  @Styles.Render("~/Content/kaUI_chat.css")
+}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Back to Marketplace", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li class="active">View Channel</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="panel chat-box">
+    <div class="row">
+      <div class="col-3 aside-section">
+        <section>
+          <article>
+            <div class="heading">
+              <button class="btn btn-secondary btn-sm" onclick="showCreateConversationModal();">Compose</button>
+            </div>
+          </article>
+          <article>
+            <!-- Search bar -->
+            <div class="search">
+              @Html.TextBoxFor(model => model.searchConversation, new { @placeholder = "Search", @class = "form-control", @maxlength = 80 })
+            </div>
+            <!-- Users -->
+            <div>
+              <ul class="users">
+                @foreach (var item in Model.conversationItems)
+                {
+                  <li>
+                    <a href="#" onclick="showMessages('@item.ProfileName','@item.ProfileTagLine','@item.ConversationId')">
+                      <div class="img">
+                        <img src="@item.IconUrl" alt="" />
+                      </div>
+                      <div class="info">
+                        <span class="profile-name">@item.ProfileName</span>
+
+                        <span class="last-msg"> @item.LastMessage.MessageWithoutHtml </span>
+
+                        @if (Convert.ToInt32(item.LastMessage.DayOfMessage) == DateTime.Now.Day)
+                        {
+                          <span class="date">@item.LastMessage.HourOfMessage : @item.LastMessage.MinuteOfMessage</span>
+                        }
+                        @if (Convert.ToInt32(item.LastMessage.DayOfMessage) == (DateTime.Now.Day - 1))
+                        {
+                          <span class="date">Yesterday</span>
+                        }
+                        @if (item.LastMessage.Message == string.Empty)
+                        {
+                          <span class="date"></span>
+                        }
+                        else
+                        {
+                          <span class="date">@item.LastMessage.MonthOfMessage / @item.LastMessage.DayOfMessage / @item.LastMessage.YearOfMessage </span>
+                        }
+                        </div>
+                    </a>
+                  </li>
+                }
+              </ul>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <div class="col-9 content-section">
+        <section>
+          <article class="heading clearfix">
+            <div class="pull-left">
+              <span id="profileNameId"></span>
+              <small id="profileTagLine"></small>
+            </div>
+
+            <div class="pull-right">
+              <a id="viewProposalBtn" class="btn btn-secondary btn-sm disabled" onclick="goToProposal();">View Proposal</a>
+            </div>
+          </article>
+
+          <article>
+            <!-- Chat conversation -->
+            <div id="chatConversationPanel" style="max-height:360px; overflow-y:scroll">
+              <div class="chats">
+
+                @if (Model.conversationItems.Count > 0)
+                {
+                  foreach (var chunk in Model.conversationItems[0].Chunks)
+                  {
+                    <!--Day separator-->
+                    <div class="chat-day" id="@chunk.ElementToAttach">
+                      <div class="date">@chunk.HeadingDate</div>
+
+                      @foreach (var item in chunk.Messages)
+                      {
+                        <!--Conversation n-->
+                        <div class="chat">
+                          <span class="user">@item.SignedBy</span>
+                          <span class="txt">                          
+                            @Html.Raw(HttpUtility.HtmlDecode(@item.Message))
+                          </span>
+                          <span class="time">@item.MessageHour</span>
+                        </div>
+                      }
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+
+            <!-- Text area -->
+            <div class="form-group clearfix">
+              @Html.TextAreaFor(model => model.conversationForm.ChatMessage, new { @class = "form-control no-resize", @readonly = true, rows = 2, cols = 70, wrap = "hard", @placeholder = "Type message here ...", @maxlength = 280 })
+            </div>
+            <div class="pull-right">
+              <input type="submit" id="SendChatMessageBtn" value="Send" class="btn btn-secondary disabled" onclick="SendChatMessage();" />
+            </div>
+          </article>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+@Html.Partial("_CreateConversationModal", Model)
+
+@section Scripts {
+  <script type="text/javascript">
+
+    // InsideChat variables is define in _MarketplacePubLayout.cshtml
+    InsideChat = true;
+
+    // local variables
+    var currentConversation =
+      {
+        ProfileName: "",
+        ProfileTagLine: "",
+        Id: "",
+        SendProposal: false,
+        Message:""
+      };
+
+    function showMessages(profileName, profileTagLine, conversationId) {
+
+      // update current conversation
+      currentConversation.Id = conversationId;
+      currentConversation.ProfileName = profileName;
+      currentConversation.ProfileTagLine = profileTagLine;
+      currentConversation.SendProposal = true;
+
+      // show data on chat panel
+      $("#profileNameId").text(profileName);
+      $("#profileTagLine").text(profileTagLine);
+      $("#viewProposalBtn").removeClass("disabled");
+      $("#conversationForm_ChatMessage").attr("readonly", false);
+      $("#SendChatMessageBtn").removeClass("disabled");
+
+      // get messages
+       $.get('@Url.Action("GetChatMessages")',
+         { Id: conversationId }).done(function (data) {           
+           $("#chatConversationPanel").html(data);
+         }).fail(function () {            
+            console.log("Error");
+          });
+    }
+
+    function goToProposal() {
+      // go to proposal
+      if (currentConversation.SendProposal) {
+        console.log("Go to proposal");
+        var currentConversationStr = JSON.stringify(currentConversation);
+
+        console.log(currentConversation);
+
+        $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GoToProposal", "Conversation")',
+          data: currentConversation,
+          cache: false,
+          success: function (result) {
+            //error
+            console.log(result);
+            window.location.href = result.url;
+        }
+       });
+
+      }
+      else {
+        console.log("Dont select conversation");
+      }
+    }
+
+    function loadMessagesFromConversation(conversationId, name) {
+      console.log("ConversationId:" + conversationId);
+      $("#conversationTitle").text(name);
+    }
+
+    function showCreateConversationModal() {
+      console.log("Show conversation modal");
+      $('#CreateConversationModal').modal('show')
+    }
+
+    function SendNewConversation() {
+      console.log("Obtenemos los datos y enviamos al controlador");
+    }
+
+    function SendChatMessage() {
+
+      var text = $("#conversationForm_ChatMessage").val();
+      currentConversation.Message = text;
+      
+      $("#conversationForm_ChatMessage").val("");
+
+        $.ajax({
+          type: 'POST',
+          url: '@Url.Action("AddMessage", "Conversation")',
+          data: currentConversation,
+          cache: false,
+          success: function (result) {
+            console.log(result.Result);
+            // this function is defined on signalRProducts.js
+            getMessageFromSignalRHandler();
+        }
+      });
+
+      console.log("Obtenemos el valor del text box y lo enviamos a signal R")
+    }
+
+    $("#btnCreateConversationModal").click(function () {
+      $("#CreateConversationModal").modal("hide");
+    });
+
+    $("#CancelNewConversationBtn").click(function () {
+      $("#CreateConversationModal").modal("hide");
+    });
+  </script>
+}
+

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <style>
+      .fill {
+        fill: none;
+      }
+
+      .outline {
+        fill: none;
+        stroke: #000;
+      }
+    </style>
+  </defs>
+  <g id="subscriber-icon" transform="translate(11 13)">
+    <circle id="bounding" class="fill" cx="24" cy="24" r="24" transform="translate(-11 -13)"/>
+    <g id="Group" transform="translate(-12.7 -10.9)">
+      <path id="Path" class="outline" d="M29.932,52.459a.9.9,0,0,0-1.017.3l-.359.359a4.668,4.668,0,0,1-6.943-.389.9.9,0,0,0-1.017-.269,9.217,9.217,0,0,0-5.9,8.559v1.766a.9.9,0,0,0,.9.9H34.929a.9.9,0,0,0,.9-.9V61.018A9.217,9.217,0,0,0,29.932,52.459Z" transform="translate(0 -29.781)"/>
+      <path id="Path-2" data-name="Path" class="outline" d="M30.2,15.825A5.925,5.925,0,1,0,36.125,9.9,5.925,5.925,0,0,0,30.2,15.825Z" transform="translate(-10.862)"/>
+    </g>
+  </g>
+</svg>

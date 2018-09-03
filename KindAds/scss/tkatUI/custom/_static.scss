@@ -1,0 +1,346 @@
+ /* Pages
+ ================================================== */
+//Globals
+// Carousel
+.carousel.slide {
+  @include breakpoint($tablet) {
+    .carousel-indicators {
+      position: relative;
+      bottom: 0;
+      margin: 30px auto 10px;
+      left: inherit;
+    }
+
+    .carousel-inner {
+
+      padding: 0 20px;
+
+      img {
+        margin: 0 auto 20px;
+        max-width: 280px;
+      }
+
+      h3, p {
+        color: $dark-grey;
+        line-height: 2;
+      }
+
+      h3 {
+        font-size: 1.714em;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+// Faq
+.faq {
+  .accordion {
+    padding: 15px;
+    .panel-group {
+      background: linear-gradient(100deg, #0494c9, #5d4282) no-repeat;
+      background-size: 100% 15px;
+      background-color: $white;
+      border-style: solid;
+      border-width: 2px;
+      border-image-source: linear-gradient(142deg, #0494c9, #5d4282);
+      border-image-slice: 1;
+      border-image-width: 2;
+      border-image-outset: 0;
+      padding-top: 15px;
+      .panel-default :last-child {
+        .panel-heading a {
+          border-bottom-color: transparent;
+        }
+      }
+    }
+    .panel-default {
+      border: none;
+      border-radius: 0;
+      margin: 0;
+      & > .panel-heading {
+        border-radius: 0;
+        color: inherit;
+        padding: 0;
+        background-color: lighten($dim-grey, 38);
+        border-color: transparent;
+        a {
+          color: $dark-violet;
+          text-decoration: none;
+          display: block;
+          padding: 32px 56px 32px 32px;
+          border-bottom: solid 1px $dim-grey;
+          background-color: $white;
+          &[aria-expanded='true'] {
+            border: none;
+            color: $main-violet;
+            background-color: lighten($main-violet, 20);
+            background-color: $off-white;
+            span {
+              background: url(#{$images-path}/icons/minus-plus.png) no-repeat center center;
+            }
+          }
+        }
+
+        span {
+          width: 20px;
+          height: 20px;
+          display: block;
+          float: right;
+          top: 10px;
+          right: 20px;
+          position: absolute;
+          background: url(#{$images-path}/icons/add-plus.png) no-repeat center center;
+        }
+
+        &:hover {
+          background-color: lighten($main-violet, 20);
+          cursor: pointer;
+        }
+      }
+
+      .panel-title {
+        font-size: 1.714em;
+        margin-bottom: 0;
+      }
+
+      .panel-collapse.in {
+        .panel-body {
+          background-color: $off-white;
+          border-bottom: solid 2px $vivid-violet;
+        }
+      }
+
+      .panel-body {
+        background-color: $off-white;
+        border-top: solid 1px $soft-grey;
+        border-top: none;
+        padding: 0 32px 32px;
+        br {
+          display: block;
+          line-height: 1em;
+          height: 12px;
+          content: " ";
+        }
+      }
+    }
+  }
+
+  @include breakpoint($tablet) {
+    .accordion {
+      background-color: #f7f9fa;
+    }
+  }
+}
+  
+
+//Wallet
+.wallet {
+  h2 {
+    margin-bottom: 24px !important;
+    text-align: left !important;
+  }
+  article {
+    margin-bottom: 48px;
+    ul {
+      li {
+        font-size: 1.25em;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+// Sign
+.sign {
+  .form-layout {
+    padding: 0;
+    .sign-wrapper {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      .content {
+        background-color: $soft-grey;
+        margin: 0;
+        padding: 24px 0;
+        color: $dark-grey;
+        h3 {
+          font-size: 1.5em;
+          margin-bottom: 20px;
+        }
+        .btn-large {
+          .btn-default,
+          .btn-primary {
+            width: 100%;
+          }
+        }
+      }
+
+      .aside {
+        background: $white;
+        display: none;
+        width: 50%;
+        margin: 0;
+        .flexbox-item {
+          justify-content: center;
+        }
+      }
+    }
+
+    .form-container {
+      padding: 15px;
+      .form-control {
+        padding: 15px;
+        height: auto;
+      }
+      .help-links {
+        margin: 10px;
+        a {
+          color: $primary-color;
+        }
+      }
+    }
+
+    .radio-group {
+      .form-group {
+        margin: 0;
+        padding: 0;
+        background: $white;
+        label {
+          display: block;
+          margin: 0;
+          padding: 10px 15px;
+          border: solid 1px $dark-grey;
+          &.active {
+            background-color: $dark-grey;
+            color: $white; 
+          }
+        }
+
+        .control_indicator {
+          top: 10px;
+          right: 8px;
+          left: inherit;
+          border: none;
+          &:after {
+            border-color: $white;
+            top: 2px;
+            left: 8px;
+          }
+        }
+
+        input:checked {
+          & ~ .control_indicator {
+            background: transparent;
+            border-color: transparent;
+          }
+        }
+
+        &:first-child label {
+          border-radius: 6px 0 0 6px;
+        }
+        &:last-child label {
+          border-radius: 0 6px 6px 0;
+        }
+      }
+    }
+
+    .role {
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+
+  @include breakpoint($tablet) {
+    .form-layout {
+      padding: 64px 0;
+      .sign-wrapper {
+        flex-direction: row;
+        .content {
+          padding: 32px 0;
+          width: calc(100% - 400px);
+        }
+
+        .aside {
+          background: $white;
+          padding: 0;
+          display: flex;
+          width: 400px;
+          .flexbox-item {
+            br {
+              display: none;
+            }
+          }
+        }
+        &.extended {
+          .content {
+            width: 80%;
+            margin-left: 10%;
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint($desktop) {
+    .form-layout {
+      .sign-wrapper {
+        .content {
+          width: 50%;
+          padding: 32px;
+        }
+        .aside {
+          width: 50%;
+          .flexbox-item {
+            br {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// Legal
+.legals {
+  font-size: 115%;
+  p {
+    line-height: 2;
+    margin-bottom: 20px;
+    a {
+      color: $main-blue;
+    }
+    &.bold {
+      font-weight: 600;
+    }
+    br {
+      display: block;
+      margin-bottom: 10px;
+      content: "A";
+    }
+  }
+  ul {
+    list-style: none;
+  }
+  ol, ul {
+    list-style-position: outside;
+    padding-left: 24px;
+    margin: 0;
+    span.underline {
+      text-decoration: underline;
+    }
+    &.latin {
+      list-style-type: lower-latin;
+    }
+    ol li {
+      padding-left: 24px;
+      ul li {
+        list-style: disc;
+      }
+    }
+  }
+}

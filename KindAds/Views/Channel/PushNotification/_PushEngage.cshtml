@@ -1,0 +1,77 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<br />
+<h1>PushEngage</h1>
+
+<div class="form-group">
+  @Html.Label("API", htmlAttributes: new { @class = "control-label" })
+  @Html.TextBoxFor(model => model.pushProductForm.pushEnagageForm.ApiToken, new { @placeholder = "e.g. Your Api token ", @class = "form-control", @required = "true", @data_msg_required = "API token is required", @maxlength = 60 })
+</div>
+
+<div class="form-group">
+  <div id="btnValidateProvider" class="btn btn-default btn-lg" onclick="ValidateProvider();">Validate</div>
+</div>
+
+
+<!-- Seccion de formulario escondido -->
+<div id="pushEngageCompleteForm" style="display:none">
+
+  @*<div class="form-group">
+    @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.pushProductForm.pushEnagageForm.Name, new { @placeholder = "e.g. Name ", @class = "form-control", @required = "true", @data_msg_required = "Name is required", @maxlength = 60 })
+  </div>*@
+
+</div>
+
+<script type="text/javascript">
+
+  var ApiKeyIsValid = false;
+
+
+  function ValidateProvider() {
+    $('#processingModal').modal('show');
+    
+    var apiToken = $("#pushProductForm_pushEnagageForm_ApiToken").val();
+
+    // envia los datos
+    var requestData = {
+      ApiToken: apiToken,
+      ChannelId: '69349c7c-48b2-4628-9f3f-22846b1bc6de',
+      ProviderId: '3b90bfc4-911b-4980-8e8c-b89b9af51bee'
+    };
+
+    $.ajax({
+      url: "ValidateProvider",
+      type: "Post",
+      data: { request: requestData },
+      success: function (response) {
+        $("#pushProductForm_pushEnagageForm_ApiToken").val(apiToken);
+        
+        ApiKeyIsValid = response.IsValid;
+        
+
+        if (ApiKeyIsValid == 'True') {
+
+          
+          $("#pushEngageCompleteForm").show();
+          $("#btnValidateProvider").hide();
+          $('#processingModal').modal('hide');
+          document.getElementById("pushProductForm_pushEnagageForm_ApiToken").readOnly = true;
+        }
+        else {
+          $('#processingModal').modal('hide');          
+          alert("Api key is not valid");
+          $("#pushEngageCompleteForm").hide();
+          $("#btnValidateProvider").show();
+        }
+
+      },
+      error: function (xhr, error, status) {
+        
+      }
+    });
+  }
+
+</script>
+
+

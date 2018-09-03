@@ -1,0 +1,181 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<h2>Campaign Monitor</h2>
+
+<div class="form-group">
+  @Html.Label("Input your Campaign Monitor API Key", htmlAttributes: new { @class = "control-label" })
+  <p>Learn how to do this by clicking <a class="link" href="@Url.Action("CampaignMonitorHelp", "Support")" target="_blank">here</a></p>
+  <div class="inline-group">
+    @Html.TextBoxFor(model => model.emailProductForm.campaignMonitorForm.ApiToken, new { @placeholder = "e.g. Your Api token ", @class = "form-control", @required = "true", @data_msg_required = "API token is required", @maxlength = 60 })
+    <div id="btnValidateProvider" class="btn btn-secondary" onclick="ValidateProvider();">Sync</div>
+  </div>
+</div>
+
+
+<div id="campaignMonitorCompleteForm" style="display:none">
+  <div class="form-group">
+    @Html.Label("Client", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.campaignMonitorForm.ClientId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Client is required" })
+    @Html.ValidationMessageFor(model => model.emailProductForm.campaignMonitorForm.ClientId)
+  </div>
+  <div class="form-group">
+    @Html.Label("Lists", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.campaignMonitorForm.ListId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+    @Html.ValidationMessageFor(model => model.emailProductForm.campaignMonitorForm.ListId)
+    <div class="main-data-number">
+      (&nbsp;<span id="lblSubscribersCampaignMonitor">&nbsp;</span>&nbsp;<small>subscribers</small>&nbsp;)
+    </div>
+  </div>
+  @*<div class="form-group">
+    <label id="lblSubscribersCampaignMonitor"></label>
+  </div>*@
+  <div class="form-group">
+    @Html.Label("Segment", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.campaignMonitorForm.SegmentId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Segment is required" })
+    @Html.ValidationMessageFor(model => model.emailProductForm.campaignMonitorForm.SegmentId)
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#emailProductForm_campaignMonitorForm_ClientId").change(function () {
+    fillList();
+    fillSegment();
+  });
+
+  $("#emailProductForm_campaignMonitorForm_ListId").change(function () {
+    GetSubscribers();
+  });
+
+  function fillClient() {
+    $("#emailProductForm_campaignMonitorForm_ClientId").empty();
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GetClientCampaignMonitor")',
+          dataType: 'json',
+          data: { ApiToken: $("#emailProductForm_campaignMonitorForm_ApiToken").val()},
+          success: function (elements) {
+            if (elements != null && elements != '') {
+              $("#emailProductForm_campaignMonitorForm_ClientId").append('<option value="">' + 'Please select' + '</option>');
+              $.each(elements, function (i, state) {
+                $("#emailProductForm_campaignMonitorForm_ClientId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+              });
+            } else {
+              $("#emailProductForm_campaignMonitorForm_ClientId").append('<option value="">' + 'Please select' + '</option>');
+            }
+          },
+          error: function (ex) {
+              alert('Failed to retrieve list from campaign monitor.' + ex);
+          }
+      });
+  }
+
+
+  function fillList() {
+    $("#emailProductForm_campaignMonitorForm_ListId").empty();
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GetListCampaignMonitor")',
+          dataType: 'json',
+          data: { idClient: $("#emailProductForm_campaignMonitorForm_ClientId").val(), ApiToken: $("#emailProductForm_campaignMonitorForm_ApiToken").val() },
+          success: function (tags) {
+            if (tags != null && tags != '') {
+              $("#emailProductForm_campaignMonitorForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+              $.each(tags, function (i, state) {
+                $("#emailProductForm_campaignMonitorForm_ListId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+              });
+            } else {
+              $("#emailProductForm_campaignMonitorForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+            }
+          },
+          error: function (ex) {
+              alert('Failed to retrieve list.' + ex);
+          }
+      });
+  }
+
+  function fillSegment() {
+    $("#emailProductForm_campaignMonitorForm_SegmentId").empty();
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GetSegmentCampaignMonitor")',
+          dataType: 'json',
+        data: { idClient: $("#emailProductForm_campaignMonitorForm_ClientId").val(), ApiToken: $("#emailProductForm_campaignMonitorForm_ApiToken").val()},
+          success: function (elements) {
+            if (elements != null && elements != '') {
+              $("#emailProductForm_campaignMonitorForm_SegmentId").append('<option value="">' + 'Please select' + '</option>');
+              $.each(elements, function (i, state) {
+                $("#emailProductForm_campaignMonitorForm_SegmentId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+              });
+            } else {
+              $("#emailProductForm_campaignMonitorForm_SegmentId").append('<option value="">' + 'Please select' + '</option>');
+            }
+          },
+          error: function (ex) {
+            alert('Failed to retrieve segment from campaign monitor.' + ex);
+          }
+      });
+  }
+
+  function GetSubscribers() {
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GetNumberSubsCampaignMonitor")',
+          dataType: 'json',
+        data: { ApiToken: $("#emailProductForm_campaignMonitorForm_ApiToken").val(), ListId: $("#emailProductForm_campaignMonitorForm_ListId").val()},
+          success: function (result) {
+            $("#lblSubscribersCampaignMonitor").text(result.CountSubscribers);
+          },
+          error: function (ex) {
+            alert('Failed to retrieve segment from campaign monitor.' + ex);
+          }
+      });
+  }
+
+  function ValidateProvider() {
+    $('#processingModal').modal('show');
+    var apiToken = $("#emailProductForm_campaignMonitorForm_ApiToken").val();
+
+    // envia los datos
+    var requestData = {
+      ApiToken: apiToken,
+      ProviderId: 'f30ae168-93b5-407d-b9a7-6d167555184b'
+    };
+
+    $.ajax({
+      url: "ValidateProvider",
+      type: "Post",
+      data: { request: requestData },
+      success: function (response) {
+        $("#emailProductForm_campaignMonitorForm_ApiToken").val(apiToken);
+
+        console.log(apiToken);
+        ApiKeyIsValid = response.IsValid;
+        console.log(ApiKeyIsValid);
+
+        if (ApiKeyIsValid == 'True') {
+
+          fillClient();
+
+          console.log("Api key is valid");
+          $("#campaignMonitorCompleteForm").show();
+          $("#btnValidateProvider").hide();
+
+          document.getElementById("emailProductForm_campaignMonitorForm_ApiToken").readOnly = true;
+          $("#hiddenIsValidApiKey").val(true);
+          $('#processingModal').modal('hide');
+        }
+        else {
+          $('#processingModal').modal('hide');
+          console.log("Api key is not valid");
+          alert("Api key is not valid");
+          $("#campaignMonitorCompleteForm").hide();
+          $("#btnValidateProvider").show();
+        }
+
+      },
+      error: function (xhr, error, status) {
+        console.log(error);
+      }
+    });
+  }
+</script>

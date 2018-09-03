@@ -1,0 +1,13 @@
+@model KindAds.Negocio.MoneyAdsManager
+@{
+  ViewBag.Title = "Dashboards";
+  Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+<br />
+<br />
+
+@{
+  Html.RenderPartial("CreateAdsForm",Model);
+}
+
+

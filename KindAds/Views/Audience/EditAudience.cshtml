@@ -1,0 +1,664 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceViewModel
+@{
+    ViewBag.Title = "Edit your audience";
+    Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+    List<KindAds.Comun.Models.CosmosDocuments.KindAdsV2.AudiencePreferenceDocument> audiencePreferences = ViewBag.audiencePreferences;
+}
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li>@Html.ActionLink("Audiences", "MyAudiences", "Audience", null, new { @class = "link" })</li>
+        <li class="active">Edit Audience</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h1>Audience </h1>
+      <p>Let advertisers know about the make up of your audience.</p>
+
+      <section class="form-data">
+        <fieldset>
+          <div class="white-block form-container read-only">
+            <article>
+              <h2>Tell us about your audience </h2>
+              <p>These data are associated witn this url: <span>@ViewBag.WebSiteUrl</span></p>
+              <a id="editAudience" class="btn btn-default" href="#">Edit audience</a>
+            </article>
+            <hr />
+
+           
+
+
+            <div class="clearfix">
+              @using (Html.BeginForm("EditAudience", "Audience", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formEditAudience" }))
+              {
+                @Html.HiddenFor(m => m.audience.Id)
+                @Html.Hidden("preferencesStringify", Model.preferencesStringify,new { @id= "preferencesStringify" })
+
+                @Html.HiddenFor(m => m.audience.IconUrl)
+                @Html.HiddenFor(m => m.audience.ImageUrl)
+
+                @Html.HiddenFor(m => m.audience.HowManyAdvertisers)
+                @Html.HiddenFor(m => m.audience.Visibility)
+                <article>
+                  <div class="form-group">
+                    @Html.Label("Choose a title for your audience", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.audience.Title, new { @placeholder = "e.g. Your Company Name", @disabled = "disabled", @class = "form-control", @required = "true", @data_msg_required = "Title is required", @maxlength = 30 })
+                    <span id="counterTitle" class="counter">30 / 30 remaining</span>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("Choose a tagline for your audience", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.audience.Tagline, new { @placeholder = "e.g. New SaaS product in hypergrowth", @disabled = "disabled", @class = "form-control", @required = "true", @data_msg_required = "Tagline is required", @maxlength = 50 })
+                    <span id="counterTagline" class="counter">50 / 50 remaining</span>
+                  </div>
+
+                  <div class="form-group no-edit">
+                    @Html.Label("What is the URL for this audience?", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.audience.UrlProtocol, new SelectList(Model.GetProtocols("choose"), "Id", "Name", Model.audience.UrlProtocol), new { @class = "form-control form-control-small dropdown", @style = "display: none;" })
+                    @Html.TextBoxFor(model => model.audience.WebSiteUrl, new { @placeholder = "e.g. www.yoursite.com", @disabled = "true", @class = "form-control", @required = "true", @data_msg_required = "Main URL is required" })
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("Describe your business and your audience", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.audience.Description, new { @placeholder = "Write out your description here....", @disabled = "disabled", @class = "form-control no-resize", rows = 7, cols = 80, wrap = "hard", @maxlength = 1000, @required = "true", @data_msg_required = "Describe your business and your audience is required" })
+                    <span id="counterDescription" class="counter">1000 / 1000 remaining</span>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("Choose an icon to display for with your profile", htmlAttributes: new { @class = "control-label" })
+                    <div class="marquee-upload clearfix">
+                      @*<label id="lblFileupIcon"></label>*@
+                      @KindAds.Helpers.ImgSelectorHelper.DisplayImageSelector("fileupIcon", Model.audience.IconUrl)
+                      @*<label>@Model.audience.IconUrl.Split('/')[Model.audience.IconUrl.Split('/').Length - 1]</label>*@
+                      @*<img id="iconSelected" src="@Model.audience.IconUrl" />*@
+                      <div class="content">
+                        <div class="btn btn-default file icon">
+                          + Upload Files
+                          <input id="fileupIcon" name="fileupIcon" type="file" />
+                        </div>
+                        <div>
+                          Drag &amp; drop any images or documents tha might be helpful in providing insights and information into your business here.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What category is this audience most assciated with?", htmlAttributes: new { @class = "control-label" })
+                    <!--Industries-->
+                    @Html.DropDownListFor(model => model.audience.CategoryId, new SelectList(Model.GetIndustries("choose"), "Id", "Name", Model.audience.CategoryId), new { @disabled = "disabled", @class = "form-control dropdown", @required = "true", @data_msg_required = "Category is required" })
+                    <br />
+                    @Html.DropDownListFor(model => model.audience.SubCategoryId, new SelectList(Model.GetIndustries("choose").SingleOrDefault(ind => ind.Id == Model.audience.CategoryId).SubIndustries, "Id", "Name", Model.audience.SubCategoryId), new { @disabled = "true", @class = "form-control dropdown", @required = "true", @data_val_required = "Category category is required", @data_msg_required = "Category category is required" })
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("Roughly when did you start building this audience?", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.audience.YearFounded, new SelectList(Model.GetYears(), "Id", "Name", Model.audience.YearFounded), new { @disabled = "disabled", @class = "form-control dropdown", @required = "true", @data_msg_required = "Year is required" })
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("How many people work for your business?", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.audience.PeopleInYourBusiness, new SelectList(Model.GetManyPeople(), "Id", "Name", Model.audience.PeopleInYourBusiness), new { @disabled = "disabled", @class = "form-control dropdown", @required = "true", @data_msg_required = "How many people work for your business is required" })
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What country do you do most of your business in", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.audience.CountryBusinessInId, new SelectList(Model.GetCountries(), "Id", "Name", Model.audience.CountryBusinessInId), new { @disabled = "disabled", @class = "form-control dropdown", @required = "disabled", @data_msg_required = "What country do you do most of your business is required" })
+                  </div>
+                </article>
+
+
+                <article>
+                  <div class="form-group">
+                    @Html.Label("How many advertisers are you looking to work with?", htmlAttributes: new { @class = "control-label" })
+                    <div class="radio-group" role="AdvertisersCoworkers" aria-label="Likes">
+                      <div class="radio radio-check">
+                        <label for="AdvertiserOption1">
+                          I want to work with multiple advertisers
+                          <input data-val="true" id="AdvertiserOption1" name="AdvertisersCoworkers" @if (Model.audience.HowManyAdvertisers == "many") { @("checked") } type="radio" disabled="disabled" onclick="changeMany('many');" required="required" data-msg-required="This option is required">
+                          <div class="control_indicator"></div>
+                        </label>
+                      </div>
+
+                      <div class="radio radio-check">
+                        <label for="AdvertiserOption2">
+                          I want to work with only 1 advertiser
+                          <input data-val="true" id="AdvertiserOption2" name="AdvertisersCoworkers" type="radio" disabled="disabled" @if (Model.audience.HowManyAdvertisers == "one") { @("checked") } onclick="changeMany('one');">
+                          <div class="control_indicator"></div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What do you want to see this audience?", htmlAttributes: new { @class = "control-label" })
+                    <div class="radio-group" role="AudienceVisivility" aria-label="Likes">
+                      <div class="radio radio-check">
+                        <label for="AudienceOption1">
+                          Public
+                          <small>All advertisers will be able to view this projec in the marketplace</small>
+                          <input data-val="true" id="AudienceOption1" name="AudienceVisivility" type="radio" disabled="disabled" @if (Model.audience.Visibility) { @("checked") } onclick="changeVisibility('public');" required="required" data-msg-required="What do you want to see this audience is required">
+                          <div class="control_indicator"></div>
+                        </label>
+                      </div>
+
+                      <div class="radio radio-check">
+                        <label for="AudienceOption2">
+                          Private
+                          <small>Only advertiser you invite will be able to view this audience</small>
+                          <input data-val="true" id="AudienceOption2" name="AudienceVisivility" @if (!Model.audience.Visibility) { @("checked") } type="radio" disabled="disabled" onclick="changeVisibility('private');">
+                          <div class="control_indicator"></div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label id="lblPreferencesRequired" style="display:none; color:darkred;">Preferences is required</label>
+                  <div class="form-group">
+                    @Html.Label("What type of businessses would you prefer to advertise with?", htmlAttributes: new { @class = "control-label" })
+                    <p>
+                      Choose as many as you'd like.
+                    </p>
+                    <div class="flexbox radio-group" role="BusinessLikes" aria-label="Likes">
+                      @foreach (var industrie in Model.GetIndustries("none"))
+                      {
+                        <div class="flexbox-item radio radio-check">
+                          <label for="@industrie.Id">
+                            @industrie.Name
+
+                            @if (audiencePreferences.Any(a => a.IndustryId == industrie.Id && a.Like))
+                            {
+                              <input data-val="true" id="@industrie.Id" class="cBusinessLikes" checked name="BusinessLikes" type="checkbox" disabled="disabled" onclick="selectIndustryPreference('@industrie.Id');">
+                            }
+                            else
+                            {
+                              <input data-val="true" id="@industrie.Id" class="cBusinessLikes" name="BusinessLikes" type="checkbox" disabled="disabled" onclick="selectIndustryPreference('@industrie.Id');">
+                            }
+                            <div class="control_indicator"></div>
+                          </label>
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What type of businessses would you prefer NOT to advertise with?", htmlAttributes: new { @class = "control-label" })
+                    <p>
+                      Choose as many as you'd like.
+                    </p>
+                    <div class="flexbox radio-group" role="BusinessDislikes" aria-label="Disikes">
+                      @foreach (var industrie in Model.GetIndustries("none"))
+                      {
+                        <div class="flexbox-item radio radio-check" id="flex-item-@industrie.Id">
+                          <label for="d+@industrie.Id">
+                            @industrie.Name
+                            @if (audiencePreferences.Any(a => a.IndustryId.ToLower().Trim() == industrie.Id.ToLower().Trim() && !a.Like))
+                            {
+                              <input data-val="true" id="d+@industrie.Id" class="cBusinessDislikes" checked name="BusinessDislikes" type="checkbox" disabled="disabled" onclick="selectIndustryDislikePreference('@industrie.Id');">
+                            }
+                            else
+                            {
+                              <input data-val="true" id="d+@industrie.Id" class="cBusinessDislikes" name="BusinessDislikes" type="checkbox" disabled="disabled" onclick="selectIndustryDislikePreference('@industrie.Id');">
+                            }
+                            <div class="control_indicator"></div>
+                          </label>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </article>
+
+                <article>
+                  <h2>Upload Image</h2>
+
+                  <p>
+                    Each Audience has an image associated with it. These images are shown in various places around the Kind Ads platform but it
+                    mainly displayed within the Marketplace.
+                  </p>
+
+                  <div class="form-group">
+                    <div class="marquee-upload clearfix">
+                      @*<label>@Model.audience.ImageUrl.Split('/')[Model.audience.ImageUrl.Split('/').Length - 1]</label>*@
+                      @KindAds.Helpers.ImgSelectorHelper.DisplayImageSelector("fileupImg", Model.audience.ImageUrl)
+                      @*<img id="imgSelected" src="@Model.audience.ImageUrl" />
+            <label id="lblfileupImg"></label>*@
+                      <div class="content">
+                        <div class="btn btn-default file">
+                          + Upload Files
+                          <input id="fileupImg" name="fileupImg" type="file" />
+                        </div>
+                        <div>
+                          Drag &amp; drop any images or documents tha might be helpful in providing insights and information into your business here.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <div class="cta-bar">
+                  <div class="pull-left">
+                    <a onclick="CancelEditAudience()" class="btn btn-default btn-lg">Cancel</a>
+                  </div>
+                  <div class="pull-right">
+                    <input type="submit" value="Save Audience" class="btn btn-secondary btn-lg" />
+                  </div>
+                </div>
+              }
+
+
+            </div>
+
+          </div>
+        </fieldset>
+      </section>
+    </div>
+  </div>
+</div>
+
+@Html.Partial("_ErrorTextModal")
+@Html.Partial("~/Views/Shared/_Processing.cshtml")
+@Html.Partial("~/Views/Audience/_MessageEditAudience.cshtml")
+
+@section Scripts {
+  <script src="~/Scripts/Utils/image-upload.js"></script>
+  <script type="text/javascript">
+    var error = "@(ViewBag.error == null?"NULL":ViewBag.error)"
+    var myArray = [];
+    // get industries
+    var industries = @Html.Raw(Json.Encode(Model.GetIndustries("none")));
+
+    var dict = []; // create an empty array
+    var preferences = [];
+    var howManyAdvertisers = "@Model.audience.HowManyAdvertisers";
+    var visibility = "@Model.audience.Visibility";
+
+    dict.push({
+      id: "",
+      visibility: ""
+    });
+
+    var selectList = {
+      "audience_YearFounded": false,
+      "audience_PeopleInYourBusiness": false,
+      "audience_CountryBusinessInId": false,
+      "audience_CategoryId": false,
+    };
+
+    function ShowErrorModal(errorText) {
+      $("#ErrorModal_text").text(errorText);
+      $('#ErrorModal').modal('show');
+    }
+
+    $(document).ready(function () {
+
+      @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupIcon", "")
+      @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupImg", "")
+
+            if (error != "NULL") {
+        switch (error) {
+          case "SiteDuplicated":
+            var siteName = "@(Model.audience.WebSiteUrl )";
+            ShowErrorModal("The site " + siteName + " is duplicated");
+            break;
+        }
+      }
+
+      // Edit Profile
+      $('#editAudience').click(function (e) {
+        e.preventDefault();
+        $(".form-data .form-control").removeAttr("disabled");
+        $(".radio-check input").removeAttr("disabled");
+        $(".form-container").removeClass("read-only");
+      });
+
+      // binding text
+      $("#audience_Title").on('keyup', function (e) {
+                      var totalLength = 30;
+                      var textLength = $("#audience_Title").val().length;
+                      var remaining = totalLength - textLength;
+      $("#counterTitle").text(" "+remaining + " / " + totalLength + " remaining");
+                    });
+
+      $("#audience_Tagline").on('keyup', function (e) {
+                      var totalLength = 50;
+                      var textLength = $("#audience_Tagline").val().length;
+                      var remaining = totalLength - textLength;
+      $("#counterTagline").text(" " + remaining + " / " + totalLength + " remaining");
+                    });
+
+      $("#audience_Description").on('keyup', function (e) {
+                      var totalLength = 1000;
+                      var textLength = $("#audience_Description").val().length;
+                      var remaining = totalLength - textLength;
+      $("#counterDescription").text(" " + remaining + " / " + totalLength + " remaining");
+                    });
+
+      // images are required
+      $("#lblFileupIcon").text("Selected image.");
+
+
+      $("#formEditAudience").validate();
+
+      //binding select list
+      $("#audience_YearFounded").change(function () {
+
+        console.log("audience_YearFounded changed...");
+        var combo = document.getElementById("audience_YearFounded");
+
+        if (selectList.audience_YearFounded == false) {
+          combo.removeChild(combo.childNodes[0]);
+          selectList.audience_YearFounded = true;
+        }
+
+      });
+
+      $("#audience_PeopleInYourBusiness").change(function () {
+
+        console.log("audience_PeopleInYourBusiness changed...");
+        var combo = document.getElementById("audience_PeopleInYourBusiness");
+
+        if (selectList.audience_PeopleInYourBusiness == false) {
+          combo.removeChild(combo.childNodes[0]);
+          selectList.audience_PeopleInYourBusiness = true;
+        }
+      });
+
+      $("#audience_CountryBusinessInId").change(function () {
+
+        console.log("audience_CountryBusinessInId changed...");
+        var combo = document.getElementById("audience_CountryBusinessInId");
+
+        if (selectList.audience_CountryBusinessInId == false) {
+          combo.removeChild(combo.childNodes[0]);
+          selectList.audience_CountryBusinessInId = true;
+        }
+      });
+
+      // binding change
+      $("#audience_CategoryId").change(function () {
+
+        // remove first element
+        var combo = document.getElementById("audience_CategoryId");
+
+        if (selectList.audience_CategoryId == false) {
+          combo.removeChild(combo.childNodes[0]);
+          selectList.audience_CategoryId = true;
+        }
+
+        // get current value
+        var e = document.getElementById("audience_CategoryId");
+        var industryId = e.options[e.selectedIndex].value;
+        if (industryId != "") {
+
+          $("#audience_SubCategoryId").show();
+          $("#labelSubCat").show();
+        }
+
+        var elements = [];
+        //Print all industries
+        for (var i = 0; i <= (industries.length - 1); i++) {
+          if (industries[i].Id === industryId) {
+            elements = industries[i].SubIndustries;
+          }
+        }
+
+        // clear values
+        $("#audience_SubCategoryId").empty();
+
+        //Obtenemos las subcategorias de la industria
+        $.each(elements, function (i, value) {
+          $("#audience_SubCategoryId").append('<option value="' + value.Id + '">' + value.Name + '</option>');
+        });
+      });
+
+      $("#formEditAudience").submit(function (event) {
+        
+        event.preventDefault();
+        $('#processingModal').modal('show');
+        var stringifyPreferences = JSON.stringify(preferences);
+        console.log(stringifyPreferences);
+        
+        document.getElementById("preferencesStringify").value = stringifyPreferences;
+
+        // set how many advertisers values to model
+        document.getElementById("audience_HowManyAdvertisers").value = howManyAdvertisers;
+
+        // set visibility value
+        if (visibility == "public") {
+          document.getElementById("audience_Visibility").value = true;
+        }
+        else {
+          document.getElementById("audience_Visibility").value = false;
+        }
+        
+        var iconValid = false;
+        var imgValid = false;
+        var iconSelected = false;
+
+        var fileIcon = $('#fileupIcon')[0].files[0];
+        if (fileIcon && fileIcon.name!="") {
+          iconSelected = true;
+          iconValid = validateImgFile(72, 72, "#fileupIcon", "#lblfileupIcon");
+          $("#audience_IconUrl").val("");
+          console.log("Icon check: " + iconValid);
+        }
+        else {
+          iconValid = true;
+          console.log("IconValid!");
+        }
+
+        var imgSelected = false;
+        var fileImg = $('#fileupImg')[0].files[0];
+        if (fileImg && fileImg.name != "") {
+          imgSelected = true;
+          imgValid = validateImgFile(480, 360, "#fileupImg", "#lblfileupImg")
+          $("#audience_ImageUrl").val("");
+          console.log("img check: " + imgValid);
+        }
+        else {
+          imgValid = true;
+          console.log("imgValid!");
+        }
+
+        var _data = new FormData(this);
+        if (validatePreferences(preferences) && $("#formEditAudience").valid() && iconValid && imgValid)
+        {
+          $.ajax({
+            url: "EditAudience",
+            type: "Post",
+            data: _data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              if (response.success) {
+                $('#processingModal').modal('hide');
+                $('#MessageAudieceLabel').append(response.message);
+                $('#MessageAudienceModal').modal('show');
+              } else {
+                $('#processingModal').modal('hide');
+                $('#MessageAudieceLabel').append(response.message);
+                $('#MessageAudienceModal').modal('show');
+              }
+            },
+            error: function (xhr, error, status) {
+              $('#processingModal').modal('hide');
+              $('#MessageAudieceLabel').append('Error');
+              $('#MessageAudienceModal').modal('show');
+            }
+          });
+        }
+        else {
+          $('#processingModal').modal('hide');
+          console.log("SaveBasicsBtn false");
+          return false;
+        }
+      });
+
+      $(".cBusinessDislikes").each(function () {
+        if ($(this).is(':checked')) {
+          selectIndustryDislikePreference(this.id.replace("d+",""));/*Reemplazamos los id de dislike porque tienen el prefijo d+*/
+          console.log("Dislike" + this.id);
+        }
+
+      });
+
+      $(".cBusinessLikes").each(function () {
+        if ($(this).is(':checked')) {
+          selectIndustryPreference(this.id);
+          console.log("Like" + this.id);
+        }
+      });
+
+
+    });
+
+    function validateFile(idComponent, idComponentLabel) {
+      if ($(idComponent).val().length > 0) {
+        var ext = $(idComponent).val().split('.').pop().toLowerCase();
+        if ($.inArray(ext, ['png', 'jpg', 'jpeg']) == -1) {
+          $(idComponentLabel).show().text('Invalid extension');
+          alert("Invalid image extension");
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+      return true;
+    }
+
+    //Prefrence scripts
+
+    function changeMany(value) {
+      console.log("Many:" + value);
+      howManyAdvertisers = value;
+    };
+
+    function changeVisibility(value) {
+      console.log("Visibility:" + value);
+      visibility = value;
+    };
+
+    function makeVisibility(industryId) {
+      var industryItem = 'flex-item-' + industryId;
+      var existInDictionary = false;
+      var indexInDictionary = -1;
+
+      // check if exist any element in dictionary
+      if (dict.length > 0) {
+
+        // check if exist in dictionary
+        for (var i = 0; i <= (dict.length - 1); i++) {
+          if (dict[i].id == industryItem) {
+            existInDictionary = true;
+            indexInDictionary = i;
+          }
+        }
+
+        if (existInDictionary) {
+          // show again
+          $("#" + industryItem).show();
+
+          // pop element
+          dict.splice(indexInDictionary, 1);
+        }
+        else {
+          // push element
+          dict.push({
+            id: industryItem,
+            visibility: "none"
+          });
+
+          // hide element
+          $("#" + industryItem).hide();
+        }
+      }
+      else {
+
+        // push element
+        dict.push({
+          id: industryItem,
+          visibility: "none"
+        });
+
+        // hide element
+        $("#" + industryItem).hide();
+      }
+    };
+
+    function makePreferences(industryId, like) {
+      var industryItem = 'flex-item-' + industryId;
+      var existInDictionary = false;
+      var indexInDictionary = -1;
+
+      // check if exist any element in dictionary
+      if (preferences.length > 0) {
+
+        // check if exist in dictionary
+        for (var i = 0; i <= (preferences.length - 1); i++) {
+          if (preferences[i].IndustryId == industryItem) {
+            existInDictionary = true;
+            indexInDictionary = i;
+          }
+        }
+
+        if (existInDictionary) {
+          // pop element
+          preferences.splice(indexInDictionary, 1);
+        }
+        else {
+
+          // push element
+          preferences.push({
+            IndustryId: industryItem,
+            Like: like,
+            AudienceId: "undefined"
+          });
+        }
+      }
+      else {
+
+        // push element
+        preferences.push({
+          IndustryId: industryItem,
+          Like: like,
+          AudienceId: "undefined"
+        });
+      }
+    };
+
+    function selectIndustryPreference(industryId) {
+      console.log(industryId);
+      makeVisibility(industryId);
+      makePreferences(industryId, true);
+    };
+
+    function selectIndustryDislikePreference(industryId) {
+      makePreferences(industryId, false);
+    };
+
+    function validatePreferences(preferences) {
+      if (preferences.length > 0) {
+        $("#lblPreferencesRequired").hide();
+        return true;
+      } else {
+        $("#lblPreferencesRequired").show();
+        return false;
+      }
+    }
+
+    function CancelEditAudience() {
+      location.reload();
+    }
+
+  </script>
+
+}

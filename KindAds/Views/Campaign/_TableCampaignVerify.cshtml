@@ -1,0 +1,44 @@
+@model KindAds.Models.Campaign.TableCampaignViewModel
+@{
+  var grid = new WebGrid(rowsPerPage: Model.PageSize);
+  grid.Bind(Model.ListCampaigns, autoSortAndPage: false, rowCount: Model.TotalRecord);
+
+  var _service = new KindAds.Services.AccessService();
+  var idUser = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
+}
+
+@if (_service.ContainRoleUser(idUser, (int)KindAds.Utils.Enums.Roles.Advertiser))
+{
+  @grid.GetHtml(
+                                  tableStyle: "table datagrid",
+                                  columns: grid.Columns(
+                              grid.Column(columnName: "Name", header: "Name", canSort: true),
+                              grid.Column(columnName: "PRODUCT.SITE.URL", header: "Site", canSort: true),
+                              grid.Column(columnName: "RegisterDate", header: "Date creation",
+                              format: (model) => model.RegisterDate != null ? model.RegisterDate.ToString("d") == DateTime.Today.ToString("d") ? "Today" : model.RegisterDate.ToString("d") == DateTime.Today.AddDays(-1).ToString("d") ? "Yesterday" : string.Format("{0:MMM dd, yy}", model.RegisterDate) : "", canSort: true),
+                              grid.Column(header: "View message / Status", format: (item) =>
+                                  new HtmlString(
+                                    Html.Raw("<a href='" + @Url.Action("VerifyCampaign", "Campaign", new { idCampaign = item.IdCampaign, toValidate = false }) + "' ><span class='fa fa-file-o' style='color:#8C88FF;'> &nbsp;Details</span></a>") + "&nbsp;|&nbsp;" +
+                                        (Html.Raw("<span class='text-danger'>" + item.CAT_CAMPAIGN_STATUS.Descripcion + "</span>")).ToHtmlString()
+                                      )
+                                    )
+                                        ));
+}
+else if (_service.ContainRoleUser(idUser, (int)KindAds.Utils.Enums.Roles.Publisher))
+{
+  @grid.GetHtml(
+                                  tableStyle: "table datagrid",
+                                  columns: grid.Columns(
+                              grid.Column(columnName: "Name", header: "Name", canSort: true),
+                              grid.Column(columnName: "PRODUCT.SITE.URL", header: "Site", canSort: true),
+                              grid.Column(columnName: "RegisterDate", header: "Date creation",
+                              format: (model) => model.RegisterDate != null ? model.RegisterDate.ToString("d") == DateTime.Today.ToString("d") ? "Today" : model.RegisterDate.ToString("d") == DateTime.Today.AddDays(-1).ToString("d") ? "Yesterday" : string.Format("{0:MMM dd, yy}", model.RegisterDate) : "", canSort: true),
+                              grid.Column(header: "View message / Status", format: (item) =>
+                                  new HtmlString(
+                                    Html.Raw("<a href='" + @Url.Action("VerifyCampaign", "Campaign", new { idCampaign = item.IdCampaign, toValidate = false }) + "' ><span class='fa fa-file-o' style='color:#8C88FF;'>&nbsp;Details</span></a>") + "&nbsp;|&nbsp;" +
+                                        (Html.Raw("<span class='text-danger'>" + item.CAT_CAMPAIGN_STATUS.Descripcion + "</span>")).ToHtmlString()
+                                      )
+                                    )
+                                  ));
+}
+

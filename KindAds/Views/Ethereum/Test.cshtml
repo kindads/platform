@@ -1,0 +1,184 @@
+@model KindAds.Models.Home.HomeViewModel
+@{
+  ViewBag.Title = "Test";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="faq content-wrapper">
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-sm-12">
+          <h1>
+            Ethereum Smart Contract Test
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="questions">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+
+          <button id="approve">Approve</button>
+          <button id="checkApprove">CheckApprove</button>
+          <button id="pay">Pay</button>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+
+@section Scripts {
+  @Scripts.Render("~/bundles/basejs")
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+  <script type="text/javascript">
+
+  jQuery(document).ready(function ($) {
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+      console.log(web3.currentProvider);
+    } else {
+      console.log('Please add metamask plugin');
+    }
+    var address = web3.eth.coinbase;
+    console.log(address);
+    if (address != null && address != '') {
+      //****************** ABI **********************************************
+      var tokenABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_behalfOf", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approveOwner", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "INITIAL_SUPPLY", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_subtractedValue", "type": "uint256" }], "name": "decreaseApproval", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_addedValue", "type": "uint256" }], "name": "increaseApproval", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "behalfOf", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "ApprovalOwner", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "previousOwner", "type": "address" }, { "indexed": true, "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }];
+      //****************** TOKEN ADDRESS *************************************************
+      var tokenAddress = "0xa67C799f22DF6A30FC5439836f3C530Fc87B6718";
+      var token = web3.eth.contract(tokenABI).at(tokenAddress);
+      console.log(token);
+      //****************** ABI ***********************************************************
+      var rewardABI = [{ "constant": false, "inputs": [{ "name": "token", "type": "address" }], "name": "reclaimToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "renounceOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "KIND", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_tokenAddress", "type": "address" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "publisher", "type": "address" }, { "indexed": false, "name": "pricePaid", "type": "uint256" }, { "indexed": false, "name": "campaignId", "type": "bytes32" }], "name": "PaidAndDistributed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "previousOwner", "type": "address" }], "name": "OwnershipRenounced", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "previousOwner", "type": "address" }, { "indexed": true, "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "constant": false, "inputs": [{ "name": "_publisher", "type": "address" }, { "name": "_priceToPay", "type": "uint256" }, { "name": "_toPublisher", "type": "uint256" }, { "name": "_toReward", "type": "uint256" }, { "name": "_toPlatform", "type": "uint256" }, { "name": "_campaignId", "type": "bytes32" }], "name": "payAndDistribute", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "contractTokenBalance", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getRewardAmount", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getPlatformShare", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }];
+      var rewardAddress = "0x95822fB4E9ad8feC3a05F10B154F4DB300bd9E7e";
+      var reward = web3.eth.contract(rewardABI).at(rewardAddress);
+      console.log(reward);
+    }
+    $('#approve').on('click', function (event) {
+      var userAddress = web3.eth.coinbase;
+      console.log(userAddress);
+      token.approve(rewardAddress, 20, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log(result);
+      });
+      token.Approval({ a: 0 }, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log(result);
+      });
+    });
+    $('#pay').on('click', function (event) {
+
+      //alert(getEnvironment());
+      console.log('Payingggg');
+      var userAddress = web3.eth.coinbase;
+      var publisherAddress = '0x2c5e6c66B9785c49e00d8182F2FaCa26b36A66A3';
+      const parameter = {
+        from: address,
+        to: "0x02f4E3974aE5EfDc7DB2Fb2b282d12dFee983fE5"
+      };
+
+      web3.eth.estimateGas(
+        {
+          from: address,
+          to: "0x02f4E3974aE5EfDc7DB2Fb2b282d12dFee983fE5",
+          data: parameter.data
+        }, function (error, result) {
+
+          if (!error) {
+            reward.payAndDistribute(publisherAddress, 20, 14, 3, 3, web3.toAscii('10'), { gas: 200000, from: userAddress }, function (err, result) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+              var transactionHash = result;
+              var campaignId = "10";
+              var networkName = getNetworkNameMetamask();
+              $.getJSON($.validator.format("https://transactionapi.azurewebsites.net/transactiondev/{0}/{1}/{2}/{3}", transactionHash, campaignId, networkName, userAddress),
+                function (data, status) {
+                  if (status === "success") {
+                    alert(data.transactionId);
+                  }
+
+                });
+
+              console.log("success: " + result);
+            });
+          }
+          else {
+            console.error(error);
+          }
+
+        });
+    });
+
+
+    function getNetworkNameMetamask() {
+      var networkId = web3.version.network
+      switch (networkId) {
+        case "1":
+          networkName = "main";
+          break;
+        case "2":
+          networkName = "morden";
+          break;
+        case "3":
+          networkName = "ropsten";
+          break;
+        case "4":
+          networkName = "rinkeby";
+          break;
+        case "42":
+          networkName = "kovan";
+          break;
+        default:
+          networkName = "unknown";
+      }
+      return networkName;
+    }
+
+    function getEnvironment() {
+      @{
+
+#if DEV
+          ViewBag.Enviroment = "DEV";
+#elif QA
+          ViewBag.Enviroment = "QA";
+#elif STAGING
+          ViewBag.Enviroment = "STAGING";
+#else
+          ViewBag.Enviroment = "Other";
+#endif
+       }
+    }
+
+
+    $('#checkApprove').on('click', function (event) {
+      console.log('CHECKINGGGGG');
+      var userAddress = web3.eth.coinbase;
+      console.log(userAddress)
+      console.log(rewardAddress)
+      token.allowance(userAddress, rewardAddress, function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log(result);
+      });
+    })
+  });
+  </script>
+}

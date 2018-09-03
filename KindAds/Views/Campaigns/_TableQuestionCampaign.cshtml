@@ -1,0 +1,22 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.CampaignViewModel
+
+
+@if (Model.listQuestions != null && Model.listQuestions.Count > 0)
+{
+  <table style="width:100%">
+    <tr>
+      <th>Question</th>
+      <th>Action</th>
+    </tr>
+    @foreach (var item in Model.listQuestions)
+    {
+    <tr>
+      <td>@item.Question</td>
+      <td>@Ajax.ActionLink("Delete", "RemoveQuestion", new { question = @item.Id }, new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "QuestionsAdd", OnBegin = "showProcessingModal();", OnComplete = "hideProcessingModal();" })</td>
+    </tr>
+    }
+  </table>
+}
+
+
+

@@ -1,0 +1,66 @@
+<div class="modal modal-white fade" id="PublisherProfileModal" role="dialog" aria-labelledby="PublisherProfileModal" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="lblTitle">Publisher</label>
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div>
+              <label id="PublisherProfileModalBody"></label>
+              <div id="PublisherProfileModalBodyError">
+                <span class="image"></span>
+                <p>
+                  Congratulations your Publisher profile is now live.
+                </p>
+                <p>
+                  Your next step is to add your audiences so advertisers know what you have to offer.
+                </p>
+                <div class="btn-stack">
+                  @Html.ActionLink("Add your first Audience", "CreateAudience", "Audience", null, new { @class = "btn btn-secondary btn-lg" })
+
+                  @Html.ActionLink("I'll do this later", "Publisher", "Marketplace", null, new { @class = "btn btn-none btn-lg" })
+                  @*<button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">I'll do this later</span>
+                  </button>*@
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" style="display:none;" id="loadingPublisherProfileModal" role="dialog" aria-labelledby="loadingPublisherProfileModal" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="lblTitle">Create profile</label>
+          @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>*@
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-12">
+                <img src="~/Img/Loader/loading.white.gif" />
+                Creating profile in progress ...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,171 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.ViewChannelViewModel
+@{
+    ViewBag.Title = "View Channel";
+    Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+
+    var channelVisibility = Model.audienceChannel.Visibility ? "Public" : "Private";
+}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Back to Marketplace", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li class="active">View Channel</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-9 content-section">
+      <h1>Channel Details</h1>
+      <section class="panel">
+        <div class="body-content">
+          <article class="card-horizontal clearfix">
+            <div class="card-img">
+              <img src="@Model.audienceChannel.ImageUrl" alt="" />
+            </div>
+            <div class="card-details">
+              <ul>
+                <li>@Model.audience.Title</li>
+                <li class="site">@Model.audience.WebSiteUrl</li>
+                <li>@Model.audienceChannel.ChannelType - List </li>
+                <li>@channelVisibility Channel</li>
+              </ul>
+            </div>
+          </article>
+          <hr />
+          <article>
+            <h2>@Model.audienceChannel.Name</h2>
+            <p>@Model.audienceChannel.Description</p>
+            <ul class="files">
+              <li>
+                <a href="@Model.audienceChannel.ImageUrl">Download file(s)</a>
+              </li>
+            </ul>
+          </article>
+          <hr class="separator" />
+          <article class="partners">
+            <ul>
+              <li>Email list size - <strong>@Model.audienceChannel.Detail</strong></li>
+              <li>Last updated: <strong>@KindAds.Comun.Utils.DateUtils.GetTextDaysAgo(Convert.ToDateTime(Model.audienceChannel.RegisterDate))</strong></li>
+            </ul>
+            <ul class="@Model.providerImageClass">
+              <li>
+                <div class="logo"></div>
+              </li>
+              <li>
+                <span class="btn verified">[Verified]</span>
+              </li>
+            </ul>
+          </article>
+          <hr />
+          <article>
+            <h2>Details</h2>
+            <ul>
+              <li>
+                <span class="title">List</span>
+                HTML Mail
+              </li>
+              <li>
+                <span class="title">Frequency</span>
+                One mail
+              </li>
+            </ul>
+          </article>
+          <hr />
+          <article>
+            <h2>Preferences</h2>
+            <p>Types of Advertisers</p>
+            <ul class="categories">
+              <li>
+                @Model.audienceChannel.Category
+              </li>
+              <li>
+                @Model.audienceChannel.SubCategory
+              </li>
+            </ul>
+          </article>
+          <hr />
+          <article>
+            <h2>Previous Campaigns</h2>
+            <p>Check out the stats for some of most recent campaigns with this audience</p>
+            <table class="table disabled">
+              <thead>
+                <tr>
+                  <th>Campaign</th>
+                  <th>Delivered</th>
+                  <th>Opened</th>
+                  <th>Clicked</th>
+                  <th>CTR %</th>
+                </tr>
+              </thead>
+              <tody>
+                <tr>
+                  <td>Campaign Name</td>
+                  <td>89,987</td>
+                  <td>23,456</td>
+                  <td>4,567</td>
+                  <td>4.5%</td>
+                </tr>
+                <tr>
+                  <td>Campaign name</td>
+                  <td>90,020</td>
+                  <td>24,000</td>
+                  <td>4,400</td>
+                  <td>4.4%</td>
+                </tr>
+              </tody>
+            </table>
+          </article>
+          <hr />
+          <article>
+            <h2>Budget</h2>
+            <ul class="price">
+              <li><span>Negotiable</span>Yes</li>
+              <li><span>Fixed price</span>@Model.audienceChannel.Price.ToString("##0.00") KIND</li>
+            </ul>
+          </article>
+          <div class="cta-bar clearfix">
+            <div class="pull-right">
+              @*@Html.ActionLink("Send Message", "Home", "Conversation", null, new { @class = "btn btn-secondary btn-lg" })*@
+              @Html.ActionLink("Send Proposal", "Proposal", "Marketplace", new {@culture = culture, idAudienceChannel = Model.audienceChannel.Id }, new { @class = "btn btn-secondary btn-lg" })
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-3 aside-section">
+      <div class="panel panel-detail">
+        <div class="body-content">
+          <ul>
+            <li>
+              @Html.ActionLink("Send Proposal", "Proposal", "Marketplace", new { @culture = culture, idAudienceChannel = Model.audienceChannel.Id }, new { @class = "btn" })
+            </li>
+            <li>
+              @Html.ActionLink("Add to favorites", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+          </ul>
+          <hr />
+          <ul>
+            <li>
+              @Html.ActionLink("Vew Profile Publisher", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+            <li>
+              @Html.ActionLink("Vew Audience", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+            <li>
+              @Html.ActionLink("Vew Audience Channels", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+
+} 

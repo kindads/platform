@@ -1,0 +1,74 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.VerifyAudienceViewModel
+@{
+  var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+<div class="row">
+  <div id="SiteVerify" style="display:block">
+    <div id="SiteVerifyFailure" style="display:none">
+      <div class="white-block">
+        <div class="form-data form-horizontal">
+          <div class="body-content">
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <div class="col-md-offset-3 col-md-9 form-inline">
+                  @Html.Label("", Model.audience.WebSiteUrl, new { @class = "form-control verify-site" })
+                  <div class="text-danger">
+                    Verification failure, please go back and follow instructions
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <div class="col-md-offset-3 col-md-9">
+                  <button class="btn btn-default" onclick="siteModule.goBack()">Go Back</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="SiteVerifySuccess" style="display:none">
+      <div class="white-block">
+        <div class="body-content text-center">
+          <div class="row">
+            <div class="col-md-12 form-group">
+              <div class="col-md-12 form-inline">
+                @Html.Label("", Model.audience.WebSiteUrl, new { @class = "form-control verify-site" })
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-offset-2 col-sm-8 panel panel-info">
+          <div class="panel-body text-center">
+            <h3>
+              CONGRATULATIONS
+              <small>Your site has been verified</small>
+            </h3>
+            <div class="circle">
+              <img class="image-logo" src="../Img/UI/approved-arrow.png" alt="Verified" />
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          @*@Html.ActionLink("View my sites", "ShowSites", "Site", new { @class = "btn btn-primary" })*@
+          @Html.ActionLink(
+                           "View my audiences",
+                           "MyAudiences",
+                           "Audience",
+                           new { culture= culture },
+                           new { @class = "btn btn-primary" }
+                           )
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

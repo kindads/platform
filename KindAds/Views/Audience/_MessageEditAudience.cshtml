@@ -1,0 +1,43 @@
+@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+
+<div class="modal modal-white fade" id="MessageAudienceModal" role="dialog" aria-labelledby="MessageAudienceModal" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="lblTitle">Edit Audience</label>
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-12">
+                <label id="MessageAudienceLabel"></label>
+                <div>
+                  <p>
+                    Congratulations you have edited an audience succesfully!
+                  </p>
+                  <div class="btn-stack">
+
+                    @Html.ActionLink(
+                               "View my audiences",
+                               "MyAudiences",
+                               "Audience",
+                               new { culture= culture },
+                               new { @class = "btn btn-secondary btn-lg" }
+                               )
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

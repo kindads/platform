@@ -1,0 +1,36 @@
+@model KindAds.Models.Access.VerifyAccountViewModel
+@{
+  ViewBag.Title = "Verify your Account";
+}
+
+<h2>Verify your Account</h2>
+
+@using (Html.BeginForm("VerifyAccount", "Access", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+  @Html.AntiForgeryToken()
+  <div class="row">
+    <div class="col-md-4 form-group">
+      <p>We just send a text message with a code to enter here.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 form-group">
+      @Html.TextBoxFor(model => model.Code, new { placeholder = "Enter code", @class = "form-control" })
+      @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 form-group">
+      <input type="submit" class="btn btn-lg btn-success btn-block" value="Verify" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 form-group">
+      @Html.ActionLink("Resend code", "", "")
+    </div>
+  </div>
+
+}

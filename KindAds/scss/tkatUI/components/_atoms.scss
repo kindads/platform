@@ -1,0 +1,204 @@
+ /* CORE ATOMS
+ ================================================== */
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 300; }
+h1 { font-size: 3.0rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 2.4rem; line-height: 1.25; letter-spacing: -.1rem; }
+h3 { font-size: 2.0rem; line-height: 1.3;  letter-spacing: -.1rem; }
+h4 { font-size: 1.4rem; line-height: 1.35; letter-spacing: -.08rem; }
+h5 { font-size: 1rem; line-height: 1.5;  letter-spacing: -.05rem; }
+h6 { font-size: .8rem; line-height: 1.6;  letter-spacing: 0; }
+
+/* Larger than phablet */
+@include breakpoint($tablet) {
+  h1 { font-size: 3.2rem; }
+  h2 { font-size: 2.6rem; }
+  h3 { font-size: 2.2rem; }
+  h4 { font-size: 1.6rem; }
+  h5 { font-size: 1.2rem; }
+  h6 { font-size: 1rem; }
+}
+
+p {
+  margin-bottom: 10px; }
+
+
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a {
+  color: $dark-blue;
+  text-decoration: none;
+}
+a:hover {
+  color: $main-blue;
+  text-decoration: underline;
+}
+
+
+/* Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.btn,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: $secondary-color;
+  text-align: center;
+  font-size: 14px;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: $white;
+  border-radius: 2px;
+  border: 1px solid $secondary-color;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-decoration: none;
+  &.disabled,
+  &[disabled] {
+    border: none;
+    cursor: default;
+    box-shadow: none;
+    text-shadow: none;
+    opacity: 0.33;
+    cursor: default;
+  }
+}
+.btn:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: $black;
+  border-color: darken($dark-violet, 10);
+  //background-color: lighten($main-violet, 30);
+  background-color: $off-white;
+  outline: 0;
+  text-decoration: none;
+}
+
+
+
+/* Forms
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  height: 38px;
+  padding: 6px 10px;
+  background-color: $white;
+  border: 1px solid $charcoal-grey;
+  border-radius: 2px;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid $vivid-blue;
+  outline: 0;
+}
+label,
+legend {
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-family: $openSansSemibold;
+}
+fieldset {
+  padding: 0;
+  border-width: 0;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline;
+}
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal;
+}
+
+
+
+/* Lists
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+ul {
+  list-style: circle inside; }
+ol {
+  list-style: decimal inside; }
+ol, ul {
+  padding-left: 0;
+  margin-top: 0; }
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%; }
+li {
+  margin-bottom: .5rem; }
+
+
+
+/* Misc
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+hr {
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+  border-width: 0;
+  border-top: 1px solid $grey; }
+
+
+
+/* Clearing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* Self Clearing Goodness */
+.row:after,
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}

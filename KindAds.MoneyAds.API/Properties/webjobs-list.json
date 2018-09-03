@@ -1,0 +1,11 @@
+﻿{
+  "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
+  "WebJobs": [
+    {
+      "filePath": "../KindAds.WebJob.GeoTelemetry/KindAds.WebJob.GeoTelemetry.csproj"
+    },
+    {
+      "filePath": "../KindAds.WebJob.BrowserTelemetry/KindAds.WebJob.BrowserTelemetry.csproj"
+    }
+  ]
+}

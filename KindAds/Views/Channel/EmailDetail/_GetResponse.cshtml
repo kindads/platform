@@ -1,0 +1,161 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<br />
+<h1>GetResponse</h1>
+
+<div class="form-group">
+  @Html.Label("API", htmlAttributes: new { @class = "control-label" })
+  @Html.TextBoxFor(model => model.emailProductForm.getResponseForm.ApiToken, new { @placeholder = "e.g. Your Api token ", @class = "form-control", @required = "true", @data_msg_required = "API token is required", @maxlength = 60 })
+</div>
+
+<div class="form-group">
+  <div id="btnValidateProvider" class="btn btn-default btn-lg" onclick="ValidateProvider();">Validate</div>
+</div>
+
+
+<!-- Seccion de formulario escondido -->
+<div id="getResponseCompleteForm" style="display:none">
+
+  @*<div class="form-group">
+    @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.emailProductForm.getResponseForm.Name, new { @placeholder = "e.g. Name ", @class = "form-control", @required = "true", @data_msg_required = "Name is required", @maxlength = 60 })
+  </div>*@
+
+  <!-- Seccion de From field -->
+  <!-- obtenemos la informacion -->
+  <div class="form-group">
+    @Html.Label("From Field", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.getResponseForm.FromFieldId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Folders is required" })
+  </div>
+
+
+  <!-- Seccion de listas -->
+  <!-- obtenemos la informacion -->
+  <div class="form-group">
+    @Html.Label("Lists", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.getResponseForm.ListId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Lists is required" })
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+  var ApiKeyIsValid = false;
+
+  function FillFromField(token, callback, callbackError) {
+
+    $("#emailProductForm_getResponseForm_FromFieldId").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetFromFieldsFromGetResponse")',
+              data: { ApiToken: token },
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#emailProductForm_getResponseForm_FromFieldId").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#emailProductForm_getResponseForm_FromFieldId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#emailProductForm_getResponseForm_FromFieldId").append('<option value="">' + 'Please select' + '</option>');
+                }
+
+                callback();
+              },
+            error: function (ex) {
+                  callbackError();
+                  alert('Failed to retrieve templates from mail chimp.' + ex);
+              }
+          });
+  }
+
+  function FillListas(token, callback, callbackError) {
+
+    $("#emailProductForm_getResponseForm_ListId").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListFromGetResponse")',
+            data: { ApiToken: token },
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#emailProductForm_getResponseForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#emailProductForm_getResponseForm_ListId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#emailProductForm_getResponseForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+                }
+
+                callback();
+              },
+            error: function (ex) {
+
+                  callbackError();
+                  alert('Failed to retrieve templates from mail chimp.' + ex);
+              }
+          });
+  }
+
+
+  function ValidateProvider() {
+    $('#processingModal').modal('show');
+    
+    var apiToken = $("#emailProductForm_getResponseForm_ApiToken").val();
+
+    var requestData = {
+      ApiToken:apiToken,
+      ChannelId  : 'b4ee7512-5f12-40f1-8408-8f96bf43df6d',
+      ProviderId : '1f35b9b2-3cde-4893-87c7-74f2a6ceb29a'
+    };
+
+    $.ajax({
+      url: "ValidateProvider",
+      type: "Post",
+      data: { request : requestData },
+      success: function (response) {
+
+        ApiKeyIsValid = response.IsValid;
+        
+
+        if (ApiKeyIsValid == 'True') {
+
+          FillListas(apiToken, function () {
+            // exitoso
+            FillFromField(apiToken, function () {
+              // exitoso
+              $('#processingModal').modal('hide');
+              $("#getResponseCompleteForm").show();
+              $("#btnValidateProvider").hide();
+              document.getElementById("emailProductForm_getResponseForm_ApiToken").readOnly = true;
+              $("#hiddenIsValidApiKey").val(true);
+            }, function () {
+              // error
+              $('#processingModal').modal('hide');
+            });
+          }, function () {
+            // error
+            $('#processingModal').modal('hide');
+          });
+          
+          
+         
+        }
+        else {
+          $('#processingModal').modal('hide');
+          
+          alert("Api key is not valid");
+          $("#getResponseCompleteForm").hide();
+          $("#btnValidateProvider").show();
+        }
+
+      },
+      error: function (xhr, error, status) {
+        
+      }
+    });
+  }
+
+
+</script>

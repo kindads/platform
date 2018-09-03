@@ -1,0 +1,156 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<br />
+<h1>SendinBlue</h1>
+
+<div class="form-group">
+  @Html.Label("API", htmlAttributes: new { @class = "control-label" })
+  @Html.TextBoxFor(model => model.emailProductForm.sendinBlueForm.ApiToken, new { @placeholder = "e.g. Your Api token ", @class = "form-control", @required = "true", @data_msg_required = "API token is required", @maxlength = 60 })
+</div>
+
+<div class="form-group">
+  <div id="btnValidateProvider" class="btn btn-default btn-lg" onclick="ValidateProvider();">Validate</div>
+</div>
+
+
+<!-- Seccion de formulario escondido -->
+<div id="sendinBlueCompleteForm" style="display:none">
+
+  @*<div class="form-group">
+    @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.emailProductForm.sendinBlueForm.Name, new { @placeholder = "e.g. Name ", @class = "form-control", @required = "true", @data_msg_required = "Name is required", @maxlength = 60 })
+  </div>*@
+
+  <div class="form-group">
+    @Html.Label("Category", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.emailProductForm.sendinBlueForm.Category, new { @placeholder = "e.g. Category ", @class = "form-control", @required = "true", @data_msg_required = "Category is required", @maxlength = 60 })
+  </div>
+
+  <!-- Seccion de folders ids -->
+  <!-- obtenemos la informacion de: GetAppsFromOneSignal-->
+  <div class="form-group">
+    @Html.Label("Folders", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.sendinBlueForm.FolderId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Folders is required" })
+  </div>
+
+
+  <!-- Seccion de listas -->
+  <!-- obtenemos la informacion de: GetAppsFromOneSignal-->
+  <div class="form-group">
+    @Html.Label("List", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.sendinBlueForm.ListId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Lists is required" })
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+  var ApiKeyIsValid = false;
+
+  function FillFolders(token) {
+    $("#emailProductForm_sendinBlueForm_FolderId").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetFoldersFromSendinBlue")',
+              data: { ApiToken: token },
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#emailProductForm_sendinBlueForm_FolderId").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#emailProductForm_sendinBlueForm_FolderId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#emailProductForm_sendinBlueForm_FolderId").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve templates from mail chimp.' + ex);
+              }
+          });
+  }
+
+  function FillListas(token, folder) {
+    $("#emailProductForm_sendinBlueForm_ListId").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListFromSendinBlue")',
+            data: { ApiToken: token, FolderId: folder },
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#emailProductForm_sendinBlueForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#emailProductForm_sendinBlueForm_ListId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#emailProductForm_sendinBlueForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve templates from mail chimp.' + ex);
+              }
+          });
+  }
+
+
+  function ValidateProvider() {
+    $('#processingModal').modal('show');
+    
+    var apiToken = $("#emailProductForm_sendinBlueForm_ApiToken").val();
+
+    var requestData = {
+      ApiToken:apiToken,
+      ChannelId:'b4ee7512-5f12-40f1-8408-8f96bf43df6d',
+      ProviderId:'8c0d6cc7-230c-4a2b-a379-51aa1fd321b6' 
+    };
+
+    $.ajax({
+      url: "ValidateProvider",
+      type: "Post",
+      data: { request : requestData },
+      success: function (response) {
+
+        $('#processingModal').modal('hide');
+        ApiKeyIsValid = response.IsValid;
+
+        
+
+        if (ApiKeyIsValid == 'True') {
+
+          FillFolders(apiToken);
+
+          
+          $("#sendinBlueCompleteForm").show();
+          $("#btnValidateProvider").hide();
+
+          document.getElementById("emailProductForm_sendinBlueForm_ApiToken").readOnly = true;
+          $("#hiddenIsValidApiKey").val(true);
+        }
+        else {
+          $('#processingModal').modal('hide');         
+          alert("Api key is not valid");
+          $("#sendinBlueCompleteForm").hide();
+          $("#btnValidateProvider").show();
+        }
+
+      },
+      error: function (xhr, error, status) {
+        
+      }
+    });
+  }
+
+  $("#emailProductForm_sendinBlueForm_FolderId").change(function () {
+   
+    var apiToken = $("#emailProductForm_sendinBlueForm_ApiToken").val();
+    var FolderId = $("#emailProductForm_sendinBlueForm_FolderId").val();
+
+    if (FolderId != '') {
+       FillListas(apiToken, FolderId);
+    }    
+
+  });
+
+</script>

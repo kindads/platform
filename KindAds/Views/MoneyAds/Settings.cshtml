@@ -1,0 +1,62 @@
+@model KindAds.Comun.Models.ViewModel.MoneyAdsViewModel
+@{
+  ViewBag.Title = "Dashboards";
+  Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+  <div class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-12 main-bar clearfix">
+        <h1 class="pull-left title" id="titleMonedAds">My Ads</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white-block">
+          <div class="tab-content clearfix">
+            <div id="tab01" class="tab-pane active">
+              <div id="pnlTypesOfAds">
+                @{
+                  Html.RenderPartial("ListOfAds");
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="add-space btn-group">
+          @Html.ActionLink("Download ads monetization script", "ShowDownloadScriptView", "MoneyAds", null ,new { @class = "btn btn-default" })
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+@Scripts.Render("~/bundles/customjs")
+<script src="~/Modules/moneyAddsModule.js"></script>
+<script type="text/javascript">
+  moneyAddsModule.ready();
+
+  $(function () {
+    moneyAddsModule.bindingForm();
+  });
+
+  $(function () {
+    $('.link-campaign').addClass('active');
+  });
+
+  $(function () {
+    $('.link-dashboard').removeClass('active');
+  });
+  $(function () {
+    $('.link-site').removeClass('active');
+  });
+  $(function () {
+    $('.link-profile').removeClass('active');
+  });
+</script>
+
+

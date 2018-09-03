@@ -1,0 +1,27 @@
+@model  List<KindAds.Models.PRODUCT>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Chanel</th>
+      <th scope="col">Price</th>
+      <th scope="col">UTM Source</th>
+      <th scope="col">UTM Medium</th>
+      <th scope="col">UTM Campaign</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model)
+    {
+      var utmSource = item.CAMPAIGNs != null && item.CAMPAIGNs.Any() ? item.CAMPAIGNs.FirstOrDefault().UTM_Source : "";
+      var utmMedium = item.CAMPAIGNs != null && item.CAMPAIGNs.Any() ? item.CAMPAIGNs.FirstOrDefault().UTM_Medium : "";
+      var utmCampaign = item.CAMPAIGNs != null && item.CAMPAIGNs.Any() ? item.CAMPAIGNs.FirstOrDefault().UTM_Campaign : "";
+      <tr>
+        <th scope="row">@item.PRODUCT_TYPE.Name</th>
+        <td>@item.Price</td>
+        <td>@utmSource</td>
+        <td>@utmMedium</td>
+        <td>@utmCampaign</td>
+      </tr>
+    }
+  </tbody>
+</table>

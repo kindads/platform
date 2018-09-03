@@ -1,0 +1,133 @@
+@model  KindAds.Business.ViewModels.SiteViewModelManager
+@{
+    ViewBag.Title = "Create Site";
+    Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+
+@using (Html.BeginForm("CreateSite", "Site", null, FormMethod.Post, new { @id = "formSite" }))
+{
+  @Html.AntiForgeryToken()
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 main-bar">
+        <h1 class="title">Create your site</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white-block">
+          @if (@ViewBag.Message != null && !string.IsNullOrEmpty(@ViewBag.Message))
+          {
+            <div class="callout callout-info">
+              <h4>@ViewBag.Message</h4>
+
+              In order to see all your products go to  @Html.ActionLink("Products", "ShowSites", "Publisher", new { @class = "link" }) page.
+            </div>
+          }
+          <div class="heading">
+            <h2>New Site</h2>
+          </div>
+
+          <div class="body-content">
+            <div class="form-data form-horizontal">
+              <form>
+                <fieldset>
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.viewModel.URL, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9 form-inline">
+                          <div class="input-group">
+                            <div class="input-group-btn">
+                              @Html.DropDownListFor(model=>model.viewModel.protocoloSelected, Model.Protocols(), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Url protocol is required" })
+                              @Html.ValidationMessage("Protocols")
+                            </div>
+                            @Html.EditorFor(model => model.viewModel.URL, new { htmlAttributes = new { @placeholder = "nytimes.com", @class = "form-control lowercase", @required = "true", @data_msg_required = "Site URL is required" } })
+                          </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.viewModel.URL, "", new { @class = "text-danger" })
+                      </div>
+
+                      <div class="form-group">
+                         @Html.LabelFor(model => model.viewModel.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9 form-inline">
+                          @Html.EditorFor(model => model.viewModel.Name, new { htmlAttributes = new { @placeholder = "Site Name", @class = "form-control", @required = "true", @data_msg_required = "Name is required" } })
+                          @Html.ValidationMessageFor(model => model.viewModel.Name, "", new { @class = "text-danger" })
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        @Html.LabelFor(model => model.viewModel.categorySelected, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9 form-inline">
+                          @Html.DropDownListFor(model=>model.viewModel.categorySelected, Model.Categories(),"Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Category is required" })
+                          @Html.ValidationMessage("Categories")
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-9 col-md-offset-3 cta-bar clearfix">
+                      <div class="form-group col-sm-12">
+                        <input type="submit" value="Create Site" class="btn btn-primary btn-lg" />
+                      </div>
+                    </div>
+                    </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="siteSucessModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="lblTitle"></label>
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="panel">
+          <div class="panel-body">
+            @using (Html.BeginForm("ValidateSite", "Site", null, FormMethod.Post, new { @id = "formSiteValidate" }))
+            {
+              @Html.Hidden("idSite")
+              <h3>
+                <label id="lblBody"></label>
+              </h3>
+              <br>
+              <div id="pnlInfoSite" style="display:none">
+                <p>You must to verify your <strong><label id="lblSiteUrl"></label></strong> in order you ca use it.</p>
+              </div>
+              <div class="add-space s2x"></div>
+              <div class="btn-group">
+                <input id="btnValidateSite" type="submit" value="Proceed to validate" class="btn btn-primary btn-lg" />
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+@Scripts.Render("~/bundles/customjs")
+
+<script src="~/Modules/siteModule.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    siteModule.ready();
+    siteModule.bindingForm();
+  });
+</script>
+

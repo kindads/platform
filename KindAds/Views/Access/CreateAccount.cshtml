@@ -1,0 +1,147 @@
+@using KindAds.Models.Access
+@model CreateAccountViewModel
+@{
+  ViewBag.Title = "Create an Account";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+@section Head {
+  @Styles.Render("~/Content/kaUI_pages.css")
+}
+
+<div class="sign content-wrapper" ">
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-12">
+          <h1>
+            Sign Up for Kind Ads
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="form-layout">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sign-wrapper">
+          <div class="content">
+            @using (Html.BeginForm("CreateAccount", "Access", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "formCreateAccount" }))
+            {
+              @Html.AntiForgeryToken()
+              @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+              <article class="form-data">
+                <form>
+                  <fieldset>
+                    <div class="form-container">
+                      <div class="row">
+                        <div class="col-12 form-group">
+                          @Html.Label("Name")
+                          @Html.TextBoxFor(model => model.Name, new { placeholder = "NAME", @class = "form-control clean", @required = "true", @data_msg_required = "Name is required" })
+                          @Html.ValidationMessageFor(model => model.Name, "")
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 form-group">
+                          @Html.Label("Email address")
+                          @Html.TextBoxFor(model => model.Email, new { placeholder = "EMAIL", @class = "form-control clean", @required = "true", @data_msg_required = "Email is required" })
+                          @Html.ValidationMessageFor(model => model.Email, "")
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 form-group">
+                          @Html.Label("Password")
+                          @Html.PasswordFor(model => model.Password, new { placeholder = "Password", @class = "form-control clean", @required = "true", @data_msg_required = "Password is required" })
+                          @Html.ValidationMessageFor(model => model.Password, "")
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 form-group">
+                          <label class="KindAdsRole">I'm a</label>
+                          <div class="flexbox radio-group" role="group" aria-label="Roles">
+                            <div class="flexbox-item form-group radio">
+                              <label for="PublisherRole" class="active">
+                                Publisher
+                                @*<input data-val="true" id="PublisherRole" name="KindAdsRole" type="radio" checked>*@
+                                @Html.RadioButtonFor(model => model.Role, "Publisher", new { @id = "PublisherRole", @name = "KindAdsRole", @checked = true })
+                                <div class="control_indicator"></div>
+                              </label>
+                            </div>
+                            <div class="flexbox-item form-group radio">
+                              <label for="AdvertiserRole">
+                                Advertiser
+                                @Html.RadioButtonFor(model => model.Role, "Advertiser", new { @id = "AdvertiserRole", @name = "KindAdsRole" })
+                                @*<input data-val="true" id="AdvertiserRole" name="KindAdsRole" type="radio">*@
+                                <div class="control_indicator"></div>
+                              </label>
+                            </div>
+                          </div>
+                          @*<div class="form-group2">
+                              @Html.DropDownListFor(model => model.Role, Session["roles"] as SelectList, new { @class = "select form-control", @required = "true", @data_msg_required = "Role is required" })
+                            </div>*@
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group checkbox">
+                            <label id="eula">
+                              I agree to&nbsp;<a class="link" href="@Url.Action("TermsOfService", "Home")" target="_blank">The Terms of Service</a>&nbsp;and the&nbsp;<a class="link" href="@Url.Action("PrivacyPolicy", "Home")" target="_blank">Privacy Policy</a>
+                              @Html.CheckBoxFor(model => model.AgreeTerms)
+                              <div class="control_indicator"></div>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group role">
+                            <input type="submit" class="btn btn-primary btn-lg" value="Sign up" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 form-group help-links text-center">
+                          <span>Already have an account?&nbsp;</span>
+                          @Html.ActionLink("Sign In", "Login", "Access")
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </article>
+            }
+
+          </div>
+          <div class="aside">
+            @Html.Partial("_PartialAccess")
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+@section Scripts {
+  <!-- Validate SignUp -->
+  <script type="text/javascript">
+    $('#formCreateAccount').submit(function (e) {
+      if (!$("#formCreateAccount").valid()) {
+        e.preventDefault();
+      }
+    });
+    $().ready(function () {
+      $("#formCreateAccount").validate();
+    });
+
+    $('#PublisherRole').click(function (e) {
+      $(this).parent().addClass('active');
+      $('#AdvertiserRole').parent().removeClass('active');
+      $(".KindAdsRole").text("I'm a");
+    });
+    $('#AdvertiserRole').click(function (e) {
+      $(this).parent().addClass('active');
+      $('#PublisherRole').parent().removeClass('active');
+      $(".KindAdsRole").text("I'm an");
+    });
+  </script>
+}

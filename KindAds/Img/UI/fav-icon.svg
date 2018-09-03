@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <style>
+      .outline {
+        stroke: red;
+        stroke-width: 2px;
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="fav-icon" transform="translate(14 12)">
+    <circle id="bounding" fill="none" data-name="0val" cx="24" cy="24" r="24" transform="translate(-14 -12)"/>
+    <path id="heart-solid" class="outline" d="M21.658,33.4a6.41,6.41,0,0,0-8.747.637l-.923.952-.923-.952A6.41,6.41,0,0,0,2.318,33.4a6.731,6.731,0,0,0-.464,9.745l9.07,9.365a1.47,1.47,0,0,0,2.123,0l9.07-9.365a6.727,6.727,0,0,0-.459-9.745Z" transform="translate(-1.988 -29.967)"/>
+  </g>
+</svg>

@@ -1,0 +1,215 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.ProposalViewModel
+@{
+  ViewBag.Title = "Submit a Proposal";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+  var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+  var proposalCSS = ViewBag.existProposal ? "disabled" : "";
+}
+
+<div class="container-fluid">
+  <div class="row" style="display:none;">
+    <div class="col-sm-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Back to Marketplace", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li class="active">View Channel</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row @proposalCSS">
+    @using (Html.BeginForm("Proposal", "Marketplace", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formProposal" }))
+    {
+      <div class="col-9 content-section">
+        <h1>Submit a Proposal</h1>
+        <p>When you submit a proposal provide as much relevant inforamtion as possible so the publisher can make informed decisions quicly and easily.</p>
+        <hr />
+        <section class="panel panel-default">
+          <div class="body-content">
+            <article>
+              <h2>Property Details</h2>
+              <div class="card-horizontal clearfix">
+                <div class="card-img">
+                  <img src="@Model.audienceChannel.ImageUrl" alt="" />
+                </div>
+                <div class="card-details">
+                  <ul>
+                    <li>@Model.audience.Title</li>
+                    <li class="site">@Model.audience.WebSiteUrl</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+            <hr />
+            <article>
+              <div>
+                <h3>@Model.audienceChannel.Name</h3>
+                <p>@Model.audienceChannel.Description</p>
+                <ul class="files">
+                  <li>
+                    <a href="@Model.audienceChannel.ImageUrl">Attachment files</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="partners">
+                <ul>
+                  <li>Email list size - <strong>@Model.audienceChannel.Detail</strong></li>
+                  <li>Last updated: <strong>@KindAds.Comun.Utils.DateUtils.GetTextDaysAgo(Convert.ToDateTime(Model.audienceChannel.RegisterDate))</strong></li>
+                </ul>
+                <ul class="@Model.providerImageClass">
+                  <li>
+                    <div class="logo"></div>
+                  </li>
+                  <li>
+                    <span class="btn verified">Verified</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+            <hr />
+            <article class="form-data">
+              <h2>Terms</h2>
+              <p>What is the amount you'd like to bid for this Chanel?</p>
+
+
+              <div class="form-group inline-url">
+                <div class="combo-price">
+                  <div class="form-control form-control-small">
+                    @Model.audienceChannel.Price.ToString("##0.00")
+                  </div>
+                  @*<select class="form-control form-control-small" required="true">
+        <option selected="selected" value="@Model.audienceChannel.Price">@Model.audienceChannel.Price.ToString("##0.00")</option>
+      </select>*@
+                </div>
+                <label>KIND</label>
+                &nbsp;&nbsp;&nbsp;<span>Minimum bid @Model.audienceChannel.Price.ToString("##0.00") Kind</span>
+              </div>
+            </article>
+
+            <hr />
+            <article>
+              <h2>Screening Questions</h2>
+              @if (Model.listQuestion != null && Model.listQuestion.Count > 0)
+              {
+                for (int i = 0; i < Model.listQuestion.Count(); i++)
+                {
+                  @Html.HiddenFor(model => model.listQuestion[i].Id)
+                  @Html.HiddenFor(model => model.listQuestion[i].Question)
+                  <div class="form-group">
+                    <label class="control-label">@Model.listQuestion[i].Question</label>
+                    @Html.TextAreaFor(model => model.listQuestion[i].Answer, new { @class = "form-control no-resize", @cols = "80", @data_msg_required = "Answer the question is required", @maxlength = "1000", @placeholder = "Write our response here....", @required = "true", @rows = "7", @wrap = "hard", @aria_invalid = "false", @id = @Model.listQuestion[i].Id, @onkeyup = "countCharacters(event,this.id);" })
+                    <span id="@Model.listQuestion[i].Id-Counter" class="counter">1000 / 1000 remaining</span>
+                  </div>
+                }
+              }
+            </article>
+            <hr />
+            <article>
+              <h2>Additional Note</h2>
+              <div class="form-group">
+                @Html.Label("Anything else you'd lik to share with the publisher?", htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.proposal.AditionalNote, new { @class = "form-control no-resize", @cols = "80", @data_msg_required = "Add note is required", @maxlength = "1000", @placeholder = "Write note here....", @required = "true", @rows = "7", @wrap = "hard", @aria_invalid = "false", @id = "txtNoteAditional", @onkeyup = "countCharacters(event,this.id);" })
+                <span id="txtNoteAditional-Counter" class="counter">1000 / 1000 remaining</span>
+              </div>
+            </article>
+
+            <div class="cta-bar clearfix">
+              <div class="pull-left">
+                @Html.ActionLink("Cancel", "Advertiser", "Marketplace", new { @culture = culture }, new { @class = "btn btn-none" })
+              </div>
+              <div class="pull-right">
+                @if (!ViewBag.existProposal && User.IsInRole(KindAds.Utils.Enums.Roles.Advertiser.ToString()))
+                {
+                  <button class="btn btn-secondary btn-lg">Submit Proposal</button>
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    }
+
+    <div class="col-3 aside-section">
+      <div class="panel panel-detail">
+        <div class="body-content">
+          <ul>
+            <li>
+              @Html.ActionLink("Back to Channel", "CreateAudience", "Audience", null, new { @class = "btn" })
+            </li>
+          </ul>
+          <hr />
+          <ul>
+            <li>
+              @Html.ActionLink("Vew Profile Publisher", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+            <li>
+              @Html.ActionLink("Vew Audience", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+            <li>
+              @Html.ActionLink("Vew Audience Channels", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@Html.Hidden("hiddennameConversation", Model.nameConversation)
+
+@Html.Partial("~/Views/Shared/_Processing.cshtml")
+@Html.Partial("~/Views/Marketplace/_ProposalMessage.cshtml")
+
+@section Scripts {
+  <script type="text/javascript">
+    $().ready(function () {
+      $("#formProposal").validate();
+    });
+
+    function countCharacters(event, idElement) {
+      var noCharacters = $("#" + idElement).attr('maxLength');
+      var totalLength = noCharacters;
+      var textLength = $("#" + idElement).val().length;
+      var remaining = totalLength - textLength;
+      $("#" + idElement + "-Counter").text(" " + remaining + " / " + totalLength + " remaining");
+    }
+
+    $("#formProposal").submit(function (event) {
+      if ($("#formProposal").valid()) {
+        var _data = new FormData(this);
+
+        event.preventDefault();
+        $('#processingModal').modal('show');
+        $.ajax({
+          url: "Proposal",
+          type: "Post",
+          data: _data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+            if (response.success) {
+              $('#processingModal').modal('hide');
+              $('#ProposalMessageContent').append(response.message);
+              $('#ProposalMessage').modal('show');
+              $("#btnLinkChat").attr("href", function (i, href) {
+                return href + '?conversationJSON=' + response.conversationParameters;
+              });
+            } else {
+              $('#processingModal').modal('hide');
+              $('#ProposalMessageContent').append(response.message);
+              $('#ProposalMessage').modal('show');
+            }
+
+          },
+          error: function (xhr, error, status) {
+            $('#processingModal').modal('hide');
+            $('#ProposalMessageContent').append('Error');
+            $('#ProposalMessage').modal('show');
+          }
+        });
+      } else {
+        return false;
+      }
+    });
+  </script>
+}

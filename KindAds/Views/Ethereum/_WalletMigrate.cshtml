@@ -1,0 +1,75 @@
+@{
+  var culture = KindAds.Helpers.CultureHelper.GetCurrentNeutralCulture();
+}
+
+<div class="modal fade" id="ethereumModal" role="dialog" aria-labelledby="ethereumModal" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="lbl1Title">Kind Ads uses a MetaMask Wallet</label>
+        </h2>
+      </div>
+
+      <div class="modal-body">
+        <div class="panel">
+          <div class="panel-body">
+            <div id="pnlDataWalletMigrate">
+              <h3 class="bottom-space">Follow these steps to create a Metamask account.</h3>
+              <ol style="margin: 0 0 20px 20px;">
+                <li><a href="https://metamask.io" target="_blank" class="link">Get extension</a></li>
+                <li>
+                  @Html.ActionLink("Follow instrucions", "CreateWallet", "Home", new { culture = culture }, new { @class = "link", target = "_blank" })
+                </li>
+              </ol>
+              <form id="WalletMigrateForm">
+                <div class="row">
+                  <div id="ethereumBtn">
+                    <div class="col-sm-12">
+                      <input id="btnGetWalletMetamask" type="button" class="btn btn-primary btn-lg" value="Get Current Address Account" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div id="ethereumAddress" style="display:none;" class="form-group clearfix">
+                    <div class="col-sm-12">
+                      @Html.Label("Your wallet address is:", new { @class = " " })
+                      <div class="row">
+                        <div class="col-xs-10">
+                          @Html.TextBox("txtEthereumAdress", null, new { @placeholder = "Address", @class = "form-control", @disabled = "true" })
+                        </div>
+                        <div class="col-xs-2">
+                          <button id="btnUpdateWalletMetamask" class="btn btn-default">
+                            Get <i class="fa fa-exchange"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12" id="pnlActionWalletMigrate" style="display:none;">
+                    <input id="btnWalletMigrate" type="button" class="btn btn-primary btn-lg" value="Save" />
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div id="pnlDataWalletMigrateSuccess" class="text-center" style="display:none;">
+              <p class="bg-success"><h1 class="bg-success">Your wallet is updated.</h1></p>
+              <div class="col-md-12">
+                <input id="btnCloseWalletMigrate" type="button" value="Close" class="btn btn-default" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+

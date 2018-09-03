@@ -1,0 +1,426 @@
+@model KindAds.Comun.Models.ViewModel.KindAdsV2.PublisherProfileViewModel
+@using KindAds.Comun.Models.CosmosDocuments.KindAdsV2;
+@using System.Linq;
+@{
+  ViewBag.Title = "Profile";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+  List<PublisherPreferenceDocument> preferences = ViewBag.Preferences;
+}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li class="active">Account</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h1>Account</h1>
+
+      <section>
+        <ul>
+          <li>
+            <label>Name:</label>
+            <span>@ViewBag.Name</span>
+          </li>
+          <li>
+            <label>Mail:</label>
+            <span>@ViewBag.Email</span>
+          </li>
+        </ul>
+      </section>
+
+      @*@Html.Hidden("", null)*@
+      <section class="form-data">
+
+        @using (Html.BeginForm("EditProfile", "PublisherProfile", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formEditProfile" }))
+        {
+
+          @Html.HiddenFor(model => model.preferencesStringify, new { @id = "preferencesStringify" })
+          <fieldset>
+            <div class="white-block form-container read-only">
+              <article>
+                <h2>Publisher Profile</h2>
+                <p>Your profile is viewable by all KindAds users.</p>
+                <a id="editProfile" class="btn btn-default">Edit profile</a>
+              </article>
+              <hr />
+              <article>
+                <div class="form-group">
+                  @Html.Label("What will be the display name for this profile?", htmlAttributes: new { @class = "control-label" })
+                  @Html.TextBoxFor(model => model.Name, new { @placeholder = "e.g. Your Company Name", @disabled = "disabled", @class = "form-control", @required = "true", @data_msg_required = "Name is required", @data_val = "true", @data_val_required = "Name is required", @maxlength = 30 })
+                  @Html.ValidationMessageFor(model => model.Name)
+                  <span id="counterTitle" class="counter">30 / 30 remaining</span>
+                </div>
+
+                <div class="form-group">
+                  @Html.Label("At a high level, provide a description on yourself, your team(s) and marketing experience", htmlAttributes: new { @class = "control-label" }).
+
+                  @Html.TextAreaFor(model => model.Description, new { @class = "form-control no-resize", @disabled = "disabled", @required = "true", @data_msg_required = "Description is required", @rows = "7", @cols = "80", @wrap = "hard", @placeholder = "Write out your description here....", @maxlength = 1000 })
+                  @Html.ValidationMessageFor(model => model.Description)
+                  <span id="counterDescription" class="counter">1000 / 1000 remaining</span>
+                </div>
+
+                <div class="form-group">
+                  @Html.Label("Choose an icon to display with your profile", htmlAttributes: new { @class = "control-label" })
+                  <div class="marquee-upload clearfix">
+                    @KindAds.Helpers.ImgSelectorHelper.DisplayImageSelector("fileupIcon", Model.profile.IconUrl)
+                    @*<label id="lblFileupIcon"></label>
+    <img id="iconSelected" src="@Model.profile.IconUrl" />*@
+                    <div class="content">
+
+                      <div class="btn btn-default file">
+                        + Upload Files
+                        <input id="fileupIcon" name="fileupIcon" type="file" />
+                      </div>
+                      <div>
+                        Drag &amp; drop an icon we can use to display your profile in various parts of the site<br />
+                        <small>Recommended 96 x 96px</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  @Html.Label("What country are you located in?", htmlAttributes: new { @class = "control-label" })
+                  @Html.DropDownListFor(model => model.Country, new SelectList(string.Empty, "Value", "Text"), new { @id = "BusinessCountry", @disabled = "disabled", @class = "form-control dropdown", @required = "true", @data_msg_required = "Business country is required" })
+                  @Html.ValidationMessage("BusinessCountry")
+                </div>
+
+                <div class="form-group">
+                  @Html.Label("How experienced is your business with digital advertising?", htmlAttributes: new { @class = "control-label" })
+                  @Html.DropDownListFor(model => model.ExperienceLevel, new SelectList(string.Empty, "Value", "Text"), new { @id = "ExperienceLevel", @disabled = "disabled", @class = "form-control dropdown", @required = "true", @data_msg_required = "Experience level is required" })
+                  @Html.ValidationMessage("ExperienceLevel")
+                </div>
+
+
+              </article>
+
+              <article class="clearfix">
+                <h2>
+                  Advertiser Preferences
+                  <small>Optional</small>
+                </h2>
+
+                <div class="form-group">
+                  @Html.Label("What type of businessses would you prefer to work with?", htmlAttributes: new { @class = "control-label" })
+                  <p>
+                    Choose as many as you'd like.
+                  </p>
+                  <div class="flexbox radio-group" role="BusinessLikes" aria-label="Likes">
+
+                    @foreach (var industrie in Model.GetIndustries())
+                    {
+                      <div class="flexbox-item radio radio-check">
+                        <label for="@industrie.Id">
+                          @industrie.Name
+                          @if (preferences.Any(p => p.IndustryId == industrie.Id && p.Like == true))
+                          {
+                            <input data-val="true" class="industryLike" checked id="@industrie.Id" name="BusinessLikes" type="checkbox" disabled="disabled" onclick="selectIndustryPreference('@industrie.Id');">
+                          }
+                          else
+                          {
+                            <input data-val="true" class="industryLike" id="@industrie.Id" name="BusinessLikes" type="checkbox" disabled="disabled" onclick="selectIndustryPreference('@industrie.Id');">
+                          }
+
+                          <div class="control_indicator"></div>
+                        </label>
+                      </div>
+                    }
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  @Html.Label("What type of businessses would you prefer NOT to work with?", htmlAttributes: new { @class = "control-label" })
+                  <p>
+                    Choose as many as you'd like.
+                  </p>
+                  <div class="flexbox radio-group" role="BusinessDislikes" aria-label="Disikes">
+
+                    @foreach (var industrie in Model.GetIndustries())
+                    {
+                      <div class="flexbox-item radio radio-check" id="flex-item-@industrie.Id">
+                        <label for="d+@industrie.Id">
+                          @industrie.Name
+
+                          @if (preferences.Any(p => p.IndustryId == industrie.Id && p.Like == false))
+                          {
+                            <input data-val="true" class="industryDislike" id="d+@industrie.Id" checked name="BusinessDislikes" type="checkbox" disabled="disabled" onclick="selectIndustryDislikePreference('@industrie.Id');">
+                          }
+                          else
+                          {
+                            <input data-val="true" class="industryDislike" id="d+@industrie.Id" name="BusinessDislikes" type="checkbox" disabled="disabled" onclick="selectIndustryDislikePreference('@industrie.Id');">
+                          }
+
+                          <div class="control_indicator"></div>
+                        </label>
+                      </div>
+                    }
+
+                  </div>
+                </div>
+
+                <div class="cta-bar">
+                  <div class="pull-left">
+                    <a id="cancelProfile" class="btn btn-default btn-lg">Cancel</a>
+                  </div>
+                  <div class="pull-right">
+                    @*@Html.ActionLink("Create profile", "CreateProfile", "Publisher", null, new { @class = "btn btn-secondary btn-lg" })*@
+                    <input type="submit" id="btnCreateProfile" class="btn btn-secondary btn-lg" value="Save profile" />
+                  </div>
+                </div>
+              </article>
+            </div>
+          </fieldset>
+        }
+      </section>
+
+    </div>
+  </div>
+</div>
+
+@Html.Partial("_PublisherProfileEditModal")
+
+@section Scripts {
+  <script src="~/Scripts/Utils/image-upload.js"></script>
+  <script type="text/javascript">
+    var dict = [];
+    var preferences = [];
+
+    $(document).ready(function () {
+      $.ajax({
+        type: 'POST',
+        url: '@Url.Action("FillCatCountry")',
+        dataType: 'json',
+        success: function (elements) {
+          if (elements != null && elements != '') {
+            $("#BusinessCountry").append('<option value="">' + 'Choose country' + '</option>');
+            $.each(elements, function (i, value) {
+
+              if (value.Value == '@Html.Raw(Model.profile.CountryBusinessInId)') {
+                $("#BusinessCountry").append('<option value="' + value.Value + '" selected>' + value.Text + '</option>');
+              } else {
+                $("#BusinessCountry").append('<option value="' + value.Value + '">' + value.Text + '</option>');
+              }
+            });
+
+          } else {
+            $("#BusinessCountry").append('<option value="">' + 'Choose country' + '</option>');
+          }
+        },
+        error: function (ex) {
+          alert('Failed to fill catalog country.' + ex);
+        }
+      });
+
+      //Fil Catalog Experience Level
+      $("#ExperienceLevel").empty();
+        $.ajax({
+        type: 'POST',
+        url: '@Url.Action("FillCatBusinessExpertise")',
+        dataType: 'json',
+        success: function (elements) {
+          if (elements != null && elements != '') {
+            $("#ExperienceLevel").append('<option value="">' + 'Choose experience level' + '</option>');
+            $.each(elements, function (i, value) {
+
+              if (value.Value == '@Html.Raw(Model.profile.ExperienceLevel)') {
+                $("#ExperienceLevel").append('<option value="' + value.Value + '" selected>' + value.Text + '</option>');
+              } else {
+                   $("#ExperienceLevel").append('<option value="' + value.Value + '">' + value.Text + '</option>');
+                 }
+            });
+
+
+          } else {
+            $("#ExperienceLevel").append('<option value="">' + 'Choose experience level' + '</option>');
+          }
+        },
+        error: function (ex) {
+          alert('Failed to fill catalog experience level.' + ex);
+        }
+      });
+
+
+
+      //add preferences to list
+      $(".industryDislike").each(function () {
+        if ($(this).is(':checked')) {
+          selectIndustryDislikePreference(this.id.replace("d+", ""));/*Reemplazamos los id de dislike porque tienen el prefijo d+*/
+        }
+
+      });
+
+      $(".industryLike").each(function () {
+        if ($(this).is(':checked')) {
+          selectIndustryPreference(this.id);
+        }
+      });
+
+      @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupIcon", "");
+
+
+      // Edit Profile
+      $('#editProfile').on("click", function (e) {
+        e.preventDefault();
+        $(".form-data .form-control").removeAttr("disabled");
+        $(".radio-check input").removeAttr("disabled");
+        $(".form-container").removeClass("read-only");
+        $(this).hide();
+      });
+
+      // Cancel Profile
+      $('#cancelProfile').on("click", function (e) {
+        e.preventDefault();
+        $(".form-data .form-control").attr("disabled", "disabled");
+        $(".radio-check input").attr("disabled", "disabled");
+        $(".form-container").addClass("read-only");
+        $('#editProfile').show();
+      });
+
+      $('#formEditProfile').submit(function (e) {
+        if ($("#formEditProfile").valid() && validateImgFile(72,72,"#fileupIcon", "#lblFileupIcon")) {
+          var stringify = JSON.stringify(preferences);
+          $("#preferencesStringify").val(stringify);
+          var _data = new FormData(this);
+
+          e.preventDefault();
+          $('#loadingPublisherProfileModal').modal('show');
+          $.ajax({
+            url: "EditProfile",
+            type: "Post",
+            data: _data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              if (response.success) {
+                $('#loadingPublisherProfileModal').modal('hide');
+                $('#PublisherProfileModal').modal('show')
+              } else {
+                $('#loadingPublisherProfileModal').modal('hide');
+                $('#PublisherProfileModalBody').append('Error');
+                $('#PublisherProfileModalBodyError').text('');
+                $('#PublisherProfileModal').modal('show')
+              }
+            },
+            error: function (xhr, error, status) {
+              $('#loadingCampaignModal').modal('hide');
+              $('#PublisherProfileModalBody').append('Error');
+              $('#PublisherProfileModalBodyError').text('');
+              $('#PublisherProfileModal').modal('show')
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+    });
+
+    
+
+    function selectIndustryPreference(industryId) {
+      makeVisibility(industryId);
+      makePreferences(industryId, true);
+    };
+
+    function selectIndustryDislikePreference(industryId) {
+      makePreferences(industryId, false);
+    };
+
+    function makeVisibility(industryId) {
+      var industryItem = 'flex-item-' + industryId;
+      var existInDictionary = false;
+      var indexInDictionary = -1;
+
+      // check if exist any element in dictionary
+      if (dict.length > 0) {
+
+        // check if exist in dictionary
+        for (var i = 0; i <= (dict.length - 1); i++) {
+          if (dict[i].id == industryItem) {
+            existInDictionary = true;
+            indexInDictionary = i;
+          }
+        }
+
+        if (existInDictionary) {
+          // show again
+          $("#" + industryItem).show();
+
+          // pop element
+          dict.splice(indexInDictionary, 1);
+        }
+        else {
+          // push element
+          dict.push({
+            id: industryItem,
+            visibility: "none"
+          });
+
+          // hide element
+          $("#" + industryItem).hide();
+        }
+      }
+      else {
+
+        // push element
+        dict.push({
+          id: industryItem,
+          visibility: "none"
+        });
+
+        // hide element
+        $("#" + industryItem).hide();
+      }
+    };
+
+    function makePreferences(industryId, like) {
+      var industryItem = 'flex-item-' + industryId;
+      var existInDictionary = false;
+      var indexInDictionary = -1;
+
+      // check if exist any element in dictionary
+      if (preferences.length > 0) {
+
+        // check if exist in dictionary
+        for (var i = 0; i <= (preferences.length - 1); i++) {
+          if (preferences[i].IndustryId == industryItem) {
+            existInDictionary = true;
+            indexInDictionary = i;
+          }
+        }
+
+        if (existInDictionary) {
+          // pop element
+          preferences.splice(indexInDictionary, 1);
+        }
+        else {
+
+          // push element
+          preferences.push({
+            IndustryId: industryItem,
+            Like: like,
+            AdvertiserProfileId: "undefined"
+          });
+        }
+      }
+      else {
+
+        // push element
+        preferences.push({
+          IndustryId: industryItem,
+          Like: like,
+          AdvertiserProfileId: "undefined"
+        });
+      }
+    };
+
+
+  </script>
+}

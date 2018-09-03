@@ -1,0 +1,3 @@
+﻿# KindAds.WebJob.Minado
+
+

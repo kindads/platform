@@ -1,0 +1,20 @@
+﻿{
+  "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
+  "WebJobs": [
+    {
+      "filePath": "../KindAds.Notifications/KindAds.WebJob.Notifications.csproj"
+    },
+    {
+      "filePath": "../KindAds.WebJob.CampaignValidator/KindAds.WebJob.CampaignValidator.csproj"
+    },
+    {
+      "filePath": "../KindAds.WebJob.SiteValidator/KindAds.WebJob.SiteValidator.csproj"
+    },
+    {
+      "filePath": "../KindAds.WebJob.Chat/KindAds.WebJob.Chat.csproj"
+    },
+    {
+      "filePath": "../KindAds.WebJob.Audience/KindAds.WebJob.Audience.csproj"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+@model PublisherProposalDetailViewModel
+@{
+  ViewBag.Title = "Contract";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+}
+<div>
+  <img src="@Model.AdvertiserImage" />
+  <p> @Model.AdvertiserName</p>
+  <p> @Model.AdvertiserLocation</p>
+  <p>@Model.WebSite</p>
+  <p>@Model.MemberSinceYear </p>
+  <h3>Proposed Terms</h3>
+  <p>@Model.StartDate </p>
+  <p>@Model.EndDate </p>
+  <p>@Model.Price </p>
+  <a href="">View Channel</a>
+  <a href="">View Audience</a>
+  <div id="blockchainValidations"></div>
+  <button id="getInfoWallet" onclick="ValidWalletData();">Get Info Wallet </button>
+  <div id="walletData"></div>
+  <div id="acceptPanel">
+
+
+
+    @using (Html.BeginForm("BeginContract", "Channel", FormMethod.Post, new { @id = "beginForm" }))
+    {
+      @Html.HiddenFor(m => m.ProposalId)
+      @Html.HiddenFor(m => m.Price)
+      @Html.HiddenFor(m => m.Accepted, new { @id = "Accepted" })
+
+
+      @Html.CheckBox("xaccepted", Model.Accepted ?? false)
+      <p>
+        Yes I understand and agre to Kind Ads <a href="@Url.Action("PublisherContract","Channel")" target="_blank">Terms of Service</a>, including the User Agreement and Privacy Policy
+      </p>
+      if (ViewBag.errorMessage != null)
+      {
+        switch (ViewBag.errorMessage)
+        {
+          case "DontAccept":
+            <text><p>You should accept contract</p></text>
+            break;
+        }
+      }
+
+      <br />
+      <button type="submit">Begin Contract</button>
+
+    }
+
+    <button>Cancel</button>
+  </div>
+
+</div>
+<div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+@Scripts.Render("~/bundles/web3")
+@section scripts
+{
+  <script>
+    $(document).ready(function () {
+      $("#acceptPanel").hide();
+      $("#getInfoWallet").hide();
+
+      ValidMetamask();
+      
+      $('#beginForm').submit(function (e) {
+        var isChecked = $('#xaccepted').is(':checked');
+        if (isChecked) {
+          $("#Accepted").val("true");
+        }
+        else {
+          $("#Accepted").val("false");
+        }
+      });
+    
+    });
+
+    function ValidMetamask() {
+      //Browser Validation
+      var valBrowserResult = CheckBrowserCompatibility();
+      if (!valBrowserResult.validBrowser) {
+        $("#acceptPanel").hide();
+        $("#blockchainValidations").append("Kind Ads uses MetaMask wallet, so only Chrome, Firefox and Opera browsers are supported.");
+        return;
+      }
+
+      //Metamask Validation
+      if (!IsMetamaskInBrowser()) {
+        $("#acceptPanel").hide();
+        $("#blockchainValidations").append("Please install Metamask in your browser");
+        return;
+      }
+      $("#getInfoWallet").show();
+      
+    }
+
+    function ValidWalletData() {
+      $("#blockchainValidations").text("");
+      $("#walletData").text("");
+      if (IsMetamaskInBrowser()) {
+        
+        var networkName = getNetworkNameMetamask();
+        
+
+        if (networkName != "main") {
+          $("#walletData").append("You are in " + networkName + " network, please change to main");
+        }
+        //else {
+        var wallet = GetCurrentWallet();
+
+        
+          if (wallet) {
+            $("#walletData").append("You are in " + networkName + " network ");
+            $("#walletData").append("Your selected wallet is " + wallet);
+            $("#acceptPanel").show();
+          }
+          else {
+            $("#walletData").append("Your wallet is invalid, select wallet and try again");
+          }
+          
+        //}
+      }
+      else {
+        $("#blockchainValidations").append("Please install Metamask in your browser");
+      }
+    }
+  </script>
+
+
+}

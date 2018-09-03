@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="@KindAds.Helpers.CultureHelper.GetCurrentNeutralCulture()" dir="@(KindAds.Helpers.CultureHelper.IsRighToLeft() ? "rtl" : "ltr")">
+<head>
+  <!--CustomLayout-->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>@ViewBag.Title | Kind Ads</title>
+  <link rel="shortcut icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" href="../Img/favicon/apple-icon-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../Img/favicon/apple-icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="../Img/favicon/android-icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../Img/favicon/favicon-16x16.png">
+  <meta name="application-name" content="&amp;amp;nbsp;">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="../Img/favicon/ms-icon-144x144.png">
+  @Styles.Render("~/Content/vendor/bootstrap.min.css")
+  @Styles.Render("~/Content/tkatUI.css")
+</head>
+<body>
+  <div class="wrapper" role="main" id="top">
+    <div class="main-content">
+      <div class="flexbox sign">
+        <section class="flexbox-item spaced form">
+          @RenderBody()
+        </section>
+        <section class="flexbox-item info">
+          @*Html.Partial("_LanguageSelectPartial")*@
+          @Html.Partial("~/Views/Access/_PartialAccess.cshtml")
+        </section>
+      </div>
+    </div>
+  </div>
+
+  @Scripts.Render("~/bundles/basejs")
+  @RenderSection("Scripts", required: false)
+  <script src="~/Modules/languageModule.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      languageModule.bindingForm();
+    });
+  </script>
+
+  <!-- GTA -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114897255-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-114897255-1');
+  </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+/* Button
+================================================== */
+// Core
+@mixin btn-disabled {
+  border: none;
+  cursor: default;
+  box-shadow: none;
+  text-shadow: none;
+  opacity: 0.33;
+  cursor: not-allowed;
+}
+
+@mixin btn-core {
+  outline: 0;
+  word-spacing: .08em;
+  border-radius: 1px;
+}
+
+@mixin btn-style ($bgcolor, $bdrcolor, $txtcolor) {
+  background: $bgcolor;
+  border: solid 1px $bdrcolor;
+  color: $txtcolor !important;
+}
+
+
+// Styles
+@mixin btn {
+  @include btn-core;
+}
+
+@mixin btn-default {
+  @include btn-style($white, $secondary-color, $secondary-color);
+  min-width: 160px;
+  display: block;
+  margin: 0 auto;
+  @include transitionButton();
+  &:focus, &:hover {
+    background: lighten($main-violet, 20);
+    border-color: $vivid-violet;
+    color: $secondary-color !important;
+  }
+  &.active, &:active {
+    background: lighten($dark-violet, 0) !important;
+    border-color: $vivid-violet;
+    color: $white !important;
+    &:hover {
+      pointer-events: none;
+    }
+  }
+  @include breakpoint($tablet) {
+    display: inline-block;
+    margin: 0;
+    width: initial;
+  }
+}
+
+@mixin btn-primary {
+  @include btn-style($primary-color, transparent, $white);
+  min-width: 160px;
+  display: block;
+  margin: 0 auto;
+  @include transitionButton();
+  &:active, &.active, &:focus, &:hover {
+    background: lighten($vivid-blue, 0);
+    border-color: $dark-blue;
+    color: $white;
+    text-decoration: none;
+  }
+
+  @include breakpoint($tablet) {
+    display: inline-block;
+    margin: 0;
+    width: initial;
+  }
+}
+
+@mixin btn-secondary {
+  @include btn-style($dark-violet, $vivid-violet, $off-white);
+  min-width: 160px;
+  padding: 8px 48px;
+  display: block;
+  margin: 0 auto;
+  @include transitionButton();
+  &:active, &.active, &:focus, &:hover {
+    background-color: lighten($dark-violet, 12);
+    border-color: $vivid-violet;
+    color: $white;
+  }
+
+  @include breakpoint($tablet) {
+    display: inline-block;
+    margin: 0;
+    width: initial;
+  }
+}
+
+.button, input[type='submit'], input[type='button'], input[type='reset'], .btn {
+  @include btn;
+}
+
+.btn-default {
+  @include btn-default;
+  &.disabled,
+  &[disabled] {
+    @include btn-disabled;
+  }
+}
+
+.btn-primary {
+  @include btn-primary;
+  //background: linear-gradient(to bottom, $main-blue 0%, darken($main-blue, 10) 120%);
+
+  &.disabled,
+  &[disabled] {
+    @include btn-disabled;
+  }
+}
+
+.btn-secondary {
+  @include btn-secondary;
+  //background: linear-gradient(to bottom, $main-violet 0%, darken($main-violet, 10) 120%);
+
+  &.disabled,
+  &[disabled] {
+    @include btn-disabled;
+  }
+}
+
+
+// Xtras
+.btn-sm {
+  padding: 8px 30px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  min-width: auto;
+}
+
+.btn-rounded {
+  border-radius: 24px;
+}
+
+.btn-lg {
+  font-size: 1.15em;
+  padding: 15px 36px;
+}

@@ -1,0 +1,109 @@
+@model KindAds.Models.Publisher.TransactionsViewModel
+@{
+  ViewBag.Title = "Profile";
+  Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+
+@{ var grid = new WebGrid(Model.ListTransactions, canPage: true, rowsPerPage: 15);}
+<div class="container-fluid">
+  <div class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-12 main-bar">
+        <h1 class="title">Profile</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="white-block">
+
+          <h2>
+            <p>@User.Identity.Name</p>
+          </h2>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="white-block">
+
+          <div class="body-content">
+            <div class="row">
+              <div class="col-sm-12">
+                <h2>
+                  <p>Transactions</p>
+                </h2>
+                <hr style="width:100%;" />
+                @{int i = 0;
+                  foreach (var item in Model.ListTransactions)
+                  {
+                    i = i + 1;
+                    <div class="row">
+                      <div class="col-sm-3 text-right">
+                        <label>Hash</label>
+                      </div>
+                      <div class="col-sm-9">
+                        @Html.Raw("<a target='_blank' href='" + KindAds.Utils.Configuration.AppSettings.EtherScanUrl + item.hashtransaction + "'>" + item.hashtransaction + "</a>")
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-3 text-right">
+                        <label>From</label>
+                      </div>
+                      <div class="col-sm-9">
+                        @item.hashfrom
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-3 text-right">
+                        <label>To</label>
+                      </div>
+                      <div class="col-sm-9">
+                        @item.hashto
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-3 text-right">
+                        <label>Value</label>
+                      </div>
+                      <div class="col-sm-9">
+                        @item.value.ToString("##0.00000000")
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-3 text-right">
+                        <label>Date</label>
+                      </div>
+                      <div class="col-sm-9">
+                        @item.date
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-3 text-right">
+                      </div>
+                      <div class="col-sm-9">
+                        @Html.Raw(item.inout)
+                      </div>
+                    </div>
+                    <hr style="width:100%;" />
+                  }
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+@Scripts.Render("~/bundles/customjs")
+
+<script>
+  $(function () {
+    $('.link-profile').addClass('active');
+  });
+</script>

@@ -1,0 +1,339 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceViewModel
+
+<h1>Tell us about your audience</h1>
+<p>Let advertisers know about the make up of your audience, provide relevant reporting metrics, integrate with out tools and verify ownership of the website.</p>
+
+<section class="form-data">
+  <div class="form-container">
+
+    @using (Html.BeginForm("CreateAudienceBasic", "Audience", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formCreateAudience" }))
+    {
+      @Html.HiddenFor(m => m.audience.Id)
+      @Html.Hidden("preferencesStringify", Model.preferencesStringify)
+      <article>
+        <div class="form-group">
+          @Html.Label("Choose a title for your audience", htmlAttributes: new { @class = "control-label" })
+          @Html.TextBoxFor(model => model.audience.Title, new { @placeholder = "e.g. Your Company Name", @class = "form-control", @required = "true", @data_msg_required = "Title is required", @maxlength = 30 })
+          <span id="counterTitle" class="counter">30 / 30 remaining</span>
+        </div>
+
+        <div class="form-group">
+          @Html.Label("Choose a tagline for your audience", htmlAttributes: new { @class = "control-label" })
+          @Html.TextBoxFor(model => model.audience.Tagline, new { @placeholder = "e.g. New SaaS product in hypergrowth", @class = "form-control", @required = "true", @data_msg_required = "Tagline is required", @maxlength = 50 })
+          <span id="counterTagline" class="counter">50 / 50 remaining</span>
+        </div>
+
+        <div class="form-group inline-url">
+          @Html.Label("What is the URL for this audience?", htmlAttributes: new { @class = "control-label" })
+          <p>This needs to be the top level domain. For example, rather than a specific page URL like this: www.yourwebsiteurl.com/blog/blogarticle123, it needs to be www.yourwebsiteurl.com</p>
+          @Html.DropDownListFor(model => model.audience.UrlProtocol, new SelectList(Model.GetProtocols("choose"), "Id", "Name", "1"), new { @class = "form-control form-control-small dropdown" })
+          @Html.TextBoxFor(model => model.audience.WebSiteUrl, new { @placeholder = "e.g. www.yoursite.com", @class = "form-control", @required = "true", @data_msg_required = "Main URL is required" })
+        </div>
+
+        <div class="form-group">
+          @Html.Label("Describe your business and your audience", htmlAttributes: new { @class = "control-label" })
+          <p>Provide a description of your business and it's audience in detail.</p>
+          @Html.TextAreaFor(model => model.audience.Description, new { @class = "form-control no-resize", rows = 7, cols = 80, wrap = "hard", @placeholder = "Write out your description here....", @maxlength = 1000, @required = "true", @data_msg_required = "Describe your business and your audience is required" })
+          <span id="counterDescription" class="counter">1000 / 1000 remaining</span>
+        </div>
+
+        <div class="form-group">
+          @Html.Label("Choose an icon to display for with your profile", htmlAttributes: new { @class = "control-label" })
+          <div class="marquee-upload clearfix">
+            @KindAds.Helpers.ImgSelectorHelper.DisplayImageSelector("fileupIcon", "")
+            <label id="lblFileupIcon"></label>
+            <div class="content">
+              <div class="btn btn-default file">
+                + Upload Files
+                <input id="fileupIcon" name="fileupIcon" type="file" />
+              </div>
+              <div>
+                Drag &amp; drop any images or documents tha might be helpful in providing insights and information into your business here.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          @Html.Label("What category is this audience most assciated with?", htmlAttributes: new { @class = "control-label" })
+          <!--Industries-->
+          @Html.DropDownListFor(model => model.audience.CategoryId, new SelectList(Model.GetIndustries("choose"), "Id", "Name"), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Category is required" })
+          <br />
+          <!--Subcategory-->
+          @Html.Label("What sub category is this audience most assciated with?", htmlAttributes: new { @id="labelSubCat", @class = "control-label", @hidden ="hidden" })
+          @Html.DropDownListFor(model => model.audience.SubCategoryId, new SelectList(string.Empty), new { @hidden = "hidden",  @class = "form-control dropdown", @required = "true", @data_val_required = "sub category is required", @data_msg_required = "sub category is required" })
+
+        </div>
+
+        <div class="form-group">
+          @Html.Label("Roughly when did you start building this audience?", htmlAttributes: new { @class = "control-label" })
+          @Html.DropDownListFor(model => model.audience.YearFounded, new SelectList(Model.GetYears(), "Id", "Name"), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Year is required" })
+        </div>
+
+        <div class="form-group">
+          @Html.Label("How many people work for your business?", htmlAttributes: new { @class = "control-label" })
+          @Html.DropDownListFor(model => model.audience.PeopleInYourBusiness, new SelectList(Model.GetManyPeople(), "Id", "Name"), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "How many people work for your business is required" })
+        </div>
+
+        <div class="form-group">
+          @Html.Label("What country do you do most of your business in", htmlAttributes: new { @class = "control-label" })
+          @Html.DropDownListFor(model => model.audience.CountryBusinessInId, new SelectList(Model.GetCountries(), "Id", "Name"), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "What country do you do most of your business is required" })
+        </div>
+      </article>
+
+      <div class="cta-bar pull-right">
+        <input type="submit" id="SaveBasicsBtn" value="Next: Prefereces" class="btn btn-secondary btn-lg" />
+      </div>
+    }
+
+  </div>
+</section>
+<script src="~/Scripts/Utils/image-upload.js"></script>
+<script type="text/javascript">
+
+
+  var dict = []; // create an empty array
+  var preferences = [];
+  var industries = @Html.Raw(Json.Encode(Model.GetIndustries("none")));
+
+  dict.push({
+    id: "",
+    visibility: ""
+  });
+
+  var selectList = {
+    "audience_YearFounded": false,
+    "audience_PeopleInYourBusiness": false,
+    "audience_CountryBusinessInId": false,
+    "audience_CategoryId": false,
+  };
+
+  $(document).ready(function () {
+
+    $("#audience_SubCategoryId").hide();
+    $("#labelSubCat").hide();
+    // binding text
+    // profile_Title,profile_Tagline, profile_AdvertiserNeeds
+    $("#audience_Title").on('keyup', function (e) {
+      var totalLength = 30;
+      var textLength = $("#audience_Title").val().length;
+      var remaining = totalLength - textLength;
+      $("#counterTitle").text(" "+remaining + " / " + totalLength + " remaining");
+    });
+
+    $("#audience_Tagline").on('keyup', function (e) {
+      var totalLength = 50;
+      var textLength = $("#audience_Tagline").val().length;
+      var remaining = totalLength - textLength;
+      $("#counterTagline").text(" " + remaining + " / " + totalLength + " remaining");
+    });
+
+    $("#audience_Description").on('keyup', function (e) {
+      var totalLength = 1000;
+      var textLength = $("#audience_Description").val().length;
+      var remaining = totalLength - textLength;
+      $("#counterDescription").text(" " + remaining + " / " + totalLength + " remaining");
+    });
+
+    // images are required
+    $("#lblFileupIcon").text("Image is required");
+
+
+    // get industries
+    var industries = @Html.Raw(Json.Encode(Model.GetIndustries("none")));
+
+    $("#formCreateAudience").validate();
+
+    //binding select list
+    $("#audience_YearFounded").change(function () {
+
+      console.log("audience_YearFounded changed...");
+      var combo = document.getElementById("audience_YearFounded");
+
+      if (selectList.audience_YearFounded == false) {
+        combo.removeChild(combo.childNodes[0]);
+        selectList.audience_YearFounded = true;
+      }
+
+    });
+
+    $("#audience_PeopleInYourBusiness").change(function () {
+
+      console.log("audience_PeopleInYourBusiness changed...");
+      var combo = document.getElementById("audience_PeopleInYourBusiness");
+
+      if (selectList.audience_PeopleInYourBusiness == false) {
+        combo.removeChild(combo.childNodes[0]);
+        selectList.audience_PeopleInYourBusiness = true;
+      }
+    });
+
+    $("#audience_CountryBusinessInId").change(function () {
+
+      console.log("audience_CountryBusinessInId changed...");
+      var combo = document.getElementById("audience_CountryBusinessInId");
+
+      if (selectList.audience_CountryBusinessInId == false) {
+        combo.removeChild(combo.childNodes[0]);
+        selectList.audience_CountryBusinessInId = true;
+      }
+    });
+
+ 
+    // binding change
+    $("#audience_CategoryId").change(function () {
+
+      // remove first element
+      var combo = document.getElementById("audience_CategoryId");
+
+      if (selectList.audience_CategoryId == false) {
+        combo.removeChild(combo.childNodes[0]);
+        selectList.audience_CategoryId = true;
+      }
+
+      // get current value
+      var e = document.getElementById("audience_CategoryId");
+      var industryId = e.options[e.selectedIndex].value;
+      if (industryId != "") {
+        
+        $("#audience_SubCategoryId").show();
+        $("#labelSubCat").show();
+      }
+
+      var elements = [];
+      //Print all industries
+      for (var i = 0; i <= (industries.length - 1); i++) {
+        if (industries[i].Id === industryId) {
+          elements = industries[i].SubIndustries;
+        }
+      }
+
+      // clear values
+      $("#audience_SubCategoryId").empty();
+
+      //Obtenemos las subcategorias de la industria
+      $.each(elements, function (i, value) {
+        $("#audience_SubCategoryId").append('<option value="' + value.Id + '">' + value.Name + '</option>');
+      });
+
+    });
+
+
+
+    @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupIcon", "")
+
+    
+
+    $("#SaveBasicsBtn").click(function (event) {
+      console.log("SaveBasicsBtn submit");
+      if ($("#formCreateAudience").valid() && validateImgFile(72,92,"#fileupIcon", "#lblfileupIcon")) {
+        var stringify = JSON.stringify(preferences);
+        document.getElementById("preferencesStringify").value = stringify;
+      }
+      else {
+        event.preventDefault();
+        console.log("SaveBasicsBtn false");
+        return false;
+      }
+    });
+
+  });
+
+
+  function makeVisibility(industryId) {
+    var industryItem = 'flex-item-' + industryId;
+    var existInDictionary = false;
+    var indexInDictionary = -1;
+
+    // check if exist any element in dictionary
+    if (dict.length > 0) {
+      // check if exist in dictionary
+      for (var i = 0; i <= (dict.length - 1); i++) {
+        if (dict[i].id == industryItem) {
+          existInDictionary = true;
+          indexInDictionary = i;
+        }
+      }
+
+      if (existInDictionary) {
+        // show again
+        $("#" + industryItem).show();
+
+        // pop element
+        dict.splice(indexInDictionary, 1);
+      }
+      else {
+        // push element
+        dict.push({
+          id: industryItem,
+          visibility: "none"
+        });
+
+        // hide element
+        $("#" + industryItem).hide();
+      }
+    }
+    else {
+
+      // push element
+      dict.push({
+        id: industryItem,
+        visibility: "none"
+      });
+
+      // hide element
+      $("#" + industryItem).hide();
+    }
+  };
+
+  function makePreferences(industryId,like) {
+    var industryItem = 'flex-item-' + industryId;
+    var existInDictionary = false;
+    var indexInDictionary = -1;
+
+    // check if exist any element in dictionary
+    if (preferences.length > 0) {
+
+      // check if exist in dictionary
+      for (var i = 0; i <= (preferences.length - 1); i++) {
+        if (preferences[i].IndustryId == industryItem) {
+          existInDictionary = true;
+          indexInDictionary = i;
+        }
+      }
+
+      if (existInDictionary) {
+        // pop element
+        preferences.splice(indexInDictionary, 1);
+      }
+      else {
+
+        // push element
+        preferences.push({
+          IndustryId: industryItem,
+          Like: like,
+          AdvertiserProfileId: "undefined"
+        });
+      }
+    }
+    else {
+
+      // push element
+      preferences.push({
+        IndustryId: industryItem,
+        Like: like,
+        AdvertiserProfileId: "undefined"
+      });
+    }
+  };
+
+  function selectIndustryPreference(industryId) {
+    makeVisibility(industryId);
+    makePreferences(industryId,true);
+  };
+
+  function selectIndustryDislikePreference(industryId) {
+    makePreferences(industryId,false);
+  };
+</script>
+

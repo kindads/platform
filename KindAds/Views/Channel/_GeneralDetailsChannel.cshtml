@@ -1,0 +1,278 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+@{
+    bool IsPremium = ViewBag.IsPremium;
+    bool Visibility = ViewBag.visibility;
+}
+
+@Html.HiddenFor(model => model.channel.ChannelId, new { @id = "hiddenChannelId" })
+@Html.HiddenFor(model => model.IsValidApiKey , new { @id = "hiddenIsValidApiKey" })
+
+<article>
+  <h2>Rate &amp; Availability</h2>
+  <div class="form-group inline-url">
+    @Html.Label("Price", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.channel.Price, new { @placeholder = "", @class = "form-control form-control-small", @required = "true", @data_val_required = "Price is required", @data_msg_required = "Price is required", @maxlength = 2, @type = "number", @min = "1", @max = "20" })
+    @Html.ValidationMessageFor(model => model.channel.Price)
+  </div>
+
+  @if (IsPremium)
+  {
+    <div class="form-group">
+      @Html.Label("Premium Channel", htmlAttributes: new { @class = "control-label" })
+      <div class="radio-group" role="option" aria-label="Image">
+        <div class="checkbox">
+          <label for="PremiumChannel">
+            Enable this channel as premium
+            @Html.CheckBoxFor(model => model.channel.IsPremium, new { @id = "PremiumChannel" })
+            <div class="control_indicator"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+  }
+  <hr />
+</article>
+
+<article>
+  <h2>Details</h2>
+  <div class="form-group">
+    @Html.Label("Write a name for this Channel", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.channel.Name, new { @placeholder = "e.g. US Open Tennis Fans", @class = "form-control", @required = "true", @data_val_required = "Name is required", @data_msg_required = "Name is required", @maxlength = 50 })
+    <span id="counterName" class="counter">50 / 50 remaining</span>
+    @Html.ValidationMessageFor(model => model.channel.Name)
+  </div>
+
+  <div class="form-group">
+    @Html.Label("Choose a tagline for this Channel", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.channel.TagLine, new { @placeholder = "e.g. 100k Subscribers, 5% CRT", @class = "form-control", @required = "true", @data_val_required = "Tagline is required", @data_msg_required = "Tagline is required", @maxlength = 50 })
+    <span id="counterTagLine" class="counter">50 / 50 remaining</span>
+    @Html.ValidationMessageFor(model => model.channel.TagLine)
+  </div>
+
+  <div class="form-group">
+    @Html.Label("Image to display with this Channel?", htmlAttributes: new { @class = "control-label" })
+    <div class="radio-group" role="option" aria-label="Image">
+      <div class="radio radio-check">
+        <label for="ImageDisplayDefault">
+          Use default audience image <span class="link" onclick="ShowPreviewImageModal()">(preview)</span>
+          @Html.RadioButtonFor(model => model.channel.IsDefaultImage, true, new { @id = "ImageDisplayDefault", @name = "ChannelVisibility" })
+          <div class="control_indicator"></div>
+        </label>
+      </div>
+
+      <div class="radio radio-check">
+        <label for="ImageDisplayCustom">
+          Upload new image image for this Channel
+          @Html.RadioButtonFor(model => model.channel.IsDefaultImage, false, new { @id = "ImageDisplayCustom", @name = "ChannelVisibility" })
+          <div class="control_indicator"></div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="UploadImageDisplay" style="display:none;">
+    <div class="form-group">
+      @Html.Label("Examples to display to advertisers", htmlAttributes: new { @class = "control-label" })
+      <p>If you have any examples of what this Channel looks like you can upload those images.</p>
+      <div class="marquee-upload clearfix">
+        @*   <label id="lblFileupIcon"></label>*@
+        @KindAds.Helpers.ImgSelectorHelper.DisplayImageSelector("fileupImg", "")
+        <div class="content">
+          <div class="btn btn-default file">
+            + Upload Files
+            <input id="fileupImg" name="fileupImg" type="file" />
+          </div>
+          <div>
+            Drag &amp; drop an images to display along with your ext to draw advertisers to your audience.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    @Html.Label("Description", htmlAttributes: new { @class = "control-label" })
+    <p>Your audience description will be visible for this Channel but if there is anything specific to this Channel that you would like to share please include it here.</p>
+    <div class="radio-group" role="option" aria-label="Description">
+      <div class="radio radio-check">
+        <label for="DescriptionDefault">
+          Use default audience description <span class="link" onclick="ShowPreviewTextModal()">(preview)</span>
+          @Html.RadioButtonFor(model => model.channel.IsDefaultDescription, true, new { @id = "DescriptionDefault", @name = "DescriptionDisplay",  })
+          <div class="control_indicator"></div>
+        </label>
+      </div>
+
+      <div class="radio radio-check">
+        <label for="DescriptionCustom">
+          Insert custom description for this Channel
+          @Html.RadioButtonFor(model => model.channel.IsDefaultDescription, false, new { @id = "DescriptionCustom", @name = "DescriptionDisplay", })
+          <div class="control_indicator"></div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="DescriptionDisplay" class="form-group" style="display:none;">
+    @Html.TextAreaFor(model => model.channel.Description, new { @class = "form-control no-resize", @required = "true", @data_msg_required = "Description is required", @rows = "7", @cols = "80", @wrap = "hard", @placeholder = "Write out your description here....", @maxlength = 1000 })
+    @Html.ValidationMessageFor(model => model.channel.Description)
+    <span id="counterDescription" class="counter">1000 / 1000 remaining</span>
+    @Html.ValidationMessageFor(model => model.channel.Description)
+  </div>
+
+  <hr />
+</article>
+
+<article>
+  <h2>Advertiser preferences</h2>
+  @*<div class="form-group">
+      @Html.Label("Who do you want to see this Channel?", htmlAttributes: new { @class = "control-label" })
+      @Html.TextBoxFor(model => model.channel.WhoSeeChannel, new { placeholder = "e.g 100k Subscribers, 5% CTR", @class = "form-control", @required = "true", @data_msg_required = "Who do you want to see this Channel is required", @maxlength = 50 })
+      <span id="counterWhoSeeChannel" class="counter">50 / 50 remaining</span>
+      @Html.ValidationMessageFor(model => model.channel.WhoSeeChannel)
+    </div>*@
+
+  @if (Visibility)
+  {
+    <div class="form-group">
+      @Html.Label("Who do you want to see this Channel?", htmlAttributes: new { @class = "control-label" })
+      <div class="radio-group" role="AudienceVisivility" aria-label="Likes">
+        <div class="radio radio-check">
+          <label for="rdPublic">
+            Public
+            <small>All advertisers will be able to view this projec in the marketplace</small>
+            @Html.RadioButtonFor(model => model.channel.Visibility, true, new { @id = "rdPublic", @name = "KindAdsRole" })
+            <div class="control_indicator"></div>
+          </label>
+        </div>
+
+        <div class="radio radio-check">
+          <label for="rdPrivate">
+            Private
+            <small>Only advertiser you invite will be able to view this audience</small>
+            @Html.RadioButtonFor(model => model.channel.Visibility, false, new { @id = "rdPrivate", @name = "KindAdsRole" })
+            <div class="control_indicator"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+  }
+
+  <h3>Screening Questions</h3>
+  <div class="form-group">
+    @Html.Label("Question ", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.question, new { placeholder = "e.g. what kind of digital advertising have you done before?", @class = "form-control", @data_msg_required = "Write a question is required", @id = "txtQuestion", @maxlength = 200 })
+    <span id="counterQuestion" class="counter">200 / 200 remaining</span>
+    @Html.ValidationMessageFor(model => model.question)
+  </div>
+
+  @Html.HiddenFor(model => model.question, new { @id = "hideQuestion" })
+
+  <div class="form-group">
+    @Ajax.ActionLink("Add question", "AddQuestion", new { question = "__QUESTION__" }, new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "QuestionsAdd", OnBegin = "validateQuestion();", OnComplete = "finishValidateQuestion();" }, new { @id = "btnAddQuestion", @class = "btn btn-default btn-lg" })
+  </div>
+
+  <div id="QuestionsAdd"></div>
+
+  <hr />
+</article>
+
+@Html.Partial("_ActionsChannel")
+<script src="~/Scripts/Utils/image-upload.js"></script>s
+
+<script type="text/javascript">
+
+  //Jquery
+  $(document).ready(function () {
+    @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupImg", "")
+  });
+
+  $("#ImageDisplayCustom").click(function (e) {
+    $("#UploadImageDisplay").show();
+  });
+
+  $("#ImageDisplayDefault").click(function (e) {
+    $("#UploadImageDisplay").hide();
+  });
+
+  $("#DescriptionCustom").click(function (e) {
+    $("#DescriptionDisplay").show();
+  });
+
+  $("#DescriptionDefault").click(function (e) {
+    $("#DescriptionDisplay").hide();
+  });
+
+  $('#btnAddQuestion').click(function (e) {
+    if (!$("#txtQuestion").val()) {
+      alert("Please insert question");
+      var replace = getUrlVars(this.href)["question"];
+      this.href = this.href.replace(replace, "__QUESTION__");
+    } else {
+      var replace = getUrlVars(this.href)["question"];
+      this.href = this.href.replace(replace, $("#txtQuestion").val());
+    }
+  });
+
+  function getUrlVars(data) {
+    var vars = {};
+    var parts = data.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+      vars[key] = value;
+    });
+    return vars;
+  }
+
+  $("#channel_TagLine").on('keyup', function (e) {
+    var totalLength = 50;
+    var textLength = $("#channel_TagLine").val().length;
+    var remaining = totalLength - textLength;
+    $("#counterTagLine").text(" " + remaining + " / " + totalLength + " remaining");
+  });
+
+  $("#channel_Name").on('keyup', function (e) {
+    var totalLength = 50;
+    var textLength = $("#channel_Name").val().length;
+    var remaining = totalLength - textLength;
+    $("#counterName").text(" " + remaining + " / " + totalLength + " remaining");
+  });
+
+  $("#channel_Description").on('keyup', function (e) {
+    var totalLength = 1000;
+    var textLength = $("#channel_Description").val().length;
+    var remaining = totalLength - textLength;
+    $("#counterDescription").text(" " + remaining + " / " + totalLength + " remaining");
+  });
+
+  $("#channel_WhoSeeChannel").on('keyup', function (e) {
+    var totalLength = 50;
+    var textLength = $("#channel_WhoSeeChannel").val().length;
+    var remaining = totalLength - textLength;
+    $("#counterWhoSeeChannel").text(" " + remaining + " / " + totalLength + " remaining");
+  });
+
+  $("#txtQuestion").on('keyup', function (e) {
+    var totalLength = 200;
+    var textLength = $("#txtQuestion").val().length;
+    var remaining = totalLength - textLength;
+    $("#counterQuestion").text(" " + remaining + " / " + totalLength + " remaining");
+  });
+
+  function validateQuestion() {
+    if ($("#txtQuestion").val()) {
+      showProcessingModal();
+    }
+  }
+
+  function finishValidateQuestion() {
+    hideProcessingModal();
+  }
+
+  function showProcessingModal() {
+    $('#processingModal').modal('show');
+  }
+
+  function hideProcessingModal() {
+    $('#processingModal').modal('hide');
+  }
+
+
+</script>

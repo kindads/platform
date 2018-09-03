@@ -1,0 +1,173 @@
+@using KindAds.Comun.Models.CosmosDocuments.KindAdsV2
+@using KindAds.Negocio.ViewModels.KindAdsV2
+@model IEnumerable<AudienceListItemViewModel> 
+@{
+    ViewBag.Title = "My Audiencies";
+    Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <ol class="breadcrumb">
+        @*<li>@Html.ActionLink("Home", "Publisher", "Marketplace", new { culture = "en-Us" }, new { @class = "link" })</li>*@
+        <li>@Html.ActionLink("Home", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li class="active">Audiences</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="title-bar clearfix">
+        <h1>Audiences</h1>
+        @Html.ActionLink("Add Audience", "CreateAudience", "Audience", null, new { @class = "btn btn-secondary btn-lg", @title = "Add Audience" })
+      </div>
+      <hr/>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <section>
+        @{
+            foreach (AudienceListItemViewModel item in Model)
+            {
+
+              if (item.audience.Verified)
+              {
+                <div>&nbsp;</div>
+              }
+              else
+              {
+                <div>You must validate this audience to see your channels in the Marketplace</div>
+              }
+            <article class="data-grid audiences-grid">
+              <div class="data-grid-actions">
+                <ul class="flexbox ">
+                  <li>
+                    @item.audience.WebSiteUrl.Replace("https://", "").Replace("http://", "").Replace("www.", "")
+                  </li>
+                  <li>
+                    <div class="flexbox btn-group">
+                      @if (item.audience.Verified)
+                      {
+                        <a class="flexbox-item btn verified">Verified</a>
+                      }
+                      else
+                      {
+                        @*<a class="flexbox-item btn btn-primary btn-sm">Verify site</a>*@
+                        @Html.ActionLink(
+                          "Verify",
+                          "VerifyWebSite",
+                          "PublisherProfile",
+                          new { culture= culture, audienceId = item.audience.Id  },
+                          new { @class= "flexbox-item btn btn-primary", @title = "Verify Site" }
+                          )
+                      }
+
+                      @Html.ActionLink(
+                        "Edit",
+                        "EditAudience",
+                        "Audience",
+                        new { audienceId = item.audience.Id },
+                        new { @class = "flexbox-item btn btn-default", @title = "Edit Audience" } )
+
+                      @Html.ActionLink(
+                        "Add",
+                        "CreateChannel",
+                        "Channel",
+                        new { culture= culture, audienceId = item.audience.Id  },
+                        new { @class= "flexbox-item btn btn-default", @title = "Add channel" }
+                       )
+                    </div>
+                    <form method="post" class="searchbox" style="display:none;">
+                      <input type="text" class="textbox" placeholder="Search">
+                      <input title="Search" value="" type="submit" class="search-btn">
+                    </form>
+                  </li>
+                </ul>
+              </div>
+              <div class="data-grid-title">
+                <ul class="flexbox ">
+                  <li>Channel</li>
+                  <li>Cost</li>
+                  <li>Proposals</li>
+                  <li>Contracts</li>
+                  <li>Completed</li>
+                  <li>Status</li>
+                  <li>
+                    <a class="btn" data-toggle="collapse" data-parent="#datagrid" data-target="#collapse-@item.audience.Id" aria-expanded="true">
+                      <span class="caret"></span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="data-grid-content collapse in" div id="collapse-@item.audience.Id" aria-expanded="true">
+                <div>
+                  @foreach (AudienceChannelDocument channel in item.Channels)
+                  {
+                    <ul class="flexbox">
+                      <li>
+                        @channel.Name
+                        <small>@channel.ChannelType by @channel.providerName </small>
+                      </li>
+
+                      <li>@channel.Price</li>
+                      <li>--</li>
+                      <li>--</li>
+                      <li>---</li>
+                      <li>@(channel.Visibility ? "Public" : "Private")</li>
+                      <li>
+                        <div class="dropdown">
+                          <button class="btn dropdown-toggle" id="menuRole" type="button" data-toggle="dropdown">
+                            <span class="text">...</span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="menuRole">
+                            <li role="presentation">
+                              <a role="menuitem" tabindex="-1" href="@Url.Action("Channel", "Channel", new { audienceId= channel.AudienceId, audienceChannelId=channel.Id, channelTypeId = channel.ChannelId})">View/Edit</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  }
+                </div>
+              </div>
+            </article>
+          }
+        }
+      </section>
+    </div>
+  </div>
+</div>
+
+
+@section Scripts {
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var createChannel = function (id) {
+        //todo
+        console.log("audienceId:" + id);
+
+        $.ajax({
+          type: 'POST',
+          url: '@Url.Action("CreateChannel","Channel")',
+          data: { audienceId: id },
+          dataType: 'json',
+          success: function (result) {
+            //exitoso
+            console.log("Exitoso");
+          },
+          error: function (ex) {
+            //error
+            console.log("Error");
+          }
+        });
+      }
+    });
+
+  </script>
+}

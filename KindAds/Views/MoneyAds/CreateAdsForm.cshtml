@@ -1,0 +1,25 @@
+@model KindAds.Negocio.MoneyAdsManager
+
+@using (Html.BeginForm("CreateAds", "MoneyAds", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formSite" }))
+{
+  @Html.AntiForgeryToken()
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 main-bar">
+        <h1 class="title">Create your Ads</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        @{
+          Html.RenderPartial("CreateAdsFormControls",Model);
+        }
+      </div>
+    </div>
+  </div>
+}
+<script src="~/Modules/moneyAddsModule.js"></script>
+<script type="text/javascript">
+  moneyAddsModule.ready();
+</script>

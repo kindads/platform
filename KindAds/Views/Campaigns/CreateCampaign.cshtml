@@ -1,0 +1,153 @@
+@model  KindAds.Negocio.ViewModels.KindAdsV2.CampaignViewModel
+@{
+  ViewBag.Title = "CreateCampaign";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+}
+
+<h2>Create Campaign</h2>
+
+<div class="form-group">
+  @Html.Label("Choose a name for you campaign", htmlAttributes: new { @class = "control-label" })
+  @Html.TextBoxFor(model => model.campaign.Name)
+</div>
+
+<div class="form-group">
+  @Html.Label("Choose a photo to display for your audience", htmlAttributes: new { @class = "control-label" })
+  <div class="marquee-upload clearfix">
+    <label id="lblFileupIcon"></label>
+    <div class="content">
+      <div class="btn btn-default file">
+        + Upload Files
+        <input id="fileupImage" name="fileupImage" type="file" />
+      </div>
+      <div>
+        Drag &amp; drop an image to display along with your text to draw advertser to your audience.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  @Html.Label("Tell us more about your campaign", htmlAttributes: new { @class = "control-label" })
+  <p>
+    Great campaign descriptions inclide a little bit about yourself, details of what you are trying to achieve and any decisions you that
+    you have already made about your campaign.Neil to hel with text.
+  </p>
+  @Html.TextAreaFor(model => model.campaign.Text)
+</div>
+
+<div class="form-group">
+  @Html.Label("Choose a photo to display for your audience", htmlAttributes: new { @class = "control-label" })
+  <div class="marquee-upload clearfix">
+    <label id="lblFileupIcon"></label>
+    <div class="content">
+      <div class="btn btn-default file">
+        + Upload Files
+        <input id="fileupFile" name="fileupFile" type="file" />
+      </div>
+      <div>
+        Drag &amp; drop any images or documents that might be helpful in explaining your campaign brief better here.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="form-group">
+  @Html.Label("What channel(s) are you looking to advertiser on?", htmlAttributes: new { @class = "control-label" })
+  <p>
+    We recommend keeping each campaign speficif to only one plataform. If you´re not sure which one yet please just click get
+    recommendations below and our publishers will recommend the best channel for you
+  </p>
+
+  @Html.CheckBoxFor(m => m.isWebSiteChecked, new { @checked = "checked" }) Website Ad Space
+  @Html.CheckBoxFor(m => m.isEmailChecked, new { @checked = "checked" }) Email
+  @Html.CheckBoxFor(m => m.isPushNotificationChecked, new { @checked = "checked" }) Web Push Notification
+
+</div>
+
+<div class="form-group">
+  @Html.Label("Who do you want to see this project?", htmlAttributes: new { @class = "control-label" })
+  <div class="radio-group" role="CampaignVisivility" aria-label="Likes">
+    <div class="radio radio-check">
+      <label for="rdPublic">
+        Public
+        <small>All publisher will be able to view this projec in the marketplace</small>
+        @Html.RadioButtonFor(model => model.campaign.Visibility, false, new { @id = "rdPublic", @name = "KindAdsRole" })
+        <div class="control_indicator"></div>
+      </label>
+    </div>
+
+    <div class="radio radio-check">
+      <label for="rdPrivate">
+        Private
+        <small>Only publisher you invite will be able to view this project</small>
+        @Html.RadioButtonFor(model => model.campaign.Visibility, true, new { @id = "rdPrivate", @name = "KindAdsRole" })
+        <div class="control_indicator"></div>
+      </label>
+    </div>
+  </div>
+</div>
+
+<h3>Screening Questions</h3>
+<div class="form-group">
+  @Html.Label("Question ", htmlAttributes: new { @class = "control-label" })
+  @Html.TextBoxFor(model => model.question, new { placeholder = "e.g. what kind of digital advertising have you done before?", @class = "form-control", @data_msg_required = "Write a question is required", @id = "txtQuestion", @maxlength = 200 })
+  <span id="counterQuestion" class="counter">200 / 200 remaining</span>
+  @Html.ValidationMessageFor(model => model.question)
+</div>
+
+@Html.HiddenFor(model => model.question, new { @id = "hideQuestion" })
+
+<div class="form-group">
+  @Ajax.ActionLink("Add another question", "AddQuestion", new { question = "__QUESTION__" }, new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "QuestionsAdd", OnBegin = "validateQuestion();", OnComplete = "finishValidateQuestion();" }, new { @id = "btnAddQuestion", @class = "btn btn-default btn-lg" })
+</div>
+
+<div id="QuestionsAdd"></div>
+
+<div class="form-group">
+  @Html.Label("Choose a name for you campaign", htmlAttributes: new { @class = "control-label" })
+  @Html.TextAreaFor(model => model.campaign.Information)
+</div>
+
+@Html.Partial("~/Views/Shared/_Processing.cshtml")
+@section Scripts {
+  <script type="text/javascript">
+    $('#btnAddQuestion').click(function (e) {
+      if (!$("#txtQuestion").val()) {
+        alert("Please insert question");
+        var replace = getUrlVars(this.href)["question"];
+        this.href = this.href.replace(replace, "__QUESTION__");
+      } else {
+        var replace = getUrlVars(this.href)["question"];
+        this.href = this.href.replace(replace, $("#txtQuestion").val());
+      }
+    });
+
+    function getUrlVars(data) {
+      var vars = {};
+      var parts = data.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        vars[key] = value;
+      });
+      return vars;
+    }
+
+    function validateQuestion() {
+      if ($("#txtQuestion").val()) {
+        showProcessingModal();
+      }
+    }
+
+    function finishValidateQuestion() {
+      hideProcessingModal();
+    }
+
+    function showProcessingModal() {
+      $('#processingModal').modal('show');
+    }
+
+    function hideProcessingModal() {
+      $('#processingModal').modal('hide');
+    }
+  </script>
+}

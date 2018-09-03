@@ -1,0 +1,57 @@
+@using KindAds.Negocio.ViewModels.KindAdsV2;
+
+@model IEnumerable<ProposalReviewListItemViewModel>
+
+<section class="">
+  <div class="white-block block-default">
+    <article class="data-grid">
+      <div class="data-grid-title">
+        <ul class="flexbox ">
+          <li>Advertiser</li>
+          <li>Location</li>
+          <li>Actions</li>
+        </ul>
+      </div>
+
+      @{
+        foreach (ProposalReviewListItemViewModel proposal in Model)
+        {
+          <div class="data-grid-content collapse in">
+            <ul class="flexbox ">
+              <li>
+                <img src="@proposal.AdvertiserImageSrc" />
+                @proposal.ProductName
+                @proposal.AdvertiserName
+                @proposal.Price
+
+                @proposal.TimeAgoReceived
+
+                @proposal.noMessages
+
+                @proposal.previewMessage
+              </li>
+              <li>@proposal.Location</li>
+              <li>
+                <a class="btn btn-secondary" href="@Url.Action("ReviewProposal","Channel",new { proposalId = proposal.IdProposal })">Review Proposal</a>
+                <a class="btn btn-default" onclick="AddToFavorites('@proposal.IdProposal')">Add to favorites</a>
+              </li>
+            </ul>
+          </div>
+        }
+      }
+
+    </article>
+  </div>
+</section>
+
+
+<script>
+  function ReviewProposal(idProposal) {
+
+  }
+
+  function ReviewProposal(AddToFavorites) {
+
+  }
+
+</script>

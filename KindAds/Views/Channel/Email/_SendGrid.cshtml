@@ -1,0 +1,126 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<h2>SendGrid</h2>
+
+<div class="form-group">
+  @Html.Label("Input your SendGrid API Key", htmlAttributes: new { @class = "control-label" })
+  <p>Learn how to do this by clicking <a class="link" href="@Url.Action("sendGridHelp", "Support")" target="_blank">here</a></p>
+  <div class="inline-group">
+    @Html.TextBoxFor(model => model.emailProductForm.sendGridForm.ApiToken, new { @placeholder = "e.g. Your Api token ", @class = "form-control", @required = "true", @data_msg_required = "API token is required", @maxlength = 80 })
+    <div id="btnValidateProvider" class="btn btn-secondary btn-lg" onclick="ValidateProvider();">Sync</div>
+  </div>
+</div>
+
+
+<!-- Seccion de formulario escondido -->
+<div id="sendGridCompleteForm" style="display:none">
+
+  @*<div class="form-group">
+      @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+      @Html.TextBoxFor(model => model.emailProductForm.sendGridForm.Name, new { @placeholder = "e.g. Name ", @class = "form-control", @required = "true", @data_msg_required = "Name is required", @maxlength = 60 })
+    </div>*@
+
+  <div class="form-group">
+    @Html.Label("Lists", htmlAttributes: new { @class = "control-label col-md-3" })
+    @*@Html.DropDownList("List", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+    @Html.ValidationMessage("List")*@
+
+    @Html.DropDownListFor(model => model.emailProductForm.sendGridForm.ListId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+    @Html.ValidationMessageFor(model => model.emailProductForm.sendGridForm.ListId)
+    <div class="main-data-number">
+      (&nbsp;<span id="lblSubscribers">&nbsp;</span>&nbsp;<small>subscribers</small>&nbsp;)
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  var ApiKeyIsValid = false;
+
+  function ValidateProvider() {
+    $('#processingModal').modal('show');
+    var apiToken = $("#emailProductForm_sendGridForm_ApiToken").val();
+
+    // envia los datos
+    var requestData = {
+      ApiToken: apiToken,
+      ChannelId: 'b4ee7512-5f12-40f1-8408-8f96bf43df6d',
+      ProviderId: '00f9f759-c3f0-4a96-b47c-44438f785756'
+    };
+
+    $.ajax({
+      url: "ValidateProvider",
+      type: "Post",
+      data: { request: requestData },
+      success: function (response) {
+
+        $('#processingModal').modal('hide');
+        ApiKeyIsValid = response.IsValid;
+
+        if (ApiKeyIsValid == 'True') {
+
+          $("#sendGridCompleteForm").show();
+          $("#btnValidateProvider").hide();
+
+          document.getElementById("emailProductForm_sendGridForm_ApiToken").readOnly = true;
+          $("#hiddenIsValidApiKey").val(true);
+          FillList(apiToken);
+        }
+        else {
+          $('#processingModal').modal('hide');
+          alert("Api key is not valid");
+          $("#sendGridCompleteForm").hide();
+          $("#btnValidateProvider").show();
+        }
+
+      },
+      error: function (xhr, error, status) {
+
+      }
+    });
+  }
+
+  function FillList(ApiToken) {
+    $("#emailProductForm_sendGridForm_ListId").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetListSendGrid")',
+              data: { ApiToken : ApiToken},
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#emailProductForm_sendGridForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#emailProductForm_sendGridForm_ListId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#emailProductForm_sendGridForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+                }
+              },
+              error: function (ex) {
+                  alert('Failed to retrieve list from sendgrid.' + ex);
+              }
+          });
+  }
+
+
+  function GetSubscribers() {
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GetNumberSubsSendGrid")',
+          dataType: 'json',
+          data: { ApiToken: $("#emailProductForm_sendGridForm_ApiToken").val(), ListId: $("#emailProductForm_sendGridForm_ListId").val()},
+          success: function (result) {
+            $("#lblSubscribers").text(result.CountSubscribers);
+          },
+          error: function (ex) {
+            alert('Failed to retrieve segment from campaign monitor.' + ex);
+          }
+      });
+  }
+
+  $("#emailProductForm_sendGridForm_ListId").change(function () {
+    GetSubscribers();
+  });
+
+</script>

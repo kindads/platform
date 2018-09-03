@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KindAds.Azure\KindAds.Azure.csproj" />
+    <ProjectReference Include="..\KindAds.Comun\KindAds.Common.csproj" />
+    <ProjectReference Include="..\KindAds.Migration.ToCosmos\KindAds.Migration.ToCosmos.csproj" />
+  </ItemGroup>
+
+</Project>

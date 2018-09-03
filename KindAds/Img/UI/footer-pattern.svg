@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="1440px" viewBox="0 0 1440 1440" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>KindAds Footer</title>
+  <defs>
+    <linearGradient id="linearGradient" x1="-0.024" y1="-0.305" x2="0.703" y2="1.172">
+      <stop stop-color="#0494c9" offset="0%"></stop>
+      <stop stop-color="#5d4282" offset="100%"></stop>
+    </linearGradient>
+  </defs>
+  <g id="footer-pattern" stroke="none" fill="none" fill-rule="evenodd">
+    <rect id="rectangleMask" fill="url(#linearGradient)" width="1440" height="1440" transform="translate(2.135)"/>
+    <rect id="leftBar" fill="#FFFFFF" opacity="0.08" width="2150" height="481" transform="translate(212.255 -360) rotate(45)"/>
+    <rect id="rightBar" fill="#FFFFFF" opacity="0.08" width="2375" height="480" transform="translate(1906.925 -20.589) rotate(135)"/>
+  </g>
+</svg>

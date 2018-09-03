@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="630px" viewBox="0 0 1440 630" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>KindAds Header</title>
+  <defs>
+    <linearGradient id="linearGradient" x1="32.0892538%" y1="6.68718871%" x2="50%" y2="100%">
+      <stop stop-color="#0494C9" offset="0%"></stop>
+      <stop stop-color="#5D4282" offset="100%"></stop>
+    </linearGradient>
+  </defs>
+  <g id="bg-pattern" stroke="none" fill="none" fill-rule="evenodd">
+    <rect id="rectangleMask" fill="url(#linearGradient)" width="1440" height="630"/>
+    <rect id="leftBar" fill="#FFFFFF" opacity="0.08" mask="url(#mask)" transform="translate(139.938452, 489.938452) rotate(-315.000000) translate(-139.938452, -489.938452) " x="-633.472009" y="249.44483" width="1546.82092" height="480.987243"></rect>
+    <rect id="rightBar" fill="#FFFFFF" opacity="0.08" mask="url(#mask)" transform="translate(740.938452, 489.938452) scale(-1, 1) rotate(-315.000000) translate(-740.938452, -489.938452) " x="-32.4720085" y="249.44483" width="1546.82092" height="480.987243"></rect>
+  </g>
+</svg>

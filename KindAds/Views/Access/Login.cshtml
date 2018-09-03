@@ -1,0 +1,91 @@
+@model KindAds.Models.Access.LoginViewModel
+@{
+  ViewBag.Title = "Login";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+@section Head {
+  @Styles.Render("~/Content/kaUI_pages.css")
+}
+
+<div class="sign content-wrapper" ">
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-12">
+          <h1>
+            Sign In
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="form-layout">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sign-wrapper">
+          <div class="content">
+            @using (Html.BeginForm("Login", "Access", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "formLogin" }))
+            {
+              @Html.AntiForgeryToken()
+              @Html.ValidationSummary(true, "", new { @class = "error" })
+
+              <article class="form-data">
+                <form>
+                  <fieldset>
+                    @*Html.LabelFor(model => model.TestLanguage, new { @class = "control-label col-md-2" })*@
+                    <div class="form-container">
+                      <div class="row">
+                        <div class="col-12 form-group">
+                          @Html.Label("Email address", htmlAttributes: new { @class = "control-label" })
+                          @Html.TextBoxFor(model => model.Email, new { placeholder = "EMAIL", @class = "form-control", @required = "true", @data_msg_required = "Email is required" })
+                          @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error" })
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 form-group">
+                          @Html.Label("Password")
+                          @Html.PasswordFor(model => model.Password, new { placeholder = "PASSWORD", @class = "form-control", @required = "true", @data_msg_required = "Password is required" })
+                          @Html.ValidationMessageFor(model => model.Password, "")
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group role">
+                            <input type="submit" class="btn btn-primary btn-lg" value="Sign In" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 form-group help-links text-center">
+                          @Html.ActionLink("Lost your password?", "RecoverPassword", "Access")
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </article>
+            }
+          </div>
+          <div class="aside">
+            @Html.Partial("_PartialAccess")
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+@section Scripts {
+  <!-- Validate Login -->
+  <script type="text/javascript">
+    $('#formLogin').submit(function (e) {
+      if (!$("#formLogin").valid()) {
+        e.preventDefault();
+      }
+    });
+    $().ready(function () {
+      $("#formLogin").validate();
+    });
+
+  </script>
+}

@@ -1,0 +1,114 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+<h2>CampaignMonitor</h2>
+<div class="form-group inline">
+  @Html.Label("Api Token", htmlAttributes: new { @class = "control-label" })
+  @Model.emailProductForm.campaignMonitorForm.ApiToken
+</div>
+<div class="form-group inline">
+  @Html.Label("Client", htmlAttributes: new { @class = "control-label" })
+  <span id="cmClient"></span>
+</div>
+<div class="form-group inline">
+  @Html.Label("List", htmlAttributes: new { @class = "control-label" })
+  <span id="cmList"></span>
+</div>
+
+<div class="form-group inline">
+  @Html.Label("Segment", htmlAttributes: new { @class = "control-label" })
+  <span id="cmSegment"></span>
+</div>
+
+<div class="form-group inline">
+  <label>Email list size:</label>
+  <span id="listSize"></span>
+</div>
+
+<div class="form-group inline">
+  <label>Last updated:</label>
+  <span id="lastUpdated"></span>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    fillList();
+    fillSegment();
+    fillClient();
+  });
+
+  function fillClient() {
+    $.ajax({
+      type: 'POST',
+      url: '@Url.Action("GetClientCampaignMonitor")',
+      dataType: 'json',
+      data: {
+        ApiToken: '@Model.emailProductForm.campaignMonitorForm.ApiToken'
+      },
+      success: function (elements) {
+        if (elements != null && elements != '') {
+
+          $.each(elements, function (i, state) {
+            if (state.Value == '@Model.emailProductForm.campaignMonitorForm.ClientId') {
+              $("#cmClient").text(state.Text);
+            }
+          });
+        }
+      },
+      error: function (ex) {
+        alert('Failed to retrieve list from campaign monitor.' + ex);
+      }
+    });
+  }
+
+
+  function fillList() {
+    $.ajax({
+      type: 'POST',
+      url: '@Url.Action("GetListCampaignMonitor")',
+      dataType: 'json',
+      data: {
+        idClient: "@Model.emailProductForm.campaignMonitorForm.ClientId",
+        ApiToken: "@Model.emailProductForm.campaignMonitorForm.ApiToken"
+      },
+      success: function (tags) {
+        if (tags != null && tags != '') {
+
+          $.each(tags, function (i, state) {
+            console.log(state);
+            if (state.Value == '@Model.emailProductForm.campaignMonitorForm.ListId') {
+              $("#cmList").text(state.Text);
+            }
+          });
+        }
+      },
+      error: function (ex) {
+        alert('Failed to retrieve list.' + ex);
+      }
+    });
+  }
+
+  function fillSegment() {
+    $.ajax({
+      type: 'POST',
+      url: '@Url.Action("GetSegmentCampaignMonitor")',
+      dataType: 'json',
+      data: {
+        idClient: "@Model.emailProductForm.campaignMonitorForm.ClientId",
+        ApiToken: "@Model.emailProductForm.campaignMonitorForm.ApiToken"
+      },
+      success: function (elements) {
+        if (elements != null && elements != '') {
+          $.each(elements, function (i, state) {
+            if (state.Value == '@Model.emailProductForm.campaignMonitorForm.SegmentId') {
+              $("#cmSegment").text(state.Text);
+            }
+
+          });
+        }
+      },
+      error: function (ex) {
+        alert('Failed to retrieve segment from campaign monitor.' + ex);
+      }
+    });
+  }
+</script>

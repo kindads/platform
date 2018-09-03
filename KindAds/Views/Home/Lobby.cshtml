@@ -1,0 +1,598 @@
+@model KindAds.Models.Home.HomeViewModel
+@{
+  ViewBag.Title = "Home";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="home  content-wrapper">
+  <div id="cookiesPanel" class="cookies-banner alert-bar">
+    @*Model.Heading.ToString()*@
+    <span>
+      This website uses cookies to provide the best experience.
+    </span>
+    <a class="btn">Got it</a>
+  </div>
+
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-md-6">
+          <h1>
+            @Resource.Language.Home.Home.Resources.MainTitleStart
+            <span>@Resource.Language.Home.Home.Resources.MainTitleBold</span>
+            <br />
+            @Resource.Language.Home.Home.Resources.MainTitleEnd
+          </h1>
+          <p>
+            @Resource.Language.Home.Home.Resources.HeroTextStart_01<br />
+            @Resource.Language.Home.Home.Resources.HeroTextStart_02
+          </p>
+          <p>
+            @Resource.Language.Home.Home.Resources.HeroTextEnd_01<br />
+            @Resource.Language.Home.Home.Resources.HeroTextEnd_02
+          </p>
+        </div>
+        <div class="col-md-6 col-lg-5 col-lg-offset-1">
+          <a href="#" class="video" data-toggle="modal" data-target="#videoModal" title="Watch Kind Ads explanation">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/kind-ads-network-on-vimeo.jpg" alt="Kind Ads Network" />
+          </a>
+        </div>
+        <div class="col-sm-12 text-center">
+          @Html.ActionLink(Resource.Language.Home.Home.Resources.HeroMainBtn, "CreateAccount", "Access", null, new { @class = "btn btn-default btn-lg" })
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>@Resource.Language.Home.Home.Resources.FeaturesTitle</h2>
+        </div>
+      </div>
+      <div class="row relative">
+        <div class="col-lg-10 col-lg-offset-1 data-list flexbox">
+          <article class="flexbox-item">
+            <h3>@Resource.Language.Home.Home.Resources.AdIndustryHeading</h3>
+            <ul>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_01
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_02
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_03
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_04
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.AdIndustryBullet_05
+              </li>
+            </ul>
+          </article>
+
+          <article class="flexbox-item">
+            <h3>@Resource.Language.Home.Home.Resources.KindAdsHeading</h3>
+            <ul>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_01
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_02
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_03
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_04
+              </li>
+              <li>
+                @Resource.Language.Home.Home.Resources.KindAdsBullet_05
+              </li>
+            </ul>
+            <div class="cta-block">
+              @Html.ActionLink(Resource.Language.Home.Home.Resources.FeaturesMainBtn, "CreateAccount", "Access", null, new { @class = "btn btn-default" })
+            </div>
+          </article>
+        </div>
+        <div class="vs">
+          VS.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="register">
+    <form id="subscribeFormUp" method="get" action="">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <h2>@Resource.Language.Home.Home.Resources.RegisterTitle</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-offset-1 col-sm-10">
+            <div id="pnlSubscribeInfoUp">
+              <div class="row">
+                <div class="form-group col-sm-9">
+                  <input id="emailSubscribeUp" type="email" class="form-control" placeholder="@Resource.Language.Home.Home.Resources.RegisterEmailPlaceholder" required />
+                </div>
+                <div class="form-group col-sm-3">
+                  <input id="btnSubscribeUp" type="submit" class="btn btn-default" value="@Resource.Language.Home.Home.Resources.RegisterMainBtn">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 form-group checkbox">
+                  <label id="eula">
+                    <span>@Resource.Language.Home.Home.Resources.RegisterEULA</span>
+                    <input data-val-required="You must accept terms and policy" id="AgreeTermsUp" name="AgreeTermsUp" type="checkbox">
+                    <div class="control_indicator"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div id="pnlSubscribeSuccessUp" class="panel panel-default" style="display:none;">
+              <h2>Thanks for subscribing</h2>
+              <p>
+                We've sent a message.
+                <br />
+                Check your email and click Activate Account.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <section class="roadmap">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>@Resource.Language.Home.Home.Resources.RoadmapTitle</h2>
+        </div>
+      </div>
+    </div>
+    <div class="timeline">
+      <ul class="container-fluid timeline-range clearfix">
+        <li class="item item-add color-01">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_01
+            </span>
+          </div>
+        </li>
+        <li class="item color-02">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_02
+            </span>
+          </div>
+        </li>
+        <li class="item item-add item-short color-03">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_03
+            </span>
+          </div>
+        </li>
+        <li class="item item-short color-04">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_04
+            </span>
+          </div>
+        </li>
+        <li class="item item-add color-05">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_05
+            </span>
+          </div>
+        </li>
+        <li class="item color-06">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_06
+            </span>
+          </div>
+        </li>
+        <li class="item item-add item-short color-07">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_07
+            </span>
+          </div>
+        </li>
+        <li class="item item-short color-08">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_08
+            </span>
+          </div>
+        </li>
+        <li class="item item-add color-09">
+          <span class="item-badge"></span>
+          <div class="item-panel">
+            <span>
+              @Resource.Language.Home.Home.Resources.RoadmapStep_09
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="integrations">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-offset-1 col-sm-10">
+          <h2>@Resource.Language.Home.Home.Resources.IntegrationsTitle</h2>
+          <p>
+            @Resource.Language.Home.Home.Resources.IntegrationsText
+          </p>
+        </div>
+      </div>
+
+      <div id="showIntegrations" class="row">
+        <div class="col-sm-12 flexbox partners">
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/subscribers-min.png" alt="Subscribers Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/pushcrew-min.png" alt="Push Crew Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/mailchimp-min.png" alt="Mailchimp Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/campaignmonitor-min.png" alt="Campaign Monitor Logo" />
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <a class="btn btn-primary">
+            View all integrations
+          </a>
+        </div>
+      </div>
+
+      <div id="moreIntegrations" class="row collapse">
+        <div class="col-sm-12 flexbox partners">
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/subscribers-min.png" alt="Subscribers Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/pushcrew-min.png" alt="Push Crew Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/mailchimp-min.png" alt="Mailchimp Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/campaignmonitor-min.png" alt="Campaign Monitor Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/aweber-min.png" alt="AWeber Logo" />
+          </div>
+
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/sendgrid-min.png" alt="SendGrid Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/activecampaign-min.png" alt="Active Campaign Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/getresponse-min.png" alt="Get Response Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/icontact-min.png" alt="icontact Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/sendinblue-min.png" alt="SendinBlue Logo" />
+          </div>
+
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/onesignal-min.png" alt="OneSignal Logo" />
+          </div>
+          <div class="image flexbox-item">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/pushengage-min.png" alt="PushEngage Logo" />
+          </div>
+          <div class="image flexbox-item" style="display: none;">
+            <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Integrations/mailjet-min.png" alt="MailJet Logo" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="articles">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>@Resource.Language.Home.Home.Resources.ArticlesTitle</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="carousel slide" id="carousel-home" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner" role="listbox">
+              <ul class="item active clearfix">
+                <li>
+                  <a href="https://www.investopedia.com/news/blockchain-unlocking-advertisers-profit-potential/" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/investopedia-min.jpg" alt="Investopedia">
+                    <div class="content">
+                      <h3>Investopedia</h3>
+                      <p>Blockchain Unlocking Advertisers' Profit Potential</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="http://bitcoinist.com/want-personal-data-back-really-going-stop-using-google-chrome-safari/" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/bitcoinist-min.jpg" alt="Bitcoinist">
+                    <div class="content">
+                      <h3>Bitcoinist</h3>
+                      <p>We Want Our Personal Data Back - But Are We Really Going To Using Google Chrome or Safari?</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.zerohedge.com/news/2018-05-10/data-grabbing-no-more-blockchain-positioned-overhaul-online-advertising-sector" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/zero-hedge-min.jpg" alt="Zero Hedge">
+                    <div class="content">
+                      <h3>Zero Hedge</h3>
+                      <p>Data Grabbing No More-Blockchain Positioned to Overhaul The Online Advertising Sector.</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+
+              <ul class="item clearfix">
+                <li>
+                  <a href="https://www.cryptocompare.com/coins/guides/kind-ads-the-next-generation-of-online-advertising/" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/cryptocompare-min.jpg" alt="Cryptocompare">
+                    <div class="content">
+                      <h3>Cryptocompare</h3>
+                      <p>Kind Ads: The Next Generation of Online Advertising</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://globalcoinreport.com/kind-ads-streamlining-digital-marketing-industry/" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/globalcoinreport-min.jpg" alt="Global Coin Report">
+                    <div class="content">
+                      <h3>Global Coin Report</h3>
+                      <p>Kind Ads - Streamlining the Digital Marketing Industry</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a id="SteemitButton" href="#" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/steemit-min.png" alt="Steemit">
+                    <div class="content">
+                      <h3>Steemit</h3>
+                      <p>What is Kind Ads?</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+
+              <ul class="item clearfix">
+                <li>
+                  <a href="https://bitcoinexchangeguide.com/kind-ads-token/" target="_blank" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/bitcoin-exchange-guide-min.jpg" alt="Bitcoin Exchange Guide">
+                    <div class="content">
+                      <h3>Bitcoin Exchange Guide</h3>
+                      <p>Kind Ads Token: Leadchain Foundation Blockchain Advertising?</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://coincentral.com/neil-patel-kindads-interview/" class="content">
+                    <img class="img-responssive" data-no-retina="true" src="~/Img/Home/Articles/coin-central-min.jpg" alt="Coin Central">
+                    <div class="content">
+                      <h3>Coin Central</h3>
+                      <p>Neil Patel on KindAds, Crypto Advertising, Entrepreneurship, and Regulations</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <a class="left carousel-control" href="#carousel-home" data-slide="prev">
+              <span class="chevron chevron-left"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-home" data-slide="next">
+              <span class="chevron chevron-right"></span>
+              <span class="sr-only">Next</span>
+            </a>
+            <ol class="carousel-indicators  ">
+              <li class="active" data-target="#carousel-home" data-slide-to="0"></li>
+              <li data-target="#carousel-home" data-slide-to="1"></li>
+              <li data-target="#carousel-home" data-slide-to="2"></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="register register-bottom">
+    <form id="subscribeFormDown" method="get" action="">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <h2>@Resource.Language.Home.Home.Resources.RegisterTitle</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-offset-1 col-sm-10">
+            <div id="pnlSubscribeInfoDown">
+              <div class="row">
+                <div class="form-group col-sm-9">
+                  <input id="emailSubscribeDown" type="email" class="form-control" placeholder="@Resource.Language.Home.Home.Resources.RegisterEmailPlaceholder" required />
+                </div>
+
+                <div class="form-group col-sm-3">
+                  <input id="btnSubscribeDown" type="submit" class="btn btn-default" value="@Resource.Language.Home.Home.Resources.RegisterMainBtn">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 form-group checkbox">
+                  <label id="eulaDown">
+                    <span>@Resource.Language.Home.Home.Resources.RegisterEULA</span>
+                    <input data-val-required="You must accept terms and policy" id="AgreeTermsDown" name="AgreeTermsDown" type="checkbox">
+                    <div class="control_indicator"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div id="pnlSubscribeSuccessDown" class="panel panel-default" style="display:none;">
+              <h2>Thanks for subscribing</h2>
+              <p>
+                We've sent a message.
+                <br />
+                Check your email and click Activate Account.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
+
+
+<div id="videoModal" class="video-modal modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Kind Ads</h4>
+      </div>
+      <div class="modal-body">
+        <div class="embed-container">
+          <iframe src="https://player.vimeo.com/video/257040441" frameborder="0" width="320" height="auto" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+        </div>
+        <!--
+          <iframe src="https://player.vimeo.com/video/257040441" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        -->
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  <script>
+    // Cookies Banner
+    document.querySelector(".main-content").classList.add("homepage");
+
+    // Cookies Banner
+    $('#cookiesPanel .btn').click(function (e) {
+      document.getElementById("cookiesPanel").classList.add("fadeDown");
+    });
+
+    // Integrations
+    $("#showIntegrations .btn-primary").click(function (e) {
+      document.getElementById("showIntegrations").style.display = "none";
+      document.getElementById("moreIntegrations").style.display = "block";
+    });
+
+    // Redirect Link
+    var decodedUri = decodeURIComponent('https%3A%2F%2Fsteemit.com%2Fcrypto%2F%40btcsam%2Fwhat-is-kind-ads');
+    $('#SteemitButton').click(function (e) {
+      window.open(decodedUri, "_blank");
+    });
+  </script>
+
+  <!-- Subscribe Section -->
+  <script>
+    $(document).ready(function () {
+      jQuery.validator.setDefaults({
+        debug: true,
+        success: "valid"
+    });
+
+    $("#subscribeFormUp").validate({
+      rules: {
+        AgreeTermsUp: {
+          required: true
+        }
+      }
+    });
+
+    $("#subscribeFormDown").validate({
+      rules: {
+        AgreeTermsDown: {
+          required: true
+        }
+      }
+    });
+  });
+
+  $("#btnSubscribeUp").click(function (event) {
+    if ($("#subscribeFormUp").valid()) {
+      var emailSubscribe = $("#emailSubscribeUp").val();
+      $.ajax({
+        type: 'POST',
+        url: '@Url.Action("Subscribe")',
+        dataType: 'json',
+        data: { email: emailSubscribe },
+        success: function (result) {
+          if (result.success) {
+            $("#pnlSubscribeInfoUp").hide();
+            $("#pnlSubscribeSuccessUp").show();
+          } else {
+            alert('Error when subscribing.');
+          }
+        },
+        error: function (ex) {
+          alert('Error when subscribing.');
+        }
+      });
+    } else {
+      $("#pnlSubscribeSuccessUp").hide();
+    }
+  });
+
+  $("#btnSubscribeDown").click(function (event) {
+    if ($("#subscribeFormDown").valid()) {
+      var emailSubscribe = $("#emailSubscribeDown").val();
+      $.ajax({
+        type: 'POST',
+        url: '@Url.Action("Subscribe")',
+        dataType: 'json',
+        data: { email: emailSubscribe },
+        success: function (result) {
+          if (result.success) {
+            $("#pnlSubscribeInfoDown").hide();
+            $("#pnlSubscribeSuccessDown").show();
+          } else {
+            alert('Error when subscribing.');
+          }
+        },
+        error: function (ex) {
+          alert('Error when subscribing.');
+        }
+      });
+    } else {
+      $("#pnlSubscribeSuccessDown").hide();
+    }
+  });
+  </script>
+}
+

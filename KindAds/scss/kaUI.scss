@@ -1,0 +1,75 @@
+/* Vendor
+================================================== */
+@import 'vendor/breakpoint';
+
+
+
+/* Base UI
+================================================== */
+//helpers
+@import 'tkatUI/base/_variables';                  // Variables
+@import 'tkatUI/base/_normalize';                  // Reset
+@import 'tkatUI/base/_fonts';                      // Fonts
+
+
+
+/* Global
+  =================================================== */
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+  background: $white;
+}
+body {
+  font-size: 1.5rem;
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: $openSansRegular, "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: $dark-grey;
+}
+.wrapper {
+  min-height: 100%;
+}
+.main-content {
+  position: relative;
+  .container-fluid {
+    
+  }
+  @include breakpoint($ext-desktop) {
+    .container-fluid {
+      margin: 0 auto;
+      width: 1250px;
+    }
+  }
+}
+
+.flexbox,
+.flexbox-item {
+  display: flex;
+}
+.flexbox-item {
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+
+
+/* UI General
+================================================== */
+//components
+@import 'tkatUI/components/_grid';                 // Grid
+@import 'tkatUI/components/_atoms';                // Atoms
+@import 'tkatUI/components/_bootstrap-min';        // Bootstrap
+
+
+
+ /* UI Modules
+================================================== */
+//components
+@import 'tkatUI/custom/_header';                   // Header
+@import 'tkatUI/custom/_home';                     // Home
+//@import 'tkatUI/custom/_static';                   // Pages

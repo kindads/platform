@@ -1,0 +1,288 @@
+@using Microsoft.AspNet.Identity
+@using KindAds.Business.Managers
+@using KindAds.Comun.Models.CosmosDocuments.KindAdsV2
+@using System.Web
+@using Microsoft.AspNet.Identity.Owin;
+@using Microsoft.Owin.Security;
+@using Microsoft.Owin;
+@using Microsoft.Owin.Security.Cookies;
+@using System.Security.Claims;
+@{
+
+  KindAds.Utils.Enums.Roles rol = KindAds.Utils.Enums.Roles.Publisher;
+  if (User != null && User.Identity != null && !String.IsNullOrEmpty(User.Identity.Name))
+  {
+    if (User != null)
+    {
+
+      rol = (User.IsInRole(KindAds.Utils.Enums.Roles.Publisher.ToString()) ? KindAds.Utils.Enums.Roles.Publisher : KindAds.Utils.Enums.Roles.Advertiser);
+    }
+    else
+    {
+      //QUITAR descomentar para publicar
+      Response.Redirect("~/en-US/Access/Login");
+    }
+  }
+
+}
+<!DOCTYPE html>
+<html lang="@KindAds.Helpers.CultureHelper.GetCurrentNeutralCulture()" dir="@(KindAds.Helpers.CultureHelper.IsRighToLeft() ? "rtl" : "ltr")">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>@ViewBag.Title | Kind Ads</title>
+  <link rel="shortcut icon" href="~/favicon.ico">
+  <link rel="apple-touch-icon" href="~/Img/favicon/apple-icon-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Img/favicon/apple-icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="~/Img/favicon/android-icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="~/Img/favicon/favicon-16x16.png">
+  <meta name="application-name" content="&amp;amp;nbsp;">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="~/Img/favicon/ms-icon-144x144.png">
+  @*@Styles.Render("~/Content/vendor/bootstrap.min.css")*@
+  @Styles.Render("~/Content/kaUI_admin-slim.css")
+  @Scripts.Render("~/bundles/basejs")
+  @RenderSection("Head", required: false)
+</head>
+<body>
+  <div class="wrapper" role="main" id="top">
+    <div class="main-content marketplace">
+      <div class="header navbar-admin">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="navbar-header">
+                <button class="navbar-toggle collapsed" role="button" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="sr-only">Menu</span>
+                  <div class="pull-left">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar last"></span>
+                  </div>
+                </button>
+
+                <a class="navbar-brand" href="@Url.Action("Home", "Home")" target="_blank" title="Kind Ads">
+                  <svg width="147px" height="25px" viewBox="0 0 147 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title>Kind Ads Logo</title>
+                    <desc>Advertising Without the Irritating Ads</desc>
+                    <g transform="translate(-208.000000, -31.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                      <g transform="translate(208.000000, 31.000000)">
+                        <path d="M5.85807504,0.447658402 L5.85807504,9.74517906 L12.8466558,0.447658402 L19.3898858,0.447658402 L10.4143556,11.9834711 L19.5611746,24.5523416 L12.8466558,24.5523416 L5.85807504,14.8415978 L5.85807504,24.5523416 L0,24.5523416 L0,0.447658402 L5.85807504,0.447658402 Z M27.7830343,0.447658402 L27.7830343,24.5523416 L21.9249592,24.5523416 L21.9249592,0.447658402 L27.7830343,0.447658402 Z M46.6247961,24.5523416 L37.7177814,9.77961433 L37.7177814,24.5523416 L31.9624796,24.5523416 L31.9624796,0.447658402 L37.9233279,0.447658402 L46.6933116,15.392562 L46.6933116,0.447658402 L52.4486134,0.447658402 L52.4486134,24.5523416 L46.6247961,24.5523416 Z M56.6280587,0.447658402 L63.685155,0.447658402 C71.3931485,0.447658402 76.3262643,4.95867769 76.3262643,12.5 C76.3262643,20.0413223 71.3931485,24.5523416 63.685155,24.5523416 L56.6280587,24.5523416 L56.6280587,0.447658402 Z M63.685155,5.54407713 L62.4861338,5.54407713 L62.4861338,19.4559229 L63.685155,19.4559229 C67.6247961,19.4559229 70.228385,17.1143251 70.228385,12.5 C70.228385,7.88567493 67.6247961,5.54407713 63.685155,5.54407713 Z M99.3132137,19.1460055 L91.776509,19.1460055 L90.0636215,24.5523416 L84.1712887,24.5523416 L92.4616639,0.447658402 L98.6280587,0.447658402 L106.918434,24.5523416 L101.026101,24.5523416 L99.3132137,19.1460055 Z M97.8058728,14.3250689 L95.5448613,6.68044077 L93.2838499,14.3250689 L97.8058728,14.3250689 Z M109.247961,0.447658402 L116.305057,0.447658402 C124.013051,0.447658402 128.946166,4.95867769 128.946166,12.5 C128.946166,20.0413223 124.013051,24.5523416 116.305057,24.5523416 L109.247961,24.5523416 L109.247961,0.447658402 Z M116.305057,5.54407713 L115.106036,5.54407713 L115.106036,19.4559229 L116.305057,19.4559229 C120.244698,19.4559229 122.848287,17.1143251 122.848287,12.5 C122.848287,7.88567493 120.244698,5.54407713 116.305057,5.54407713 Z M139.017945,0 C144.156607,0 146.143556,3.75344353 146.760196,5.5785124 L141.895595,7.81680441 C141.415987,6.74931129 140.696574,5.44077135 138.880914,5.44077135 C137.750408,5.44077135 136.996737,6.12947658 136.996737,7.05922865 C136.996737,10.3305785 147,9.9862259 147,17.3553719 C147,21.7975207 143.848287,25 138.606852,25 C133.228385,25 131.070147,21.0743802 130.453507,19.2493113 L135.352365,16.8044077 C136.003263,18.2162534 137.305057,19.4903581 138.949429,19.4903581 C140.353997,19.4903581 141.073409,18.8705234 141.073409,17.8030303 C141.073409,14.600551 131.138662,14.8760331 131.138662,7.16253444 C131.138662,2.82369146 134.256117,0 139.017945,0 Z"></path>
+                      </g>
+                    </g>
+                  </svg>
+                </a>
+
+                <div class="navbar-role dropdown">
+                  <button class="btn dropdown-toggle" id="menuRole" type="button" data-toggle="dropdown">
+                    @switch (rol)
+                    {
+                      case KindAds.Utils.Enums.Roles.Publisher:
+                        <text>Publisher</text>
+                        break;
+                      case KindAds.Utils.Enums.Roles.Advertiser:
+                        <text>Advertiser</text>
+                        break;
+                    }
+                    <span class="text">Profile</span>
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="menuRole">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("ChangeRol", "Access", new { rolName="Publisher" })">Publisher</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("ChangeRol", "Access", new { rolName="Advertiser" })">Advertiser</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              @switch (rol)
+              {
+                case KindAds.Utils.Enums.Roles.Publisher:
+                  <nav class="collapse navbar-collapse" role="navigation" aria-expanded="false" id="navbar-collapse-pub">
+                    <ul class="nav navbar-nav flexbox">
+                      <li>
+                        <a class="nav-item marketplace" href="@Url.Action("Publisher", "Marketplace", null)">
+                          <span>Marketplace</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="nav-item analytics disabled" href="@Url.Action("CreateAccount", "Access", null)">
+                          <span>Analytics</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="nav-item messages " href="@Url.Action("Home", "Conversation", null)">
+                          <span>Messages</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="nav-item audience" href="@Url.Action("MyAudiences", "Audience", null)">
+                          <span>Audiences</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="nav-item balance" href="#">
+                          <div>
+                            <strong>1,200</strong>k
+                          </div>
+                          <span>Balance</span>
+                        </a>
+                      </li>
+                      <li class="dropdown">
+                        <a class="nav-item account dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                          <span>Account</span>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                          @Html.AntiForgeryToken()
+                          <li>@Html.ActionLink("Profile", "Profile", "PublisherProfile")</li>
+                          <li>
+
+                            @using (Html.BeginForm("LogOff", "Access", FormMethod.Post, new { id = "adFormLogOut" }))
+                            {
+                              <a href="#" onclick="document.getElementById('adFormLogOut').submit();">Sign out</a>
+                            }
+
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
+                  break;
+                case KindAds.Utils.Enums.Roles.Advertiser:
+                  <nav class="collapse navbar-collapse" role="navigation" aria-expanded="false" id="navbar-collapse-adv">
+                    <ul class="nav navbar-nav flexbox">
+                      <li>
+                        <a class="nav-item marketplace" href="@Url.Action("Advertiser", "Marketplace", null)">
+                          <span>Marketplace</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="nav-item analytics disabled" href="@Url.Action("CreateAccount", "Access", null)">
+                          <span>Analytics</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="nav-item messages" href="@Url.Action("Home", "Conversation", null)">
+                          <span>Messages</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="nav-item campaign" href="@Url.Action("MyCampaigns", "Campaigns", null)">
+                          <span>Campaigns</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="nav-item balance" href="@Url.Action("Profile", "PublisherProfile", null)">
+                          <div>
+                            <strong>1,200</strong>k
+                          </div>
+                          <span>Balance</span>
+                        </a>
+                      </li>
+                      <li class="dropdown">
+                        <a class="nav-item account dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                          <span>Account</span>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                          @Html.AntiForgeryToken()
+                          <li>@Html.ActionLink("Profile", "Profile", "AdvertiserProfile")</li>
+                          <li>
+                            @*<a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Sign out</a>*@
+                            @*<a href="#" onclick="document.getElementById('formLogOut').submit();">Sign out</a>*@
+                            @using (Html.BeginForm("LogOff", "Access", FormMethod.Post, new { id = "formLogOut" }))
+                            {
+                              <a href="#" onclick="document.getElementById('formLogOut').submit();">Sign out</a>
+                            }
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
+                  break;
+              }
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="publisher content-wrapper">@RenderBody()</div>
+
+      @Html.Partial("_FooterPartial")
+    </div>
+
+    <div id="notification-tile" class="notification-tile">
+      <a href="#">
+        <div class="noti-header">
+          <span class="close" onclick="closePushNotification()">&times;</span>
+          <p id="notification-title"></p>
+        </div>
+        <div class="noti-content">
+          <div id="notification-message">
+
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+
+  @Scripts.Render("~/bundles/bootstrap")
+
+  <!-- Culture Languages -->
+  <script src="~/Modules/languageModule.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      languageModule.bindingForm();
+    });
+  </script>
+
+  <!-- Role Dropdown -->
+  <script>
+    $(".dropdown-menu li a").click(function () {
+      $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="text">Profile</span>' + '<span class="caret"></span>');
+      $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+    });
+  </script>
+
+  <!-- Signal R -->
+  <script type="text/javascript">
+    var IdUserIdentity = '@Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity)';
+    var IsPublisher = '@User.IsInRole(KindAds.Utils.Enums.Roles.Publisher.ToString())'.toLowerCase();
+    var InsideChat = false;
+    var currentMessage = 0;
+    function closePushNotification() {
+     $("#notification-tile").hide("fast");
+       currentMessage = 0;
+    }
+  </script>
+  @Scripts.Render("~/bundles/signalr")
+
+  <!--Site validator-->
+  <script src="https://kindadsscripts.blob.core.windows.net/site-validation-dev/KindAdsSites.js"></script>
+  <script type="text/javascript">
+    var url = 'https://kindads2-api-dev-qa.azurewebsites.net/api/site';
+    var apiToken = '227c3ec7-d638-48df-b230-ed8a2f81cb37';
+    var idAudience = '1FAEB7BE-42AF-4472-ABF0-EA9BD005956D';
+    kindAds.validateSite(url, apiToken, idAudience);
+  </script>
+
+
+
+  <!-- JS Wrapper -->
+  @RenderSection("Scripts", required: true)
+
+  <!-- GTA -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114897255-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-114897255-1');
+    gtag('config', 'GTM-KXN54TN');
+  </script>
+
+  <!-- Hello SearchBar-->
+  @*<script src="https://my.hellobar.com/a5c463a9c14c317029a14be9d34d344309cb187d.js" type="text/javascript" charset="utf-8" async="async"></script>*@
+</body>
+</html>

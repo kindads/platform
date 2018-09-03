@@ -1,0 +1,92 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.MarketplaceViewModel
+
+@{
+  ViewBag.Title = "Publisher";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+  var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+@section Head {
+  @Styles.Render("~/Content/kaUI_marketplace.css")
+}
+
+<div class="container-fluid">
+  <div class="row" style="display: none;">
+    <div class="col-12">
+      <h1>Welcome Publisher to Kind Ads w</h1>
+    </div>
+  </div>
+
+  @if (Model.needProfile)
+  {
+    <div class="row">
+      <div class="col-12">
+        <div class="white-block">
+          <div class="heading">
+            <h2>You need complete your profile</h2>
+          </div>
+          <div class="body-content">
+            <p>Get started by complete your channels.</p>
+            @Html.ActionLink("Add channel", "MyAudiences", "Audience", null, new { @class = "btn btn-primary btn-lg" })
+          </div>
+        </div>
+      </div>
+    </div>
+
+  }
+  else
+  {
+    if (Model.needAudience)
+    {
+      <div class="row">
+        <div class="col-12">
+          <div class="white-block">
+            <div class="heading">
+              <h2>You need to create your audience</h2>
+            </div>
+            <div class="body-content">
+              <p>Get started to create an Audience</p>
+              @Html.ActionLink("Create your Audience", "CreateAudience", "Audience", null, new { @class = "btn btn-primary btn-lg" })
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    else
+    {
+      if (Model.needALastOneChannel)
+      {
+        <div class="partialContents" data-url="/@culture/Marketplace/GetMarketplaceChannelsPublisher">
+          <img src="~/Img/Loader/loading.white.gif" /> Loading Publishers...
+        </div>
+      }
+    }
+
+  }
+
+
+
+</div>
+
+@section Scripts {
+  <!-- Marketplace Slider -->
+  <script src="~/Scripts/slick/slick.min.js"></script>
+
+  <!-- Subscribe Section -->
+  <script type="text/javascript">
+    $('.link-dashboard').addClass('active');
+  </script>
+
+  <script>
+    var site = site || {};
+    site.baseUrl = site.baseUrl || "";
+    $(document).ready(function (e) {
+      $(".partialContents").each(function (index, item) {
+        var url = site.baseUrl + $(item).data("url");
+        if (url && url.length > 0) {
+          $(item).load(url);
+        }
+      });
+
+    });
+  </script>
+}

@@ -1,0 +1,101 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.VerifyAudienceViewModel
+<div class="row">
+  <!-- GTM option -->
+  <div class="col-12" id="descripcionGoogleTagManager">
+    <div class="panel">
+      <div class="body-content">
+        <p>Install the script using Google Tag Manager by following the steps below. If you do not use Google Tag Manager yet, you can learn how to get it set up on your site <a href="@Url.Action("GTMHelp", "Support")" class="link" target="_blank">here</a>.</p>
+        <ul>
+          <li>
+            <span class="title">Step 1:</span>
+            Navigate to your Google Tag Manager container for this site
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+          <li>
+            <span class="title">Step 2:</span>
+            Click on Tags in the left side menu, then click on NEW
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+          <li>
+            <span class="title">Step 3:</span>
+            Give your tag a name. We suggest "Kind Ads Verification Script"
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+          <li>
+            <span class="title">Step 4:</span>
+            Click on Tag Configuration and choose "Custom HTML Tag"
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+          <li>
+            <span class="title">Step 5:</span>
+            Copy and paste the following code into the HTML field
+            <div class="highlight">
+              <pre>              
+                <textarea id="scriptGTM" rows="15" style="height:250px;" readonly="readonly">
+                 @Model.gtm.Script
+                </textarea>
+              </pre>
+            </div>
+            <div class="bd-clipboard">
+              <button id="copiarScriptBtn" class="btn btn-secondary" title="Copy to clipboard" >Copy</button>
+            </div>           
+          </li>
+          <li>
+            <span class="title">Step 6:</span>
+            Click on the Triggering are and then click on All Pages
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+          <li>
+            <span class="title">Step 7:</span>
+            Click Save
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+          <li>
+            <span class="title">Step 8:</span>
+            Click on Submit
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+          <li>
+            <span class="title">Step 9:</span>
+            Type "Kind Ads Verification" into the Version name field and then click Publish
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+          <li>
+            <span class="title">Step 10:</span>
+            Wait for 2 minutes and then clic on Verify Ownership below (GTM can have a delay to pdate th script)
+            <a class="link" data-toggle="tooltip" title="<img src='http://getbootstrap.com/apple-touch-icon.png' />">see image</a>.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <hr />
+    <div class="cta-bar">
+      <div class="pull-left">
+        @Html.ActionLink("Skip > I'll do this later", "MyAudiences", "Audience", null, new { @class = "btn btn-none btn-lg" })
+      </div>
+      <div class="pull-right">
+        <input id="VerifySite" value="Verify Ownership" type="submit" class="btn btn-secondary btn-lg" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $("#copiarScriptBtn").on("click", function (e) {
+       e.preventDefault();
+      var textArea = document.getElementById("scriptGTM");
+      textArea.select();
+      textArea.select();
+      document.execCommand("copy");
+  })
+
+ 
+</script>
+

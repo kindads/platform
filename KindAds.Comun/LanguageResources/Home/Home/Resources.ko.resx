@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdIndustryBullet_01" xml:space="preserve">
+    <value>사용자는 음란물 및 관련성이없는 광고로 맹렬히 비난 받고 있습니다.</value>
+  </data>
+  <data name="AdIndustryBullet_02" xml:space="preserve">
+    <value>사용자 데이터는 상품화되어 사생활, 관련성 또는 효율성에 대해 거의 고려하지 않고 사고 팔았습니다.</value>
+  </data>
+  <data name="AdIndustryBullet_03" xml:space="preserve">
+    <value>게시자는 트래픽으로 수익을 창출하기가 어렵습니다. 직접적으로가 아니라 간접적으로 가입자로부터 수익을 창출합니다.</value>
+  </data>
+  <data name="AdIndustryBullet_04" xml:space="preserve">
+    <value>대부분의 광고주는 게시자 구독자 기반의 효율성을 활용하는 대신 배너 및 디스플레이 광고에 의존해야합니다.</value>
+  </data>
+  <data name="AdIndustryBullet_05" xml:space="preserve">
+    <value>앱 파트너는 마켓 플레이스를 먼저 구축하지 않으면 확장 할 수 없습니다. 널리 보급 된 사용자 채택은 극도로 어렵습니다.</value>
+  </data>
+  <data name="AdIndustryHeading" xml:space="preserve">
+    <value>현재 디지털 광고 산업</value>
+  </data>
+  <data name="ArticlesTitle" xml:space="preserve">
+    <value>우리에 관한 기사</value>
+  </data>
+  <data name="FeaturesMainBtn" xml:space="preserve">
+    <value>Sign Up for Kind Ads today</value>
+  </data>
+  <data name="FeaturesTitle" xml:space="preserve">
+    <value>Kind Ads가 디지털 광고를 다시 만드는 방법은 다음과 같습니다.</value>
+  </data>
+  <data name="HeroMainBtn" xml:space="preserve">
+    <value>Sign Up for Kind Ads today</value>
+  </data>
+  <data name="HeroTextEnd_01" xml:space="preserve">
+    <value>광고주가 비용을 절감합니다. 게시자는 수익을 더 많이 얻습니다.</value>
+  </data>
+  <data name="HeroTextEnd_02" xml:space="preserve">
+    <value>사용자는 성가신 광고와 관련성이없는 광고로 분노하지 않습니다.</value>
+  </data>
+  <data name="HeroTextStart_01" xml:space="preserve">
+    <value>Kind Ads는 사용자 친화적 인 광고를 게재하는 광고 플랫폼입니다.</value>
+  </data>
+  <data name="HeroTextStart_02" xml:space="preserve">
+    <value>이메일 및 푸시 알림과 같은 효과적인 채널을 통해</value>
+  </data>
+  <data name="IntegrationsMainBtn" xml:space="preserve">
+    <value>View all integrations</value>
+  </data>
+  <data name="IntegrationsText" xml:space="preserve">
+    <value>캠페인에 중점을 두어 최고의 게시자와의 통합을 처리하도록하십시오.</value>
+  </data>
+  <data name="IntegrationsTitle" xml:space="preserve">
+    <value>통합</value>
+  </data>
+  <data name="KindAdsBullet_01" xml:space="preserve">
+    <value>Kind Ads는 이메일 마케팅 및 푸시 알림과 같은 채널을 통해 관련성 높은 광고를 보여줍니다.</value>
+  </data>
+  <data name="KindAdsBullet_02" xml:space="preserve">
+    <value>사용자는 데이터 사용 방식을 정확하게 지정할 수 있으며 토큰 화 된 보상 풀을 통해 액세스 할 수 있도록 더 많은 인센티브를 제공 할 수 있습니다.</value>
+  </data>
+  <data name="KindAdsBullet_03" xml:space="preserve">
+    <value>게시자는 구독자에게 광고주에게 직접 액세스 권한을 쉽게 판매 할 수 있습니다.</value>
+  </data>
+  <data name="KindAdsBullet_04" xml:space="preserve">
+    <value>광고주는 가입자 품질에 따라 게시자를 찾고 자신감을 가지고 캠페인을 운영 할 수 있습니다.</value>
+  </data>
+  <data name="KindAdsBullet_05" xml:space="preserve">
+    <value>토큰 화 된 보상 풀은 게시자, 사용자 및 앱 파트너에게 매일 할당됩니다.</value>
+  </data>
+  <data name="KindAdsHeading" xml:space="preserve">
+    <value>유형 광고 생태계</value>
+  </data>
+  <data name="MainTitleBold" xml:space="preserve">
+    <value>새로운 시대</value>
+  </data>
+  <data name="MainTitleEnd" xml:space="preserve">
+    <value>를 만나십시오.</value>
+  </data>
+  <data name="MainTitleStart" xml:space="preserve">
+    <value>마케팅의</value>
+  </data>
+  <data name="RegisterEmailPlaceholder" xml:space="preserve">
+    <value>Enter your Email Address</value>
+  </data>
+  <data name="RegisterEULA" xml:space="preserve">
+    <value>I consent to occasionally receive email communication from Kind Ads and its partners</value>
+  </data>
+  <data name="RegisterMainBtn" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="RegisterTitle" xml:space="preserve">
+    <value>업데이트 및 독점 판매를 위해 아래에 이메일을 입력하십시오 :</value>
+  </data>
+  <data name="RoadmapStep_01" xml:space="preserve">
+    <value>이메일 및 웹 푸시 플랫폼과의 통합</value>
+  </data>
+  <data name="RoadmapStep_02" xml:space="preserve">
+    <value>Kind Ads Display Network 개발</value>
+  </data>
+  <data name="RoadmapStep_03" xml:space="preserve">
+    <value>종류 광고 점수 실행</value>
+  </data>
+  <data name="RoadmapStep_04" xml:space="preserve">
+    <value>Kind Ads Marketplace의 베타 출시</value>
+  </data>
+  <data name="RoadmapStep_05" xml:space="preserve">
+    <value>종업원 지갑 개발</value>
+  </data>
+  <data name="RoadmapStep_06" xml:space="preserve">
+    <value>부모님을위한 광고를위한 계약</value>
+  </data>
+  <data name="RoadmapStep_07" xml:space="preserve">
+    <value>프리미엄 게시자와의 파트너십</value>
+  </data>
+  <data name="RoadmapStep_08" xml:space="preserve">
+    <value>Kind Ads Marketplace의 공식 출시</value>
+  </data>
+  <data name="RoadmapStep_09" xml:space="preserve">
+    <value>Appパートナーとの高度な統合...</value>
+  </data>
+  <data name="RoadmapTitle" xml:space="preserve">
+    <value>제품 로드맵</value>
+  </data>
+</root>

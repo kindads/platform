@@ -1,0 +1,191 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<h2>MailChimp</h2>
+
+<div class="form-group">
+  @Html.Label("Input your MailChimp API Key", htmlAttributes: new { @class = "control-label" })
+  <p>Learn how to do this by clicking <a class="link" href="@Url.Action("MailChimpHelp", "Support")" target="_blank">here</a></p>
+  <div class="inline-group">
+    @Html.TextBoxFor(model => model.emailProductForm.mailChimpForm.ApiToken, new { @placeholder = "Copy and paste MailChimp API Key here ", @class = "form-control", @required = "true", @data_msg_required = "API token is required", @maxlength = 60 })
+    <div id="btnValidateProvider" class="btn btn-secondary" onclick="ValidateProvider();">Sync</div>
+  </div>
+</div>
+
+
+<!-- Seccion de formulario escondido -->
+<div id="mailChimpCompleteForm" style="display:none">
+  @*<div class="form-group">
+    @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.emailProductForm.mailChimpForm.Name, new { @placeholder = "e.g. Name ", @class = "form-control", @required = "true", @data_msg_required = "Name is required", @maxlength = 60 })
+  </div>*@
+
+  <!-- Seccion de templates ids -->
+  <!-- obtenemos la informacion de: GetTemplatesFromMailChimp-->
+  <div class="form-group">
+    @Html.Label("Choose a Template", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.mailChimpForm.TemplateId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Template is required" })
+  </div>
+
+    <!-- Seccion de List ids -->
+    <!-- obtenemos la informacion de : GetListFromMailChimp-->
+  <div class="form-group">
+    @Html.Label("Choose a List", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.mailChimpForm.ListId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "List is required" })
+    <div class="main-data-number">
+      (&nbsp;<span id="subscribersCount">&nbsp;</span><small>subscribers</small>&nbsp;)
+    </div>
+  </div>
+ </div>
+
+<script type="text/javascript">
+
+  var ApiKeyIsValid = false;
+
+  function GetSubscribers(token, listId) {
+    console.log("Toke:" + token);
+    console.log("List:" + listId);
+
+    $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GetSubscribersFromList")',
+          data: { ApiToken : token, listName : listId },
+          dataType: 'json',
+          success: function (result) {
+            console.log(result.subsCount);
+            $("#subscribersCount").text(result.subsCount);
+          },
+        error: function (ex) {
+            // error
+          }
+      });
+  }
+
+  //change de List
+  $("#emailProductForm_mailChimpForm_ListId").change(function () {
+
+    var apiToken = $("#emailProductForm_mailChimpForm_ApiToken").val();
+    var listId = $("#emailProductForm_mailChimpForm_ListId").val();
+
+    GetSubscribers(apiToken, listId);
+
+  });
+
+  function FillTemplates(token, callback, errorCallback ) {
+    $("#emailProductForm_mailChimpForm_TemplateId").empty();
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GetTemplatesFromMailChimp")',
+          data: { ApiToken: token },
+          dataType: 'json',
+          success: function (elements) {
+            if (elements != null && elements != '') {
+              $("#emailProductForm_mailChimpForm_TemplateId").append('<option value="">' + 'Please select' + '</option>');
+              $.each(elements, function (i, state) {
+                $("#emailProductForm_mailChimpForm_TemplateId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+              });
+            } else {
+              $("#emailProductForm_mailChimpForm_TemplateId").append('<option value="">' + 'Please select' + '</option>');
+            }
+
+            callback();
+          },
+          error: function (ex) {
+
+              errorCallback();
+              alert('Failed to retrieve templates from mail chimp.' + ex);
+          }
+      });
+  }
+
+  function FillList(token, callback, errorCallback ) {
+    $("#emailProductForm_mailChimpForm_ListId").empty();
+      $.ajax({
+          type: 'POST',
+          url: '@Url.Action("GetListFromMailChimp")',
+          data: { ApiToken: token },
+          dataType: 'json',
+          success: function (elements) {
+            if (elements != null && elements != '') {
+              $("#emailProductForm_mailChimpForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+              $.each(elements, function (i, state) {
+                $("#emailProductForm_mailChimpForm_ListId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+              });
+              $('#processingModal').modal('hide');
+            } else {
+              $("#emailProductForm_mailChimpForm_ListId").append('<option value="">' + 'Please select' + '</option>');
+              $('#processingModal').modal('hide');
+            }
+
+            callback();
+          },
+        error: function (ex) {
+
+            errorCallback();
+            alert('Failed to retrieve list from mail chimp.' + ex);
+            $('#processingModal').modal('hide');
+          }
+      });
+  }
+
+
+  function ValidateProvider() {
+    $('#processingModal').modal('show');
+
+    var apiToken = $("#emailProductForm_mailChimpForm_ApiToken").val();
+
+    // envia los datos
+    var requestData = {
+      ApiToken : apiToken,
+      ChannelId : 'b4ee7512-5f12-40f1-8408-8f96bf43df6d',
+      ProviderId: '260bb8bd-b343-48fe-a171-eb8a45ca6aac'
+    };
+
+    $.ajax({
+      url: "ValidateProvider",
+      type: "Post",
+      data: { request : requestData },
+      success: function (response) {
+        $("#emailProductForm_mailChimpForm_ApiToken").val(apiToken);
+
+        ApiKeyIsValid = response.IsValid;
+
+        if (ApiKeyIsValid == 'True') {
+
+
+          FillList(apiToken, function () {
+            // exitoso
+            FillTemplates(apiToken, function () {
+              // exitoso
+              $("#mailChimpCompleteForm").show();
+              $("#btnValidateProvider").hide();
+
+              document.getElementById("emailProductForm_mailChimpForm_ApiToken").readOnly = true;
+              $("#hiddenIsValidApiKey").val(true);
+            }, function () {
+              // error
+              $('#processingModal').modal('hide');
+            });
+          }, function () {
+            // error
+            $('#processingModal').modal('hide');
+          });
+
+
+
+        }
+        else {
+          $('#processingModal').modal('hide');
+
+          alert("Api key is not valid");
+          $("#mailChimpCompleteForm").hide();
+          $("#btnValidateProvider").show();
+        }
+
+      },
+      error: function (xhr, error, status) {
+
+      }
+    });
+  }
+
+</script>

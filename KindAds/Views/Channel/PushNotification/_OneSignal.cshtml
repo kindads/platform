@@ -1,0 +1,115 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<h2>OneSignal</h2>
+
+<div class="form-group">
+  @Html.Label("Input your OneSignal API Key", htmlAttributes: new { @class = "control-label" })
+  <p>Learn how to do this by clicking <a class="link" href="@Url.Action("OneSignalHelp", "Support")" target="_blank">here</a></p>
+  <div class="inline-group">
+    @Html.TextBoxFor(model => model.pushProductForm.oneSignalForm.ApiToken, new { @placeholder = "e.g. Your Api token ", @class = "form-control", @required = "true", @data_msg_required = "API token is required", @maxlength = 60 })
+    <div id="btnValidateProvider" class="btn btn-secondary btn-lg" onclick="ValidateProvider();">Sync</div>
+  </div>
+</div>
+
+
+<!-- Seccion de formulario escondido -->
+<div id="oneSignalCompleteForm" style="display:none">
+
+  @*<div class="form-group">
+    @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+    @Html.TextBoxFor(model => model.pushProductForm.oneSignalForm.Name, new { @placeholder = "e.g. Name ", @class = "form-control", @required = "true", @data_msg_required = "Name is required", @maxlength = 60 })
+  </div>*@
+
+  <!-- Seccion de apps ids -->
+  <!-- obtenemos la informacion de: GetAppsFromOneSignal-->
+  <div class="form-group">
+    @Html.Label("Apps", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.pushProductForm.oneSignalForm.AppId , new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control dropdown", @required = "true", @data_msg_required = "App is required" })
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+  var ApiKeyIsValid = false;
+
+  function FillApps(token, callback, errorCallback ) {
+    $("#pushProductForm_oneSignalForm_AppId").empty();
+          $.ajax({
+              type: 'POST',
+              url: '@Url.Action("GetAppsFromOneSignal")',
+              data: { ApiToken: token },
+              dataType: 'json',
+              success: function (elements) {
+                if (elements != null && elements != '') {
+                  $("#pushProductForm_oneSignalForm_AppId").append('<option value="">' + 'Please select' + '</option>');
+                  $.each(elements, function (i, state) {
+                    $("#pushProductForm_oneSignalForm_AppId").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                  });
+                } else {
+                  $("#pushProductForm_oneSignalForm_AppId").append('<option value="">' + 'Please select' + '</option>');
+                }
+
+                callback();
+              },
+              error: function (ex) {
+
+                  errorCallback();
+                  alert('Failed to retrieve templates from mail chimp.' + ex);
+              }
+          });
+  }
+
+
+  function ValidateProvider() {
+    $('#processingModal').modal('show');    
+    var apiToken = $("#pushProductForm_oneSignalForm_ApiToken").val();
+
+    // envia los datos
+    var requestData = {
+      ApiToken: apiToken,
+      ChannelId:  '69349c7c-48b2-4628-9f3f-22846b1bc6de',
+      ProviderId: 'e49a5ebf-0a07-4de3-b62f-f5a4627e5d0f'
+    };
+
+    $.ajax({
+      url: "ValidateProvider",
+      type: "Post",
+      data: { request: requestData },
+      success: function (response) {
+        $("#pushProductForm_oneSignalForm_ApiToken").val(apiToken);
+        
+        ApiKeyIsValid = response.IsValid;        
+
+        if (ApiKeyIsValid == 'True') {
+
+          FillApps(apiToken, function () {
+            // exitoso
+            $("#oneSignalCompleteForm").show();
+            $("#btnValidateProvider").hide();
+            $('#processingModal').modal('hide');
+            document.getElementById("pushProductForm_oneSignalForm_ApiToken").readOnly = true;
+          }, function () {
+            // error
+            $('#processingModal').modal('hide'); 
+          });
+          
+         
+        }
+        else {
+          $('#processingModal').modal('hide');          
+          alert("Api key is not valid");
+          $("#oneSignalCompleteForm").hide();
+          $("#btnValidateProvider").show();
+        }
+
+      },
+      error: function (xhr, error, status) {
+        
+      }
+    });
+  }
+
+</script>
+
+

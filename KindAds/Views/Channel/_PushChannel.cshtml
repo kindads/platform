@@ -1,0 +1,60 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<fieldset>
+  <article>
+    <div class="form-group">
+      @Html.Label("Push Service provider Integration", htmlAttributes: new { @class = "control-label" })
+      <p>In order to publish this Channel you will need to integrate with one of our Push Service Providers</p>
+      <p>What Push Service Provider do you use?</p>
+      <!--Emails providers-->
+      @Html.DropDownListFor(model => model.PushProviderSelected, new SelectList(Model.GetPushProviders("choose"), "Id", "Name"), new { @class = "form-control dropdown", @required = "true", @data_val_required = "Email provider is required", @data_msg_required = "Email provider is required" })
+      <label id="PushProviderSelected-error" class="error" for="PushProviderSelected" style="display:none"></label>
+    </div>
+
+    <!--Seccion para cargar el formulario -->
+    <div id="pushPartialPlaceHolder" style="display:none;"> </div>
+
+  </article>
+
+  @Html.Partial("_GeneralDetailsChannel", Model)
+
+</fieldset>
+
+
+<script type="text/javascript">
+
+  //Jquery
+  $(document).ready(function () {
+
+  });
+
+  //  seccion de email channel
+  //  binding
+  $('#PushProviderSelected').change(function (e) {
+    $("#pushPartialPlaceHolder").fadeOut(0);
+    var selectedID = $(this).val();
+    if (selectedID != 'undefined' && selectedID != '') {
+      $('#processingModal').modal('show');
+      $.get('@Url.Action("GetProviderForm")',
+        { emailChannelProvider: selectedID }).done(function (data) {
+          $('#processingModal').modal('hide');
+          console.log(data);
+          $("#pushPartialPlaceHolder").html(data);
+          $("#pushPartialPlaceHolder").fadeIn(2000);
+        }).fail(function () {
+          $('#processingModal').modal('hide');
+          console.log("Error");
+        });
+    }
+    else {
+      $('#processingModal').modal('hide');
+      var data = '';
+      $("#pushPartialPlaceHolder").html(data);
+      $("#pushPartialPlaceHolder").fadeOut(0);
+    }
+
+  });
+
+
+</script>
+

@@ -1,0 +1,56 @@
+<div class="modal modal-white fade" id="PublisherProfileModal" role="dialog" aria-labelledby="PublisherProfileModal" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="lblTitle">Publisher</label>
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div>
+              <label id="PublisherProfileModalBody"></label>
+              <div id="PublisherProfileModalBodyError">
+                <span class="image"></span>
+                <p>
+                  Your Publisher profile is updated.
+                </p>
+               
+                <div class="btn-stack">
+                  @Html.ActionLink("Go to audiences", "MyAudiences", "Audience", null, new { @class = "btn btn-secondary btn-lg" })
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="loadingPublisherProfileModal" style="display:none;" role="dialog" aria-labelledby="loadingPublisherProfileModal" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="lblTitle">Update profile</label>
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-12">
+                <img src="~/Img/Loader/loading.white.gif" />
+                Updating profile in progress ...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

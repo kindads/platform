@@ -1,0 +1,95 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceViewModel
+
+<h1>Upload Image</h1>
+<p>
+  Each Audience has an image associated with it. These images are shown in various places around the Kind Ads platform but it
+  mainly displayed within the Marketplace. See examples below...
+</p>
+
+
+<section class="form-data">
+  <div cclass="form-container">
+
+    @using (Html.BeginForm("CreateAudienceImage", "Audience", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formCreateAudiencePreference" }))
+    {
+
+      @Html.HiddenFor(m => m.audience.Id)
+      <article>
+        <div class="form-group">
+          <div class="marquee-upload clearfix">
+            @KindAds.Helpers.ImgSelectorHelper.DisplayImageSelector("fileupImg", "/Img/Admin/audience-sample-min.jpg")
+        
+            <div class="content">
+              <div class="btn btn-default file">
+                + Upload Files
+                <input id="fileupImg" name="fileupImg" type="file" />
+              </div>
+              <div>
+                Drag &amp; drop any images or documents tha might be helpful in providing insights and information into your business here.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+      </article>
+
+      <div class="cta-bar clearfix">
+        <div class="pull-left">
+          @Html.ActionLink("Go back", "GoBack", "Audience", Model, new { @id = "GoBasicsBtn", @class = "btn btn-default btn-lg" })
+        </div>
+
+        <div class="pull-right">
+          <input type="submit" id="SaveImageBtn" value="Next: Verification" class="btn btn-secondary btn-lg" />
+        </div>
+      </div>
+    }
+
+  </div>
+</section>
+<script src="~/Scripts/Utils/image-upload.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupImg", "")
+
+    $("#formCreateAudiencePreference").submit(function (event) {
+      var _data = new FormData(this);
+      event.preventDefault();
+
+      if (validateImgFile(480,360,"#fileupImg", "#lblfileupImg") && $("#formCreateAudiencePreference").valid()) {
+        $('#processingModal').modal('show');
+        $.ajax({
+          url: "CreateAudienceImage",
+          type: "Post",
+          data: _data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+            if (response.success) {
+              $('#processingModal').modal('hide');
+              $('#MessageAudieceLabel').append(response.message);
+              $('#MessageAudienceModal').modal('show');
+            } else {
+              $('#processingModal').modal('hide');
+              $('#MessageAudieceLabel').append(response.message);
+              $('#MessageAudienceModal').modal('show');
+            }
+
+          },
+          error: function (xhr, error, status) {
+            $('#processingModal').modal('hide');
+            $('#MessageAudieceLabel').append('Error');
+            $('#MessageAudienceModal').modal('show');
+          }
+        });
+      }
+      else {
+        console.log("SaveBasicsBtn false");
+        return false;
+      }
+    });
+
+  });
+  
+</script>

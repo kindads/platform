@@ -1,0 +1,106 @@
+@model KindAds.Negocio.MoneyAdsManager
+
+<div class="white-block">
+
+  <div class="heading">
+    <h2>New Ad</h2>
+  </div>
+
+  <div class="body-content">
+    <div class="form-data form-horizontal">
+      <form>
+        <fieldset>
+          <br />
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+
+              <!--Seleccione Ads type-->
+              <div class="form-group">
+                @Html.LabelFor(model => model.viewModel.defaultAd.typeSelected, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9 form-inline">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      @Html.DropDownListFor(model => model.viewModel.defaultAd.typeSelected, Model.Types(), new { @id = "comboTypeAds", @class = "form-control dropdown", @required = "true", @data_msg_required = "Url protocol is required", @onchange = "moneyAddsModule.onSelectTypeAds()" })
+                    </div>
+                  </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.viewModel.defaultAd.typeSelected, "", new { @class = "text-danger" })
+              </div>
+              <!--Seleccion Sites-->
+              <div class="form-group">
+                @Html.LabelFor(model => model.viewModel.defaultAd.IdSite, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9 form-inline">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      @Html.DropDownListFor(model => model.viewModel.defaultAd.IdSite, Model.Sites(), new { @id = "comboTypeAds", @class = "form-control dropdown", @required = "true", @data_msg_required = "Site is required" })
+                    </div>
+                  </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.viewModel.defaultAd.IdSite, "", new { @class = "text-danger" })
+              </div>
+              <!--Text-->
+              <div class="form-group">
+                @Html.LabelFor(model => model.viewModel.defaultAd.text, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9 form-inline">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      @Html.EditorFor(model => model.viewModel.defaultAd.text, new { htmlAttributes = new { @placeholder = "Ads text", @class = "form-control", @required = "true", @data_msg_required = "Text is required" } })
+                    </div>
+                  </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.viewModel.defaultAd.text, "", new { @class = "text-danger" })
+              </div>
+              <!--Name-->
+              <div class="form-group">
+                @Html.LabelFor(model => model.viewModel.defaultAd.name, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9 form-inline">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      @Html.EditorFor(model => model.viewModel.defaultAd.name, new { htmlAttributes = new { @placeholder = "Ads text", @class = "form-control", @required = "true", @data_msg_required = "Text is required" } })
+                    </div>
+                  </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.viewModel.defaultAd.name, "", new { @class = "text-danger" })
+              </div>
+              <div id="panelDefaultAds">
+                <!--Javascript id-->
+                <div class="form-group">
+                  @Html.LabelFor(model => model.viewModel.defaultAd.javascriptId, htmlAttributes: new { @class = "control-label col-md-3" })
+                  <div class="col-md-9 form-inline">
+                    <div class="input-group">
+                      <div class="input-group-btn">
+                        @Html.EditorFor(model => model.viewModel.defaultAd.javascriptId, new { htmlAttributes = new { @placeholder = "Ads text", @class = "form-control lowercase" } })
+                      </div>
+                    </div>
+                  </div>
+                  @Html.ValidationMessageFor(model => model.viewModel.defaultAd.javascriptId, "", new { @class = "text-danger" })
+                </div>
+                <!-- Image upload-->
+                <div class="form-group">
+                  @Html.Label("Upload an image", htmlAttributes: new { @class = "control-label col-md-3" })
+                  <div class="col-md-9 form-inline">
+                    <div class="btn btn-default file">
+                      Add photo
+                      <input id="fileup" name="fileup" type="file" />
+                    </div>
+                    <label id="filename"></label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-9 col-md-offset-3 cta-bar clearfix">
+              <div class="form-group col-sm-12">
+                <input type="submit" value="Create Ads" class="btn btn-primary btn-lg" />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

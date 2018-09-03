@@ -1,0 +1,38 @@
+ /* ADMIN PAGES
+ ================================================== */
+/* Global
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+  .marketplace {
+    .content-wrapper {
+      padding: 15px 8px;
+      margin: 0;
+      @include breakpoint($tablet) {
+        padding: 30px 15px;
+      }
+      @include breakpoint($desktop) {
+        .col-12 {
+          width: calc(100% - 60px);
+          &:first-child {
+            margin-left: 30px;
+          }
+        }
+      }
+    }
+  }
+
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+  h1, h2 {
+    font-family: $openSansSemibold;
+    color: $dark-grey;
+  }
+  h1, h2, h3 {
+    small {
+      margin-left: 30px;
+      font-size: 60%;
+      color: $dim-grey;
+    }
+    span.site {
+      color: lighten($secondary-color, 5);
+    }
+  }

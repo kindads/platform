@@ -1,0 +1,65 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<fieldset>
+  <article>
+    @*<div class="form-group">
+      @Html.Label("Write a Name for your audience", htmlAttributes: new { @class = "control-label" })
+      @Html.TextBoxFor(model => model.channel.Name, new { @placeholder = "e.g. your audience name", @class = "form-control", @required = "true", @data_val_required = "Name is required", @data_msg_required = "Name is required", @maxlength = 50 })
+      <span id="counterTitle" class="counter">50 / 50 remaining</span>
+      @Html.ValidationMessageFor(model => model.channel.Name)
+    </div>*@
+
+    <div class="form-group">
+      @Html.Label("Email Service provider Integration", htmlAttributes: new { @class = "control-label" })
+      <p>In order to publish this Channel you will need to integrate with one of our Email Service Providers</p>
+    </div>
+    <div class="form-group">
+      <p>What Email Service Provider do you use?</p>
+      <!--Emails providers-->
+      @Html.DropDownListFor(model => model.EmailProviderSelected, new SelectList(Model.GetEmailProviders("choose"), "Id", "Name"), new { @class = "form-control", @required = "true", @data_val_required = "Email provider is required", @data_msg_required = "Email provider is required" })
+      <label id="EmailProviderSelected-error" class="error" for="EmailProviderSelected" style="display:none"></label>
+    </div>
+
+    <!--Seccion para cargar el formulario -->
+    <div id="emailPartialPlaceHolder" style="display:none;"> </div>
+    <hr />
+  </article>
+
+  @Html.Partial("_GeneralDetailsChannel", Model)
+
+</fieldset>
+
+
+<script type="text/javascript">
+
+  //Jquery
+  $(document).ready(function () {
+   
+    //  seccion de email channel
+    //  binding
+    $('#EmailProviderSelected').change(function (e) {
+      $("#emailPartialPlaceHolder").fadeOut(0);
+      var selectedID = $(this).val();
+      if (selectedID != 'undefined' && selectedID != '') {
+        $('#processingModal').modal('show');
+        $.get('@Url.Action("GetProviderForm")',
+          { emailChannelProvider: selectedID }).done(function (data) {
+            $('#processingModal').modal('hide');
+            console.log(data);
+            $("#emailPartialPlaceHolder").html(data);
+            $("#emailPartialPlaceHolder").fadeIn(2000);
+          }).fail(function () {
+            $('#processingModal').modal('hide');
+            console.log("Error");
+          });
+      }
+      else {
+        $('#processingModal').modal('hide');
+        var data = '';
+        $("#emailPartialPlaceHolder").html(data);
+        $("#emailPartialPlaceHolder").fadeOut(0);
+      }
+    });
+  });
+
+</script>

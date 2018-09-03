@@ -1,6 +1,0 @@
-@model captivate_express_webapp.Models.Advertiser.CreateCampaingModel
-
-@Html.LabelFor(model => model.MessageTextHtml)
-@Html.TextAreaFor(model => model.MessageTextHtml, new { @required = "true", @data_msg_required = "Message is required", @cols = "30", @rows = "15" })
-@Html.ValidationMessageFor(model => model.MessageTextHtml, "", new { @class = "text-danger" })
-<label id="lblMessageTextHtml" style="color:#b30000 !important;display:none;" />

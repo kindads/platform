@@ -1,0 +1,35 @@
+@model KindAds.Negocio.MoneyAdsManager
+@{
+  ViewBag.Title = "Download script";
+  Layout = "~/Views/Shared/_PublisherLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+  <div class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-12 main-bar clearfix">
+        <h1 class="pull-left title" id="titleMonedAds">My Ads</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="white-block">
+          @{ 
+            Html.RenderPartial("PanelDownloadScript",Model);
+          }
+        </div>        
+      </div>
+    </div>
+
+
+  </div>
+</div>
+@Scripts.Render("~/bundles/customjs")
+<script src="~/Modules/moneyAddsModule.js"></script>
+<script type="text/javascript">
+  moneyAddsModule.ready();
+</script>
+
+

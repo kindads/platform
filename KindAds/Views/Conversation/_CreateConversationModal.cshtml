@@ -1,0 +1,65 @@
+@model  KindAds.Negocio.ViewModels.KindAdsV2.ConversationViewModel
+
+<div class="modal modal-white fade" id="CreateConversationModal" role="dialog" aria-labelledby="CreateConversationModal" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <article class="data-grid">
+        <div class="data-grid-actions">
+          <ul class="flexbox inline">
+            <li>
+              <br />
+              <h2>
+                <label id="lblTitle" style="float: left;">Create New Conversation</label>
+              </h2>
+            </li>
+            <li>
+              <div class="col-md-3" style="float: right;">
+                <input id="btnCreateConversationModal" type="button" value="X" class="col-md-1 flexbox-item btn btn-primary " />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <div class="modal-body">
+        <div class="panel">
+          <div class="panel-body">
+            <div>
+              <div class="form-group ">
+                @Html.Label("Conversation Name", htmlAttributes: new { @class = "control-label", style = "float: left;" })
+                @Html.TextBoxFor(model => model.conversationForm.Name, new { @placeholder = "What do you want to call this conversation", @class = "form-control", @required = "true", @data_msg_required = "Conversation name is required", @maxlength = 60 })
+              </div>
+
+              <div class="form-group ">
+                @Html.Label("Add People", htmlAttributes: new { @class = "control-label", style = "float: left;" })
+                @Html.TextBoxFor(model => model.conversationForm.PeopleRaw, new { @placeholder = "People", @class = "form-control", @required = "true", @data_msg_required = "Is a must add a last one people", @maxlength = 500 })
+              </div>
+
+              <div class="form-group">
+                @Html.Label("Message", htmlAttributes: new { @class = "control-label", style = "float: left;" })
+                @Html.TextAreaFor(model => model.conversationForm.Message, new { @class = "form-control no-resize", rows = 7, cols = 80, wrap = "hard", @placeholder = "Type your message", @maxlength = 1000, @required = "true", @data_msg_required = "Message is required" })
+              </div>
+
+              <article class="form-data" style = "float: right;">
+                <div class="data-grid-actions">
+                  <ul class="flexbox ">
+                    <li>
+                      <div class="flexbox btn-group">
+                        <input type="submit" id="CancelNewConversationBtn" value="Cancel" class="flexbox-item btn btn-default"  />
+                        <input type="submit" id="SaveNewConversationBtn" value="Send" class="flexbox-item btn btn-secondary btn-lg" onclick="SendNewConversation();" />
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+  </div>
+</div>

@@ -1,0 +1,24 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<h2>SendGrid</h2>
+<div class="form-group">
+  <label>Api Token:</label>
+  @Model.emailProductForm.sendGridForm.ApiToken
+</div>
+
+<div class="form-group inline">
+  <label>Email list </label>
+  @Model.GetListsSendGrid(Model.emailProductForm.sendGridForm.ApiToken).SingleOrDefault(t => t.Value == Model.emailProductForm.sendGridForm.ListId).Text
+
+</div>
+
+<div class="form-group inline">
+  <label>Email list size:</label>
+  <span id="listSize"></span>
+</div>
+
+<div class="form-group inline">
+  <label>Last updated:</label>
+  <span id="lastUpdated"></span>
+</div>
+

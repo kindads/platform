@@ -1,0 +1,1262 @@
+/* COMPONENTS
+================================================== */
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.link {
+  font-size: 90%;
+  color: lighten($secondary-color, 5);
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+
+
+ /* Butons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.btn.btn-default {
+  &.active, &:focus, &:hover {
+    background-color: $secondary-color;
+    color: $white;
+    text-decoration: none;
+  }
+}
+
+.btn.btn-primary {
+  background-color: $primary-color;
+  color: $off-white;
+  border-color: $vivid-blue;
+  &.active, &:focus, &:hover {
+    background: darken($primary-color, 10);
+    color: $white;
+    text-decoration: none;
+  }
+}
+
+.btn.btn-secondary {
+  background-color: $secondary-color;
+  color: $off-white;
+  border-color: $vivid-violet;
+  &.active, &:focus, &:hover {
+    background-color: darken($secondary-color, 10);
+    color: $white;
+    text-decoration: none;
+  }
+}
+
+.btn-default,
+.btn-primary,
+.btn-secondary {
+  display: block;
+  @include breakpoint($tablet) {
+    display: inline-block;
+  }
+}
+
+.btn.btn-lg {
+  font-size: 115%;
+  padding: 6px 36px;
+  height: auto;
+}
+
+.btn.btn-sm {
+  font-size: 85%;
+  padding: 0px 20px;
+  height: 34px;
+  line-height: 34px;
+}
+
+.btn-none {
+  margin-bottom: 20px;
+  border: none;
+}
+
+
+
+/* Forms
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+// Forms
+.form-group {
+  margin-bottom: 30px;
+  display: block;
+  label {
+    position: relative;
+    margin-bottom: 8px;
+    font-size: 115%;
+    &.error {
+      color: darken($info-red, 15);
+      padding: 4px 8px 0;
+      margin-bottom: 0;
+      font-size: 85%;
+    }
+  }
+  .radio-group label {
+    &.error {
+      display: block;
+    }
+  }
+  .form-control {
+    padding: 12px 12px;
+    height: auto;
+    width: 100%;
+    display: block;
+    &.error {
+      border: solid 1px $info-red;
+    }
+  }
+  textarea.no-resize {
+    resize: none;
+    width: 100%;
+    padding: 15px;
+  }
+  .counter {
+    float: right;
+    font-size: 85%;
+  }
+  &.inline {
+    margin-bottom: 0;
+    label {
+      margin-right: 10px;
+    }
+  }
+  @include breakpoint($tablet) {
+    &.inline {
+      label {
+        min-width: 120px;
+      }
+    }
+    &.inline-url {
+      .form-control {
+        display: inline-block;
+        width: calc(100% - 104px);
+      }
+      .form-control-small {
+        width: 100px;
+      }
+    }
+    .inline-group {
+      .form-control {
+        display: inline-block;
+        width: calc(100% - 200px);
+        vertical-align: top;
+      }
+      .btn   {
+        width: 180px;
+        padding-top: 4px;
+        float: right;
+        height: 46px;
+      }
+    }
+    select.form-control {
+      width: 50%;
+    }
+  }
+}
+
+.checkbox, .radio {
+  label {
+    padding-left: 32px;
+    font-size: 100%;
+    font-family: $openSansRegular;
+    small {
+      margin-left: 40px;
+    }
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    visibility: hidden;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .control_indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    border-radius: 6px;
+    border: solid 2px $vivid-violet;
+    background: $white;
+    &:after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 6px;
+      top: 0px;
+      width: 8px;
+      height: 16px;
+      border: solid 1px $off-white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  input:checked {
+    & ~ .control_indicator {
+      background: $vivid-violet;
+      border-color: transparent;
+
+      &:after {
+        display: block;
+      }
+    }
+  }
+}
+
+.radio {
+  .control_indicator {
+    border-radius: 50%;
+  }
+
+  &.radio-check {
+    .control_indicator:after {
+      content: none;
+    }
+    input:checked {
+      & ~ .control_indicator {
+        background: $white;
+        border: 6px solid $dark-violet;
+      }
+    }
+  }
+}
+
+// Data in Forms
+.main-data-number {
+  font-size: 1.25em;
+  color: $main-violet;
+  padding: 8px;
+  @include breakpoint($tablet) {
+    float: left;
+    left: calc(50% + 10px);
+    position: relative;
+    margin-top: -48px;
+  }
+}
+
+.flexbox {
+  &.radio-group {
+    flex-wrap: wrap;
+    .flexbox-item {
+      width: 33%;
+      max-width: 33%;
+      padding-right: 8px;
+      margin: 4px 0 8px;
+    }
+  }
+}
+
+// Edit
+.form-data {
+  .read-only {
+    article hr,
+    .alert {
+      display: none;
+    }
+
+    .form-group {
+      label {
+        font-weight: 300;
+        font-size: 1em;
+        //color: $charcoal-grey;
+        pointer-events: none;
+      }
+      .form-control[disabled],
+      .form-control[readonly] {
+        cursor :not-allowed;
+        pointer-events: none;
+        background-color: lighten($off-white, 2);
+        color: $black;
+      }
+      textarea.form-control {
+        max-height: 120px;
+      }
+      .form-control {
+        border: none;
+        box-shadow: none;
+        font-size: 1.429em;
+      }
+      .marquee-upload div.content,
+      .marquee-upload label,
+      span.counter,
+      &.question {
+        display: none;
+      }
+      .checkbox .control_indicator, .radio .control_indicator {
+        border-color: lighten($dark-grey, 0);
+      }
+    }
+
+    .cta-bar {
+      display: none;
+    }
+  }
+
+  .form-group {
+    &.no-edit {
+      label {
+        font-size: 100%;
+        color: $charcoal-grey;
+      }
+      .form-control {
+        border: none;
+        box-shadow: none;
+        font-size: 1.429em;
+        cursor :not-allowed;
+        pointer-events: none;
+        background-color: lighten($off-white, 2);
+        color: $black;
+      }
+
+      .radio {
+        &.radio-check {
+          cursor :not-allowed;
+          pointer-events: none;
+          .control_indicator {
+            border-color: lighten($dark-grey, 0);
+          }
+        }
+      }
+    }
+
+    .combo-price {
+      border: solid 1px $grey;
+      display: inline-block;
+      margin-right: 8px;
+      padding: 4px;
+      .form-control {
+        background: none;
+        display: inline-block;
+        width: auto;
+      }
+    }
+  }
+}
+
+
+
+/* Upload
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.marquee-upload {
+  padding: 20px;
+  border: dashed 1px $main-violet;
+  > label {
+    display: none;
+  }
+  img {
+    max-width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    &[src="<NULL>"] {
+      margin-bottom: 0;
+    }
+  }
+  div.content {
+    div:last-child {
+      margin: 8px;
+      font-size: 85%;
+    }
+  }
+  @include breakpoint($tablet) {
+    div.content {
+      div:first-child {
+        float: left;
+      }
+      div:last-child {
+        float: left;
+        margin: 0 0 0 30px;
+        width: calc(100% - 240px);
+      }
+    }
+  }
+}
+
+.btn.file {
+  position: relative;
+  cursor: pointer;
+  input {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+  }
+}
+
+
+
+/* Notications
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.callout {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-left: 3px solid $soft-grey;
+  box-shadow: inset 0 1px 8px rgba($black, .3);
+  font-size: 1.286em;
+  font-family: $openSansSemibold;
+  &.callout-info {
+    background-color: lighten($soft-grey, 2);
+    border-color: lighten($main-green, 4);
+    .link {
+      padding: 4px;
+      border-bottom: solid 1px $main-blue;
+      text-decoration: none;
+    }
+  }
+  &.callout-warning {
+    background-color: lighten($soft-grey, 2);
+    border-color: lighten($info-red, 4);
+    color: $info-red;
+  }
+}
+
+.alert {
+  padding: 8px;
+  //background-color: lighten($off-white, 3);
+  border: solid 1px lighten($info-red, 4);
+  color: $info-red;
+  margin-bottom: 16px;
+}
+
+
+
+/* Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+// Bar
+.title-bar {
+  @include breakpoint($tablet) {
+    h1 {
+      float: left;
+    }
+    .btn {
+      float: right;
+    }
+  }
+}
+
+.cta-bar {
+  margin: 20px 0 10px;
+  > div {
+    margin-bottom: 20px;
+  }
+}
+
+.flexbox.btn-group {
+  padding: 0;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  .flexbox-item {
+    width: 100%;
+  }
+  .btn {
+    border-width: 2px;
+  }
+  @include breakpoint($tablet) {
+    padding: 8px 0;
+    .flexbox-item {
+      width: auto;
+      margin-bottom: 1rem;
+      &:first-child {
+        margin-right: 15px;
+      }
+      &:last-child {
+        margin-left: 15px;
+      }
+    }
+  }
+}
+
+.btn-stack {
+  margin: 40px auto 0;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  > .btn {
+    margin-bottom: 20px;
+  }
+}
+
+// Tab
+.tab-container {
+  .flexbox.tab-group {
+    padding: 0;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    .flexbox-item {
+      width: 100%;
+      margin-bottom: 1rem;
+      .btn {
+        border-radius: 0;
+        &.active {
+          background-color: $secondary-color;
+          color: $white;
+          pointer-events: none;
+        }
+      }
+    }
+    @include breakpoint($tablet) {
+      .flexbox-item {
+        width: auto;
+        margin-bottom: 0;
+        .btn {
+          &.active {
+            color: $secondary-color;
+            background-color: $white;
+            font-weight: 600;
+            border-bottom: solid 2px $white;
+          }
+        }
+      }
+    }
+  }
+  & ~ .div {
+
+  }
+
+  > div {
+    border: solid 1px $secondary-color;
+    border-top: none;
+  }
+}
+
+// Sections
+.container,
+.container-fluid {
+  @include breakpoint($tablet) {
+    .col-9.content-section {
+      max-width: calc(100% - 270px - 2%);
+    }
+    .col-3.aside-section {
+      min-width: 270px;
+    }
+  }
+}
+
+
+
+/* Breadcrumb
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.breadcrumb {
+  padding: 8px;
+  margin-bottom: 20px;
+  list-style: none;
+  //background: $off-white;
+  border-radius: 3px;
+  li {
+    display: inline-block;
+    margin-bottom: 0;
+    a {
+      color: $vivid-blue;
+      &:hover, &:focus {
+        color: $main-blue;
+      }
+    }
+    & > .active {
+      color: $dark-blue;
+    }
+  }
+
+  & > li + li:before {
+    padding: 0 5px;
+    color: $dim-grey;
+    content: "/\00a0";
+  }
+}
+
+
+
+
+/* Container
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.white-block {
+  padding: 4px;
+  background: rgba($white, .28);
+  border: solid 1px transparent;
+
+  .heading {
+    border-bottom: solid 1px $dim-grey;
+    margin-bottom: 20px;
+    h2 {
+      font-size: 1.275em;
+    }
+  }
+
+  .subheading {
+    border-bottom: solid 1px $dim-grey;
+    padding: 0 8px;
+    margin-bottom: 16px;
+
+    h2 {
+      font-size: 18px;
+    }
+  }
+
+  .body-content {
+    padding: 0;
+
+    p {
+      margin-bottom: 20px;
+    }
+  }
+
+  &.shadow-block {
+    box-shadow: $box-shadow;
+    background: $white;
+    border-radius: 8px;
+    padding: 20px;
+    .body-content {
+      h3, p {
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        margin: 20px 0 0;
+      }
+    }
+  }
+
+  @include breakpoint($tablet) {
+    padding: 20px;
+    margin: 0 0 20px;
+    background: rgba($white, .88);
+    border: solid 1px lighten($dim-grey, 5);
+    //min-height: 70vh;
+    &.block-default {
+      border: none;
+      //background-color: aliceblue;
+    }
+  }
+}
+
+.panel {
+  border: solid 1px $grey;
+  margin-top: 20px;
+  .body-heading {
+    padding: 4px;
+  }
+
+  .body-content {
+    padding: 4px;
+    background: $white;
+    ul {
+      list-style: none;
+      li {
+        margin-bottom: 1.5rem;
+        .title {
+          font-weight: bold;
+          &:after {
+            content: "\A";
+            white-space: pre;
+          }
+        }
+      }
+
+      &.files {
+        color: $main-blue;
+      }
+      
+      &.mailchimp {
+        margin: 0;
+        li {
+          margin-bottom: 0;
+          vertical-align: middle;
+        }
+        .logo {
+          background: url(#{$images-path}/Partners/mailchimp-min.png) no-repeat;
+          background-size: contain;
+          display: block;
+          height: 48px;
+          width: 160px;
+        }
+        .verified {
+          pointer-events: none;
+          position: relative;
+          color: $main-violet;
+          border: none;
+          font-family: $openSansSemibold;
+          &:after {
+            content: '';
+            background: url(#{$images-path}/UI/checkmark-icon.svg) no-repeat;
+            display: block;
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            top: 14px;
+            right: 0;
+          }
+        }
+      }
+      
+      &.categories {
+        display: block;
+        li {
+          background-color: $grey;
+          display: inline-block;
+          padding: 6px 12px;
+          border-radius: 3px;
+          margin-right: 12px;
+        }
+      }
+
+      &.price {
+        margin-bottom: 40px;
+        li {
+          font-weight: 600;
+          span {
+            font-weight: 300;
+            width: 120px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+    hr {
+      margin: 4rem .5rem 3rem 0;
+      border-color: $dark-grey;
+      &.separator {
+        border-color: $grey;
+        margin: 2rem 0;
+      }
+    }
+  }
+
+  &.panel-default {
+    border: none;
+  }
+
+  &.panel-detail {
+    .body-content {
+      background-color: $dark-blue;
+      color: $off-white;
+      a {
+        color: $white;
+        background-color: transparent;
+        border: none;
+        display: inline;
+        padding: 4px;
+      }
+      hr {
+        border-color: $dim-grey;
+      }
+    }
+  }
+
+  @include breakpoint($tablet) {
+    .body-heading {
+      padding: 20px;
+    }
+    .body-content {
+      padding: 20px;
+    }
+  }
+}
+
+
+// data
+.data-grid {
+  margin-bottom: 20px;
+  border: solid 1px $grey;
+  background-color: $white;
+  .flexbox {
+    margin: 0;
+    > li {
+      display: flex;
+      flex-grow: 1;
+      padding: 4px 8px;
+      width: 12%;
+      overflow: hidden;
+      margin: 0;
+      &:first-child {
+        flex-grow: 2;
+        flex-direction: column;
+        min-width: calc(40% - 40px);
+      }
+      &:last-child {
+        width: 40px;
+        overflow: inherit;
+      }
+      .btn.verified {
+        border: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  .data-grid-actions {
+    background-color: lighten($soft-grey, 3%);
+    .flexbox {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .btn {
+        padding: 0 8px;
+        max-width: 32%;
+        border-width: 1px;
+      }
+      & > li {
+        width: auto;
+        justify-content: center;
+        &:first-child {
+          font-weight: 700;
+          width: 100%;
+        }
+        &:last-child {
+          flex-direction: column;
+        }
+        .verified {
+          pointer-events: none;
+          position: relative;
+          color: $main-violet;
+          font-family: $openSansSemibold;
+          &:after {
+            content: '';
+            background: url(#{$images-path}/UI/checkmark-icon.svg) no-repeat;
+            display: block;
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            top: 14px;
+            right: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .data-grid-title {
+    .flexbox {
+      border-bottom: solid 1px $grey;
+      &> li {
+        font-family: $openSansSemibold;
+        padding-top: 16px;
+      }
+      a.btn {
+        padding: 4px 8px;
+        border: none;
+        margin: 0 auto;
+        &[aria-expanded="false"] {
+          .caret {
+            border-top: 4px dashed;
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+            border-bottom: none;
+          }
+        }
+        &[aria-expanded="true"] {
+          .caret {
+            border-top: none;
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+            border-bottom: 4px dashed;
+          }
+        }
+      }
+    }
+  }
+
+  .data-grid-content {
+    .flexbox {
+      &> li {
+        &:first-child {
+          color: $black;
+          small {
+            color: $charcoal-grey;
+          }
+        }
+      }
+
+      .dropdown {
+        margin: 0 auto;
+      }
+
+      button.btn {
+        padding: 4px;
+        border: solid 1px $dim-grey;
+        background: $white;
+        border-radius: 3px;
+        & ~ .dropdown-menu  {
+          top: 36px;
+          right: 0;
+          left: auto;
+        }
+      }
+    }
+  }
+
+  &.audiences-grid {
+    .data-grid-title {
+      .flexbox {
+        &> li {
+          &:last-child {
+            padding: 8px 0;
+          }
+        }
+      }
+    }
+
+    .data-grid-content {
+      .flexbox {
+        &> li {
+          &:last-child {
+            padding: 8px 0 0 0;
+          }
+        }
+      }
+    }
+  }
+  @include breakpoint($tablet) {
+    .flexbox {
+      > li {
+        padding: 8px 12px;
+        &:last-child {
+
+        }
+      }
+    }
+
+    .data-grid-actions {
+      .flexbox {
+        flex-wrap: nowrap;
+        & > li {
+          &:first-child {
+            width: auto;
+          }
+          &:last-child {
+            align-items: stretch;
+          }
+        }
+      }
+    }
+  }
+}
+
+// code
+.highlight {
+  background-color: $soft-grey;
+  padding: 1rem;
+  margin: 8px 0;
+  pre, code {
+    word-break: normal;
+    white-space: normal;
+    padding: 0;
+    -ms-overflow-style: scrollbar;
+    display: block;
+  }
+  textarea {
+    resize: none;
+    overflow-y: hidden;
+    word-break: normal;
+    padding: 0;
+    -ms-overflow-style: scrollbar;
+    display: block;
+    background: none;
+    width: 100%;
+  }
+  code {
+    font-size: 90%;
+    span {
+      display: block;
+      &.ti {
+        padding-left: 20px;
+      }
+    }
+  }
+}
+
+
+
+
+/* Container
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.card-horizontal {
+  .card-img {
+    float: left;
+    max-height: 180px;
+    max-width: 100%;
+    overflow: hidden;
+    img {
+      height: 180px;
+    }
+  }
+  .card-details {
+    float: left;
+    ul {
+      list-style: none;
+      margin-left: 30px;
+      li {
+        &.site {
+          color: $main-blue;
+        }
+      }
+    }
+  }
+}
+
+.partners {
+  margin: 20px 0;
+  ul {
+    list-style: none;
+    li {
+      display: inline-block;
+      margin-left: 24px;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+
+
+
+/* Modal
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2001;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+  background-color: rgba($black, .7);
+
+  &:before {
+    content: '';
+    display: inline-block;
+  }
+
+  /*&.in .modal-dialog {
+    transform: translate(0,0);
+  }*/
+
+  .modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+    &.fade {
+      transition: transform .3s ease-out;
+      transform: translate(0,-25%);
+    }
+  }
+
+  .modal-content {
+    margin-top: 100px;
+    position: relative;
+    background-color: $white;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    outline: 0;
+    box-shadow: 0 3px 9px rgba(0,0,0,.5);
+  }
+  .modal-header {
+    padding: 20px;
+    border-bottom: solid 1px $grey;
+    .modal-title {
+      margin: 0;
+      font-size: 180%;
+    }
+    .close {
+      opacity: .8;
+      color: $dark-grey;
+      text-shadow: 0 1px 0 $charcoal-grey;
+      float: right;
+      font-size: 21px;
+      height: auto;
+      padding: 4px;
+      cursor: pointer;
+      background: 0 0;
+      border: 0;
+      margin-top: -10px;
+    }
+  }
+  .modal-body {
+    padding: 20px;
+  }
+  .modal-footer {
+    text-align: center;
+  }
+
+  .btn-close {
+    padding: 8px 15px;
+    color: $secondary-color;
+    background: none;
+  }
+
+  &.modal-white {
+    background-color: rgba($white, .9);
+    .modal-content {
+      box-shadow: none;
+      text-align: center;
+      .image {
+        background: $dim-grey;
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+      }
+    }
+    .modal-header {
+      font-size: 1.125em;
+      border-bottom: none;
+    }
+    .modal-body {
+      font-size: 1.125em;
+    }
+  }
+  @include breakpoint($tablet) {
+    .modal-dialog {
+      width: 720px;
+      margin: 30px auto;
+    }
+  }
+}
+
+
+
+/* Tabs
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.nav-tabs {
+  border-bottom: 1px solid $grey;
+  > li {
+    float: left;
+    border: none;
+    margin-bottom: -1px;
+    > a {
+      border: 1px solid $grey;
+      border-radius: 2px 2px 0 0;
+      padding: 4px 12px;
+      height: auto;
+      &:hover {
+        border-color: $primary-color;
+        color: $white;
+        background: lighten($vivid-blue, 0);
+      }
+    }
+
+    &.active > a {
+      color: $white;
+      background-color: $primary-color;
+      border-bottom-color: transparent;
+      &:hover,
+      &:focus {
+        cursor: not-allowed;
+        pointer-events: none;
+        cursor: default;
+        border-color: transparent; 
+      }
+    }
+  }
+}
+
+.tab-content {
+  > .tab-panel {
+    display: none;
+    visibility: hidden;
+  }
+  > .active {
+    display: block;
+    visibility: visible;
+  }
+}
+
+
+
+/* Table
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+        border-top: 1px solid $grey;
+      }
+    }
+  }
+  > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid $dark-grey;
+  }
+  > thead:first-child {
+    > tr:first-child {
+      > th,
+      > td {
+        border-top: 0;
+      }
+    }
+  }
+  > tbody + tbody {
+    border-top: 2px solid $grey;
+  }
+}
+
+
+
+/* Notification Tile
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.notification-tile {
+  z-index: 3000;
+  display: inline-block;
+  position: absolute;
+  top: 60px;
+  width: 90%;
+  right: 5%;
+  background-color: $white;
+  display:none;
+  box-shadow: 0 0 6px 3px rgba(0, 0, 0, 0.2);
+  border-bottom: 5px solid $main-blue;
+  .close {
+    opacity: .8;
+    color: $dark-grey;
+    text-shadow: 0 1px 0 $charcoal-grey;
+    float: right;
+    font-size: 21px;
+    height: auto;
+    padding: 0;
+    cursor: pointer;
+    margin-top: -4px;
+  }
+  .noti-header {
+    padding: 8px 16px;
+    border-bottom: solid 1px $grey;
+    position: relative;
+    p {
+      margin: 0;
+      font-size: 1.75rem;
+      display: inline-block;
+    }
+  }
+  .noti-content {
+    padding: 8px 16px;
+    font-size: 1.25rem;
+  }
+  .color-black {
+    color: #ff6a00;
+    content: "\e208";
+    text-align: center;
+    font-size: 16px;
+  }
+  @include breakpoint($tablet) {
+    width: 550px;
+    top: 100px;
+  }
+  @include breakpoint($ext-desktop) {
+    right: calc(100% - 50% - 565px);
+  }
+}

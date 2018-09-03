@@ -1,0 +1,157 @@
+@{
+  var culture = KindAds.Helpers.CultureHelper.GetCurrentNeutralCulture();
+}
+<section class="footer">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3">
+        <svg class="logo" width="147px" height="25px" viewBox="0 0 147 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Kind Ads Logo</title>
+          <desc>Advertising Without the Irritating Ads</desc>
+          <g id="1" transform="translate(-208.000000, -31.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="KIND-ADS-Logo-White" transform="translate(208.000000, 31.000000)">
+              <path d="M5.85807504,0.447658402 L5.85807504,9.74517906 L12.8466558,0.447658402 L19.3898858,0.447658402 L10.4143556,11.9834711 L19.5611746,24.5523416 L12.8466558,24.5523416 L5.85807504,14.8415978 L5.85807504,24.5523416 L0,24.5523416 L0,0.447658402 L5.85807504,0.447658402 Z M27.7830343,0.447658402 L27.7830343,24.5523416 L21.9249592,24.5523416 L21.9249592,0.447658402 L27.7830343,0.447658402 Z M46.6247961,24.5523416 L37.7177814,9.77961433 L37.7177814,24.5523416 L31.9624796,24.5523416 L31.9624796,0.447658402 L37.9233279,0.447658402 L46.6933116,15.392562 L46.6933116,0.447658402 L52.4486134,0.447658402 L52.4486134,24.5523416 L46.6247961,24.5523416 Z M56.6280587,0.447658402 L63.685155,0.447658402 C71.3931485,0.447658402 76.3262643,4.95867769 76.3262643,12.5 C76.3262643,20.0413223 71.3931485,24.5523416 63.685155,24.5523416 L56.6280587,24.5523416 L56.6280587,0.447658402 Z M63.685155,5.54407713 L62.4861338,5.54407713 L62.4861338,19.4559229 L63.685155,19.4559229 C67.6247961,19.4559229 70.228385,17.1143251 70.228385,12.5 C70.228385,7.88567493 67.6247961,5.54407713 63.685155,5.54407713 Z M99.3132137,19.1460055 L91.776509,19.1460055 L90.0636215,24.5523416 L84.1712887,24.5523416 L92.4616639,0.447658402 L98.6280587,0.447658402 L106.918434,24.5523416 L101.026101,24.5523416 L99.3132137,19.1460055 Z M97.8058728,14.3250689 L95.5448613,6.68044077 L93.2838499,14.3250689 L97.8058728,14.3250689 Z M109.247961,0.447658402 L116.305057,0.447658402 C124.013051,0.447658402 128.946166,4.95867769 128.946166,12.5 C128.946166,20.0413223 124.013051,24.5523416 116.305057,24.5523416 L109.247961,24.5523416 L109.247961,0.447658402 Z M116.305057,5.54407713 L115.106036,5.54407713 L115.106036,19.4559229 L116.305057,19.4559229 C120.244698,19.4559229 122.848287,17.1143251 122.848287,12.5 C122.848287,7.88567493 120.244698,5.54407713 116.305057,5.54407713 Z M139.017945,0 C144.156607,0 146.143556,3.75344353 146.760196,5.5785124 L141.895595,7.81680441 C141.415987,6.74931129 140.696574,5.44077135 138.880914,5.44077135 C137.750408,5.44077135 136.996737,6.12947658 136.996737,7.05922865 C136.996737,10.3305785 147,9.9862259 147,17.3553719 C147,21.7975207 143.848287,25 138.606852,25 C133.228385,25 131.070147,21.0743802 130.453507,19.2493113 L135.352365,16.8044077 C136.003263,18.2162534 137.305057,19.4903581 138.949429,19.4903581 C140.353997,19.4903581 141.073409,18.8705234 141.073409,17.8030303 C141.073409,14.600551 131.138662,14.8760331 131.138662,7.16253444 C131.138662,2.82369146 134.256117,0 139.017945,0 Z"></path>
+            </g>
+          </g>
+        </svg>
+        <!--<img class="logo img-responsive" data-no-retina="true" src="~/Img/UI/logo-full-white.png" alt="KindAds Logo" />-->
+      </div>
+      <div class="col-9">
+        <div class="row">
+          <div class="col-3">
+            <h4>@Resource.Language.UIKit.Footer.Resources.CompanyTitle</h4>
+            <ul>
+              <li>
+                @Html.ActionLink(Resource.Language.UIKit.Footer.Resources.CompanyItem_Team, "Team", "Home", new { culture = culture }, new { culture = culture })
+              </li>
+              <li>
+                <a target="_blank" href="~/Content/kind-ads-whitepaper.pdf">@Resource.Language.UIKit.Footer.Resources.CompanyItem_Paper</a>
+              </li>
+              <li>
+                @Html.ActionLink(Resource.Language.UIKit.Footer.Resources.CompanyItem_Terms, "TermsOfService", "Home", new { culture = culture }, new { culture = culture, @target = "_blank" })
+              </li>
+              <li>
+                @Html.ActionLink(Resource.Language.UIKit.Footer.Resources.CompanyItem_Privacy, "PrivacyPolicy", "Home", new { culture = culture }, new { culture = culture, @target = "_blank" })
+              </li>
+              <li>
+                @Html.ActionLink(Resource.Language.UIKit.Footer.Resources.CompanyItem_Copyright, "Copyright", "Home", new { culture = culture }, new { culture = culture, @target = "_blank", @class = "" })
+              </li>
+            </ul>
+          </div>
+          <div class="col-3">
+            <h4>@Resource.Language.UIKit.Footer.Resources.ResourcesTitle</h4>
+            <ul>
+              <li>
+                <a class="disabled">@Resource.Language.UIKit.Footer.Resources.ResourcesItem_Help</a>
+              </li>
+              <li>
+                @Html.ActionLink(Resource.Language.UIKit.Footer.Resources.ResourcesItem_Faq, "Faq", "Home", new { culture = culture }, new { culture = culture })
+              </li>
+              <li>
+                <a href="https://medium.com/kindads" target="_blank">@Resource.Language.UIKit.Footer.Resources.ResourcesItem_Blog</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-3">
+            <h4>@Resource.Language.UIKit.Footer.Resources.IntegrationsTitle</h4>
+            <ul>
+              <li>
+                <a href="https://subscribers.com/" target="_blank">Subscribers</a>
+              </li>
+              <li>
+                <a href="https://pushcrew.com/" target="_blank">PushCrew</a>
+              </li>
+              <li>
+                <a href="https://onesignal.com/" target="_blank">OneSignal</a>
+              </li>
+              <li>
+                <a href="https://mailchimp.com/" target="_blank">Mailchimp</a>
+              </li>
+              <li>
+                <a href="https://www.aweber.com/" target="_blank">AWeber</a>
+              </li>
+              <li>
+                <a href="https://www.campaignmonitor.com/" target="_blank">Campaign Monitor</a>
+              </li>
+              <li>
+                <a href="https://sendgrid.com/" target="_blank">Send Grid</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-3">
+            <h4>@Resource.Language.UIKit.Footer.Resources.ContactTitle</h4>
+            <ul>
+              <li>
+                <a href="mailto:hello@kindads.io" target="_blank">hello@kindads.io</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="legals">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <span class="token">
+            Token Contract Address: 0x4618519de4c304f3444ffa7f812dddc2971cc688<br />
+          </span>
+          &#169; 2018 KInd Ads. All rights reserved.
+        </div>
+        <div class="col-6">
+          <ul class="social">
+            <li>
+              <a href="https://twitter.com/KindAdsNetwork" target="_blank" alt="Kind Ads Twitter">
+                <i class="twitter">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.263 48">
+                    <g id="twitter" transform="translate(10 12)">
+                      <path id="Shape" class="colorShape" d="M36.235,15.4a7.8,7.8,0,0,1-2.954.9,5.565,5.565,0,0,0,2.265-3.1A11.294,11.294,0,0,1,32.2,14.6a5,5,0,0,0-3.742-1.8,5.46,5.46,0,0,0-5.219,5.7,5.792,5.792,0,0,0,.1,1.3A14.354,14.354,0,0,1,12.6,13.9a5.494,5.494,0,0,0-.689,2.9,5.719,5.719,0,0,0,2.265,4.7,4.687,4.687,0,0,1-2.363-.7v.1a5.717,5.717,0,0,0,4.135,5.6,5.729,5.729,0,0,1-1.378.2,3.3,3.3,0,0,1-.985-.1,5.135,5.135,0,0,0,4.825,3.9,9.964,9.964,0,0,1-6.4,2.4,5.966,5.966,0,0,1-1.28-.1,13.844,13.844,0,0,0,7.976,2.6c9.551,0,14.77-8.6,14.77-16.1v-.7A11.9,11.9,0,0,0,36.235,15.4Z" transform="translate(-10 -12)" />
+                    </g>
+                  </svg>
+                </i>
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/kindads" target="_blank" alt="Kind Ads Telegram">
+                <i class="telegram">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g id="telegram" transform="translate(11 13)">
+                      <path id="Shape" class="colorShape" d="M24.786,29.736c-.924.9-1.84,1.786-2.748,2.678a1.432,1.432,0,0,1-1.13.461.575.575,0,0,1-.58-.448c-.7-2.158-1.4-4.312-2.093-6.472a.5.5,0,0,0-.379-.377q-2.458-.75-4.906-1.531a2.788,2.788,0,0,1-.722-.332.514.514,0,0,1-.084-.865,3.319,3.319,0,0,1,.954-.6c2-.794,4.016-1.562,6.026-2.337l15.3-5.907a1.092,1.092,0,0,1,1.615,1.2,18.061,18.061,0,0,1-.379,1.994Q34,25.05,32.336,32.9c-.264,1.242-1.136,1.566-2.158.812q-2.567-1.892-5.132-3.79C24.964,29.858,24.879,29.8,24.786,29.736Zm-3.842,1.588L21,31.308a1.183,1.183,0,0,0,.03-.146c.11-1.186.226-2.371.322-3.558a.871.871,0,0,1,.311-.63q2.366-2.116,4.717-4.247,2.609-2.353,5.212-4.71a1.464,1.464,0,0,0,.226-.4,1.471,1.471,0,0,0-.486-.045,2.125,2.125,0,0,0-.574.283Q25,21.484,19.244,25.11a.345.345,0,0,0-.175.491c.283.813.541,1.634.808,2.453Z" transform="translate(-11 -13)" />
+                    </g>
+                  </svg>
+                </i>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/kindads/platform" target="_blank" alt="Kind Ads Github">
+                <i class="github">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g id="github" transform="translate(15 14)">
+                      <path id="Shape" class="colorShape" d="M23.992,27.546h-.721v.171c0,1.129,0,2.26-.006,3.39A2.5,2.5,0,0,1,23,32.185a1.425,1.425,0,0,1-1.108.788,1.1,1.1,0,0,1-.251.027,1.342,1.342,0,0,1-.241-.063c.084-.14.148-.253.217-.363a2.168,2.168,0,0,0,.329-1.143c.017-1.213.013-2.427.019-3.641a.506.506,0,0,0-.01-.068.738.738,0,0,0-.592.731c-.007.159,0,.317,0,.476,0,.7-.027,1.4.007,2.1a1.357,1.357,0,0,1-1.342,1.465,3.076,3.076,0,0,1-.49.005.4.4,0,0,1-.171-.051.183.183,0,0,1-.035-.313.872.872,0,0,1,.155-.12,1.411,1.411,0,0,0,.723-1.475c-.043-.5-.065-1-.1-1.5-.136.031-.292.074-.45.1A3.225,3.225,0,0,1,17.7,28.8a2.5,2.5,0,0,1-1.032-1.014,7.866,7.866,0,0,0-.562-.884c-.306-.361-.663-.681-1.005-1.011-.139-.137-.145-.206.016-.321a.814.814,0,0,1,.852,0,2.332,2.332,0,0,1,.843.723,5.032,5.032,0,0,0,1.057,1.036A2,2,0,0,0,20.2,27.3a.308.308,0,0,0,.092-.132,1.723,1.723,0,0,1,.971-1.028l.567-.241c-.285-.035-.531-.064-.774-.1a7.787,7.787,0,0,1-2.992-.966,3.971,3.971,0,0,1-1.87-2.641,6.575,6.575,0,0,1,.092-3.47,4.2,4.2,0,0,1,.875-1.486.209.209,0,0,0,.054-.222,4.8,4.8,0,0,1,.119-2.756c.019-.062.041-.124.062-.186,0-.012.013-.024.037-.073.346.061.706.108,1.058.193a5.409,5.409,0,0,1,1.995.956.248.248,0,0,0,.231.046,11.259,11.259,0,0,1,2.734-.343,12.323,12.323,0,0,1,2.685.286.346.346,0,0,0,.286-.054,6.024,6.024,0,0,1,1.954-.916c.324-.066.656-.094.983-.141a.116.116,0,0,1,.15.1,5.721,5.721,0,0,1,.205,2.749.221.221,0,0,0,.046.17,4.837,4.837,0,0,1,1.2,2.808,7.233,7.233,0,0,1-.147,2.405,4.175,4.175,0,0,1-1.953,2.7,6.047,6.047,0,0,1-2.43.838c-.281.038-.565.065-.868.1.039.026.066.046.095.063l.434.257a2.017,2.017,0,0,1,.994,1.558,3.484,3.484,0,0,1,.029.4c.019,1.032.035,2.063.056,3.093a.334.334,0,0,0,.053.168,1.963,1.963,0,0,0,.674.639c.093.054.182.108.154.237a.228.228,0,0,1-.227.176,1.81,1.81,0,0,1-1.664-.607,1.009,1.009,0,0,1-.2-.686c0-.849,0-1.7,0-2.549a1.975,1.975,0,0,0-.016-.278.778.778,0,0,0-.642-.66v.152c0,1.12,0,2.241,0,3.363a5.726,5.726,0,0,0,.045.627,1.274,1.274,0,0,0,.226.579,4.656,4.656,0,0,1,.266.512.713.713,0,0,1-.2.035,2.1,2.1,0,0,1-1.026-.377,1.708,1.708,0,0,1-.558-1.053A3.1,3.1,0,0,1,24,30.911c-.006-1.065,0-2.129,0-3.194Z" transform="translate(-15 -14)" />
+                    </g>
+                  </svg>
+                </i>
+              </a>
+            </li>
+            <li>
+              <a href="https://kindads.io/Content/kind-ads-whitepaper.pdf" target="_blank" alt="Kind Ads Whitepaper">
+                <i class="file-text">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g id="paper" transform="translate(14 12)">
+                      <path id="Shape" class="colorShape" d="M17,0H3A3,3,0,0,0,0,3V21a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V3A3,3,0,0,0,17,0Zm1,21a1,1,0,0,1-1,1H3a1,1,0,0,1-1-1V3A1,1,0,0,1,3,2H17a1,1,0,0,1,1,1Z" />
+                      <path id="Shape-2" data-name="Shape" class="cls-2" d="M15,18a1,1,0,0,1-1,1H6a1,1,0,0,1,0-2h8A1,1,0,0,1,15,18Z" />
+                      <path id="Shape-3" data-name="Shape" class="cls-2" d="M15,14a1,1,0,0,1-1,1H6a1,1,0,0,1,0-2h8A1,1,0,0,1,15,14Z" />
+                      <path id="Shape-4" data-name="Shape" class="cls-2" d="M15,10a1,1,0,0,1-1,1H6A1,1,0,0,1,6,9h8A1,1,0,0,1,15,10Z" />
+                      <path id="Shape-5" data-name="Shape" class="cls-2" d="M11,6a1,1,0,0,1-1,1H6A1,1,0,0,1,6,5h4A1,1,0,0,1,11,6Z" />
+                    </g>
+                  </svg>
+                </i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

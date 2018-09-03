@@ -1,0 +1,63 @@
+
+@{
+  ViewBag.Title = "Start";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Welcome to Kind Ads</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="white-block">
+        <div class="heading">
+          <h2>You don't have completed your profile</h2>
+        </div>
+        <div class="body-content">
+          <p>Get started by completing your profile.</p>
+          @Html.ActionLink("Set up your profile", "CreateProfile", "PublisherProfile", null, new { @class = "btn btn-primary btn-lg" })
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@using (Html.BeginForm("CreateSite", "Site", FormMethod.Get))
+{
+  @*@Html.Hidden("isCreateSite", "true")*@
+  @*<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 main-bar">
+          <h1 class="title">Start your Ads!</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="white-block shadow-block top-space s2x">
+            <div class="heading">
+              <h2>Welcome to Kind Ads</h2>
+            </div>
+            <div class="body-content">
+              <h3>You don't have sites yet!</h3>
+              <p>Get started by adding a site.</p>
+              <input type="submit" class="btn btn-primary btn-lg" value="Create a Site" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>*@
+}
+
+
+@section Scripts {
+  <!-- Subscribe Section -->
+  <script type="text/javascript">
+    $('.link-dashboard').addClass('active');
+  </script>
+}

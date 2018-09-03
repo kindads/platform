@@ -1,0 +1,25 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+<h2>MailChimp</h2>
+<div class="form-group inline">
+  <label>Api Token:</label>
+  @Model.emailProductForm.mailChimpForm.ApiToken
+</div>
+<div class="form-group inline">
+  <label>Template:</label>
+  @Model.GetTemplatesFromMailChimp(Model.emailProductForm.mailChimpForm.ApiToken).SingleOrDefault(t => t.Value == Model.emailProductForm.mailChimpForm.TemplateId).Text
+</div>
+<div class="form-group inline">
+  <label>List:</label>
+  @Model.GetListFromMailChimp(Model.emailProductForm.mailChimpForm.ApiToken).SingleOrDefault(t => t.Value == Model.emailProductForm.mailChimpForm.ListId).Text
+</div>
+
+<div class="form-group inline">
+  <label>Email list size:</label>
+  <span id="listSize"></span>
+</div>
+
+<div class="form-group inline">
+  <label>Last updated:</label>
+  <span id="lastUpdated"></span>
+</div>
+

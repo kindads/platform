@@ -1,0 +1,239 @@
+@model KindAds.Models.Advertiser.HomeProductsViewModel
+@{
+
+  ViewBag.Title = "Home";
+  Layout = "~/Views/Shared/_AdvertiserLayout.cshtml";
+  var listCategory = ViewBag.listCategory as SelectList;
+  var listTag = ViewBag.listTag as SelectList;
+  var listParter = ViewBag.listParter as SelectList;
+}
+
+@using (Html.BeginForm())
+{
+
+  <div class="row">
+    <div class="col-sm-12 main-bar"><span class="legend">* All prices are in KIND</span></div>
+  </div>
+  @*<div class="row">
+    <div class="col-sm-12 main-bar filter-panel">
+      <div class="row">
+        <div class="form-group col-sm-3">
+          @Html.LabelFor(model => model.ProductTypeSelect)
+          @Html.DropDownList("Products", ViewData["products"] as List<SelectListItem>, "Please select", new { @class = "form-control" })
+        </div>
+        <div class="col-sm-6">
+          <button id="btnFilter" class="btn-filter" data-toggle="collapse" data-target="#results-filter1" style="display:none;">Filter</button>
+          <p class="title">Search results (<label id="lblResultNoRecords">@ViewBag.NoRecords</label>)</p>
+        </div>
+      </div>
+    </div>
+  </div>*@
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-3 filter-panel clearfix" id="results-filter">
+          <div class="form-group">
+            @Html.LabelFor(model => model.ProductTypeSelect)
+            @Html.DropDownList("Products", ViewData["products"] as List<SelectListItem>, "Please select", new { @class = "form-control" })
+          </div>
+
+          <div class="form-group">
+            @Html.LabelFor(model => model.ParterTypeSelect)
+            @Html.DropDownList("Partners", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control" })
+          </div>
+
+          <div class="form-group">
+            @Html.Label("Tag")
+            @Html.DropDownList("Categories", ViewData["categories"] as List<SelectListItem>, "Please select", new { @class = "form-control" })
+          </div>
+
+          @*<div class="form-group">
+      @Html.LabelFor(model => model.TagTypeSelect)
+      @Html.DropDownList("Tags", new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control" })
+    </div>*@
+
+          <div class="form-group">
+            @Html.LabelFor(model => model.PriceSelecc, htmlAttributes: new { @class = "control-label col-md-3" })
+            @Html.DropDownList("Prices", ViewData["prices"] as List<SelectListItem>, "Please select", new { @class = "form-control", @required = "true", @data_msg_required = "Price is required" })
+            @Html.ValidationMessage("Categories")
+          </div>
+
+          <br />
+
+          @Ajax.ActionLink("Search", "SearchProducts", "Advertiser",
+                                                                          new AjaxOptions
+                                                                          {
+                                                                            UpdateTargetId = "UpdateContentDiv",
+                                                                            InsertionMode = InsertionMode.Replace,
+                                                                            HttpMethod = "GET",
+                                                                            LoadingElementId = "progress",
+                                                                            OnComplete = "GetCountRecords"
+                                                                          },
+                                                                              new { @class = "btn btn-primary btn-lg" }
+                                                                             )
+
+
+
+        </div>
+
+
+        <div class="col-md-9 results-panel clearfix">
+          <div id="UpdateContentDiv">
+            @{
+              Html.RenderPartial("SearchProducts", Model.ListProducts);
+            }
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+}
+
+@{Html.RenderPartial("Loading"); }
+
+@Scripts.Render("~/bundles/customjs")
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Products").change(function () {
+        $("#Partners").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetPartners")',
+                dataType: 'json',
+                data: { id: $("#Products").val() },
+                success: function (partners) {
+                  if (partners != null && partners != '') {
+                    $("#Partners").append('<option value="">' + 'Please select' + '</option>');
+                    $.each(partners, function (i, state) {
+                      $("#Partners").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                  } else {
+                    $("#Partners").append('<option value="">' + 'Please select' + '</option>');
+                  }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Categories").change(function () {
+        $("#Tags").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTags")',
+                dataType: 'json',
+                data: { id: $("#Categories").val() },
+                success: function (tags) {
+                  if (tags != null && tags != '') {
+                    $("#Tags").append('<option value="">' + 'Please select' + '</option>');
+                    $.each(tags, function (i, state) {
+                      $("#Tags").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                  } else {
+                    $("#Tags").append('<option value="">' + 'Please select' + '</option>');
+                  }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve categories.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Tags").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("TagSelecc")',
+                data: { id: $("#Tags").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve tags.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Partners").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PartnerSelecc")',
+                data: { id: $("#Partners").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Price").focusout(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PriceSelecc")',
+                data: { id: $("#Price").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $("#btnFilter").click(function (event) {
+    event.preventDefault();
+  });
+</script>
+<script type="text/javascript">
+  function GetCountRecords() {
+    $('#lblResultNoRecords').text($("#lblNoRecords").val());
+  }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Prices").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("PriceSelecc")',
+                data: { id: $("#Prices").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+
+<script type="text/javascript">
+  $("#productComingSoon").click(function (event) {
+    event.preventDefault();
+  });
+  $("#productPremiumComingSoon").click(function (event) {
+    event.preventDefault();
+  });
+</script>

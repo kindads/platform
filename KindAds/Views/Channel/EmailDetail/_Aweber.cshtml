@@ -1,0 +1,103 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+<h2>Aweber</h2>
+
+<div class="form-group">
+  <label>Autorization Code</label>
+  @Html.TextBoxFor(model => model.emailProductForm.aweberForm.ApiToken, new { @placeholder = "e.g. Your Autorization token ", @class = "form-control", @required = "true", @data_msg_required = "API token is required", @maxlength = 500 })
+</div>
+
+
+<div class="form-group inline">
+  <label>Email list size:</label>
+  <span id="listSize"></span>
+</div>
+
+<div class="form-group inline">
+  <label>Last updated:</label>
+  <span id="lastUpdated"></span>
+</div>
+
+
+@*<div class="form-group">
+    <div id="btnValidateProvider" class="btn btn-default btn-lg" onclick="ValidateProvider();">Validate</div>
+  </div>*@
+
+
+<!-- Seccion de formulario escondido -->
+<div id="aweberCompleteForm" style="display:none">
+
+  @*<div class="form-group">
+      @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+      @Html.TextBoxFor(model => model.emailProductForm.getResponseForm.Name, new { @placeholder = "e.g. Name ", @class = "form-control", @required = "true", @data_msg_required = "Name is required", @maxlength = 60 })
+    </div>*@
+
+  <!-- Seccion de From field -->
+  <!-- obtenemos la informacion -->
+  <div class="form-group">
+    @Html.Label("From Field", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.getResponseForm.FromFieldId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Folders is required" })
+  </div>
+
+
+  <!-- Seccion de listas -->
+  <!-- obtenemos la informacion -->
+  <div class="form-group">
+    @Html.Label("Lists", htmlAttributes: new { @class = "control-label" })
+    @Html.DropDownListFor(model => model.emailProductForm.getResponseForm.ListId, new SelectList(string.Empty, "Value", "Text"), "Please select", new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Lists is required" })
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+  var ApiKeyIsValid = false;
+
+
+
+  function ValidateProvider() {
+    $('#processingModal').modal('show');
+
+    var apiToken = $("#emailProductForm_aweberForm_ApiToken").val();
+
+    var requestData = {
+      ApiToken: apiToken,
+      ChannelId: 'b4ee7512-5f12-40f1-8408-8f96bf43df6d',
+      ProviderId: '74679a58-e03f-470e-abc8-953c6b2ff79a'
+    };
+
+    $.ajax({
+      url: "ValidateProvider",
+      type: "Post",
+      data: { request: requestData },
+      success: function (response) {
+
+        $('#processingModal').modal('hide');
+        ApiKeyIsValid = response.IsValid;
+
+        if (ApiKeyIsValid == 'True') {
+
+          $("#aweberCompleteForm").show();
+          $("#btnValidateProvider").hide();
+
+          document.getElementById("emailProductForm_aweberForm_ApiToken").readOnly = true;
+          $("#hiddenIsValidApiKey").val(true);
+        }
+        else {
+          $('#processingModal').modal('hide');
+
+          alert("Api key is not valid");
+          $("#aweberCompleteForm").hide();
+          $("#btnValidateProvider").show();
+        }
+
+      },
+      error: function (xhr, error, status) {
+
+      }
+    });
+  }
+
+
+</script>

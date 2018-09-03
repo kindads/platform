@@ -1,0 +1,27 @@
+@model  KindAds.Negocio.ViewModels.KindAdsV2.ConversationViewModel
+
+<div class="chats">
+
+  @if (Model.conversationItems.Count > 0)
+  {
+    foreach (var chunk in Model.conversationItems[0].Chunks)
+    {
+      <!--Separador por dia-->
+      <div class="heading-date" id="@chunk.ElementToAttach">
+        @chunk.HeadingDate
+
+        @foreach (var item in chunk.Messages)
+        {
+          <!-- conversation n-->
+          <div class="chat">
+            <span class="user">@item.SignedBy</span>
+            <span class="txt">
+              @Html.Raw(HttpUtility.HtmlDecode(@item.Message))
+            </span>
+            <span class="time">@item.MessageHour</span>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

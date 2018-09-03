@@ -1,0 +1,306 @@
+@model KindAds.Models.Advertiser.CreateCampaingModel
+@{
+  ViewBag.Title = "Configure your site.";
+  Layout = "~/Views/Shared/_AdvertiserLayout.cshtml";
+  var displayDataChannelMC = ViewBag.IsChannelMailChimp ? "display:inline" : "display:none";
+  var displayDataChannelPush = ViewBag.IsChannelPushCrew || ViewBag.IsChannelSuscribers ? "display:inline" : "display:none";
+}
+
+@if (TempData["message"] != null)
+{
+  @Html.Raw(TempData["message"])
+}
+<link href="~/Content/jHtmlArea/jHtmlArea.css" rel="stylesheet" />
+<link href="~/Content/jHtmlArea/jHtmlArea.ColorPickerMenu.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "Campaign", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formCampaign" }))
+{
+  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+  <div class="container-fluid">
+    <div class="form-horizontal">
+      <div class="row">
+        <div class="col-sm-12 main-bar">
+          <h1 class="title">Create your campaign</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-9 col-md-9">
+          <div class="white-block clearfix">
+            <div class="heading">
+              <h2>Configure your message</h2>
+            </div>
+            <div class="body-content">
+              <div class="col-sm-6">
+                @Html.Partial("_CampaignData", Model)
+                <br />
+                <div class="text-center">
+                  <input type="submit" id="Status" class="col-sm-12 btn btn-primary btn-lg" value="Create Campaign" />
+                </div>
+              </div>
+
+              <div class="col-sm-5 col-sm-offset-1" style="@displayDataChannelPush">
+                <div class="form-group1 phone">
+                  <div id="pnlTitle" class="form-group1 preview-text">
+                    <label class="title" id="lblTitleShowcase">Title</label>
+                    <br />
+                    <label class="message" id="lblMessageShowcase">Content</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3 col-md-3 summary-bar">
+
+          <h2>Estimated price</h2>
+
+          <div class="data">
+            <label style="@displayDataChannelPush">Cost By Push</label>
+            <label style="@displayDataChannelMC">Cost By Email Sending</label>
+            <h3>
+              @ViewBag.ProductPrice
+              <small>KIND</small>
+            </h3>
+          </div>
+          <div class="data">
+            <label>Site</label>
+            <h3>@ViewBag.Site</h3>
+          </div>
+          <div class="data" style="@displayDataChannelPush">
+            <label>Number</label>
+            <h3>1 - 1000 notifications</h3>
+          </div>
+          <div class="data">
+            <label>FINAL PRICE</label>
+            <h3>
+              @ViewBag.ProductPrice
+              <small>KIND</small>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="message"></div>
+}
+
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="siteSucessModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Campaign register message<label id="lblTitle"></label></h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel">
+          <div class="panel-body text-center">
+            <form>
+              <p><label id="lblBody"></label></p>
+              <div class="add-space"></div>
+              @Html.ActionLink("View all campaigns", "SortCampaigns", "Campaign", new { @class = "btn btn-default" })
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="avatar-hint"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@Html.Partial("_LoadingCampaignModal", Model)
+@Scripts.Render("~/bundles/customjs")
+<script type="text/javascript">
+  $('#formCampaign').submit(function (e) {
+    e.preventDefault();
+    var _action = this.action;
+    var _type = this.method;
+    var _data = new FormData(this);
+
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+      var address = web3.eth.coinbase;
+      if (address != null && address != '') {
+        //****************** Token ABI **********************************************
+        var tokenABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_behalfOf", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "approveOwner", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "INITIAL_SUPPLY", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_subtractedValue", "type": "uint256" }], "name": "decreaseApproval", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_spender", "type": "address" }, { "name": "_addedValue", "type": "uint256" }], "name": "increaseApproval", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "behalfOf", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "ApprovalOwner", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "previousOwner", "type": "address" }, { "indexed": true, "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }];
+        //****************** TOKEN ADDRESS ******************************************
+        var tokenAddress = "0xa67C799f22DF6A30FC5439836f3C530Fc87B6718";
+        //****************** Reward ABI *********************************************
+        var rewardABI = [{ "constant": false, "inputs": [{ "name": "token", "type": "address" }], "name": "reclaimToken", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "renounceOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "KIND", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_tokenAddress", "type": "address" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "publisher", "type": "address" }, { "indexed": false, "name": "pricePaid", "type": "uint256" }, { "indexed": false, "name": "campaignId", "type": "bytes32" }], "name": "PaidAndDistributed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "previousOwner", "type": "address" }], "name": "OwnershipRenounced", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "previousOwner", "type": "address" }, { "indexed": true, "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "constant": false, "inputs": [{ "name": "_publisher", "type": "address" }, { "name": "_priceToPay", "type": "uint256" }, { "name": "_toPublisher", "type": "uint256" }, { "name": "_toReward", "type": "uint256" }, { "name": "_toPlatform", "type": "uint256" }, { "name": "_campaignId", "type": "bytes32" }], "name": "payAndDistribute", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "contractTokenBalance", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getRewardAmount", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getPlatformShare", "outputs": [{ "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }];
+        //****************** Reward ADDRESS *****************************************
+        var rewardAddress = "0x95822fB4E9ad8feC3a05F10B154F4DB300bd9E7e";
+        //****************** Instance of smart contract *****************************
+        var smartContractInstance = web3.eth.contract(tokenABI).at(tokenAddress);
+
+        var price = '@ViewBag.ProductPrice';
+        //****************** Approve smart contract *********************************
+            if ($("#formCampaign").valid() && validateImage() && validateMessageTestHtml()) {
+        smartContractInstance.approve(rewardAddress, price * 100000000, function (error, result) {
+          if (!error) {
+              $('#loadingCampaignModal').modal('show');
+              $.ajax({
+                url: _action,
+                type: _type,
+                data: _data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                  if (response.success) {
+                    $('#loadingCampaignModal').modal('hide');
+                    $('#lblBody').append(response.message);
+                    $('#myModal').modal('show')
+                  } else {
+                    $('#loadingCampaignModal').modal('hide');
+                    $('#lblBody').append(response.error);
+                    $('#myModal').modal('show')
+                  }
+
+                },
+                error: function (xhr, error, status) {
+                  $('#loadingCampaignModal').modal('hide');
+                  $('#lblBody').append('Error');
+                  $('#myModal').modal('show')
+                }
+              });
+            }
+
+          else {
+            alert(error);
+          }
+          });
+      }
+      } else {
+        alert('Please log in metamask');
+      }
+    } else {
+      alert('Please add metamask plugin');
+    }
+  });
+
+  function validateImage() {
+
+    var isChannelSubscribers = "@ViewBag.IsChannelSuscribers".toLowerCase() == "true";
+    var isChannelPushCrew = "@ViewBag.IsChannelPushCrew".toLowerCase() == "true";
+    var isChannelMailChimp = "@ViewBag.IsChannelMailChimp".toLowerCase() == "true";
+    var isChannelCampaignMonitor = "@ViewBag.IsChannelCampaignMonitor".toLowerCase() == "true";
+    var isChannelAweber = "@ViewBag.IsChannelAweber".toLowerCase() == "true";
+    var isChannelSendGrid = "@ViewBag.IsChannelSendGrid".toLowerCase() == "true";
+    var isChannelActiveCampaign = "@ViewBag.IsChannelActiveCampaign".toLowerCase() == "true";
+    var isChannelGetResponse = "@ViewBag.IsChannelGetResponse".toLowerCase() == "true";
+
+    var isChannelIContact = "@ViewBag.IsChannelIContact".toLowerCase() == "true";
+    var isChannelSendinBlue = "@ViewBag.IsChannelSendinBlue".toLowerCase() == "true";
+    var isChannelOneSignal = "@ViewBag.IsChannelOneSignal".toLowerCase() == "true";
+    var isChannelMailJet= "@ViewBag.IsChannelMailJet".toLowerCase() == "true";
+
+    if (isChannelMailChimp || isChannelCampaignMonitor || isChannelAweber || isChannelSendGrid || isChannelActiveCampaign ||
+      isChannelGetResponse || isChannelIContact || isChannelSendinBlue || isChannelOneSignal || isChannelMailJet) {
+      return true;
+    }
+    if ($("#fileup").val().length > 0) {
+      var ext = $('#fileup').val().split('.').pop().toLowerCase();
+      if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+        $("#lblFileUp").show().text('Invalid extension');
+        scrollToFileUpload();
+      } else {
+        $("#lblFileUp").hide();
+        return true;
+      }
+    } else {
+      $("#lblFileUp").show().text('Image required');
+      scrollToFileUpload();
+    }
+  }
+
+  function scrollToFileUpload() {
+    $("html, body").animate({ scrollTop: $("#Protocols").offset().top }, 0);
+  }
+
+  function isEmpty(value) {
+    return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+  }
+</script>
+
+<script type="text/javascript">
+  $().ready(function () {
+    $("#formCampaign").validate();
+  });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      $("#Protocols").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ProtocolSelecc")',
+                data: { id: $("#Protocols").val() },
+                success: function (tags) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve partners.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+<script type="text/javascript">
+  $("#TitleText").keyup(function () {
+    $('#lblTitleShowcase').text($("#TitleText").val());
+  });
+</script>
+
+<script type="text/javascript">
+  $("#MessageText").keyup(function () {
+    $('#lblMessageShowcase').text($("#MessageText").val());
+  });
+</script>
+<script type="text/javascript">
+  $("#fileup").change(function () {
+    var file = $('#fileup')[0].files[0]
+    if (file) {
+      $("#filename").text(file.name);
+    }
+  });
+</script>
+@*<script src="~/Scripts/tinymce/tinymce.min.js"></script>*@
+<script>
+  //tinymce.init({ selector: '#MessageTextHtml' });
+  $(function () {
+    $("#MessageTextHtml").htmlarea();
+  });
+</script>
+<script type="text/javascript">
+  function validateMessageTestHtml() {
+    var isChannelMailChimp = ('@ViewBag.IsChannelMailChimp' == 'True');
+    var isChannelCampaignMonitor = ('@ViewBag.IsChannelCampaignMonitor' == 'True');
+    var isChannelAweber = ('@ViewBag.IsChannelAweber'.toLowerCase() == 'true');
+    var isChannelSendGrid = "@ViewBag.IsChannelSendGrid".toLowerCase() == "true";
+    var isChannelActiveCampaign = "@ViewBag.IsChannelActiveCampaign".toLowerCase() == "true";
+    var isChannelGetResponse = "@ViewBag.IsChannelGetResponse".toLowerCase() == "true";
+
+    var isChannelIContact = "@ViewBag.IsChannelIContact".toLowerCase() == "true";
+    var isChannelSendinBlue = "@ViewBag.IsChannelSendinBlue".toLowerCase() == "true";
+    var isChannelMailJet= "@ViewBag.IsChannelMailJet".toLowerCase() == "true";
+
+    if (isChannelMailChimp || isChannelCampaignMonitor || isChannelAweber || isChannelSendGrid ||
+      isChannelActiveCampaign || isChannelGetResponse || isChannelIContact || isChannelSendinBlue || isChannelMailJet) {
+      $("#lblMessageTextHtml").hide();
+      //tinyMCE.triggerSave();
+      //var textHtml = tinyMCE.get('MessageTextHtml').getContent();
+      var textHtml = $("#MessageTextHtml").val();
+      if (isEmpty(textHtml)) {
+        $("#lblMessageTextHtml").text("Message is required");
+        $("#lblMessageTextHtml").show();
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
+</script>

@@ -1,0 +1,138 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.VerifyAudienceViewModel
+@{
+    ViewBag.Title = "Verify Audience";
+    Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+    string siteName = Model.audience.WebSiteUrl;
+    siteName = siteName.ToLower().Replace("https://", "").Replace("http://", "").Replace("www", "");
+}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li>@Html.ActionLink("Audiences", "MyAudiences", "Audience", null, new { @class = "link" })</li>
+        <li class="active">Verify Site</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Verify your website</h1>
+      <p>
+        The last step is to verify you own this website.
+        You can verify your site at any time but your Audience will not be fully approved until this step has been completed.
+      </p>
+
+      <section class="form-data">
+        <div class="form-container">
+          <h2>How would you like to verify ownership of <span class="site">@siteName</span>?</h2>
+          @using (Html.BeginForm("VerifySiteTxtAndGTM", "PublisherProfileController", null, FormMethod.Post, new { @id = "formValidateAudience" }))
+          {
+            <div id="SiteNoVerify" class="tab-container">
+              <ul class="flexbox tab-group">
+                  <li class="flexbox-item">
+                    <button id="btnWordpress" class="btn btn-lg">Wordpress</button>
+                  </li>
+                  <li class="flexbox-item">
+                    <button id="btnGoogleTagManager" class="btn btn-lg">Google Tag Manager</button>
+                  </li>
+                  <li class="flexbox-item">
+                    <button id="btnInstallFile" class="btn btn-lg">Install .Txt File</button>
+                  </li>
+                </ul>
+
+              @Html.HiddenFor(model => model.TypeValidation, new { @id = "hiddenTypeValidation" })
+
+              <div id="pnlWordpress" style="display:none;">
+                Comming Soon...
+              </div>
+
+              <div id="pnlGoogleTagManager" style="display:none;">
+                @Html.Partial("~/Views/PublisherProfile/VerifyWebSite/_GoogleTagManager.cshtml", Model)
+              </div>
+
+              <div id="pnlInstallFile" style="display:none;">
+                @Html.Partial("~/Views/PublisherProfile/VerifyWebSite/_InstallTextFile.cshtml")
+              </div>
+            </div>
+          }
+          @Html.Partial("~/Views/PublisherProfile/VerifyWebSite/_MessageValidateAudience.cshtml")
+        </div>
+      </section>
+    </div>
+</div>
+</div>
+
+@section Scripts {
+  <script src="~/Modules/siteModule.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a[data-toggle="tooltip"]').tooltip({
+        animated: 'fade',
+        placement: 'top',
+        html: true
+      });
+
+      $("#btnWordpress").click(function (e) {
+        e.preventDefault();
+        $("#pnlWordpress").show();
+        $("#pnlGoogleTagManager").hide();
+        $("#pnlInstallFile").hide();
+        $(".tab-group .btn").removeClass('active');
+        $("#btnWordpress").addClass('active');
+      });
+
+      $("#btnGoogleTagManager").click(function (e) {
+        e.preventDefault();
+        $("#pnlWordpress").hide();
+        $("#pnlGoogleTagManager").show();
+        $("#pnlInstallFile").hide();
+        $(".tab-group .btn").removeClass('active');
+        $("#btnGoogleTagManager").addClass('active');
+        $("#hiddenTypeValidation").val("2");
+      });
+
+      $("#btnInstallFile").click(function (e) {
+        e.preventDefault();
+        $("#pnlWordpress").hide();
+        $("#pnlGoogleTagManager").hide();
+        $("#pnlInstallFile").show();
+        $(".tab-group .btn").removeClass('active');
+        $("#btnInstallFile").addClass('active');
+        $("#hiddenTypeValidation").val("3");
+      });
+
+      $("#formValidateAudience").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+          url: "VerifySiteTxtAndGTM",
+          type: "POST",
+          data: { typeValidation: $("#hiddenTypeValidation").val() },
+          success: function (response) {
+            if (response.success) {
+              $("#SiteVerify").show();
+              $("#SiteNoVerify").hide();
+              $("#SiteVerifySuccess").show();
+              $("#SiteVerifyFailure").hide();
+            } else {
+              $("#SiteVerify").show();
+              $("#SiteNoVerify").hide();
+              $("#SiteVerifyFailure").show();
+              $("#SiteVerifySuccess").hide();
+            }
+
+          },
+          error: function (xhr, error, status) {
+            $("#SiteVerify").show();
+            $("#SiteNoVerify").hide();
+            $("#SiteVerifyFailure").show();
+            $("#SiteVerifySuccess").hide();
+          }
+        });
+      });
+    });
+  </script>
+}

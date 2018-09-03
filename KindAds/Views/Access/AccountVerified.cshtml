@@ -1,0 +1,60 @@
+@model KindAds.Models.Access.LoginViewModel
+@{
+  ViewBag.Title = "AccountVerified";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+@section Head {
+  @Styles.Render("~/Content/kaUI_pages.css")
+}
+
+<div class="sign content-wrapper" ">
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-12">
+          <h1>
+            Account Verified
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="form-layout">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sign-wrapper extended">
+          <div class="content">
+            @using (Html.BeginForm("Login", "Access", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+              @Html.AntiForgeryToken()
+              @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+              <article class="form-data">
+                <form>
+                  <fieldset>
+                    <div class="form-container">
+                      <div class="row">
+                        <div class="col-12 form-group">
+                          <h3>Congratulations!</h3>
+                          <p>
+                            Your account has been validated
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 form-group simple">
+                          <input type="submit" class="btn btn-primary btn-lg" value="Sign in" />
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </article>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+@section Scripts {
+}

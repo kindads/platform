@@ -1,0 +1,42 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.VerifyAudienceViewModel
+<!--Descripcion de Txt-->
+<div class="row">
+  <div class="col-12" id="descripcionTxt">
+    <div class="panel">
+      <div class="body-content">
+        <p>
+          Download the kindads.txt file and install it at the root on your site.
+        </p>
+        <ul>
+          <li>
+            <span class="title">Step 1:</span>
+            Download the kindads.txt below<br />
+            @Html.ActionLink("Download file", "DownloadFileSite", "PublisherProfile", new { IdAudience = Model.audience.Id }, new { @class = "btn btn-secondary btn-lg" })
+          </li>
+          <li>
+            <span class="title">Step 2:</span>
+            Install the kindads.txt file at the root on yur site
+          </li>
+          <li>
+            <span class="title">Step 3:</span>
+            Click on the Verify Ownership button below.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <hr />
+    <div class="cta-bar">
+      <div class="pull-left">
+        @Html.ActionLink("Skip > I'll do this later", "MyAudiences", "Audience", null, new { @class = "btn btn-none btn-lg" })
+      </div>
+      <div class="pull-right">
+        <input id="VerifySite" value="Verify Ownership" type="submit" class="btn btn-secondary btn-lg" />
+      </div>
+    </div>
+  </div>
+</div>

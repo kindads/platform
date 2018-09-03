@@ -1,0 +1,80 @@
+@{
+  ViewBag.Title = "Create Wallet";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+@section Head {
+  @Styles.Render("~/Content/kaUI_pages.css")
+}
+
+<div class="faq content-wrapper">
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-sm-12">
+          <h1>
+            Create a wallet on MetaMask
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wallet">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <article>
+            <h2>
+              Part 1 - Installing MetaMask
+            </h2>
+            <ul>
+              <li>
+                Step 1: Goto <a href="metamask.io" target="_blank">MetaMask website</a> and get MetaMask plugin.
+              </li>
+              <li>
+                Step 2: Click "Add to Chrome" to Install MetaMask as Google Chrome extension.
+              </li>
+              <li>
+                Step 3: Click "Add Extension" to confirm and MetaMask will be added.
+              </li>
+            </ul>
+          </article>
+          <article>
+            <h2>
+              Part 2 - Creating a new wallet
+            </h2>
+            <ul>
+              <li>
+                Step 1: Click the MetaMask logo.
+              </li>
+              <li>
+                Step 2: Read and agree to the MetaMask terms and Conditions.
+              </li>
+              <li>
+                Step 3: Enter a strong password and click "CREATE".
+              </li>
+              <li>
+                <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Wallet/meta1.png">
+              </li>
+              <li>
+                Step 4: Metamask will now show you your seed. It is very important that you copy and store those 12 worlds, without them you cannot restore your wallet.
+              </li>
+              <li>
+                <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Wallet/meta2.png">
+              </li>
+              <li>
+                Step 5: Congratulations! Your wallet is now created!
+              </li>
+              <li>
+                <img class="img-responsive" data-no-retina="true" src="~/Img/Home/Wallet/meta3.png">
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+@section Scripts {
+}

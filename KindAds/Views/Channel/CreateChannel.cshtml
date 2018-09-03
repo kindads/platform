@@ -1,0 +1,289 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+@{
+  ViewBag.Title = "Create your channel";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+
+  string imageSource = ViewBag.ImageSrcPreview;
+  string descriptionPreview = ViewBag.descriptionPreview;
+  string siteName = ViewBag.site;
+  siteName = siteName.ToLower().Replace("https://", "").Replace("http://", "").Replace("www", "");
+}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li>@Html.ActionLink("Audiences", "MyAudiences", "Audience", null, new { @class = "link" })</li>
+        <li class="active">Add Channel</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h1>Add a Channel to <span class="site">@siteName</span></h1>
+      <p>Provide advertisers with more details about they can advertise to your <strong>@siteName</strong> audience.</p>
+
+      <section class="form-data">
+        <div class="form-group">
+          @Html.Label("What type of Channel is this?", htmlAttributes: new { @class = "control-label" })
+          <p>Which Channels with the audience be available to advertise through?</p>
+          <ul class="flexbox btn-group">
+            <li class="flexbox-item">
+              <a id="btnShowWebsite" class="btn btn-default btn-lg">Website Ad Space</a>
+            </li>
+            <li class="flexbox-item">
+              <a id="btnShowEmail" class="btn btn-default btn-lg">Email</a>
+            </li>
+            <li class="flexbox-item">
+              <a id="btnShowPush" class="btn btn-default btn-lg">Web Push Notification</a>
+            </li>
+          </ul>
+        </div>
+
+        @using (Html.BeginForm("CreateChannel", "Channel", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formCreateChannel" }))
+        {
+
+          <div class="form-container">
+            <fieldset>
+              <div id="channelSection">
+
+              </div>
+
+            </fieldset>
+          </div>
+          <hr />
+        }
+      </section>
+    </div>
+  </div>
+</div>
+
+@Html.Partial("~/Views/Shared/_Processing.cshtml")
+@Html.Partial("~/Views/Channel/_MessageChannel.cshtml")
+
+@Html.Partial("_PreviewImageModal")
+@Html.Partial("_PreviewTextModal")
+
+
+@section Scripts {
+  <script src="~/Scripts/Utils/image-upload.js"></script>
+  <script type="text/javascript">
+    var channel = "";
+
+    function ApiKeyValid()
+    {
+      if ($("#hiddenIsValidApiKey").val() === 'true') {
+        return true;
+      } else {
+        alert("Please validate Api Key");
+        return false;
+      }
+    }
+
+    function QuestionsValid() {
+      if ($("#hiddenValidationQuestion").val() != undefined && $("#hiddenValidationQuestion").val().toLowerCase() === 'true') {
+        return true;
+      } else {
+        alert("Please add a question");
+        return false;
+      }
+    }
+
+    function selectedProviderValid() {
+      var isValid = false;
+      console.log("Channel selected is: " + channel);
+      switch (channel) {
+        case "WebSpace": {
+          var webSpaceProvider = $("#WebSpaceProviderSelected").val();
+          if (webSpaceProvider != '') {
+            isValid = true;
+            $("#WebSpaceProviderSelected").removeClass("error");
+          } else {
+            $("#WebSpaceProviderSelected").addClass("error");
+          }
+        } break;
+        case "Email": {
+          var emailProvider = $("#EmailProviderSelected").val();
+          if (emailProvider != '') {
+            isValid = true;
+            $("#EmailProviderSelected").removeClass("error");
+            $("#channel_EmailProviderSelected_error").hide();
+          } else {
+            $("#EmailProviderSelected").addClass("error");
+            $("#channel_EmailProviderSelected_error").show();
+          }
+        } break;
+        case "Push": {
+          var pushProvider = $("#PushProviderSelected").val();
+          if (pushProvider != '') {
+            isValid = true;
+            $("#PushProviderSelected").removeClass("error");
+          }
+          else {
+            $("#PushProviderSelected").addClass("error");
+          }
+        } break;
+      }
+
+      return isValid;
+    }
+
+    function ShowPreviewImageModal() {
+      $("#PreviewImageModal_img").attr("src", '@imageSource');
+      $("#previewImagemodal_img_description").text("Preview Image");
+      $('#PreviewImageModal').modal('show');
+    }
+
+    function ShowPreviewTextModal() {
+      $("#previewTextModal_text").text("@descriptionPreview");
+      $('#PreviewTextcModal').modal('show');
+    }
+
+    function getAudienceId() {
+      let searchParams = new URLSearchParams(window.location.search);
+      let param = searchParams.get('audienceId');
+      return param;
+    }
+
+    $(document).ready(function () {
+      // Edit Channel
+      $('#editChannel').click(function (e) {
+        e.preventDefault();
+        $(".form-data .form-control").removeAttr("disabled");
+        $(".radio-check input").removeAttr("disabled");
+        $(".form-container").removeClass("read-only");
+      });
+
+      $("#formCreateChannel").validate();
+
+      $('#btnShowWebsite').click(function (e) {
+        channel = "WebSpace";
+
+        //$("#hiddenChannelId").val("88c34fff-a1ab-401e-8908-5a4929abf36a");
+        //$("#webSiteSection").show();
+        //$("#emailSection").hide();
+        //$("#pushSection").hide();
+
+        //cargar el script :
+
+        //$("#channelSection").fadeOut(2000);
+        $('#processingModal').modal('show');
+        var Id = "88c34fff-a1ab-401e-8908-5a4929abf36a";
+        $(".btn-group .btn-default").removeClass('active');
+        $(this).addClass('active');
+
+        // cargar el script: _EmailChannel
+         $.get('@Url.Action("GetChannelForm")',
+          { channelId: Id, audienceId: getAudienceId() }).done(function (data) {
+            $('#processingModal').modal('hide');
+            $("#channelSection").html(data);
+            //$("#channelSection").fadeIn(2000);
+          }).fail(function () {
+            $('#processingModal').modal('hide');
+            console.log("Error");
+          });
+      });
+
+      $('#btnShowEmail').click(function (e) {
+        channel = "Email";
+
+        //$("#hiddenChannelId").val("b4ee7512-5f12-40f1-8408-8f96bf43df6d");
+        //$("#webSiteSection").hide();
+        //$("#emailSection").show();
+        //$("#pushSection").hide();
+        //$("#channelSection").fadeOut(2000);
+        $('#processingModal').modal('show');
+        var Id = "b4ee7512-5f12-40f1-8408-8f96bf43df6d";
+        $(".btn-group .btn-default").removeClass('active');
+        $(this).addClass('active');
+
+        // cargar el script: _EmailChannel
+         $.get('@Url.Action("GetChannelForm")',
+          { channelId: Id, audienceId: getAudienceId() }).done(function (data) {
+            $('#processingModal').modal('hide');
+            $("#channelSection").html(data);
+            //$("#channelSection").fadeIn(2000);
+          }).fail(function () {
+            $('#processingModal').modal('hide');
+            console.log("Error");
+          });
+      });
+
+
+      $('#btnShowPush').click(function (e) {
+        channel = "Push";
+
+        //$("#hiddenChannelId").val("69349c7c-48b2-4628-9f3f-22846b1bc6de");
+        //$("#webSiteSection").hide();
+        //$("#emailSection").hide();
+        //$("#pushSection").show();
+
+        // cargar el script: _PushChannel
+        //$("#channelSection").fadeOut(2000);
+        $('#processingModal').modal('show');
+        var Id = "69349c7c-48b2-4628-9f3f-22846b1bc6de";
+        $(".btn-group .btn-default").removeClass('active');
+        $(this).addClass('active');
+
+        // cargar el script: _EmailChannel
+         $.get('@Url.Action("GetChannelForm")',
+          { channelId: Id, audienceId: getAudienceId() }).done(function (data) {
+            $('#processingModal').modal('hide');
+            $("#channelSection").html(data);
+            //$("#channelSection").fadeIn(2000);
+          }).fail(function () {
+            $('#processingModal').modal('hide');
+            console.log("Error");
+          });
+      });
+
+
+
+      $('#formCreateChannel').submit(function (e) {
+        var validImg = true;
+        if ($('#ImageDisplayCustom').is(':checked')) {
+          validImg = validateImgFile(480, 360, "#fileupImg", "#lblfileupImg");
+        }
+        if (selectedProviderValid() && validImg && ApiKeyValid() && QuestionsValid() && $("#formCreateChannel").valid()) {
+          var _data = new FormData(this);
+          e.preventDefault();
+          $('#processingModal').modal('show');
+          $.ajax({
+            url: "CreateChannel",
+            type: "Post",
+            data: _data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              if (response.success) {
+                $('#processingModal').modal('hide');
+                $('#MessageChannelLabel').append(response.message);
+                $('#MessageChannelModal').modal('show');
+              } else {
+                $('#processingModal').modal('hide');
+                $('#MessageChannelLabel').append(response.message);
+                $('#MessageChannelModal').modal('show');
+              }
+
+            },
+            error: function (xhr, error, status) {
+              $('#processingModal').modal('hide');
+              $('#MessageChannelLabel').append('Error');
+              $('#MessageChannelModal').modal('show');
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+
+      @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupImg", "")
+    });
+
+
+
+  </script>
+}

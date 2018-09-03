@@ -1,0 +1,86 @@
+/* Fonts
+================================================== */
+  // Gordita
+  /*@font-face {
+    font-family: 'gorditaregular';
+    src: url('#{$fonts-path}/Gordita/gorditaregular-webfont.eot');
+    src: url('#{$fonts-path}/Gordita/gorditaregular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('#{$fonts-path}/Gordita/gorditaregular-webfont.ttf') format('truetype'),
+         url('#{$fonts-path}/Gordita/gorditaregular-webfont.svg#gorditaregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'gorditamedium';
+    src: url('#{$fonts-path}/Gordita/gorditamedium-webfont.eot');
+    src: url('#{$fonts-path}/Gordita/gorditamedium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('#{$fonts-path}/Gordita/gorditamedium-webfont.ttf') format('truetype'),
+         url('#{$fonts-path}/Gordita/gorditamedium-webfont.svg#gorditamedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'gorditabold';
+    src: url('#{$fonts-path}/Gordita/gorditabold-webfont.eot');
+    src: url('#{$fonts-path}/Gordita/gorditabold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('#{$fonts-path}/Gordita/gorditabold-webfont.ttf') format('truetype'),
+         url('#{$fonts-path}/Gordita/gorditabold-webfont.svg#gorditabold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }*/
+
+  // OpenSans
+  @font-face {
+  	font-family: 'open_sansregular';
+      src: url('#{$fonts-path}/OpenSans/opensans-regular-webfont.eot');
+      src: url('#{$fonts-path}/OpenSans/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+           url('#{$fonts-path}/OpenSans/opensans-regular-webfont.ttf') format('truetype'),
+           url('#{$fonts-path}/OpenSans/opensans-regular-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+  	font-style: normal;
+    text-rendering: optimizeLegibility;
+  }
+
+  /*@font-face {
+    font-family: 'open_sansitalic';
+    src: url('#{$fonts-path}/OpenSans/opensans-italic-webfont.eot');
+    src: url('#{$fonts-path}/OpenSans/opensans-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('#{$fonts-path}/OpenSans/opensans-italic-webfont.ttf') format('truetype'),
+         url('#{$fonts-path}/OpenSans/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+  }*/
+
+  @font-face {
+    font-family: 'open_sanslight';
+    src: url('#{$fonts-path}/OpenSans/opensans-light-webfont.eot');
+    src: url('#{$fonts-path}/OpenSans/opensans-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('#{$fonts-path}/OpenSans/opensans-light-webfont.ttf') format('truetype'),
+         url('#{$fonts-path}/OpenSans/opensans-light-webfont.svg#open_sanslight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+  }
+
+  @font-face {
+    font-family: 'open_sanssemibold';
+    src: url('#{$fonts-path}/OpenSans/opensans-semibold-webfont.eot');
+    src: url('#{$fonts-path}/OpenSans/opensans-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('#{$fonts-path}/OpenSans/opensans-semibold-webfont.ttf') format('truetype'),
+         url('#{$fonts-path}/OpenSans/opensans-semibold-webfont.svg#open_sanssemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+  }
+
+  // Kind Ads Font kas
+  /*@font-face {
+    font-family: 'kindads';
+      src:  url('#{$fonts-path}/kindads.eot');
+      src:  url('#{$fonts-path}/kindads.eot?#iefix') format('embedded-opentype'),
+            url('#{$fonts-path}/kindads.ttf') format('truetype'),
+            url('#{$fonts-path}/kindads.svg#kindads') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }*/

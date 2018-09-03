@@ -1,0 +1,26 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+
+@Html.Hidden("hiddenValidationQuestion",Model.ValidationQuestion)
+@if (Model.listQuestions != null && Model.listQuestions.Count > 0)
+{
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model.listQuestions)
+      {
+        <tr>
+          <td>@item.Question</td>
+          <td>@Ajax.ActionLink("Delete", "RemoveQuestion", new { question = @item.Id }, new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "QuestionsAdd", OnBegin = "showProcessingModal();", OnComplete = "hideProcessingModal();" })</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+
+
+

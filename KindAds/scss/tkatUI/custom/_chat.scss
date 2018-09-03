@@ -1,0 +1,173 @@
+/* CHAT
+================================================== */
+/* General
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.chat-box {
+  margin: 0;
+  .col-3.aside-section {
+    width: 56px;
+    overflow: hidden;
+    float: left;
+  }
+  .col-9.content-section {
+    width: calc(100% - 56px);
+    margin-left: 0;
+    border-left: solid 1px $grey;
+    float: left;
+  }
+  .heading {
+    padding: 4px;
+    height: 60px;
+    border-bottom: solid 1px $grey;
+    .btn {
+      margin-top: 8px;
+    }
+    span {
+      display: block;
+      font-size: 115%;
+    }
+  }
+  .search {
+    display: none;
+  }
+  ul {
+    list-style: none;
+  }
+  .users {
+    border-top: solid 1px $grey;
+    a {
+      height: 56px;
+      display: block;
+      border-bottom: solid 1px $grey;
+      border-right: solid 2px transparent;
+      .img {
+        float: left;
+        img {
+          margin: 4px 2px 4px 4px;
+          height: 40px;
+          width: 40px;
+          display: block;
+          outline: none;
+          clip-path: circle(20px at center);
+          float: left;
+          border: solid 1px $dark-grey;
+          border-radius: 50%;
+        }
+      }
+    }
+    a > div.info {
+      display: none;
+    }
+  }
+  .chats {
+    padding: 6px;
+    .chat-day .date {
+      text-align: center;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      display: block;
+      border-bottom: solid 1px $grey;
+    }
+    .chat {
+      margin-bottom: 28px;
+      position: relative;
+      a {
+        color: $main-blue;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      .user {
+        margin-bottom: 8px;
+        display: inline-block;
+        font-family: $openSansSemibold;
+        font-size: 90%;
+      }
+      .txt {
+        display: block;
+        width: calc(100% - 60px);
+        font-size: 90%;
+      }
+      .time {
+        width: 60px;
+        font-size: 80%;
+        text-align: right;
+        position: absolute;
+        top: calc(100% - 20px);
+        right: 0;
+        letter-spacing: -0.07rem;
+      }
+    }
+  }
+
+  @include breakpoint($tablet) {
+    .col-3.aside-section {
+      width: 300px;
+    }
+    .col-9.content-section {
+      width: calc(100% - 300px);
+    }
+    .heading {
+      padding: 6px 12px;
+    }
+    .search {
+      display: block;
+      padding: 16px;
+      border-top: solid 1px $grey;
+      input {
+        width: 100%;
+      }
+    }
+    .users {
+      a {
+        height: 88px;
+        border-right-color: $main-blue;
+        .img {
+          img {
+            clip-path: circle(28px at center);
+            height: 56px;
+            width: 56px;
+            margin: 8px 4px 8px 8px;
+          }
+        }
+      }
+      a > div.info {
+        display: block;
+        float: left;
+        width: calc(100% - 74px);
+        position: relative;
+        padding: 8px;
+        height: 100%;
+        overflow: hidden;
+        span {
+          display: block;
+          color: $dark-grey;
+          &:first-child {
+            margin-top: 0;
+          }
+          &.last-msg, &.date {
+            font-size: 85%;
+            margin-top: 12px;
+          }
+          &.last-msg {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          &.date {
+            float: right;
+            padding: 4px;
+            top: 6px;
+            right: 0;
+            margin: 0;
+            position: absolute;
+            background: $white;
+          }
+        }
+      }
+    }
+    .chats {
+      padding: 8px 16px;
+    }
+  }
+}

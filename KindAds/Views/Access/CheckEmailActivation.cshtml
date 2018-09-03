@@ -1,0 +1,61 @@
+@{
+  ViewBag.Title = "Check Email For Account Activation";
+  Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+@section Head {
+  @Styles.Render("~/Content/kaUI_pages.css")
+}
+
+<div class="sign content-wrapper" ">
+  <section class="hero bg-pattern">
+    <div class="container-fluid">
+      <div class="row info">
+        <div class="col-12">
+          <h1>
+            Account Created
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="form-layout">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sign-wrapper extended">
+          <div class="content">
+            @using (Html.BeginForm("Login", "Access", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+              @Html.AntiForgeryToken()
+              <article class="form-data">
+                <form>
+                  <fieldset>
+                    <div class="form-container">
+                      <div class="row">
+                        <div class="col-12 form-group">
+                          <h3>
+                            Your account has been created.
+                          </h3>
+                          <p>
+                            Please check your email to activate your account.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row" style="display: none;">
+                        <div class="col-12 form-group">
+                          <input type="submit" class="btn btn-primary btn-lg" value="Sign In" />
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </article>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+@section Scripts {
+}

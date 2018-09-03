@@ -1,0 +1,302 @@
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html lang="@KindAds.Helpers.CultureHelper.GetCurrentNeutralCulture()" dir="@(KindAds.Helpers.CultureHelper.IsRighToLeft() ? "rtl" : "ltr")">
+<head>
+  <!--PublisherLayout-->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>@ViewBag.Title | Kind Ads</title>
+  <link rel="shortcut icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" href="../Img/favicon/apple-icon-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../Img/favicon/apple-icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="../Img/favicon/android-icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../Img/favicon/favicon-16x16.png">
+  <meta name="application-name" content="&amp;amp;nbsp;">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="../Img/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#29B5D4">
+  <meta name="msapplication-navbutton-color" content="#29B5D4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  @Styles.Render("~/Content/vendor/bootstrap.min.css")
+  @*@Styles.Render("~/Content/vendor/bootstrap-select.min.css")*@
+  @Styles.Render("~/Content/tkatUI.css")
+  @*Styles.Render("~/Content/Gridmvc.css")"*@
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="~/Content/Notification.min.css" rel="stylesheet" />
+
+  <!--SignalR-->
+  <script type="text/javascript">
+    var IdUserIdentity = '@Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity)';
+    var currentMessage = 0;
+    function closePushNotification() {
+      $("#notification-tile").hide("fast");
+      currentMessage = 0;
+    }
+  </script>
+
+  <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+  <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
+  <script src="~/signalr/hubs"></script>
+  <script src="~/Scripts/signalr/signalRProducts.js"></script>
+
+</head>
+
+<body>
+  @{ KindAds.Services.PublisherService _service = new KindAds.Services.PublisherService();
+    var showCreateSite = _service.ShowCreateSite(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity));
+    var redirectLogo = showCreateSite ? "/Publisher/Index" : "/Site/ShowSites";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+  }
+  <audio id="soundNotification" controls="controls" style="visibility:collapse; display:none">
+    <source src="~/Content/Sound/whatsapp-apple.mp3" type="audio/mpeg" />
+  </audio>
+  <div class="wrapper" role="main" id="top">
+    <header class="navbar navbar-custom fixed-header2" role="banner">
+      @using (Html.BeginForm("LogOff", "Access", FormMethod.Post, new { id = "logoutForm" }))
+      {
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="navbar-header">
+                <button class="navbar-toggle collapsed text-uppercase" role="button" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                  <span class="sr-only">Menu</span>
+                  <div class="pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar last"></span></div>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("ShowSites", "Site", new {Culture = KindAds.Helpers.CultureHelper.GetCurrentNeutralCulture() })" title="Kind Ads"><img class="img-responsive" src="~/Img/UI/logo.png"></a>
+              </div>
+              <nav class="collapse navbar-collapse" role="navigation" aria-expanded="false" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-left">
+                  <li>
+                    @Html.ActionLink("Workspace", "ShowProducts", "Product", new { IdUser = "" }, new { @id = "linkWorkspace", @role = "button" })
+                  </li>
+                  @*<li>
+                    @Html.ActionLink("Money ads", "Settings", "MoneyAds", new { IdUser = "" }, new { @id = "linkMoneyAds", @role = "button" })
+                  </li>*@
+                </ul>
+              </nav>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="name">@User.Identity.GetUserName()</span>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    @Html.AntiForgeryToken()
+                    <li>@Html.ActionLink("Profile", "ManageProfile", "Publisher")</li>
+                    <li><a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Sign out !!</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      }
+    </header>
+    <div class="main-content admin">
+      <div class="flexbox my-content">
+        <section class="tab-nav">
+          <div>
+            <a class="navbar-brand" href="@Url.Action("ShowSites", "Site", new {Culture = KindAds.Helpers.CultureHelper.GetCurrentNeutralCulture() })" title="Kind Ads"><img class="img-responsive" src="~/Img/UI/logo.png"></a>
+          </div>
+          <ul class="flexbox">
+            <li>
+              @Html.ActionLink("My sites", "ShowSites", "Site", null, new { @class = "link-dashboard" })
+            </li>
+            <li class="bal-right">
+              @Html.ActionLink("Products", "ShowProducts", "Product", null, new { @class = "link-site" })
+            </li>
+            <li class="bal-left">
+              @Html.ActionLink("Campaigns", "SortCampaigns", "Campaign", null, new { @class = "link-campaign" })
+            </li>
+            <li class="bal-left">
+              @Html.ActionLink("Ads", "Settings", "MoneyAds", null, new { @class = "link-campaign" })
+            </li>
+            <li>
+              @Html.ActionLink("Profile", "ManageProfile", "Publisher", null, new { @class = "link-profile" })
+            </li>
+          </ul>
+          @*<div class="link-balance partialContents" data-url="/@culture/Publisher/GetBalancePublisherAsync">
+              <div class="col-md-12">
+                <img src="~/Img/Loader/loading.white.gif" /> Loading Balance...
+              </div>
+            </div>*@
+          <div class="link-balance">
+            <div class="">
+              <h3>
+                <span>
+                  BALANCE
+                </span>
+              </h3>
+              <div class="base">
+                <span>
+                  <strong>
+                    <label id="lblBalance" />
+                  </strong>
+                  KIND
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="form">
+          @RenderBody()
+          <footer class="site-footer publisher">
+            <div class="holder">
+              Copyright 2018 - Kind Ads
+            </div>
+          </footer>
+        </section>
+        <!--Div de notificacion-->
+        <div id="notification-tile" class="notification-tile" style="display:none;">
+          <a href="#">
+            <div class="row">
+              <div class="col-md-11">
+                <span id="notification-title" class="notification-title">
+                  Campaign notification 5/30/2018 6:23:32 PM
+                </span>
+              </div>
+              <div class="col-md-1" onclick="closePushNotification()">
+                <span class="color-black">x</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div id="notification-message" class="notification-message">
+                  Congratulations your campaign MailJet Demo has been approved
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!--End Div notificacion-->
+      </div>
+    </div>
+  </div>
+
+  @Html.Partial("~/Views/Ethereum/_WalletMigrate.cshtml")
+  @RenderSection("scripts", required: false)
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+  <script src="~/Modules/migrateMetamaskModule.js"></script>
+  <script>
+    $(function () {
+      var $document = $(document);
+      var selector = '[data-rangeslider]';
+      var $element = $(selector);
+
+      // For ie8 support
+      var textContent = ('textContent' in document) ? 'textContent' : 'innerText';
+
+      function valueOutput(element) {
+        var value = element.value;
+        var output = element.parentNode.getElementsByTagName('output')[0] || element.parentNode.parentNode.getElementsByTagName('output')[0];
+        output[textContent] = value;
+      }
+      $document.on('input', 'input[type="range"], ' + selector, function (e) {
+        valueOutput(e.target);
+      });
+
+
+      // Basic rangeslider initialization
+      $element.rangeslider({
+        // Deactivate the feature detection
+        polyfill: true,
+
+        // Callback function
+        onInit: function () {
+          valueOutput(this.$element[0]);
+        },
+      });
+
+    });
+  </script>
+  <script>
+    var site = site || {};
+    site.baseUrl = site.baseUrl || "";
+    $(document).ready(function (e) {
+      $(".partialContents").each(function (index, item) {
+        var url = site.baseUrl + $(item).data("url");
+        if (url && url.length > 0) {
+          $(item).load(url);
+        }
+      });
+
+    });
+  </script>
+  <script>site.baseUrl = "@Url.Content("~/").TrimEnd('/')";</script>
+  <!-- GTA -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114897255-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-114897255-1');
+  </script>
+  <!-- GA -->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-114655123-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script>
+    $(document).ready(function (e) {
+      $("#linkWorkspace").click(function (event) {
+        $("#linkMoneyAds").removeClass("active");
+        $("#linkWorkspace").addClass("active");
+      });
+
+      $("#linkMoneyAds").click(function (event) {
+        $("#linkWorkspace").removeClass("active");
+        $("#linkMoneyAds").addClass("active");
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      migrateMetamask.init();
+      migrateMetamask.GetBalance();
+
+    });
+  </script>
+
+  <!-- (MONEY ADS LOCAL) Script Example -->
+  @*<script src="https://kindadsscripts.blob.core.windows.net/moneyads-dev/adsMonetization.js"></script>
+    <script type="text/javascript">
+
+      var configuration =
+        {
+          ApiUrl: 'http://localhost:52710/api/',
+          RequestUrl: 'http://localhost:52710/api/Configuration?IdUser=',
+          deviceMetric: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/deviceMetrics.js',
+          geoLocationMetric: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/geoLocationMetrics.js',
+          timeMetric: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/timeMetrics.js',
+          injectedAds: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/injectedAds.js',
+          mobileDetect: 'https://kindadsscripts.blob.core.windows.net/moneyads-dev/mobile-detect.js',
+          IdUser: '44f1e76b-24ae-4889-937b-5e1c45575ae8',
+          IdSite: 'B6DE5AB4-7DBF-427E-8F4D-38B9219B7C4C' // https://design.fundary.com
+        };
+
+      //Load configuration
+      moneyAdsMetrics.loadConfiguration(configuration);
+
+      console.log(moneyAdsMetrics);
+
+    </script>*@
+  <!--end (MONEY ADS)-->
+</body>
+</html>
+
+@*@section scripts{
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/signalr/signalRProducts.js"></script>
+  }*@

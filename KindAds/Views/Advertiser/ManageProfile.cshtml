@@ -1,0 +1,143 @@
+@model KindAds.Models.Publisher.TransactionsViewModel
+@{
+    ViewBag.Title = "Profile";
+    //Layout = "~/Views/Shared/_AdvertiserLayout.cshtml";
+    Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+  <div class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-12 main-bar">
+        <h1 class="title">My profile</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 profile">
+        <div class="white-block clearfix">
+          <div class="heading">
+            <h3>Personal data</h3>
+          </div>
+          <div class="body-content">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    Info
+                  </div>
+
+                  <div class="panel-body">
+                    <div class="col-sm-6">
+                      <span>Mail</span><br />
+                      <strong>@User.Identity.Name</strong>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <span>Balance</span><br />
+                      <strong>
+                        @{ KindAds.Services.PublisherService _service = new KindAds.Services.PublisherService();
+                  var saldo = _service.GetPublisherBalance(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity)).ToString();
+                  @saldo;
+                        }
+                      </strong>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-sm-8 legend">
+                <p>Funding your <span>kind ads</span> account</p>
+                <p>
+                  Your wallet address is: <code>
+                    @{ KindAds.Services.AccessService _servAccess = new KindAds.Services.AccessService();
+              var wallet = _servAccess.GetUserWalletAddress(Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity)).ToString();
+              @wallet
+                    }
+                  </code>
+                </p>
+                <p>By depositing tokens to this address, you agree to our deposit policies. Depositing tokens to this address other than KIND may result in your funds being lost.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="heading">
+            <h3>Transactions</h3>
+          </div>
+          <div class="body-content">
+            <div class="row">
+              <div class="col-sm-12">
+
+                <div class="transactions">
+
+                  @{int i = 0;
+            foreach (var item in Model.ListTransactions)
+            {
+              i = i + 1;
+              <div class="block clearfix">
+                <ul class="col-sm-3 text-right">
+                  <li>
+                    <label>Hash</label>
+                  </li>
+                  <li>
+                    <label>From</label>
+                  </li>
+                  <li>
+                    <label>To</label>
+                  </li>
+                  <li>
+                    <label>Value</label>
+                  </li>
+                  <li>
+                    <label>Date</label>
+                  </li>
+                </ul>
+                <ul class="col-sm-9">
+
+                  <div id=@("Transaction" + i.ToString() )> </div>
+
+                  <li>
+                    @Html.Raw("<a target='_blank' href='" + KindAds.Utils.Configuration.AppSettings.EtherScanUrl + item.hashtransaction + "'>" + item.hashtransaction + "</a>")
+                  </li>
+                  <li>
+                    @item.hashfrom
+                  </li>
+                  <li>
+                    @item.hashto
+                  </li>
+                  <li>
+                    @item.value.ToString("##0.00000000")
+                  </li>
+                  <li>
+                    @item.date
+                  </li>
+                  <li>
+                    @Html.Raw(item.inout)
+                  </li>
+                </ul>
+              </div>
+    }
+                  }
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+
+
+
+          <div class="row">
+            <div class="col-sm-12">
+              <h2></h2>
+            </div>
+          </div>
+
+
+          @Scripts.Render("~/bundles/customjs")

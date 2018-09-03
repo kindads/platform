@@ -1,0 +1,151 @@
+@model PublisherProposalDetailViewModel
+@{
+  ViewBag.Title = "Review Proposal";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li>@Html.ActionLink("Audiences", "MyAudiences", "Audience", null, new { @class = "link" })</li>
+        <li>Proposal</li>
+        <li class="active">Contract</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-9 content-section">
+      <h1>Review Proposal</h1>
+      <section class="panel">
+        <div class="body-content">
+          <article class="card-horizontal clearfix">
+            <div class="card-img">
+              <img src="@Model.AdvertiserImage" alt="" />
+            </div>
+            <div class="card-details">
+              <ul>
+                <li>@Model.AdvertiserName</li>
+                <li>@Model.AdvertiserLocation</li>
+                <li class="site">@Model.WebSite</li>
+                <li>@Model.MemberSinceYear</li>
+              </ul>
+            </div>
+          </article>
+          <hr />
+          <article>
+            <h2>Terms</h2>
+            <gr>Der</gr>
+          </article>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <div class="col-3 aside-section">
+      <div class="panel panel-detail">
+        <div class="body-content">
+          <ul>
+            <li>
+              @Html.ActionLink("Messages", "Proposal", "Marketplace", null, new { @class = "btn disabled" })
+            </li>
+            <li>
+              @Html.ActionLink("Add to favorites", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+          </ul>
+          <hr />
+          <ul>
+            <li>
+              @Html.ActionLink("Vew Profile Publisher", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+            <li>
+              @Html.ActionLink("Vew Audience", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+            <li>
+              @Html.ActionLink("Vew Audience Channels", "CreateAudience", "Audience", null, new { @class = "btn disabled" })
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div>
+  
+
+  <p> </p>
+  <p></p>
+  <p> </p>
+  <h3>Proposed Terms</h3>
+  <p>@Model.StartDate </p>
+  <p>@Model.EndDate </p>
+
+  @using (Html.BeginForm("ReviewProposal", "Channel", FormMethod.Post, new { @id = "formReviewProposal" }))
+  {
+    @Html.HiddenFor(m => m.ProposalId)
+    @Html.HiddenFor(m => m.Accepted, new { @id = "Accepted" })
+    @Html.HiddenFor(m => m.RejectDetail, new { @id = "RejectDetail" })
+    if (Model.Accepted == null)
+    {
+      <p>@Html.TextBoxFor(m => m.Price, new { @Id = "price", @required = "required" })</p>
+    }
+    else
+    {
+      @Model.Price
+    }
+  }
+
+  @foreach (KindAds.Comun.Models.CosmosDocuments.KindAdsV2.ProposalAnswerDocument QandA in Model.QuestionsAndAnswers)
+  {
+    <p>@QandA.Question</p>
+    <p>@QandA.Answer</p>
+  }
+</div>
+
+
+<div>
+  @if (Model.Accepted == null)
+  {
+    <a id="btnAcceptProposal" onclick="SendForm(true);">Accept Proposal</a>
+    <a id="btnRejectProposal" onclick="OpenModalReject();">Reject Proposal</a>
+  }
+
+  <a id="btnMessages">Messages</a>
+  <a id="btnViewAudience">View Audience</a>
+  <a id="btnViewChannel">View Channel</a>
+</div>
+
+
+
+@Html.Partial("~/Views/Shared/_Processing.cshtml")
+@Html.Partial("~/Views/Channel/_RejectProposalModal.cshtml")
+
+@section scripts
+{
+  <script>
+
+    function OpenModalReject() {
+      $("#rejectUserName").text("@Model.AdvertiserName");
+      $("#RejectModal").modal('show');
+    }
+
+    function SendForm(paccepted) {
+      $("#Accepted").val(paccepted);
+      if (paccepted == false) {
+        $("#RejectDetail").val($("#rejectMessage").val());
+        
+      }
+      if ($("#formReviewProposal").valid()) {
+        $('#formReviewProposal').submit();
+      }
+    }
+  </script>
+}

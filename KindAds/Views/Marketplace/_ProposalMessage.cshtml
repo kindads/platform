@@ -1,0 +1,44 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.ProposalViewModel
+
+@{
+  var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+
+<div class="modal fade" id="ProposalMessage" role="dialog" aria-labelledby="ProposalMessage" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <label id="ProposalMessageTitle">Message Proposal</label>
+          @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>*@
+        </h2>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-12">
+                <label id="ProposalMessageContent"></label>
+              </div>
+              <div class="col-12">
+                <div>
+                  <p>
+                    Congratulations you have send a proposal.
+                    You can establish  conversation with publisher about this product.
+                  </p>
+                  <div class="btn-stack">
+                    @*@Html.ActionLink("Go to review proposal", "CreateConversationFromProposal", "Conversation", null, new { @id = "btnLinkChat" })*@
+
+                    @Html.ActionLink("Go to conversation","CreateConversationFromProposal","Conversation",null,new { @id = "btnLinkChat", @class = "btn btn-secondary btn-lg" })
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

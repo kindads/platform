@@ -1,0 +1,40 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceChannelViewModel
+@{
+    string imageSource = ViewBag.ImageSrcPreview;
+    string descriptionPreview = ViewBag.descriptionPreview;
+    }
+@using KindAds.Comun.Models.CosmosDocuments.KindAdsV2
+
+@using (Html.BeginForm("Channel", "Channel", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formEditChannel" }))
+{
+<div class="form-container">
+  <fieldset>
+    <div class="white-block block-default form-container read-only">
+      <!--Seccion para cargar el formulario -->
+      <article id="emailPartialPlaceHolder">
+        @{ Html.RenderAction("GetProviderDetail", new
+          {
+            emailChannelProvider = Model.channel.ProductProviderId,
+            emailproductId = Model.channel.ProductId
+          });
+            }
+      </article>
+      <hr />
+      @Html.Partial("Edit/_GeneralEditChannel", Model)
+    </div>
+  </fieldset>
+</div>
+  }
+
+  <script type="text/javascript">
+
+  //Jquery
+  $(document).ready(function () {
+    $("#channelName").text("@Model.channel.Name");
+    $("#channelDescription").text("@Model.channel.Description");
+    $("#listSize").text("@Model.channel.Detail");
+    $("#lastUpdated").text("@(Model.channel.LastProviderDataUpdated!=null? (Model.channel.LastProviderDataUpdated.Year!=1? Model.channel.LastProviderDataUpdated.ToShortDateString():""):"")");
+  });
+
+
+  </script>

@@ -1,0 +1,289 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceViewModel
+<h1>Advertiser Preferences</h1>
+<p>In order for us to match you with the best adertisers please provide some additional information about this audience and the business behind it.</p>
+
+<section class="form-data">
+  <div cclass="form-container">
+    @using (Html.BeginForm("CreateAudiencePreference", "Audience", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formCreateAudiencePreference" }))
+    {
+      @Html.HiddenFor(m => m.audience.Id)
+      @Html.Hidden("preferencesStringify", Model.preferencesStringify)
+      @Html.HiddenFor(m => m.audience.HowManyAdvertisers)
+      @*@Html.HiddenFor(m => m.audience.Visibility)*@
+      <article class="clearfix">
+
+      
+        <div class="form-group">
+          @Html.Label("How many advertisers are you looking to work with?", htmlAttributes: new { @class = "control-label" })
+          <div class="radio-group" role="AdvertisersCoworkers" aria-label="Likes">
+            <div class="radio radio-check">
+              <label for="AdvertiserOption1">
+                I want to work with multiple advertisers
+                <input data-val="true" id="AdvertiserOption1" name="AdvertisersCoworkers" type="radio" checked="checked" onclick="changeMany('many');" required="required" data-msg-required="How many advertisers are you looking to work with is required">
+                <div class="control_indicator"></div>
+              </label>
+            </div>
+
+            <div class="radio radio-check">
+              <label for="AdvertiserOption2">
+                I want to work with only 1 advertiser
+                <input data-val="true" id="AdvertiserOption2" name="AdvertisersCoworkers" type="radio" onclick="changeMany('one');">
+                <div class="control_indicator"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          @Html.Label("What do you want to see this audience?", htmlAttributes: new { @class = "control-label" })
+          <div class="radio-group" role="AudienceVisivility" aria-label="Likes">
+            <div class="radio radio-check">
+              <label for="AudienceOption1">
+                Public
+                <small>All advertisers will be able to view this projec in the marketplace</small>
+                @*<input data-val="true" id="AudienceOption1" name="AudienceVisivility" type="radio" onclick="changeVisibility('public');" required="required" data-msg-required="What do you want to see this audience is required">*@
+                @Html.RadioButtonFor(model => model.audience.Visibility, true, new { @id = "AudienceOption1", @name = "AudienceVisivility", @required = "required" , data_msg_required = "What do you want to see this audience is required" })
+                <div class="control_indicator"></div>
+              </label>
+            </div>
+
+            <div class="radio radio-check">
+              <label for="AudienceOption2">
+                Private
+                <small>Only advertiser you invite will be able to view this audience</small>
+                @*<input data-val="true" id="AudienceOption2" name="AudienceVisivility" type="radio" onclick="changeVisibility('private');">*@
+                @Html.RadioButtonFor(model => model.audience.Visibility, false, new { @id = "AudienceOption2", @name = "AudienceVisivility", @required = "required", data_msg_required = "What do you want to see this audience is required" })
+                <div class="control_indicator"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <label id="lblPreferencesRequired" style="display:none; color:darkred;">Preferences is required</label>
+        <div class="form-group">
+          @Html.Label("What type of businessses would you prefer to advertise with?", htmlAttributes: new { @class = "control-label" })
+          <p>
+            Choose as many as you'd like.
+          </p>
+          <div class="flexbox radio-group" role="BusinessLikes" aria-label="Likes">
+
+            @foreach (var industrie in Model.GetIndustries("none"))
+            {
+              <div class="flexbox-item radio radio-check">
+                <label for="@industrie.Id">
+                  @industrie.Name
+                  <input data-val="true" id="@industrie.Id" name="BusinessLikes" type="checkbox" onclick="selectIndustryPreference('@industrie.Id');">
+                  <div class="control_indicator"></div>
+                </label>
+              </div>
+            }
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          @Html.Label("What type of businessses would you prefer NOT to advertise with?", htmlAttributes: new { @class = "control-label" })
+          <p>
+            Choose as many as you'd like.
+          </p>
+          <div class="flexbox radio-group" role="BusinessDislikes" aria-label="Disikes">
+            @foreach (var industrie in Model.GetIndustries("none"))
+            {
+              <div class="flexbox-item radio radio-check" id="flex-item-@industrie.Id">
+                <label for="d+@industrie.Id">
+                  @industrie.Name
+                  <input data-val="true" id="d+@industrie.Id" name="BusinessDislikes" type="checkbox" onclick="selectIndustryDislikePreference('@industrie.Id');">
+                  <div class="control_indicator"></div>
+                </label>
+              </div>
+            }
+          </div>
+
+        </div>
+
+        <hr />
+      </article>
+
+      <div class="cta-bar clearfix">
+        <div class="form-group pull-left">
+          @Html.ActionLink("Go back", "GoBack", "Audience", Model, new { @id = "GoBasicsBtn", @class = "btn btn-default btn-lg" })
+        </div>
+
+        <div class="form-group pull-right">
+          <input type="submit" id="SavePreferencesBtn" value="Next: Image" class="btn btn-secondary btn-lg" />
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<script type="text/javascript">
+  var dict = []; // create an empty array
+  var preferences = [];
+  var howManyAdvertisers = "";
+  var visibility = "";
+
+  $(document).ready(function () {
+    changeMany('many');
+    $("#formCreateAudiencePreference").validate();
+
+  });
+
+  // binding form
+  $("#SavePreferencesBtn").click(function (event) {
+    console.log("SavePreferencesBtn submit");
+    if (validatePreferences(preferences) && $("#formCreateAudiencePreference").valid()) {
+
+      // set preferences values to model
+      console.log(preferences);
+      var stringifyPreferences = JSON.stringify(preferences);
+      document.getElementById("preferencesStringify").value = stringifyPreferences;
+
+      // set how many advertisers values to model
+      document.getElementById("audience_HowManyAdvertisers").value = howManyAdvertisers;
+
+
+    }
+    else {
+      console.log("SaveBasicsBtn false");
+      return false;
+    }
+  });
+
+  function validatePreferences(preferences) {
+    if (preferences.length > 0) {
+      $("#lblPreferencesRequired").hide();
+      return true;
+    } else {
+      $("#lblPreferencesRequired").show();
+      return false;
+    }
+  }
+
+  function validateFile(idComponent, idComponentLabel) {
+    if ($(idComponent).val().length > 0) {
+      var ext = $(idComponent).val().split('.').pop().toLowerCase();
+      if ($.inArray(ext, ['png', 'jpg', 'jpeg']) == -1) {
+        $(idComponentLabel).show().text('Invalid extension');
+        alert("Invalid image extension");
+        return false;
+      }
+      else {
+        return true;
+      }
+    } else {
+      $(idComponentLabel).show().text('Image required');
+      alert("Image required");
+      return false;
+    }
+  };
+
+
+  function changeMany(value) {
+    console.log("Many:" + value);
+    howManyAdvertisers = value;
+  };
+
+  function changeVisibility(value) {
+    console.log("Visibility:" + value);
+    visibility = value;
+  };
+
+  function makeVisibility(industryId) {
+    var industryItem = 'flex-item-' + industryId;
+    var existInDictionary = false;
+    var indexInDictionary = -1;
+
+    // check if exist any element in dictionary
+    if (dict.length > 0) {
+
+      // check if exist in dictionary
+      for (var i = 0; i <= (dict.length - 1); i++) {
+        if (dict[i].id == industryItem) {
+          existInDictionary = true;
+          indexInDictionary = i;
+        }
+      }
+
+      if (existInDictionary) {
+        // show again
+        $("#" + industryItem).show();
+
+        // pop element
+        dict.splice(indexInDictionary, 1);
+      }
+      else {
+        // push element
+        dict.push({
+          id: industryItem,
+          visibility: "none"
+        });
+
+        // hide element
+        $("#" + industryItem).hide();
+      }
+    }
+    else {
+
+      // push element
+      dict.push({
+        id: industryItem,
+        visibility: "none"
+      });
+
+      // hide element
+      $("#" + industryItem).hide();
+    }
+  };
+
+  function makePreferences(industryId, like) {
+    var industryItem = 'flex-item-' + industryId;
+    var existInDictionary = false;
+    var indexInDictionary = -1;
+
+    // check if exist any element in dictionary
+    if (preferences.length > 0) {
+
+      // check if exist in dictionary
+      for (var i = 0; i <= (preferences.length - 1); i++) {
+        if (preferences[i].IndustryId == industryItem) {
+          existInDictionary = true;
+          indexInDictionary = i;
+        }
+      }
+
+      if (existInDictionary) {
+        // pop element
+        preferences.splice(indexInDictionary, 1);
+      }
+      else {
+
+        // push element
+        preferences.push({
+          IndustryId: industryItem,
+          Like: like,
+          AudienceId: "undefined"
+        });
+      }
+    }
+    else {
+
+      // push element
+      preferences.push({
+        IndustryId: industryItem,
+        Like: like,
+        AudienceId: "undefined"
+      });
+    }
+  };
+
+  function selectIndustryPreference(industryId) {
+    makeVisibility(industryId);
+    makePreferences(industryId, true);
+  };
+
+  function selectIndustryDislikePreference(industryId) {
+    makePreferences(industryId, false);
+  };
+
+</script>

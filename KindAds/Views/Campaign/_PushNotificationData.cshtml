@@ -1,0 +1,48 @@
+@model KindAds.Models.Advertiser.CreateCampaingModel
+@{
+  var displayFileUp = ViewBag.IsChannelMailChimp ? ViewBag.IsChannelMailChimp : ViewBag.IsChannelSuscribers ? ViewBag.IsChannelSuscribers : ViewBag.IsChannelPushCrew ? ViewBag.IsChannelPushCrew : false;
+  var displayModifyCampaign = ViewBag.IsModifyCampaign ? "display:inline" : "display:none";
+  var srcImage = Model.Image != null ? Model.Image : "";
+}
+
+<div class="form-group">
+  @Html.LabelFor(model => model.Url)
+  <div class="form-inline">
+    <div class="input-group">
+      <div class="input-group-btn">
+        <div class="form-group" style="margin-left:0; margin-right: 0;">
+          @Html.DropDownList("Protocols", ViewData["protocols"] as List<SelectListItem>, new { @class = "form-control", @required = "true", @data_msg_required = "Url protocol is required" })
+          @Html.ValidationMessage("Protocols")
+        </div>
+      </div>
+      @Html.TextBoxFor(model => model.UrlText, new { @placeholder = "landing.com", @class = "form-control", @required = "true", @data_msg_required = "Url is required" })
+      @Html.ValidationMessageFor(model => model.UrlText)
+    </div>
+  </div>
+</div>
+
+<div class="form-group" style="@displayModifyCampaign">
+  <div class="card-img">
+    <img class="img-responsive" style="max-width: 72px;" src=@srcImage />
+  </div>
+  <br />
+</div>
+<hr />
+<div class="form-group">
+  @Html.LabelFor(model => model.UTM_Source)
+  @Html.TextBoxFor(model => model.UTM_Source, new { @placeholder = "Google", @class = "form-control" })
+</div>
+<div class="form-group">
+  @Html.LabelFor(model => model.UTM_Medium)
+  @Html.TextBoxFor(model => model.UTM_Medium, new { @placeholder = "cpc", @class = "form-control" })
+</div>
+<div class="form-group">
+  @Html.LabelFor(model => model.UTM_Campaign)
+  @Html.TextBoxFor(model => model.UTM_Campaign, new { @placeholder = "spring_sale", @class = "form-control" })
+</div>
+
+<div class="form-group">
+  @Html.LabelFor(model => model.MessageText)
+  @Html.TextAreaFor(model => model.MessageText, new { @placeholder = "My Content", @class = "form-control", @required = "true", @data_msg_required = "Message is required" })
+  @Html.ValidationMessageFor(model => model.MessageText, "", new { @class = "text-danger" })
+</div>

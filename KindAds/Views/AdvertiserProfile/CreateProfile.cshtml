@@ -1,0 +1,499 @@
+@model KindAds.Comun.Models.ViewModel.KindAdsV2.AdvertiserProfileViewModel
+@{
+  ViewBag.Title = "Create your profile";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+}
+
+<div class="container-fluid">
+  <div class="row" style="display:none;">
+    <div class="col-sm-12">
+      <ol class="breadcrumb">
+        <li><a href="#">Advertiser</a></li>
+        <li class="active">Profile</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="callout callout-warning">Complete your profile to get started</div>
+      <h1>Create your Advertiser Profile</h1>
+      <p>Your profile is viewable by all KindAds users. This is where you can describe yourself, your business, your target audience and your advertising goals so publishers will know if it's a good match.</p>
+
+      @using (Html.BeginForm("CreateProfile", "AdvertiserProfile", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "formCreateProfile" }))
+      {
+        @Html.Hidden("preferencesStringify", Model.preferencesStringify)
+        <section class="form-data">
+          <form>
+            <fieldset>
+              <div class="form-container">
+                <article>
+                  <div class="form-group">
+                    @Html.Label("Choose a title for your profile", htmlAttributes: new { @class = "control-label" }).
+                    @Html.TextBoxFor(model => model.profile.Title, new { @placeholder = "e.g. Your Company Name", @class = "form-control", @required = "true", @data_val_required = "Title is required", @data_msg_required = "Title is required", @maxlength = 30 })
+                    @Html.ValidationMessageFor(model => model.profile.Title)
+                    <span id="counterTitle" class="counter">30 / 30 remaining</span>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("Choose a tagline for your profile", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.profile.Tagline, new { @placeholder = "e.g. New SaaS product in hypergrowth", @class = "form-control", @required = "true", @data_val_required = "Tagline is required", @data_msg_required = "Tagline is required", @maxlength = 50 })
+                    <span id="counterTagline" class="counter">50 / 50 remaining</span>
+                    @Html.ValidationMessageFor(model => model.profile.Tagline)
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What is the main URL for this profile?", htmlAttributes: new { @class = "control-label" })
+                    <p>This needs to be the top level domain. For example, rather than a specific page URL like this: www.yourwebsiteurl.com/blog/blogarticle123, it needs to be www.yourwebsiteurl.com</p>
+                    @Html.TextBoxFor(model => model.profile.WebSiteUrl, new { @placeholder = "e.g. www.yoursite.com", @class = "form-control", @required = "true", @data_val_required = "Main URL is required", @data_msg_required = "Main URL is required" })
+                    @Html.ValidationMessageFor(model => model.profile.WebSiteUrl)
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What category is this business most associated with?", htmlAttributes: new { @class = "control-label" })
+
+                    <!--Industries-->
+                    @Html.DropDownListFor(model => model.profile.CategoryId, new SelectList(Model.GetIndustries("choose"), "Id", "Name"), new { @class = "form-control dropdown", @required = "true", @data_val_required = "Industry category is required", @data_msg_required = "Industry category is required" })
+                    <br />
+                    <!--Subcategory-->
+                    @Html.DropDownListFor(model => model.profile.SubCategoryId, new SelectList(string.Empty), new { @hidden = "hidden", @class = "form-control dropdown", @required = "true", @data_val_required = "category category is required", @data_msg_required = "Category category is required" })
+
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("When was your business founded?", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.profile.YearFounded, Model.GetYears(), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Business founded year is required" })
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("How many people work for your business?", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.profile.PeopleInYourBusiness, Model.GetManyPeople(), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "The number or people who work is required" })
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What country do you do most of your business in", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.profile.CountryBusinessInId, new SelectList(Model.GetCountries(), "Id", "Name"), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Country is required" })
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("How experienced is your business with digital advertising?", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.profile.ExperienceId, new SelectList(Model.GetBusinessExpertise(), "Id", "Name"), new { @class = "form-control dropdown", @required = "true", @data_msg_required = "Experience level is required" })
+                  </div>
+                </article>
+
+                <article>
+                  <div class="form-group">
+                    <h2>What kind of digital advertising is your business currenty doing?</h2>
+                    <hr />
+                    @Html.Label("Tell publishers more about your advertising needs and your business", htmlAttributes: new { @class = "control-label" })
+                    <p>Use this area to provide publishers with any additional information you think they'd like to know</p>
+
+                    @Html.TextAreaFor(model => model.profile.AdvertiserNeeds, new { @class = "form-control no-resize", rows = 7, cols = 80, wrap = "hard", @placeholder = "Write out your description here....", @required = "true", @data_val_required = "Your advertising needs and your business is required", @data_msg_required = "Your advertising needs and your business is required", @maxlength = 1000 })
+                    <span id="counterAdvertiserNeeds" class="counter">1000 / 1000 remaining</span>
+                    @Html.ValidationMessageFor(model => model.profile.AdvertiserNeeds)
+                  </div>
+
+                  <div class="form-group">
+                    <div class="marquee-upload clearfix">
+                      @KindAds.Helpers.ImgSelectorHelper.DisplayImageSelector("fileupImg", Model.profile.PhotoUrl)
+                      <div class="content">
+                        <div class="btn btn-default file">
+                          + Upload Files
+                          <input id="fileupImg" name="fileupImg" type="file" />
+                        </div>
+                        <div>
+                          Drag &amp; drop any image or document that might be helpful in providing insights and information into your business here.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("Choose an icon to display with your profile", htmlAttributes: new { @class = "control-label" })
+                    <div class="marquee-upload clearfix">
+                      @*<label id="lblFileupIcon"></label>*@
+                      @KindAds.Helpers.ImgSelectorHelper.DisplayImageSelector("fileupIcon", Model.profile.IconUrl)
+                      <div class="content">
+                        <div class="btn btn-default file">
+                          + Upload Files
+                          <input id="fileupIcon" name="fileupIcon" type="file" />
+                        </div>
+                        <div>
+                          Drag &amp; drop an image to diplay along with your text to draw publishes to your profile.<br />
+                          <small>Recommended 96 x 96px</small>
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                  </div>
+                </article>
+
+                <article class="clearfix">
+                  <h2>
+                    Publisher Preferences
+                    <small>Optional</small>
+                  </h2>
+
+                  <div class="form-group">
+                    <p>
+                      You can set some default Publisher Preferences here that will be universal across all of your campaigns under the profile.<br />
+                      Remember these are just peferences, so they won't exclude anyone from finding you but it wil help us match you with the right publishers. You can change preferences on any individual campaign you post and you can edit or remove these default preference any time.
+                    </p>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What type of businessses would you prefer to advertise with?", htmlAttributes: new { @class = "control-label" })
+                    <p>
+                      Choose as many as you'd like.
+                    </p>
+                    <div class="flexbox radio-group" role="BusinessLikes" aria-label="Likes">
+
+                      @foreach (var industrie in Model.GetIndustries("none"))
+                      {
+                        <div class="flexbox-item radio radio-check">
+                          <label for="@industrie.Id">
+                            @industrie.Name
+                            <input data-val="true" id="@industrie.Id" name="BusinessLikes" type="checkbox" onclick="selectIndustryPreference('@industrie.Id');">
+                            <div class="control_indicator"></div>
+                          </label>
+                        </div>
+                      }
+
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    @Html.Label("What type of businessses would you prefer NOT to advertise with?", htmlAttributes: new { @class = "control-label" })
+                    <p>
+                      Choose as many as you'd like.
+                    </p>
+                    <div class="flexbox radio-group" role="BusinessDislikes" aria-label="Disikes">
+
+                      @foreach (var industrie in Model.GetIndustries("none"))
+                      {
+                        <div class="flexbox-item radio radio-check" id="flex-item-@industrie.Id">
+                          <label for="d+@industrie.Id">
+                            @industrie.Name
+                            <input data-val="true" id="d+@industrie.Id" name="BusinessDislikes" type="checkbox" onclick="selectIndustryDislikePreference('@industrie.Id');">
+                            <div class="control_indicator"></div>
+                          </label>
+                        </div>
+                      }
+
+                    </div>
+                  </div>
+
+                  <div class="pull-left">
+                    <input type="submit" id="btnCreateProfile" value="Create profile" class="btn btn-secondary btn-lg" />
+                  </div>
+                </article>
+              </div>
+            </fieldset>
+          </form>
+        </section>
+      }
+
+    </div>
+  </div>
+</div>
+
+@Html.Partial("_AdvertiserProfileModal")
+
+@section Scripts {
+  <script src="~/Scripts/Utils/image-upload.js"></script>
+
+  <script type="text/javascript">
+
+    var dict = []; // create an empty array
+    var preferences = [];
+
+    dict.push({
+      id: "",
+      visibility: ""
+    });
+
+    var selectList = {
+      "profile_YearFounded": false,
+      "profile_PeopleInYourBusiness": false,
+      "profile_CountryBusinessInId": false,
+      "profile_ExperienceId": false,
+      "profile_CategoryId": false,
+    };
+
+    $(document).ready(function () {
+      // binding text
+      // profile_Title,profile_Tagline, profile_AdvertiserNeeds
+      //Validate Text Remaining
+      $("#profile_Title").on('keyup', function (e) {
+        var totalLength = 30;
+        var textLength = $("#profile_Title").val().length;
+        var remaining = totalLength - textLength;
+        $("#counterTitle").text(" "+remaining + " / " + totalLength + " remaining");
+      });
+      $("#profile_Tagline").on('keyup', function (e) {
+        var totalLength = 50;
+        var textLength = $("#profile_Tagline").val().length;
+        var remaining = totalLength - textLength;
+        $("#counterTagline").text(" " + remaining + " / " + totalLength + " remaining");
+      });
+      $("#profile_AdvertiserNeeds").on('keyup', function (e) {
+        var totalLength = 1000;
+        var textLength = $("#profile_AdvertiserNeeds").val().length;
+        var remaining = totalLength - textLength;
+        $("#counterAdvertiserNeeds").text(" " + remaining + " / " + totalLength + " remaining");
+      });
+
+      // images are required
+      //$("#lblFileupImg").text("Image is required");
+      //$("#lblFileupIcon").text("Image is required");
+
+      // set subcategory values
+      $("#profile_SubCategoryId").append('<option value="">' + 'Choose subcategory ...' + '</option>');
+
+      // get industries
+      var industries = @Html.Raw(Json.Encode(Model.GetIndustries("none")));
+
+      $("#formCreateProfile").validate();
+
+      //binding select list
+      $("#profile_YearFounded").change(function () {
+
+        console.log("profile_YearFounded changed...");
+        var combo = document.getElementById("profile_YearFounded");
+
+      if (selectList.profile_YearFounded == false) {
+        combo.removeChild(combo.childNodes[0]);
+        selectList.profile_YearFounded = true;
+      }
+
+    });
+
+      $("#profile_PeopleInYourBusiness").change(function () {
+
+        console.log("profile_PeopleInYourBusiness changed...");
+        var combo = document.getElementById("profile_PeopleInYourBusiness");
+
+        if (selectList.profile_PeopleInYourBusiness == false) {
+          combo.removeChild(combo.childNodes[0]);
+          selectList.profile_PeopleInYourBusiness = true;
+        }
+      });
+
+      $("#profile_CountryBusinessInId").change(function () {
+
+        console.log("profile_CountryBusinessInId changed...");
+        var combo = document.getElementById("profile_CountryBusinessInId");
+
+        if (selectList.profile_CountryBusinessInId == false) {
+          combo.removeChild(combo.childNodes[0]);
+          selectList.profile_CountryBusinessInId = true;
+        }
+      });
+
+      $("#profile_ExperienceId").change(function () {
+
+        console.log("profile_ExperienceId changed...");
+        var combo = document.getElementById("profile_ExperienceId");
+
+        if (selectList.profile_ExperienceId == false) {
+          combo.removeChild(combo.childNodes[0]);
+          selectList.profile_ExperienceId = true;
+        }
+
+      });
+
+      // binding change
+      $("#profile_CategoryId").change(function () {
+
+        // remove first element
+        var combo = document.getElementById("profile_CategoryId");
+
+        if (selectList.profile_CategoryId == false) {
+          combo.removeChild(combo.childNodes[0]);
+          selectList.profile_CategoryId = true;
+        }
+
+        // get current value
+        var e = document.getElementById("profile_CategoryId");
+        var industryId = e.options[e.selectedIndex].value;
+        if (industryId != "") {
+          $("#profile_SubCategoryId").show();
+        }
+
+        var elements = [];
+        //Print all industries
+        for (var i = 0; i <= (industries.length - 1); i++) {
+          if (industries[i].Id === industryId) {
+            elements = industries[i].SubIndustries;
+          }
+        }
+
+        // clear values
+        $("#profile_SubCategoryId").empty();
+
+        //Obtenemos las subcategorias de la industria
+        $.each(elements, function (i, value) {
+          $("#profile_SubCategoryId").append('<option value="' + value.Id + '">' + value.Name + '</option>');
+        });
+
+      });
+
+   
+      @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupIcon", "")
+      @KindAds.Helpers.ImgSelectorHelper.IncludeJSDisplayImageSelector("fileupImg", "")
+
+      //Action Create Profile
+      $('#formCreateProfile').submit(function (e) {
+
+        if ($("#formCreateProfile").valid() && validateImgFile(480, 360, "#fileupIcon", "#lblFileupIcon") && validateImgFile(72, 92, "#fileupImg", "#lblFileupImg")) {
+          var stringify = JSON.stringify(preferences);
+          $("#preferencesStringify").val(stringify);
+          var _data = new FormData(this);
+
+          e.preventDefault();
+          $('#loadingAdvertiserProfileModal').modal('show');
+          $.ajax({
+            url: "CreateProfile",
+            type: "Post",
+            data: _data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+              if (response.success) {
+                $('#loadingAdvertiserProfileModal').modal('hide');
+                $('#advertiserProfileModal').modal('show')
+              } else {
+                $('#loadingAdvertiserProfileModal').modal('hide');
+                $('#advertiserProfileModalBody').append('Error');
+                $('#advertiserProfileModalBodyError').text('');
+                $('#advertiserProfileModal').modal('show')
+              }
+
+            },
+            error: function (xhr, error, status) {
+              $('#loadingCampaignModal').modal('hide');
+              $('#advertiserProfileModalBody').append('Error');
+              $('#advertiserProfileModalBodyError').text('');
+              $('#advertiserProfileModal').modal('show')
+            }
+          });
+        } else {
+          return false;
+        }
+
+      });
+
+      //$("#btnCreateProfile").click(function (event) {
+      //  if ($("#formCreateProfile").valid() && validateImgFile(72, 92,"#fileupIcon", "#lblFileupIcon")) {
+      //    var stringify = JSON.stringify(preferences);
+      //    document.getElementById("preferencesStringify").value = stringify;
+      //  }
+      //  else {
+      //    return false;
+      //  }
+      //});
+    });
+
+
+
+
+
+    function makeVisibility(industryId) {
+      var industryItem = 'flex-item-' + industryId;
+      var existInDictionary = false;
+      var indexInDictionary = -1;
+
+      // check if exist any element in dictionary
+      if (dict.length > 0) {
+
+        // check if exist in dictionary
+        for (var i = 0; i <= (dict.length - 1); i++) {
+          if (dict[i].id == industryItem) {
+            existInDictionary = true;
+            indexInDictionary = i;
+          }
+        }
+
+        if (existInDictionary) {
+          // show again
+          $("#" + industryItem).show();
+
+          // pop element
+          dict.splice(indexInDictionary, 1);
+        }
+        else {
+          // push element
+          dict.push({
+            id: industryItem,
+            visibility: "none"
+          });
+
+          // hide element
+          $("#" + industryItem).hide();
+        }
+      }
+      else {
+
+        // push element
+        dict.push({
+          id: industryItem,
+          visibility: "none"
+        });
+
+      // hide element
+      $("#" + industryItem).hide();
+    }
+  }
+
+    function makePreferences(industryId,like) {
+      var industryItem = 'flex-item-' + industryId;
+      var existInDictionary = false;
+      var indexInDictionary = -1;
+
+      // check if exist any element in dictionary
+      if (preferences.length > 0) {
+
+        // check if exist in dictionary
+        for (var i = 0; i <= (preferences.length - 1); i++) {
+          if (preferences[i].IndustryId == industryItem) {
+            existInDictionary = true;
+            indexInDictionary = i;
+          }
+        }
+
+        if (existInDictionary) {
+          // pop element
+          preferences.splice(indexInDictionary, 1);
+        }
+        else {
+
+          // push element
+          preferences.push({
+            IndustryId: industryItem,
+            Like: like,
+            AdvertiserProfileId: "undefined"
+          });
+        }
+      }
+      else {
+
+        // push element
+        preferences.push({
+          IndustryId: industryItem,
+          Like: like,
+          AdvertiserProfileId: "undefined"
+        });
+      }
+    }
+
+    function selectIndustryPreference(industryId) {
+      makeVisibility(industryId);
+      makePreferences(industryId,true);
+    }
+
+    function selectIndustryDislikePreference(industryId) {
+      makePreferences(industryId,false);
+    }
+  </script>
+}

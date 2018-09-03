@@ -1,0 +1,77 @@
+@model KindAds.Negocio.ViewModels.KindAdsV2.AudienceViewModel
+@{
+  ViewBag.Title = "Create your profile";
+  Layout = "~/Views/Shared/_MarketplacePubLayout.cshtml";
+}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <ol class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Publisher", "Marketplace", null, new { @class = "link" })</li>
+        <li>@Html.ActionLink("Audiences", "MyAudiences", "Audience", null, new { @class = "link" })</li>
+        <li class="active">Create Audience</li>
+      </ol>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <fieldset>
+        <div>
+          @if (Model.stage == "basic")
+          {
+            <div id="AudienceBasics">
+              @Html.Partial("_AudienceBasics", Model)
+            </div>
+          }
+          @if (Model.stage == "preferences")
+          {
+            <div id="AudiencePreferences">
+              @Html.Partial("_AudiencePreferences", Model)
+            </div>
+          }
+          @if (Model.stage == "images")
+          {
+            <div id="AudiencePreferences">
+              @Html.Partial("_AudienceImage", Model)
+            </div>
+          }
+
+        </div>
+      </fieldset>
+
+    </div>
+  </div>
+</div>
+
+@Html.Partial("_ErrorTextModal")
+@Html.Partial("~/Views/Shared/_Processing.cshtml")
+@Html.Partial("~/Views/Audience/_MessageAudience.cshtml")
+
+@section Scripts {
+  <script type="text/javascript">
+    var error = "@(ViewBag.error == null?"NULL":ViewBag.error)"
+
+    $(document).ready(function () {
+
+      if (error != "NULL") {
+        switch (error) {
+          case "SiteDuplicated":
+            var siteName = "@(Model.audience.WebSiteUrl )";
+            ShowErrorModal("The site " + siteName + " is duplicated");
+            break;
+        }
+      }
+
+    });
+
+    function ShowErrorModal(errorText) {
+      $("#ErrorModal_text").text(errorText);
+      $('#ErrorModal').modal('show');
+    }
+
+  </script>
+
+}
